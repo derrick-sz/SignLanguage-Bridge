@@ -40,3 +40,5 @@
 保持slbridge/media.py字节与已发布extractor identity一致：SHA-256 `a08ed4a430c08b473405b5ebc9d081c2f3a14d5ea707cd3026cd7b44b0c4a3f2`。未改模型、训练或原始视频，RF试点测试准确率仍为63.89%。当前仍为单个完整动作识别，摄像头结束录制后推理，尚未实现连续手语翻译。
 
 仓库同步沿用指定origin和原main历史，只提交源码、测试、配置和文档；数据、模型、环境与本地产物排除。
+
+实现提交为[a374cc6](https://github.com/betterway614/SignLanguage-Bridge/commit/a374cc6)，已快进合入并推送远程main，读取引用确认本地/远程一致。随后文档提交仅记录完成状态。
