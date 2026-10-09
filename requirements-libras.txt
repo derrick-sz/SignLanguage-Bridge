@@ -1,0 +1,10 @@
+-r requirements-core.txt
+mediapipe==0.10.14
+opencv-contrib-python==4.10.0.84
+protobuf==4.25.8
+matplotlib==3.9.4
+# Compatible with the pinned NumPy; avoid resolver backtracking.
+jax==0.7.1
+jaxlib==0.7.1
+ml_dtypes==0.5.4
+scipy==1.16.3

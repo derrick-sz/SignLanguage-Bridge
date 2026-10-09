@@ -1,0 +1,2 @@
+-r requirements-libras.txt
+Pillow==12.3.0

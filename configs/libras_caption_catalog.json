@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "catalog_id": "libras-pilot-display-draft-v1",
+  "sign_language": "libras",
+  "labels": [
+    {"label_id": "item:2", "display_text": {"pt-BR": "Sim", "zh-CN": "是 / 是的"}, "review_status": "draft"},
+    {"label_id": "item:7", "display_text": {"pt-BR": "Quero", "zh-CN": "我想要"}, "review_status": "draft"},
+    {"label_id": "item:92", "display_text": {"pt-BR": "Energia", "zh-CN": "能源 / 电力"}, "review_status": "draft"},
+    {"label_id": "item:93", "display_text": {"pt-BR": "Solicitar", "zh-CN": "申请 / 请求"}, "review_status": "draft"},
+    {"label_id": "item:94", "display_text": {"pt-BR": "Serviço", "zh-CN": "服务"}, "review_status": "draft"},
+    {"label_id": "item:100", "display_text": {"pt-BR": "Cair", "zh-CN": "倒下 / 落下"}, "review_status": "draft"},
+    {"label_id": "item:105", "display_text": {"pt-BR": "Árvore", "zh-CN": "树"}, "review_status": "draft"},
+    {"label_id": "item:106", "display_text": {"pt-BR": "Poste", "zh-CN": "电线杆"}, "review_status": "draft"},
+    {"label_id": "item:107", "display_text": {"pt-BR": "Raio", "zh-CN": "闪电"}, "review_status": "draft"},
+    {"label_id": "item:110", "display_text": {"pt-BR": "Menos", "zh-CN": "更少 / 减少"}, "review_status": "draft"},
+    {"label_id": "item:111", "display_text": {"pt-BR": "Mais", "zh-CN": "更多 / 增加"}, "review_status": "draft"},
+    {"label_id": "item:113", "display_text": {"pt-BR": "Religar", "zh-CN": "重新接通"}, "review_status": "draft"}
+  ]
+}

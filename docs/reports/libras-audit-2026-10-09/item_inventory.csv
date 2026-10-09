@@ -1,0 +1,179 @@
+﻿source_item_id,raw_directory,native_label,videos,local_informant_1,local_informant_2,local_informant_3,local_informant_4,local_informant_5
+1,"1_Oi, eu quero consultar meu histórico_de faturamento","Oi, eu quero consultar meu histórico_de faturamento",30,6,6,6,6,6
+2,2_Sim,Sim,30,6,6,6,6,6
+3,3_CPF ou número da conta,CPF ou número da conta,30,6,6,6,6,6
+4,4_Principal praia casa,Principal praia casa,30,6,6,6,6,6
+5,5_Eu quero ver,Eu quero ver,30,6,6,6,6,6
+6,6_Quero ver mais informações sobre…,Quero ver mais informações sobre…,30,6,6,6,6,6
+7,7_Quero,Quero,30,6,6,6,6,6
+8,8_Eu quero pagar todas as minhas faturas em aberto,Eu quero pagar todas as minhas faturas em aberto,30,6,6,6,6,6
+9,9_Eu quero pagar com o Pix,Eu quero pagar com o Pix,30,6,6,6,6,6
+10,10_Ver outras contas,Ver outras contas,30,6,6,6,6,6
+11,11_Ver outros serviços,Ver outros serviços,30,6,6,6,6,6
+12,"12_Não, Obrigado","Não, Obrigado",30,6,6,6,6,6
+13,13_Eu quero pagar com o Cartão de crédito,Eu quero pagar com o Cartão de crédito,30,6,6,6,6,6
+14,14_Eu quero pagar com o Cartão de débito,Eu quero pagar com o Cartão de débito,30,6,6,6,6,6
+18,18_Quero alterar a forma de pagamento_para Pix,Quero alterar a forma de pagamento_para Pix,30,6,6,6,6,6
+19,19_Quero alterar a forma de pagamento para Cartão de crédito,Quero alterar a forma de pagamento para Cartão de crédito,30,6,6,6,6,6
+20,20_Quero alterar a forma de pagamento para Cartão de débito,Quero alterar a forma de pagamento para Cartão de débito,30,6,6,6,6,6
+21,"21_Sim, quero receber meu histórico de consumo","Sim, quero receber meu histórico de consumo",30,6,6,6,6,6
+22,22_Desejo do mês de_,Desejo do mês de_,30,6,6,6,6,6
+23,23_e-mail,e-mail,30,6,6,6,6,6
+24,24_whatsapp,whatsapp,30,6,6,6,6,6
+25,"25_Não quero, obrigado","Não quero, obrigado",29,5,6,6,6,6
+31,31_Desejo do mês de_,Desejo do mês de_,30,6,6,6,6,6
+40,40_Quero saber mais informações_sobre…,Quero saber mais informações_sobre…,30,6,6,6,6,6
+49,"49_Oi, eu quero consultar minha fatura","Oi, eu quero consultar minha fatura",30,6,6,6,6,6
+50,"50_Oi, eu quero emitir a segunda via da_minha fatura","Oi, eu quero emitir a segunda via da_minha fatura",30,6,6,6,6,6
+54,54_Eu quero consultar os detalhes_da fatura de_,Eu quero consultar os detalhes_da fatura de_,30,6,6,6,6,6
+55,55_Eu quero pagar as minhas faturas em_aberto,Eu quero pagar as minhas faturas em_aberto,30,6,6,6,6,6
+57,57_Eu quero imprimir a 2ª via_simplificada,Eu quero imprimir a 2ª via_simplificada,30,6,6,6,6,6
+61,61_Eu quero receber a 2ª via por e-mail,Eu quero receber a 2ª via por e-mail,30,6,6,6,6,6
+62,"62_Sim, enviar para o meu e-mail","Sim, enviar para o meu e-mail",30,6,6,6,6,6
+66,"66_não, este email está desatualizado","não, este email está desatualizado",30,6,6,6,6,6
+67,67_Não é mais o meu e-mail,Não é mais o meu e-mail,30,6,6,6,6,6
+71,71_Eu quero pagar a conta,Eu quero pagar a conta,30,6,6,6,6,6
+81,81_Quero alterar a forma de pagamento_para Pix,Quero alterar a forma de pagamento_para Pix,30,6,6,6,6,6
+84,84_Pagar contas em aberto,Pagar contas em aberto,30,6,6,6,6,6
+88,88_Tentar novamente,Tentar novamente,30,6,6,6,6,6
+89,89_Mudar a forma de pagamento,Mudar a forma de pagamento,30,6,6,6,6,6
+91,91_Faltar,Faltar,30,6,6,6,6,6
+92,92_Energia,Energia,30,6,6,6,6,6
+93,93_Solicitar,Solicitar,30,6,6,6,6,6
+94,94_Serviço,Serviço,30,6,6,6,6,6
+95,95_Informar,Informar,30,6,6,6,6,6
+96,96_Mesmo,Mesmo,30,6,6,6,6,6
+97,97_Rua,Rua,30,6,6,6,6,6
+98,98_Toda,Toda,30,6,6,6,6,6
+99,99_Oscilar,Oscilar,30,6,6,6,6,6
+100,100_Cair,Cair,30,6,6,6,6,6
+101,101_Alguns,Alguns,30,6,6,6,6,6
+102,102_Cômodo,Cômodo,30,6,6,6,6,6
+103,103_Não sei,Não sei,30,6,6,6,6,6
+104,104_Motivo,Motivo,30,6,6,6,6,6
+105,105_Árvore,Árvore,30,6,6,6,6,6
+106,106_Poste,Poste,30,6,6,6,6,6
+107,107_Raio,Raio,30,6,6,6,6,6
+108,108_Intervenção,Intervenção,30,6,6,6,6,6
+109,109_Terceiros,Terceiros,30,6,6,6,6,6
+110,110_Menos,Menos,30,6,6,6,6,6
+111,111_Mais,Mais,30,6,6,6,6,6
+112,112_Instável,Instável,30,6,6,6,6,6
+113,113_Religar,Religar,30,6,6,6,6,6
+114,114_Oscilar,Oscilar,30,6,6,6,6,6
+115,115_Luz,Luz,30,6,6,6,6,6
+116,116_Eu estou sem luz,Eu estou sem luz,30,6,6,6,6,6
+117,117_Eu estou sem energia,Eu estou sem energia,30,6,6,6,6,6
+118,118_Eu estou com a energia oscilando,Eu estou com a energia oscilando,30,6,6,6,6,6
+119,119_Eu estou com a luz oscilando,Eu estou com a luz oscilando,29,6,6,6,6,5
+120,120_Eu quero registrar a falta de luz,Eu quero registrar a falta de luz,30,6,6,6,6,6
+121,121_Eu quero registrar a falta de energia,Eu quero registrar a falta de energia,30,6,6,6,6,6
+122,122_Minha luz está fraca,Minha luz está fraca,30,6,6,6,6,6
+123,123_Minha energia está fraca,Minha energia está fraca,30,6,6,6,6,6
+124,124_Eu quero solicitar a religação da energia,Eu quero solicitar a religação da energia,30,6,6,6,6,6
+125,125_Eu quero a luz de volta,Eu quero a luz de volta,30,6,6,6,6,6
+126,126_Religar a energia,Religar a energia,30,6,6,6,6,6
+127,127_Religar a luz,Religar a luz,30,6,6,6,6,6
+128,128_Não tem energia em casa,Não tem energia em casa,30,6,6,6,6,6
+129,129_Está faltando energia somente na minha casa,Está faltando energia somente na minha casa,30,6,6,6,6,6
+130,130_Faltou energia em toda a minha rua,Faltou energia em toda a minha rua,30,6,6,6,6,6
+131,131_Energia oscilando,Energia oscilando,30,6,6,6,6,6
+132,132_Luz oscilando,Luz oscilando,30,6,6,6,6,6
+133,133_A energia está oscilando há mais de sete dias,A energia está oscilando há mais de sete dias,30,6,6,6,6,6
+134,134_A luz oscilou por mais de sete dias,A luz oscilou por mais de sete dias,30,6,6,6,6,6
+135,135_Energia está instável,Energia está instável,30,6,6,6,6,6
+136,136_Faltou energia,Faltou energia,30,6,6,6,6,6
+137,137_A energia caiu na casa toda,A energia caiu na casa toda,30,6,6,6,6,6
+138,138_A  luz caiu em alguns cômodos,A  luz caiu em alguns cômodos,30,6,6,6,6,6
+139,139_SOMENTE ALGUNS CÔMODOS,SOMENTE ALGUNS CÔMODOS,30,6,6,6,6,6
+140,140_Casa toda,Casa toda,30,6,6,6,6,6
+141,141_Um poste caiu,Um poste caiu,30,6,6,6,6,6
+142,142_Uma árvore caiu,Uma árvore caiu,30,6,6,6,6,6
+143,143_Os fios da rede quebraram,Os fios da rede quebraram,30,6,6,6,6,6
+144,144_Caiu um raio,Caiu um raio,30,6,6,6,6,6
+145,145_Pessoas mexeram na rede,Pessoas mexeram na rede,30,6,6,6,6,6
+146,146_JÁ,JÁ,30,6,6,6,6,6
+147,147_AINDA,AINDA,30,6,6,6,6,6
+148,148_HAVER,HAVER,30,6,6,6,6,6
+149,149_PAGO,PAGO,30,6,6,6,6,6
+150,150_PRÓXIMA,PRÓXIMA,30,6,6,6,6,6
+151,151_ANTERIOR,ANTERIOR,30,6,6,6,6,6
+152,152_AVANÇAR,AVANÇAR,36,6,6,6,12,6
+153,153_PÁGINA,PÁGINA,30,6,6,6,6,6
+154,154_COMUM,COMUM,30,6,6,6,6,6
+155,155_URGÊNCIA,URGÊNCIA,29,6,6,6,6,5
+156,"156_Oi, eu quero religar minha energia","Oi, eu quero religar minha energia",30,6,6,6,6,6
+157,"157_Oi, eu quero religar minha luz","Oi, eu quero religar minha luz",30,6,6,6,6,6
+158,158_Eu desejo minha luz de volta,Eu desejo minha luz de volta,30,6,6,6,6,6
+159,159_Eu desejo minha de energia de volta,Eu desejo minha de energia de volta,30,6,6,6,6,6
+162,162_Eu quero minha energia ligada,Eu quero minha energia ligada,30,6,6,6,6,6
+163,163_Eu quero que liguem minha luz,Eu quero que liguem minha luz,30,6,6,6,6,6
+165,165_Página anterior,Página anterior,30,6,6,6,6,6
+166,166_Voltar para a primeira página,Voltar para a primeira página,30,6,6,6,6,6
+167,167_Ir para o fim,Ir para o fim,30,6,6,6,6,6
+168,168_Eu já paguei todas as contas,Eu já paguei todas as contas,30,6,6,6,6,6
+169,169_Já paguei as faturas,Já paguei as faturas,30,6,6,6,6,6
+170,170_Eu já paguei tudo,Eu já paguei tudo,30,6,6,6,6,6
+171,171_Paguei a minha fatura,Paguei a minha fatura,30,6,6,6,6,6
+172,172_Conta está paga,Conta está paga,30,6,6,6,6,6
+173,173_Eu já paguei a conta do mês de _,Eu já paguei a conta do mês de _,30,6,6,6,6,6
+174,"174_Sim, confirmo o pagamento","Sim, confirmo o pagamento",30,6,6,6,6,6
+175,"175_Não, ainda existem contas abertas","Não, ainda existem contas abertas",30,6,6,6,6,6
+176,"176_Sim, eu paguei","Sim, eu paguei",30,6,6,6,6,6
+177,177_Eu não paguei,Eu não paguei,30,6,6,6,6,6
+178,178_Religação comum,Religação comum,30,6,6,6,6,6
+179,179_Religar com urgência,Religar com urgência,30,6,6,6,6,6
+180,180_Cadastrar,Cadastrar,30,6,6,6,6,6
+181,181_Digital,Digital,30,6,6,6,6,6
+182,"182_Oi, eu quero cadastrar minha conta digital","Oi, eu quero cadastrar minha conta digital",30,6,6,6,6,6
+183,"183_Oi, eu quero alterar minha conta digital","Oi, eu quero alterar minha conta digital",30,6,6,6,6,6
+184,"184_Oi, eu desejo alterar minha conta digital","Oi, eu desejo alterar minha conta digital",30,6,6,6,6,6
+185,185_Quero receber minha fatura pelo e-mail,Quero receber minha fatura pelo e-mail,30,6,6,6,6,6
+186,186_Quero receber minha conta pelo whatsapp,Quero receber minha conta pelo whatsapp,30,6,6,6,6,6
+187,187_Cadastrar conta digital,Cadastrar conta digital,30,6,6,6,6,6
+188,188_Modificar conta digital,Modificar conta digital,30,6,6,6,6,6
+189,189_Ver conta digital,Ver conta digital,29,6,6,6,6,5
+190,190_Eu quero cadastrar meu e-mail,Eu quero cadastrar meu e-mail,30,6,6,6,6,6
+191,191_Eu quero cadastrar meu Whatsapp,Eu quero cadastrar meu Whatsapp,30,6,6,6,6,6
+192,192_Desejo cadastar meu e-mail,Desejo cadastar meu e-mail,30,6,6,6,6,6
+193,193_Desejo cadastrar meu whatsapp,Desejo cadastrar meu whatsapp,36,6,12,6,6,6
+194,194_Cadastrar um e-mail,Cadastrar um e-mail,30,6,6,6,6,6
+195,195_Cadastrar meu whatsapp,Cadastrar meu whatsapp,30,6,6,6,6,6
+196,196_Receber pelo e-mail,Receber pelo e-mail,30,6,6,6,6,6
+197,197_Receber pelo whatsapp,Receber pelo whatsapp,30,6,6,6,6,6
+198,198_Quero receber no meu e-mail,Quero receber no meu e-mail,30,6,6,6,6,6
+199,199_Quero receber no meu Whatsapp,Quero receber no meu Whatsapp,30,6,6,6,6,6
+200,"200_Sim, eu quero","Sim, eu quero",30,6,6,6,6,6
+201,"201_Sim, confirmo","Sim, confirmo",30,6,6,6,6,6
+202,202_Não quero,Não quero,30,6,6,6,6,6
+203,"203_Não, eu não quero","Não, eu não quero",30,6,6,6,6,6
+204,204_Data,Data,30,6,6,6,6,6
+205,205_Vencimento,Vencimento,30,6,6,6,6,6
+206,206_Dez,Dez,30,6,6,6,6,6
+207,207_Quinze,Quinze,30,6,6,6,6,6
+208,208_Trinta,Trinta,30,6,6,6,6,6
+209,"209_Oi, eu quero alterar a data de vencimento da minha fatura","Oi, eu quero alterar a data de vencimento da minha fatura",30,6,6,6,6,6
+210,"210_Oi, eu desejo alterar a data de vencimento da minha conta","Oi, eu desejo alterar a data de vencimento da minha conta",30,6,6,6,6,6
+211,211_Alterar o dia da fatura,Alterar o dia da fatura,30,6,6,6,6,6
+212,212_alterar data de vencimento,alterar data de vencimento,30,6,6,6,6,6
+213,213_Mudar data de vencimento da fatura,Mudar data de vencimento da fatura,30,6,6,6,6,6
+214,214_Atualizar data de vencimento da minha fatura,Atualizar data de vencimento da minha fatura,30,6,6,6,6,6
+215,215_Quero mudar para o dia 01,Quero mudar para o dia 01,30,6,6,6,6,6
+216,216_Quero mudar para o dia 10,Quero mudar para o dia 10,29,6,6,6,6,5
+217,217_Quero mudar para o dia 15,Quero mudar para o dia 15,30,6,6,6,6,6
+218,218_Quero mudar para o dia 30,Quero mudar para o dia 30,30,6,6,6,6,6
+219,219_Desejo mudar para o dia 30,Desejo mudar para o dia 30,30,6,6,6,6,6
+220,220_Escolher vencimento para o dia 01,Escolher vencimento para o dia 01,30,6,6,6,6,6
+221,221_Escolher vencimento para o dia 10,Escolher vencimento para o dia 10,30,6,6,6,6,6
+222,222_Escolher vencimento para o dia 15,Escolher vencimento para o dia 15,30,6,6,6,6,6
+223,223_Escolher vencimento para o dia 30,Escolher vencimento para o dia 30,30,6,6,6,6,6
+224,224_Dia 01,Dia 01,30,6,6,6,6,6
+225,225_Dia 10,Dia 10,30,6,6,6,6,6
+226,226_Dia 15,Dia 15,30,6,6,6,6,6
+227,227_Dia 30,Dia 30,30,6,6,6,6,6
+228,228_Escolher outro dia,Escolher outro dia,30,6,6,6,6,6
+229,"229_Sim, quero mudar","Sim, quero mudar",30,6,6,6,6,6
+230,"230_Não, não quero mudar","Não, não quero mudar",30,6,6,6,6,6
+231,231_Quero mudar,Quero mudar,30,6,6,6,6,6
+232,"232_Sim, está certo","Sim, está certo",30,6,6,6,6,6
+233,233_Está errado,Está errado,30,6,6,6,6,6

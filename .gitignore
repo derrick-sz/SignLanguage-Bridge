@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+.venv/
+.venv-libras/
+artifacts/
+data/
+Libras-EQT-UECE (RGB)/
+.superpowers/
+.worktrees/
+.env
+.env.*
+*.log
+docs/reports/**/sample_contact_sheet.jpg

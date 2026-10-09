@@ -1,0 +1,2 @@
+# Published model bundles bind these exact extractor bytes, including newlines.
+slbridge/media.py -text

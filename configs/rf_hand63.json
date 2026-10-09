@@ -1,0 +1,10 @@
+{
+  "representation_id": "hand63_v1",
+  "target_frames": 30,
+  "seed": 42,
+  "rf": {"n_estimators": 100, "max_depth": 20, "min_samples_leaf": 1, "n_jobs": 1},
+  "augmentation_repeats": 0,
+  "noise_std": 0.015,
+  "threshold_candidates": [0.0, 0.5, 0.7],
+  "minimum_validation_coverage": 0.8
+}

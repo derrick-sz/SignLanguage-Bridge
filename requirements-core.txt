@@ -1,0 +1,4 @@
+# Verified core runtime on Python 3.12.7 (no GUI/media extraction dependencies).
+numpy==1.26.3
+scikit-learn==1.4.0
+joblib==1.4.2

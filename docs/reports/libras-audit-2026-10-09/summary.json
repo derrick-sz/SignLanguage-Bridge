@@ -1,0 +1,693 @@
+{
+  "audit_date": "2026-10-09 Asia/Shanghai",
+  "root": "E:\\githubproject\\SignLanguage-Bridge\\Libras-EQT-UECE (RGB)",
+  "files": 5347,
+  "bytes": 8983189952,
+  "top_directories": 334,
+  "nonempty_items": 178,
+  "empty_directories": [
+    "100_Cair_",
+    "101_Alguns_",
+    "102_Cômodo_",
+    "103_Não sei_",
+    "104_Motivo_",
+    "105_Árvore_",
+    "106_Poste_",
+    "107_Raio_",
+    "108_Intervenção_",
+    "109_Terceiros_",
+    "10_Ver outras contas_",
+    "110_Menos_",
+    "111_Mais_",
+    "112_Instável_",
+    "113_Religar_",
+    "114_Oscilar_",
+    "115_Luz_",
+    "116_Eu estou sem luz_",
+    "117_Eu estou sem energia_",
+    "118_Eu estou com a energia oscilando_",
+    "119_Eu estou com a luz oscilando_",
+    "11_Ver outros serviços_",
+    "120_Eu quero registrar a falta de luz_",
+    "121_Eu quero registrar a falta de energia_",
+    "122_Minha luz está fraca_",
+    "123_Minha energia está fraca_",
+    "124_Eu quero solicitar a religação da energia_",
+    "125_Eu quero a luz de volta_",
+    "126_Religar a energia_",
+    "127_Religar a luz_",
+    "128_Não tem energia em casa_",
+    "129_Está faltando energia somente na minha casa_",
+    "12_Não, Obrigado_",
+    "130_Faltou energia em toda a minha rua_",
+    "131_Energia oscilando_",
+    "132_Luz oscilando_",
+    "133_A energia está oscilando há mais de sete dias_",
+    "134_A luz oscilou por mais de sete dias_",
+    "135_Energia está instável_",
+    "136_Faltou energia_",
+    "137_A energia caiu na casa toda_",
+    "138_A  luz caiu em alguns cômodos_",
+    "13_Eu quero pagar com o Cartão de crédito_",
+    "140_Casa toda_",
+    "141_Um poste caiu_",
+    "142_Uma árvore caiu_",
+    "143_Os fios da rede quebraram_",
+    "144_Caiu um raio_",
+    "145_Pessoas mexeram na rede_",
+    "14_Eu quero pagar com o Cartão de débito_",
+    "156_Oi, eu quero religar minha energia_",
+    "157_Oi, eu quero religar minha luz_",
+    "158_Eu desejo minha luz de volta_",
+    "159_Eu desejo minha de energia de volta_",
+    "162_Eu quero minha energia ligada_",
+    "163_Eu quero que liguem minha luz_",
+    "165_Página anterior_",
+    "166_Voltar para a primeira página_",
+    "167_Ir para o fim_",
+    "168_Eu já paguei todas as contas_",
+    "169_Já paguei as faturas_",
+    "170_Eu já paguei tudo_",
+    "171_Paguei a minha fatura_",
+    "172_Conta está paga_",
+    "174_Sim, confirmo o pagamento_",
+    "175_Não, ainda existem contas abertas_",
+    "176_Sim, eu paguei_",
+    "177_Eu não paguei_",
+    "178_Religação comum_",
+    "179_Religar com urgência_",
+    "180_Cadastrar_",
+    "181_Digital_",
+    "182_Oi, eu quero cadastrar minha conta digital_",
+    "183_Oi, eu quero alterar minha conta digital_",
+    "184_Oi, eu desejo alterar minha conta digital_",
+    "185_Quero receber minha fatura pelo e-mail_",
+    "186_Quero receber minha conta pelo whatsapp_",
+    "187_Cadastrar conta digital_",
+    "188_Modificar conta digital_",
+    "189_Ver conta digital_",
+    "18_Quero alterar a forma de pagamento_para Pix_",
+    "190_Eu quero cadastrar meu e-mail_",
+    "191_Eu quero cadastrar meu Whatsapp_",
+    "192_Desejo cadastar meu e-mail_",
+    "193_Desejo cadastrar meu whatsapp_",
+    "194_Cadastrar um e-mail_",
+    "195_Cadastrar meu whatsapp_",
+    "196_Receber pelo e-mail_",
+    "197_Receber pelo whatsapp_",
+    "198_Quero receber no meu e-mail_",
+    "199_Quero receber no meu Whatsapp_",
+    "19_Quero alterar a forma de pagamento para Cartão de crédito_",
+    "1_Oi, eu quero consultar meu histórico_de faturamento_",
+    "200_Sim, eu quero_",
+    "201_Sim, confirmo_",
+    "202_Não quero_",
+    "203_Não, eu não quero_",
+    "204_Data_",
+    "205_Vencimento_",
+    "206_Dez_",
+    "207_Quinze_",
+    "208_Trinta_",
+    "209_Oi, eu quero alterar a data de vencimento da minha fatura_",
+    "210_Oi, eu desejo alterar a data de vencimento da minha conta_",
+    "211_Alterar o dia da fatura_",
+    "212_alterar data de vencimento_",
+    "213_Mudar data de vencimento da fatura_",
+    "214_Atualizar data de vencimento da minha fatura_",
+    "215_Quero mudar para o dia 01_",
+    "216_Quero mudar para o dia 10_",
+    "217_Quero mudar para o dia 15_",
+    "218_Quero mudar para o dia 30_",
+    "219_Desejo mudar para o dia 30_",
+    "220_Escolher vencimento para o dia 01_",
+    "221_Escolher vencimento para o dia 10_",
+    "222_Escolher vencimento para o dia 15_",
+    "223_Escolher vencimento para o dia 30_",
+    "224_Dia 01_",
+    "225_Dia 10_",
+    "226_Dia 15_",
+    "227_Dia 30_",
+    "228_Escolher outro dia_",
+    "229_Sim, quero mudar_",
+    "230_Não, não quero mudar_",
+    "231_Quero mudar_",
+    "232_Sim, está certo_",
+    "233_Está errado_",
+    "25_Não quero, obrigado_",
+    "2_Sim_",
+    "3_CPF ou número da conta_",
+    "49_Oi, eu quero consultar minha fatura_",
+    "4_Principal praia casa_",
+    "50_Oi, eu quero emitir a segunda via da_minha fatura_",
+    "55_Eu quero pagar as minhas faturas em_aberto_",
+    "57_Eu quero imprimir a 2ª via_simplificada_",
+    "5_Eu quero ver_",
+    "61_Eu quero receber a 2ª via por e-mail_",
+    "62_Sim, enviar para o meu e-mail_",
+    "66_não, este email está desatualizado_",
+    "67_Não é mais o meu e-mail_",
+    "71_Eu quero pagar a conta_",
+    "7_Quero_",
+    "84_Pagar contas em aberto_",
+    "88_Tentar novamente_",
+    "89_Mudar a forma de pagamento_",
+    "8_Eu quero pagar todas as minhas faturas em aberto_",
+    "91_Faltar_",
+    "92_Energia_",
+    "93_Solicitar_",
+    "94_Serviço_",
+    "95_Informar_",
+    "96_Mesmo_",
+    "97_Rua_",
+    "98_Toda_",
+    "99_Oscilar_",
+    "9_Eu quero pagar com o Pix_"
+  ],
+  "per_item_counts": {
+    "30": 171,
+    "29": 5,
+    "36": 2
+  },
+  "per_local_informant_counts": {
+    "INFORMANTE 1": 1067,
+    "INFORMANTE 2": 1074,
+    "INFORMANTE 3": 1068,
+    "INFORMANTE 4": 1074,
+    "INFORMANTE 5": 1064
+  },
+  "anomalous_items": [
+    {
+      "source_item_id": "25",
+      "raw_directory": "25_Não quero, obrigado",
+      "native_label": "Não quero, obrigado",
+      "videos": 29,
+      "local_informant_1": 5,
+      "local_informant_2": 6,
+      "local_informant_3": 6,
+      "local_informant_4": 6,
+      "local_informant_5": 6
+    },
+    {
+      "source_item_id": "119",
+      "raw_directory": "119_Eu estou com a luz oscilando",
+      "native_label": "Eu estou com a luz oscilando",
+      "videos": 29,
+      "local_informant_1": 6,
+      "local_informant_2": 6,
+      "local_informant_3": 6,
+      "local_informant_4": 6,
+      "local_informant_5": 5
+    },
+    {
+      "source_item_id": "152",
+      "raw_directory": "152_AVANÇAR",
+      "native_label": "AVANÇAR",
+      "videos": 36,
+      "local_informant_1": 6,
+      "local_informant_2": 6,
+      "local_informant_3": 6,
+      "local_informant_4": 12,
+      "local_informant_5": 6
+    },
+    {
+      "source_item_id": "155",
+      "raw_directory": "155_URGÊNCIA",
+      "native_label": "URGÊNCIA",
+      "videos": 29,
+      "local_informant_1": 6,
+      "local_informant_2": 6,
+      "local_informant_3": 6,
+      "local_informant_4": 6,
+      "local_informant_5": 5
+    },
+    {
+      "source_item_id": "189",
+      "raw_directory": "189_Ver conta digital",
+      "native_label": "Ver conta digital",
+      "videos": 29,
+      "local_informant_1": 6,
+      "local_informant_2": 6,
+      "local_informant_3": 6,
+      "local_informant_4": 6,
+      "local_informant_5": 5
+    },
+    {
+      "source_item_id": "193",
+      "raw_directory": "193_Desejo cadastrar meu whatsapp",
+      "native_label": "Desejo cadastrar meu whatsapp",
+      "videos": 36,
+      "local_informant_1": 6,
+      "local_informant_2": 12,
+      "local_informant_3": 6,
+      "local_informant_4": 6,
+      "local_informant_5": 6
+    },
+    {
+      "source_item_id": "216",
+      "raw_directory": "216_Quero mudar para o dia 10",
+      "native_label": "Quero mudar para o dia 10",
+      "videos": 29,
+      "local_informant_1": 6,
+      "local_informant_2": 6,
+      "local_informant_3": 6,
+      "local_informant_4": 6,
+      "local_informant_5": 5
+    }
+  ],
+  "duplicate_hash_groups": [
+    [
+      "117_Eu estou sem energia/INFORMANTE 4/IMG_3371.mp4",
+      "117_Eu estou sem energia/INFORMANTE 4/IMG_3372.mp4"
+    ],
+    [
+      "151_ANTERIOR/INFORMANTE 1/IMG_3579.mp4",
+      "165_Página anterior/INFORMANTE 1/IMG_3579.mp4"
+    ],
+    [
+      "151_ANTERIOR/INFORMANTE 1/IMG_3580.mp4",
+      "165_Página anterior/INFORMANTE 1/IMG_3580.mp4"
+    ],
+    [
+      "151_ANTERIOR/INFORMANTE 1/IMG_3581.mp4",
+      "165_Página anterior/INFORMANTE 1/IMG_3581.mp4"
+    ],
+    [
+      "151_ANTERIOR/INFORMANTE 1/IMG_3582.mp4",
+      "165_Página anterior/INFORMANTE 1/IMG_3582.mp4"
+    ],
+    [
+      "151_ANTERIOR/INFORMANTE 1/IMG_3583.mp4",
+      "165_Página anterior/INFORMANTE 1/IMG_3583.mp4"
+    ],
+    [
+      "151_ANTERIOR/INFORMANTE 1/IMG_3584.mp4",
+      "165_Página anterior/INFORMANTE 1/IMG_3584.mp4"
+    ],
+    [
+      "151_ANTERIOR/INFORMANTE 2/IMG_3767.mp4",
+      "165_Página anterior/INFORMANTE 2/IMG_3767.mp4"
+    ],
+    [
+      "151_ANTERIOR/INFORMANTE 2/IMG_3768.mp4",
+      "165_Página anterior/INFORMANTE 2/IMG_3768.mp4"
+    ],
+    [
+      "151_ANTERIOR/INFORMANTE 2/IMG_3769.mp4",
+      "165_Página anterior/INFORMANTE 2/IMG_3769.mp4"
+    ],
+    [
+      "151_ANTERIOR/INFORMANTE 2/IMG_3770.mp4",
+      "165_Página anterior/INFORMANTE 2/IMG_3770.mp4"
+    ],
+    [
+      "151_ANTERIOR/INFORMANTE 2/IMG_3771.mp4",
+      "165_Página anterior/INFORMANTE 2/IMG_3771.mp4"
+    ],
+    [
+      "151_ANTERIOR/INFORMANTE 2/IMG_3772.mp4",
+      "165_Página anterior/INFORMANTE 2/IMG_3772.mp4"
+    ],
+    [
+      "198_Quero receber no meu e-mail/INFORMANTE 1/IMG_6766.mp4",
+      "199_Quero receber no meu Whatsapp/INFORMANTE 1/IMG_6766.mp4"
+    ],
+    [
+      "198_Quero receber no meu e-mail/INFORMANTE 1/IMG_6767.mp4",
+      "199_Quero receber no meu Whatsapp/INFORMANTE 1/IMG_6767.mp4"
+    ],
+    [
+      "198_Quero receber no meu e-mail/INFORMANTE 1/IMG_6768.mp4",
+      "199_Quero receber no meu Whatsapp/INFORMANTE 1/IMG_6768.mp4"
+    ],
+    [
+      "198_Quero receber no meu e-mail/INFORMANTE 1/IMG_6769.mp4",
+      "199_Quero receber no meu Whatsapp/INFORMANTE 1/IMG_6769.mp4"
+    ],
+    [
+      "198_Quero receber no meu e-mail/INFORMANTE 1/IMG_6770.mp4",
+      "199_Quero receber no meu Whatsapp/INFORMANTE 1/IMG_6770.mp4"
+    ],
+    [
+      "198_Quero receber no meu e-mail/INFORMANTE 1/IMG_6771.mp4",
+      "199_Quero receber no meu Whatsapp/INFORMANTE 1/IMG_6771.mp4"
+    ],
+    [
+      "198_Quero receber no meu e-mail/INFORMANTE 2/IMG_6440.mp4",
+      "199_Quero receber no meu Whatsapp/INFORMANTE 2/IMG_6440.mp4"
+    ],
+    [
+      "198_Quero receber no meu e-mail/INFORMANTE 2/IMG_6441.mp4",
+      "199_Quero receber no meu Whatsapp/INFORMANTE 2/IMG_6441.mp4"
+    ],
+    [
+      "198_Quero receber no meu e-mail/INFORMANTE 2/IMG_6443.mp4",
+      "199_Quero receber no meu Whatsapp/INFORMANTE 2/IMG_6443.mp4"
+    ],
+    [
+      "198_Quero receber no meu e-mail/INFORMANTE 2/IMG_6444.mp4",
+      "199_Quero receber no meu Whatsapp/INFORMANTE 2/IMG_6444.mp4"
+    ],
+    [
+      "198_Quero receber no meu e-mail/INFORMANTE 2/IMG_6445.mp4",
+      "199_Quero receber no meu Whatsapp/INFORMANTE 2/IMG_6445.mp4"
+    ],
+    [
+      "198_Quero receber no meu e-mail/INFORMANTE 2/IMG_6446.mp4",
+      "199_Quero receber no meu Whatsapp/INFORMANTE 2/IMG_6446.mp4"
+    ],
+    [
+      "198_Quero receber no meu e-mail/INFORMANTE 3/IMG_5742.mp4",
+      "199_Quero receber no meu Whatsapp/INFORMANTE 3/IMG_5742.mp4"
+    ],
+    [
+      "198_Quero receber no meu e-mail/INFORMANTE 3/IMG_5743.mp4",
+      "199_Quero receber no meu Whatsapp/INFORMANTE 3/IMG_5743.mp4"
+    ],
+    [
+      "198_Quero receber no meu e-mail/INFORMANTE 3/IMG_5744.mp4",
+      "199_Quero receber no meu Whatsapp/INFORMANTE 3/IMG_5744.mp4"
+    ],
+    [
+      "198_Quero receber no meu e-mail/INFORMANTE 3/IMG_5745.mp4",
+      "199_Quero receber no meu Whatsapp/INFORMANTE 3/IMG_5745.mp4"
+    ],
+    [
+      "198_Quero receber no meu e-mail/INFORMANTE 3/IMG_5746.mp4",
+      "199_Quero receber no meu Whatsapp/INFORMANTE 3/IMG_5746.mp4"
+    ],
+    [
+      "198_Quero receber no meu e-mail/INFORMANTE 3/IMG_5747.mp4",
+      "199_Quero receber no meu Whatsapp/INFORMANTE 3/IMG_5747.mp4"
+    ],
+    [
+      "198_Quero receber no meu e-mail/INFORMANTE 4/IMG_6085.mp4",
+      "199_Quero receber no meu Whatsapp/INFORMANTE 4/IMG_6085.mp4"
+    ],
+    [
+      "198_Quero receber no meu e-mail/INFORMANTE 4/IMG_6086.mp4",
+      "199_Quero receber no meu Whatsapp/INFORMANTE 4/IMG_6086.mp4"
+    ],
+    [
+      "198_Quero receber no meu e-mail/INFORMANTE 4/IMG_6087.mp4",
+      "199_Quero receber no meu Whatsapp/INFORMANTE 4/IMG_6087.mp4"
+    ],
+    [
+      "198_Quero receber no meu e-mail/INFORMANTE 4/IMG_6088.mp4",
+      "199_Quero receber no meu Whatsapp/INFORMANTE 4/IMG_6088.mp4"
+    ],
+    [
+      "198_Quero receber no meu e-mail/INFORMANTE 4/IMG_6091.mp4",
+      "199_Quero receber no meu Whatsapp/INFORMANTE 4/IMG_6091.mp4"
+    ],
+    [
+      "198_Quero receber no meu e-mail/INFORMANTE 4/IMG_6093.mp4",
+      "199_Quero receber no meu Whatsapp/INFORMANTE 4/IMG_6093.mp4"
+    ],
+    [
+      "198_Quero receber no meu e-mail/INFORMANTE 5/IMG_5399.mp4",
+      "199_Quero receber no meu Whatsapp/INFORMANTE 5/IMG_5399.mp4"
+    ],
+    [
+      "198_Quero receber no meu e-mail/INFORMANTE 5/IMG_5400.mp4",
+      "199_Quero receber no meu Whatsapp/INFORMANTE 5/IMG_5400.mp4"
+    ],
+    [
+      "198_Quero receber no meu e-mail/INFORMANTE 5/IMG_5401.mp4",
+      "199_Quero receber no meu Whatsapp/INFORMANTE 5/IMG_5401.mp4"
+    ],
+    [
+      "198_Quero receber no meu e-mail/INFORMANTE 5/IMG_5402.mp4",
+      "199_Quero receber no meu Whatsapp/INFORMANTE 5/IMG_5402.mp4"
+    ],
+    [
+      "198_Quero receber no meu e-mail/INFORMANTE 5/IMG_5403.mp4",
+      "199_Quero receber no meu Whatsapp/INFORMANTE 5/IMG_5403.mp4"
+    ],
+    [
+      "198_Quero receber no meu e-mail/INFORMANTE 5/IMG_5404.mp4",
+      "199_Quero receber no meu Whatsapp/INFORMANTE 5/IMG_5404.mp4"
+    ],
+    [
+      "219_Desejo mudar para o dia 30/INFORMANTE 4/IMG_5885.mp4",
+      "219_Desejo mudar para o dia 30/INFORMANTE 4/IMG_5886.mp4"
+    ],
+    [
+      "22_Desejo do mês de_/INFORMANTE 1/IMG_1138.mp4",
+      "31_Desejo do mês de_/INFORMANTE 1/IMG_1138.mp4"
+    ],
+    [
+      "22_Desejo do mês de_/INFORMANTE 1/IMG_1139.mp4",
+      "31_Desejo do mês de_/INFORMANTE 1/IMG_1139.mp4"
+    ],
+    [
+      "22_Desejo do mês de_/INFORMANTE 1/IMG_1140.mp4",
+      "31_Desejo do mês de_/INFORMANTE 1/IMG_1140.mp4"
+    ],
+    [
+      "22_Desejo do mês de_/INFORMANTE 1/IMG_1141.mp4",
+      "31_Desejo do mês de_/INFORMANTE 1/IMG_1141.mp4"
+    ],
+    [
+      "22_Desejo do mês de_/INFORMANTE 1/IMG_1142.mp4",
+      "31_Desejo do mês de_/INFORMANTE 1/IMG_1142.mp4"
+    ],
+    [
+      "22_Desejo do mês de_/INFORMANTE 1/IMG_1143.mp4",
+      "31_Desejo do mês de_/INFORMANTE 1/IMG_1143.mp4"
+    ],
+    [
+      "22_Desejo do mês de_/INFORMANTE 2/IMG_1053.mp4",
+      "31_Desejo do mês de_/INFORMANTE 2/IMG_1053.mp4"
+    ],
+    [
+      "22_Desejo do mês de_/INFORMANTE 2/IMG_1054.mp4",
+      "31_Desejo do mês de_/INFORMANTE 2/IMG_1054.mp4"
+    ],
+    [
+      "22_Desejo do mês de_/INFORMANTE 2/IMG_1055.mp4",
+      "31_Desejo do mês de_/INFORMANTE 2/IMG_1055.mp4"
+    ],
+    [
+      "22_Desejo do mês de_/INFORMANTE 2/IMG_1056.mp4",
+      "31_Desejo do mês de_/INFORMANTE 2/IMG_1056.mp4"
+    ],
+    [
+      "22_Desejo do mês de_/INFORMANTE 2/IMG_1057.mp4",
+      "31_Desejo do mês de_/INFORMANTE 2/IMG_1057.mp4"
+    ],
+    [
+      "22_Desejo do mês de_/INFORMANTE 2/IMG_1058.mp4",
+      "31_Desejo do mês de_/INFORMANTE 2/IMG_1058.mp4"
+    ],
+    [
+      "22_Desejo do mês de_/INFORMANTE 3/IMG_0962.mp4",
+      "31_Desejo do mês de_/INFORMANTE 3/IMG_0962.mp4"
+    ],
+    [
+      "22_Desejo do mês de_/INFORMANTE 3/IMG_0963.mp4",
+      "31_Desejo do mês de_/INFORMANTE 3/IMG_0963.mp4"
+    ],
+    [
+      "22_Desejo do mês de_/INFORMANTE 3/IMG_0964.mp4",
+      "31_Desejo do mês de_/INFORMANTE 3/IMG_0964.mp4"
+    ],
+    [
+      "22_Desejo do mês de_/INFORMANTE 3/IMG_0965.mp4",
+      "31_Desejo do mês de_/INFORMANTE 3/IMG_0965.mp4"
+    ],
+    [
+      "22_Desejo do mês de_/INFORMANTE 3/IMG_0966.mp4",
+      "31_Desejo do mês de_/INFORMANTE 3/IMG_0966.mp4"
+    ],
+    [
+      "22_Desejo do mês de_/INFORMANTE 3/IMG_0967.mp4",
+      "31_Desejo do mês de_/INFORMANTE 3/IMG_0967.mp4"
+    ],
+    [
+      "22_Desejo do mês de_/INFORMANTE 4/IMG_0878.mp4",
+      "31_Desejo do mês de_/INFORMANTE 4/IMG_0878.mp4"
+    ],
+    [
+      "22_Desejo do mês de_/INFORMANTE 4/IMG_0879.mp4",
+      "31_Desejo do mês de_/INFORMANTE 4/IMG_0879.mp4"
+    ],
+    [
+      "22_Desejo do mês de_/INFORMANTE 4/IMG_0880.mp4",
+      "31_Desejo do mês de_/INFORMANTE 4/IMG_0880.mp4"
+    ],
+    [
+      "22_Desejo do mês de_/INFORMANTE 4/IMG_0881.mp4",
+      "31_Desejo do mês de_/INFORMANTE 4/IMG_0881.mp4"
+    ],
+    [
+      "22_Desejo do mês de_/INFORMANTE 4/IMG_0882.mp4",
+      "31_Desejo do mês de_/INFORMANTE 4/IMG_0882.mp4"
+    ],
+    [
+      "22_Desejo do mês de_/INFORMANTE 4/IMG_0883.mp4",
+      "31_Desejo do mês de_/INFORMANTE 4/IMG_0883.mp4"
+    ],
+    [
+      "22_Desejo do mês de_/INFORMANTE 5/IMG_1440.mp4",
+      "31_Desejo do mês de_/INFORMANTE 5/IMG_1440.mp4"
+    ],
+    [
+      "22_Desejo do mês de_/INFORMANTE 5/IMG_1441.mp4",
+      "31_Desejo do mês de_/INFORMANTE 5/IMG_1441.mp4"
+    ],
+    [
+      "22_Desejo do mês de_/INFORMANTE 5/IMG_1442.mp4",
+      "31_Desejo do mês de_/INFORMANTE 5/IMG_1442.mp4"
+    ],
+    [
+      "22_Desejo do mês de_/INFORMANTE 5/IMG_1443.mp4",
+      "31_Desejo do mês de_/INFORMANTE 5/IMG_1443.mp4"
+    ],
+    [
+      "22_Desejo do mês de_/INFORMANTE 5/IMG_1444.mp4",
+      "31_Desejo do mês de_/INFORMANTE 5/IMG_1444.mp4"
+    ],
+    [
+      "22_Desejo do mês de_/INFORMANTE 5/IMG_1445.mp4",
+      "31_Desejo do mês de_/INFORMANTE 5/IMG_1445.mp4"
+    ],
+    [
+      "54_Eu quero consultar os detalhes_da fatura de_/INFORMANTE 1/IMG_1662.mp4",
+      "54_Eu quero consultar os detalhes_da fatura de_/INFORMANTE 1/IMG_1663.mp4"
+    ],
+    [
+      "97_Rua/INFORMANTE 5/IMG_4204.mp4",
+      "97_Rua/INFORMANTE 5/IMG_4205.mp4"
+    ]
+  ],
+  "distinct_hashes": 5271,
+  "probed_videos": 198,
+  "probe_errors": [],
+  "sample_duration_quantiles_s": {
+    "min": 1.367,
+    "p25": 2.666667,
+    "p50": 3.333333,
+    "p75": 4.26691675,
+    "max": 8.567
+  },
+  "sample_dimensions": {
+    "1920x1080": 198
+  },
+  "sample_avg_frame_rates": {
+    "30/1": 198
+  },
+  "sample_codecs": {
+    "h264": 198
+  },
+  "sample_rotations": {
+    "[]": 198
+  },
+  "legacy": {
+    "sequences": {
+      "files": 80,
+      "shapes": {
+        "(30, 63)": 80
+      },
+      "dtypes": {
+        "float64": 80
+      },
+      "nonfinite": 0,
+      "missing_minus999": 0
+    },
+    "sequences_full": {
+      "files": 80,
+      "shapes": {
+        "(30, 225)": 80
+      },
+      "dtypes": {
+        "float64": 80
+      },
+      "nonfinite": 0,
+      "missing_minus999": 8379
+    }
+  },
+  "limitations": [
+    "Only sampled container metadata; not a full decode audit.",
+    "No MediaPipe extraction, no training, no model deserialization.",
+    "Local informant labels are not global person identities.",
+    "No original archive checksum available to establish the local release version."
+  ],
+  "source_code_sha256": {
+    "collect_data.py": "9ac45ecbe3cc347d318ece1d58ae33ca14b168da462938c6c5266e0359c7641b",
+    "desktop_app.py": "bd2da98cfb9b353b1eb2d1dc95a2504fa6af7db115136bd24ba7038a1835d3b5",
+    "train_hand_model.py": "2eb7f9ac3ca3811c230fc30af7ea1be47bfe37e5e3d34f114434f4bf6dd00344",
+    "train_model.py": "5ac30d90a9343e3c0fb11a10a13465e9b4512db09a1897b15eb0b0fac7e23c49"
+  },
+  "source_document_sha256": {
+    "E:\\githubproject\\SignLanguage-Bridge\\docs\\开发指导.md": "2e431808f92ea2b4eebfa4dbe0e2cb3832b7f7c87cacfdd3ca233e341788901f",
+    "C:\\Users\\ADMIN\\Downloads\\SignLanguage-Bridge_改进方案代码Review_2026-10-09.md": "fe1dbb8cb8c382cca316082437029fd1e0313fb202b9ca53400708a485ad8d43"
+  },
+  "duplicate_hash_group_count": 76,
+  "duplicate_extra_file_count": 76,
+  "cross_item_duplicate_groups": 72,
+  "duplicate_item_pairs": [
+    {
+      "items": [
+        "117_Eu estou sem energia"
+      ],
+      "exact_duplicate_groups": 1
+    },
+    {
+      "items": [
+        "151_ANTERIOR",
+        "165_Página anterior"
+      ],
+      "exact_duplicate_groups": 12
+    },
+    {
+      "items": [
+        "198_Quero receber no meu e-mail",
+        "199_Quero receber no meu Whatsapp"
+      ],
+      "exact_duplicate_groups": 30
+    },
+    {
+      "items": [
+        "219_Desejo mudar para o dia 30"
+      ],
+      "exact_duplicate_groups": 1
+    },
+    {
+      "items": [
+        "22_Desejo do mês de_",
+        "31_Desejo do mês de_"
+      ],
+      "exact_duplicate_groups": 30
+    },
+    {
+      "items": [
+        "54_Eu quero consultar os detalhes_da fatura de_"
+      ],
+      "exact_duplicate_groups": 1
+    },
+    {
+      "items": [
+        "97_Rua"
+      ],
+      "exact_duplicate_groups": 1
+    }
+  ],
+  "pilot_candidate_item_ids": [
+    2,
+    7,
+    92,
+    93,
+    94,
+    100,
+    105,
+    106,
+    107,
+    110,
+    111,
+    113
+  ],
+  "pilot_candidate_videos": 360,
+  "pilot_candidate_distinct_sha256": 360,
+  "media_probe_sampling": "First lexicographically sorted relative path for each of 178 nonempty items, plus first path per local informant for item IDs 1, 2, 92, 116, 152; 198 unique clips total.",
+  "visual_sampling": "Three frames at 20%, 50%, 80% duration for item/informant pairs (2,1),(92,2),(116,3),(1,4),(152,5); no identity inference."
+}

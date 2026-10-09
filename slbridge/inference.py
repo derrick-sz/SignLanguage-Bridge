@@ -1,0 +1,71 @@
+"""Clip recognition independent of CLI, GUI and training source directories."""
+
+from __future__ import annotations
+
+from pathlib import Path
+from typing import TYPE_CHECKING
+
+from .bundle import ModelBundle, load_bundle
+from .contracts import ClassificationPrediction, PreparedInput, RecognitionResult
+from .features import InputRejected, prepare_input
+
+if TYPE_CHECKING:
+    from .sources import CapturedClip
+
+
+class Recognizer:
+    def __init__(self, bundle: ModelBundle) -> None:
+        self.bundle = bundle
+
+    @classmethod
+    def load(cls, path: str | Path) -> Recognizer:
+        return cls(load_bundle(path))
+
+    def recognize(self, path: str | Path, *, sample_id: str | None = None,
+                  representation_id: str | None = None) -> RecognitionResult:
+        """Use the bundle's saved processing; optional schema declaration must agree.
+
+        Format/contract errors raise ValueError. Valid but low-quality inputs
+        produce a rejected result. Text displays never act as a label allowlist.
+        """
+        manifest = self.bundle.manifest
+        if representation_id is not None and representation_id != manifest.input_spec.representation_id:
+            raise ValueError("Declared input representation is incompatible with the model")
+        identifier = sample_id or str(Path(path).resolve())
+        try:
+            prepared = prepare_input(path, manifest.input_spec)
+        except InputRejected as error:
+            return self._rejected(identifier, error)
+        return self._predict(prepared, identifier)
+
+    def recognize_clip(self, clip: CapturedClip, *, sample_id: str | None = None) -> RecognitionResult:
+        """Recognize one completed captured clip with the saved RGB contract."""
+        from .live import prepare_clip
+
+        identifier = sample_id or clip.source_id
+        try:
+            prepared = prepare_clip(clip, self.bundle.manifest.input_spec)
+        except InputRejected as error:
+            return self._rejected(identifier, error)
+        return self._predict(prepared, identifier)
+
+    def _rejected(self, identifier: str, error: InputRejected) -> RecognitionResult:
+        manifest = self.bundle.manifest
+        return RecognitionResult("rejected", identifier, manifest.run_id, manifest.sign_language,
+                                 None, error.quality, error.reason)
+
+    def _predict(self, prepared: PreparedInput, identifier: str) -> RecognitionResult:
+        manifest = self.bundle.manifest
+        probabilities = self.bundle.backend.predict_proba([prepared])[0]
+        scores = {label: float(value) for label, value in zip(self.bundle.backend.classes, probabilities, strict=True)}
+        label = max(scores, key=scores.get)
+        if scores[label] < self.bundle.rejection_threshold:
+            return RecognitionResult("rejected", identifier, manifest.run_id, manifest.sign_language,
+                                     None, prepared.quality, "below_validation_selected_score_threshold")
+        prediction = ClassificationPrediction(label, scores[label], scores, self.bundle.labels[label])
+        time_range = (prepared.timestamps[0], prepared.timestamps[-1]) if prepared.timestamps else None
+        return RecognitionResult("recognized", identifier, manifest.run_id, manifest.sign_language,
+                                 prediction, prepared.quality, time_range=time_range)
+
+    def begin_stream(self) -> None:
+        raise NotImplementedError("capability unavailable: this model supports clip inference only")
