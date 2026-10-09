@@ -42,3 +42,5 @@ media.py SHA-256仍为 `a08ed4a430c08b473405b5ebc9d081c2f3a14d5ea707cd3026cd7b44
 ## 5. 仓库同步
 
 本地原目录无Git，接续指定远程已有main初始提交 `3519d23e5884bce35dc658462404c0869bc29247` 的历史。源码、配置、测试、文档同步；原数据、模型、虚拟环境和运行产物排除。origin保留指定SSH仓库标识；本机22端口SSH不可用，使用GitHub CLI已登录凭据经HTTPS传输，无强制推送或历史覆盖。
+
+实现提交为 `c98199944a6e50fafd05ac5790b62e80eff7676d`，已成功推送到 [GitHub main](https://github.com/betterway614/SignLanguage-Bridge/tree/main)，本地/远程引用一致，原初始提交保留为祖先。本地main跟踪origin/main；后续文档提交记录验收完成状态。
