@@ -6,7 +6,7 @@
 
 ## 视频与摄像头字幕桌面
 
-在项目根目录使用已验证的 Python 3.12 环境。桌面支持 MP4/AVI/MOV/MKV 完整文件识别；摄像头实时预览、手动开始／结束动作录制，再识别片段。中文显示为待核验释义草案，当前模型不支持边输入边翻译。
+在项目根目录使用已验证的 Python 3.12 环境。当前桌面使用 PySide6，左侧预览视频或摄像头，右侧显示中文与葡语释义及支持的手语词。支持 MP4/AVI/MOV/MKV 完整文件识别；摄像头先录制一个动作，再识别片段。中文显示为待核验释义草案，当前模型不支持边输入边翻译。
 
 ```powershell
 python -m venv .venv-libras
@@ -15,7 +15,9 @@ python -m venv .venv-libras
 .venv-libras/Scripts/python.exe -m slbridge.desktop_cli
 ```
 
-已在本机完成试点实验时，默认加载 `artifacts/experiments/libras-rf-pilot-20261009/models/libras-rf-pilot-20261009`；新克隆的仓库不包含训练模型或视频，应先准备数据并运行下方实验，或在界面选择兼容模型目录。
+桌面依赖锁定 `PySide6-Essentials==6.8.3`，由 `requirements-desktop.txt` 安装。已在本机完成试点实验时，默认加载 `artifacts/experiments/libras-rf-pilot-20261009/models/libras-rf-pilot-20261009`；新克隆的仓库不包含训练模型或视频，应先准备数据并运行下方实验，或在“设置 → 选择识别模型”选择兼容模型目录。
+
+导入视频后点击“识别视频”；使用摄像头后点击“开始录制”，动作完成后点击“完成并识别”。按钮会随当前任务显示“取消识别”“取消录制”或“清空结果”。模型路径、设备编号和释义文件在“设置”中调整，标签编号和未经校准的模型分数在“详细信息”中查看。
 
 可指定自己的模型、词典和来源：
 
@@ -23,7 +25,7 @@ python -m venv .venv-libras
 .venv-libras/Scripts/python.exe -m slbridge.desktop_cli --model artifacts/experiments/libras-rf-pilot-20261009/models/libras-rf-pilot-20261009 --catalog configs/libras_caption_catalog.json --camera 0
 ```
 
-安装后也可使用 `slbridge-desktop`；原启动方式 `python app/desktop_app.py` 继续有效。详细操作、输入边界与验收命令见[使用说明](docs/视频摄像头与字幕_使用说明_2026-10-09.md)，开发任务见[执行方案](docs/视频摄像头输入与字幕_执行方案_2026-10-09.md)。
+安装后也可使用 `slbridge-desktop`；原启动方式 `python app/desktop_app.py` 继续有效。详细操作、输入边界与验收命令见[使用说明](docs/视频摄像头与字幕_使用说明_2026-10-09.md)，当前界面设计见[桌面改版方案](docs/桌面界面改版_设计与执行_2026-10-09.md)，验证结果见[新版验收报告](docs/reports/desktop-redesign-2026-10-09.md)。
 
 ## 开始使用核心
 
@@ -89,4 +91,4 @@ docs/              设计、数据审计、开发与验收文档
 
 `app/desktop_app.py` 已接入新核心；旧桌面原型保留为 `app/legacy_desktop_app.py`。旧采集和训练脚本尚未完成全面迁移，当前训练请使用核心 CLI。新模型包与旧的 `gesture_model.pkl` 使用不同路径。项目中没有 `app/main.py`。原始数据、训练模型和运行产物保持本地，不纳入 Git。
 
-[核心设计](docs/核心框架设计_2026-10-09.md) · [核心验收](docs/reports/core-implementation-2026-10-09.md) · [输入与字幕验收](docs/reports/video-camera-captions-2026-10-09.md) · [文档入口](docs/README.md)
+[核心设计](docs/核心框架设计_2026-10-09.md) · [核心验收](docs/reports/core-implementation-2026-10-09.md) · [当前桌面验收](docs/reports/desktop-redesign-2026-10-09.md) · [首版输入与字幕验收](docs/reports/video-camera-captions-2026-10-09.md) · [文档入口](docs/README.md)

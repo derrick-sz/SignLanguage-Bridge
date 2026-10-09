@@ -1,2 +1,3 @@
 -r requirements-libras.txt
 Pillow==12.3.0
+PySide6-Essentials==6.8.3

@@ -34,12 +34,13 @@ def main(argv=None):
     inputs.add_argument("--video", type=Path, help="启动时打开的视频文件")
     inputs.add_argument("--camera", type=int, help="启动时打开的摄像头设备编号")
     args = parser.parse_args(argv)
-    import tkinter as tk
+    import sys
+    from PySide6.QtWidgets import QApplication
     from .desktop import SignLanguageApp
 
     model = args.model if args.model is not None else default_model()
-    root = tk.Tk()
-    app = SignLanguageApp(root, model=model, video=args.video, camera=args.camera)
+    qt = QApplication.instance() or QApplication([sys.argv[0]])
+    app = SignLanguageApp(model=model, video=args.video, camera=args.camera)
     if args.catalog is not None:
         app.load_catalog(args.catalog)
     else:
@@ -47,8 +48,8 @@ def main(argv=None):
         # the JSON synchronously before a temporary resource file is released.
         with resources.as_file(default_catalog()) as catalog_path:
             app.load_catalog(catalog_path)
-    root.mainloop()
-    return 0
+    app.show()
+    return qt.exec()
 
 
 if __name__ == "__main__":
