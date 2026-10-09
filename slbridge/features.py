@@ -60,15 +60,28 @@ def load_sequence(path: str | Path, representation_id: str) -> Any:
         raise ValueError("Landmark input must be a .npy file")
     if representation_id == "mediapipe225_rgb_v1":
         raise ValueError("RGB landmarks require a timestamped .npz archive, not legacy .npy")
+    from .input_limits import check_landmark_file
+    check_landmark_file(path, representation_id)
     # Pickled/object arrays are never accepted from source data.
     return validate_sequence(np.load(path, allow_pickle=False), representation_id)
 
 
 def load_landmark_archive(path: str | Path, expected_extractor: dict[str, Any] | None = None) -> tuple[Any, Any, Any, dict[str, Any]]:
+    import zipfile
+    import zlib
+    try:
+        return _load_landmark_archive(path, expected_extractor)
+    except (zipfile.BadZipFile, zlib.error, EOFError) as error:
+        raise ValueError("Invalid landmark ZIP archive payload") from error
+
+
+def _load_landmark_archive(path: str | Path, expected_extractor: dict[str, Any] | None) -> tuple[Any, Any, Any, dict[str, Any]]:
     import numpy as np
 
     if Path(path).suffix.lower() != ".npz":
         raise ValueError("RGB landmark archive must be .npz")
+    from .input_limits import check_landmark_file
+    check_landmark_file(path, "mediapipe225_rgb_v1")
     with np.load(path, allow_pickle=False) as archive:
         if set(archive.files) != {"values", "timestamps", "frame_indices", "metadata"}:
             raise ValueError("Unexpected landmark archive entries")

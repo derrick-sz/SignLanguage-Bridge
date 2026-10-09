@@ -1,0 +1,4 @@
+# CUDA deployment. Do not co-install the CPU onnxruntime distribution.
+onnxruntime-gpu==1.23.2
+onnx==1.19.1
+skl2onnx==1.19.1

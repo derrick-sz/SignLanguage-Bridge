@@ -38,7 +38,7 @@ class ResultPresentation:
 
 
 _LANGUAGES = {"libras": "巴西手语", "csl": "中国手语"}
-_BACKENDS = {"random_forest_v1": "随机森林"}
+_BACKENDS = {"random_forest_v1": "随机森林", "onnx_classifier_v1": "ONNX 动作分类模型"}
 _CAPABILITIES = {"clip": "单个动作识别"}
 _MISSING_ZH = "中文释义待补充"
 _MISSING_PT = "葡语释义待补充"
@@ -89,6 +89,11 @@ def describe_model(recognizer: Recognizer | None,
     }
     if manifest.sign_language is not None:
         details["手语类型"] = manifest.sign_language
+    runtime = getattr(recognizer, "runtime_info", {})
+    if runtime.get("providers"):
+        details["执行引擎"] = "、".join(runtime["providers"])
+    if runtime.get("fallback_reason"):
+        details["设备说明"] = runtime["fallback_reason"]
     if catalog_matches:
         details["字幕词典版本"] = catalog.catalog_id
     return ModelPresentation(f"{language}识别模型", summary, tuple(words), details)

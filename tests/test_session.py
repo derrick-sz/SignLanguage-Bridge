@@ -204,6 +204,72 @@ def test_incompatible_model_rejected_without_replacing_previous():
         session.close()
 
 
+def test_switch_during_recording_preserves_clip_buffer_and_request():
+    session = RecognitionSession(FakeRecognizer())
+    source = FakeSource()
+    try:
+        session.open_source(source, kind='camera')
+        wait_for(lambda: session.source_active)
+        session.start_recording()
+        wait_for(lambda: source.index >= 8)
+        request = session.request_id
+        with pytest.raises(RuntimeError, match='结束或取消当前录制'):
+            session.load_model('unused', loader=lambda _: pytest.fail('must not load'))
+        assert session.state == 'RECORDING' and session.request_id == request
+        session.finish_recording()
+        wait_for(lambda: not session.busy)
+        assert len(session.recognizer.clip.frames) >= 2
+    finally:
+        session.close()
+
+
+def test_cancel_during_warmup_discards_candidate_and_keeps_active():
+    original = FakeRecognizer()
+    session = RecognitionSession(original)
+    entered, release = threading.Event(), threading.Event()
+    closed = []
+    def warmup():
+        entered.set()
+        assert release.wait(3)
+    candidate = SimpleNamespace(
+        bundle=SimpleNamespace(manifest=SimpleNamespace(
+            input_spec=SimpleNamespace(representation_id='mediapipe225_rgb_v1'), capabilities=('clip',))),
+        warmup=warmup, close=lambda: closed.append(True))
+    try:
+        session.load_model('candidate', loader=lambda _: candidate)
+        assert entered.wait(2)
+        session.cancel()
+        release.set()
+        wait_for(lambda: not session.busy)
+        assert session.recognizer is original and session.model_manager.generation == 1
+        assert closed == [True]
+        assert not any(e.kind == 'model' for e in session.poll())
+    finally:
+        release.set()
+        session.close()
+
+
+def test_runtime_closed_before_activation_does_not_kill_model_worker(monkeypatch):
+    session = RecognitionSession()
+    model = SimpleNamespace(bundle=SimpleNamespace(manifest=SimpleNamespace(
+        input_spec=SimpleNamespace(representation_id='mediapipe225_rgb_v1'), capabilities=('clip',))))
+    original_prepare = session.model_manager.prepare
+    def prepare_then_close(*args, **kwargs):
+        candidate = original_prepare(*args, **kwargs)
+        session.model_manager.close()
+        return candidate
+    monkeypatch.setattr(session.model_manager, 'prepare', prepare_then_close)
+    try:
+        session.load_model('fake', loader=lambda _: model)
+        wait_for(lambda: not session.busy)
+        assert session._worker.is_alive() and session.state == 'ERROR'
+        session.load_model('fake', loader=lambda _: model)
+        wait_for(lambda: not session.busy)
+        assert session._worker.is_alive()
+    finally:
+        session.close()
+
+
 def test_recording_limit_aborts_and_releases_camera():
     session = RecognitionSession(FakeRecognizer(), buffer=ClipBuffer(max_frames=2))
     source = FakeSource()

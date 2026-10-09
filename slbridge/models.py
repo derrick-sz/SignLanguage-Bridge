@@ -39,6 +39,39 @@ class RandomForestBackend:
     def __init__(self, estimator: Any, input_spec: InputSpec | None = None) -> None:
         self._estimator = estimator
         self._input_spec = input_spec
+        self._runtime_info = {"backend": self.backend_id, "requested_device": "cpu", "device": "cpu",
+                              "providers": ["CPU"], "fallback_reason": None}
+
+    def configure_runtime(self, options: Any) -> None:
+        from .runtime_options import RuntimeOptions
+
+        if not isinstance(options, RuntimeOptions):
+            raise ValueError("options must be RuntimeOptions")
+        if options.device == "cuda":
+            raise ValueError("random_forest_v1 supports CPU only; strict CUDA was requested")
+        self._runtime_info = {"backend": self.backend_id, "requested_device": options.device,
+                              "device": "cpu", "providers": ["CPU"],
+                              "fallback_reason": "random_forest_v1 supports CPU only" if options.device == "auto" else None,
+                              "intra_op_threads": options.intra_op_threads}
+
+    @property
+    def runtime_info(self) -> dict[str, Any]:
+        return dict(self._runtime_info)
+
+    def warmup(self) -> None:
+        if self._input_spec is None:
+            raise ValueError("Cannot warm up a model without its complete InputSpec")
+        import numpy as np
+        from .features import prepare_array
+
+        spec = self._input_spec
+        sample = prepare_array(np.zeros((spec.target_frames, spec.width), dtype=np.float32), spec,
+                               timestamps=np.arange(spec.target_frames, dtype=np.float64)
+                               if spec.temporal_policy == "timestamp_linear" else None)
+        self.predict_proba([sample])
+
+    def close(self) -> None:
+        self._estimator = None
 
     @classmethod
     def resolve_parameters(cls, parameters: dict[str, Any]) -> dict[str, Any]:
@@ -110,10 +143,14 @@ class RandomForestBackend:
 
     @property
     def classes(self) -> tuple[str, ...]:
+        if self._estimator is None:
+            raise RuntimeError("Random forest backend is closed")
         return tuple(str(label) for label in self._estimator.classes_)
 
     @property
     def feature_size(self) -> int:
+        if self._estimator is None:
+            raise RuntimeError("Random forest backend is closed")
         return int(self._estimator.n_features_in_)
 
     def predict_proba(self, samples: Sequence[PreparedInput]) -> Any:

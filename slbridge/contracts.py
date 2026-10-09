@@ -262,11 +262,14 @@ class ModelManifest:
     score_type: str = "uncalibrated_class_probability"
     preprocessing_state: str = "none"
     schema_version: int = 1
+    runtime_config: dict[str, Any] | None = None
 
     def __post_init__(self) -> None:
         if not isinstance(self.run_id, str) or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,79}", self.run_id):
             raise ValueError("Invalid run_id")
-        if self.backend != "random_forest_v1" or self.task_type != "classification":
+        from .backends import get_backend
+        get_backend(self.backend)
+        if self.task_type != "classification":
             raise ValueError("Unsupported model backend/task")
         if not isinstance(self.input_spec, InputSpec):
             raise ValueError("input_spec must be an InputSpec")
@@ -286,16 +289,21 @@ class ModelManifest:
         for name in ("parameters", "dependencies", "provenance"):
             if not isinstance(getattr(self, name), dict):
                 raise ValueError(f"{name} must be an object")
+        if self.runtime_config is not None and not isinstance(self.runtime_config, dict):
+            raise ValueError("runtime_config must be an object or null")
         _text(self.created_at, "created_at")
         if self.sign_language is not None:
             _text(self.sign_language, "sign_language")
 
     def to_dict(self) -> dict[str, Any]:
-        return asdict(self)
+        value = asdict(self)
+        if self.runtime_config is None:
+            value.pop("runtime_config")  # Preserve released RF manifest JSON.
+        return value
 
     @classmethod
     def from_dict(cls, value: dict[str, Any]) -> ModelManifest:
-        data = _strict(cls, value, tuple(f.name for f in fields(cls)))
+        data = _strict(cls, value, tuple(f.name for f in fields(cls) if f.name != "runtime_config"))
         data["input_spec"] = InputSpec.from_dict(data["input_spec"])
         data["capabilities"] = tuple(data["capabilities"])
         return cls(**data)

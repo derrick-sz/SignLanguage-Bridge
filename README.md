@@ -4,6 +4,17 @@
 
 核心支持 NPY／带时间戳的关键点序列索引、严格校验、分组切分、随机森林训练、模型包及独立推理。Libras RGB 已完成全量索引、标签冲突隔离和 12 条目／360 视频试点提取、训练及测试；当前可直接识别兼容模型对应的原始视频。连续识别与跨语言翻译仍待实现。现有 A–D 标签的手语语种及释义未经核验。
 
+## 模型 API 与 ONNX
+
+0.2.0 新增统一模型运行管理器、HTTP v1 API、模型校验/预热/切换/回退，以及 ONNX CPU/CUDA 适配器。桌面使用同一运行管理逻辑，录制期间禁止切换，设置中可恢复上个模型。现有 RF 导出模型已用全部 72 个冻结测试输入验证数值与预测一致性；CUDA 计算路径已验证，RF 的 TreeEnsemble 算子仍在 CPU 上执行。
+
+```powershell
+.venv-libras/Scripts/python.exe -m pip install -r requirements-api.txt -r requirements-onnx.txt
+.venv-libras/Scripts/python.exe -m slbridge.api_cli --catalog configs/runtime-models.example.json --model libras-onnx --device cpu
+```
+
+本地接口文档为 http://127.0.0.1:8765/docs。模型包仍保留本地，新克隆先训练或导出并修改目录配置。GPU 环境选择 `requirements-onnx-gpu.txt`，不要与 CPU ORT 包共同安装。完整输入输出、设备配置、导出和实测边界见[使用说明](docs/模型运行API与ONNX_使用说明_2026-10-09.md)、[设计与执行](docs/模型运行API与ONNX_设计与执行_2026-10-09.md)及[验收报告](docs/reports/model-runtime-api-2026-10-09.md)。
+
 ## 视频与摄像头字幕桌面
 
 在项目根目录使用已验证的 Python 3.12 环境。当前桌面使用 PySide6，左侧预览视频或摄像头，右侧显示中文与葡语释义及支持的手语词。支持 MP4/AVI/MOV/MKV 完整文件识别；摄像头先录制一个动作，再识别片段。中文显示为待核验释义草案，当前模型不支持边输入边翻译。
@@ -60,10 +71,13 @@ python -m slbridge predict --model artifacts/models/core-hand63-20261009 --input
 
 ```powershell
 .venv-libras/Scripts/python.exe -m pip install -r requirements-desktop.txt "pytest>=8"
+.venv-libras/Scripts/python.exe -m pip install -r requirements-api.txt -r requirements-onnx.txt
 .venv-libras/Scripts/python.exe -m pytest -q
 ```
 
 真实模型与视频一致性测试的配置见[输入与字幕使用说明](docs/视频摄像头与字幕_使用说明_2026-10-09.md)。
+
+上面是完整 CPU 测试环境；GPU 环境将 `requirements-onnx.txt` 替换为 `requirements-onnx-gpu.txt`。未安装可选 API/ONNX 依赖时，相应模块测试正常跳过；完整验收应安装依赖并设置真实模型/视频环境变量。
 
 ### Libras RGB 实验
 

@@ -7,12 +7,12 @@ Joblib bundles must come from a trusted training run; never load uploaded weight
 from __future__ import annotations
 
 from dataclasses import dataclass
-import importlib.metadata
 from pathlib import Path
 from typing import Any
 
 from ._io import canonical_hash, read_json, resolve_resource, sha256_file
-from .contracts import DatasetManifest, InputSpec, ModelManifest, SplitManifest
+from .contracts import DatasetManifest, ModelManifest, SplitManifest
+from .backends import get_backend, validate_dependencies
 
 
 REQUIRED_ARTIFACTS = frozenset({"labels.json", "resolved_config.json", "splits/dataset.json",
@@ -28,23 +28,22 @@ class ModelBundle:
     rejection_threshold: float
 
 
-def load_bundle(path: str | Path) -> ModelBundle:
+def load_bundle(path: str | Path, *, options: Any = None) -> ModelBundle:
     """Load a validated, trusted local bundle without requiring original data."""
     path = Path(path).resolve()
     manifest = ModelManifest.from_dict(read_json(path / "manifest.json"))
-    if set(manifest.artifacts) != REQUIRED_ARTIFACTS:
+    definition = get_backend(manifest.backend)
+    required_artifacts = definition.required_artifacts
+    if set(manifest.artifacts) != required_artifacts:
         raise ValueError("Model bundle has missing or unexpected artifacts")
     actual_files = {file.relative_to(path).as_posix() for file in path.rglob("*") if file.is_file()}
-    if actual_files != REQUIRED_ARTIFACTS | {"manifest.json"}:
+    if actual_files != required_artifacts | {"manifest.json"}:
         raise ValueError("Incomplete model directory or untracked files")
     for resource, expected in manifest.artifacts.items():
         artifact = resolve_resource(path, resource)
         if not artifact.is_file() or sha256_file(artifact) != expected:
             raise ValueError(f"Model artifact checksum mismatch: {resource}")
-    # sklearn explicitly does not support arbitrary cross-version persistence.
-    for name in ("scikit-learn", "numpy", "joblib"):
-        if manifest.dependencies.get(name) != importlib.metadata.version(name):
-            raise ValueError(f"Model dependency version mismatch for {name}; use its recorded environment")
+    validate_dependencies(manifest, definition)
     labels_value = read_json(path / "labels.json")
     if canonical_hash(labels_value) != manifest.labels_hash:
         raise ValueError("Label table does not match model manifest")
@@ -74,22 +73,12 @@ def load_bundle(path: str | Path) -> ModelBundle:
     if list(labels) != expected_labels:
         raise ValueError("Label table does not match frozen training labels")
     resolved = read_json(path / "resolved_config.json")
-    if not isinstance(resolved, dict) or set(resolved) != {"training", "input_spec", "rejection_threshold"}:
-        raise ValueError("Invalid resolved model config")
-    if InputSpec.from_dict(resolved["input_spec"]) != manifest.input_spec:
-        raise ValueError("Model and processing InputSpec disagree")
-    from .training import TrainConfig
-    config = TrainConfig.from_dict(resolved["training"])
-    if canonical_hash(config.to_dict()) != canonical_hash(manifest.parameters):
-        raise ValueError("Manifest and resolved training parameters disagree")
-    if InputSpec.for_representation(config.representation_id, config.target_frames, config.extractor) != manifest.input_spec or config.seed != split.seed:
-        raise ValueError("Training parameters disagree with input/split contract")
-    threshold = resolved["rejection_threshold"]
-    if type(threshold) not in {int, float} or threshold not in config.threshold_candidates:
-        raise ValueError("Invalid or unconfigured rejection threshold")
-    from .models import RandomForestBackend
-    backend = RandomForestBackend.load(path / "weights/model.joblib", expected_classes=tuple(labels),
-                                        expected_feature_size=manifest.input_spec.feature_size,
-                                        expected_input_spec=manifest.input_spec,
-                                        expected_parameters=dict(config.rf), expected_seed=config.seed)
-    return ModelBundle(path, manifest, backend, labels, float(threshold))
+    config, threshold = definition.validate_config(manifest, resolved, split)
+    from .runtime_options import RuntimeOptions
+    if options is None:
+        options = RuntimeOptions()
+    if not isinstance(options, RuntimeOptions):
+        raise ValueError("options must be RuntimeOptions")
+    backend = definition.load(resolve_resource(path, definition.weights_artifact), manifest,
+                              tuple(labels), config, options)
+    return ModelBundle(path, manifest, backend, labels, threshold)

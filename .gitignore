@@ -6,6 +6,7 @@ build/
 dist/
 .venv/
 .venv-libras/
+.venv-gpu/
 artifacts/
 data/
 Libras-EQT-UECE (RGB)/

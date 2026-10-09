@@ -78,6 +78,13 @@ def test_installable_console_target_is_callable():
     assert target == 'slbridge.desktop_cli:main'
 
 
+def test_model_switch_control_disabled_during_recording(gui):
+    gui.session.state = 'RECORDING'
+    gui._update_controls()
+    assert not gui.model_button.isEnabled()
+    assert not gui.rollback_model_button.isEnabled()
+
+
 @pytest.mark.parametrize('invocation', [['-m', 'slbridge.desktop_cli'], ['app/desktop_app.py']])
 def test_module_and_script_help_force_utf8_under_gbk(invocation):
     env = dict(os.environ, PYTHONIOENCODING='gbk')

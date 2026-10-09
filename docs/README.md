@@ -2,6 +2,8 @@
 
 更新日期：2026-10-09（Asia/Shanghai）。当前阶段：F0–F4 首轮核心代码已实现；真实 Libras 12 条目／360 视频训练与验证已完成。
 
+模型运行入口：[API/ONNX 使用说明](模型运行API与ONNX_使用说明_2026-10-09.md) · [设计与执行](模型运行API与ONNX_设计与执行_2026-10-09.md) · [验收报告](reports/model-runtime-api-2026-10-09.md)。0.2.0 已实现统一管理器、片段边界切换与回退、HTTP v1 和真实 ONNX CPU/CUDA 运行适配；ONNX 包是现有 RF 的验证导出，第二个训练 backbone 仍待后续接入。
+
 实现入口：[核心开发与使用](核心开发与使用_2026-10-09.md) · [本次验收记录](reports/core-implementation-2026-10-09.md)。
 
 RGB 实验入口：[巴西手语训练与验证](巴西手语训练与验证_2026-10-09.md) · [Libras 实验报告](reports/libras-rf-pilot-2026-10-09.md)。

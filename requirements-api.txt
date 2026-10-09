@@ -1,0 +1,8 @@
+-r requirements-core.txt
+fastapi==0.118.0
+uvicorn==0.37.0
+python-multipart==0.0.20
+pydantic==2.14.0
+starlette==0.48.0
+# API verification client (not required by the serving process).
+httpx==0.28.1

@@ -50,9 +50,9 @@ def _panel():
 
 
 class SignLanguageApp(QMainWindow):
-    def __init__(self, *, session=None, catalog=None, model=None, video=None, camera=None):
+    def __init__(self, *, session=None, catalog=None, model=None, video=None, camera=None, runtime_options=None):
         super().__init__()
-        self.session = session if session is not None else RecognitionSession()
+        self.session = session if session is not None else RecognitionSession(options=runtime_options)
         self.catalog = catalog if catalog is not None else CaptionCatalog()
         self.caption = None
         self._last_result = None
@@ -252,6 +252,8 @@ class SignLanguageApp(QMainWindow):
         form.addWidget(self.settings_model_label)
         self.model_button = _button("选择识别模型", self._choose_model, "folder")
         form.addWidget(self.model_button, 0, Qt.AlignmentFlag.AlignLeft)
+        self.rollback_model_button = _button("恢复上个模型", self.rollback_model, "reload")
+        form.addWidget(self.rollback_model_button, 0, Qt.AlignmentFlag.AlignLeft)
         form.addWidget(_label("字幕释义", "sectionTitle"))
         self.catalog_label = _label("中文释义待补充", "muted")
         form.addWidget(self.catalog_label)
@@ -396,6 +398,10 @@ class SignLanguageApp(QMainWindow):
             self.status_label.setText("正在准备识别模型…")
             self.result_title.setText("正在准备识别模型")
 
+    def rollback_model(self):
+        if self._call(self.session.rollback_model, context="无法恢复上个模型"):
+            self.status_label.setText("已恢复上个识别模型。")
+
     def _choose_catalog(self):
         path, _ = QFileDialog.getOpenFileName(self, "选择字幕释义文件", "", "字幕释义 (*.json)")
         if path:
@@ -464,7 +470,9 @@ class SignLanguageApp(QMainWindow):
         recording = state == "RECORDING"
         self.video_button.setChecked(self.session.source_kind == "video")
         self.camera_button.setChecked(camera_mode)
-        self.model_button.setEnabled(not busy)
+        self.model_button.setEnabled(not busy and not recording)
+        self.rollback_model_button.setEnabled(not busy and not recording and
+                                              self.session.model_manager.status()["previous"] is not None)
         self.reload_catalog_button.setEnabled(self._catalog_path is not None and self._catalog_path.is_file())
         self.recognize_button.setVisible(not camera_mode)
         self.recognize_button.setEnabled(video and loaded and not busy)

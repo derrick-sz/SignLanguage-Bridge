@@ -30,17 +30,29 @@ def main(argv=None):
     )
     parser.add_argument("--model", type=Path, help="RGB clip 模型包目录")
     parser.add_argument("--catalog", type=Path, help="字幕词典 JSON")
+    parser.add_argument("--device", choices=("auto", "cpu", "cuda"), default="auto", help="模型执行设备")
+    parser.add_argument("--device-id", type=int, default=0)
+    parser.add_argument("--intra-op-threads", type=int, default=1)
+    parser.add_argument("--gpu-mem-limit-mb", type=int, default=2048)
+    parser.add_argument("--cuda-dll-dir", type=Path, action="append", default=[])
     inputs = parser.add_mutually_exclusive_group()
     inputs.add_argument("--video", type=Path, help="启动时打开的视频文件")
     inputs.add_argument("--camera", type=int, help="启动时打开的摄像头设备编号")
     args = parser.parse_args(argv)
+    from .runtime_options import RuntimeOptions
+    try:
+        options = RuntimeOptions(device=args.device, device_id=args.device_id,
+                                 intra_op_threads=args.intra_op_threads, gpu_mem_limit_mb=args.gpu_mem_limit_mb,
+                                 cuda_dll_dirs=tuple(str(path.resolve()) for path in args.cuda_dll_dir))
+    except ValueError as error:
+        parser.error(str(error))
     import sys
     from PySide6.QtWidgets import QApplication
     from .desktop import SignLanguageApp
 
     model = args.model if args.model is not None else default_model()
     qt = QApplication.instance() or QApplication([sys.argv[0]])
-    app = SignLanguageApp(model=model, video=args.video, camera=args.camera)
+    app = SignLanguageApp(model=model, video=args.video, camera=args.camera, runtime_options=options)
     if args.catalog is not None:
         app.load_catalog(args.catalog)
     else:

@@ -10,6 +10,7 @@ import time
 from typing import Any
 
 from .sources import ClipBuffer
+from .runtime import ModelManager
 
 
 @dataclass(frozen=True)
@@ -27,8 +28,8 @@ class RecognitionSession:
     that call returns another inference cannot be queued.
     """
 
-    def __init__(self, recognizer=None, *, buffer=None):
-        self.recognizer = recognizer
+    def __init__(self, recognizer=None, *, buffer=None, options=None):
+        self.model_manager = ModelManager(initial_recognizer=recognizer, options=options)
         self.buffer = buffer if buffer is not None else ClipBuffer()
         self.state = "IDLE"
         self.epoch = 0
@@ -50,6 +51,15 @@ class RecognitionSession:
         self._capture_thread.start()
         self._worker = threading.Thread(target=self._run_worker, name="slbridge-model", daemon=True)
         self._worker.start()
+
+    @property
+    def recognizer(self):
+        return self.model_manager.recognizer
+
+    @recognizer.setter
+    def recognizer(self, model):
+        # Preserve pre-use dependency injection; live replacements use load_model.
+        self.model_manager.set_initial(model)
 
     @property
     def busy(self):
@@ -219,24 +229,30 @@ class RecognitionSession:
 
     def load_model(self, path, loader=None):
         def load(_):
-            if loader is None:
-                from ._io import read_json
-                metadata = read_json(Path(path) / "manifest.json")
-                if (metadata.get("input_spec", {}).get("representation_id") != "mediapipe225_rgb_v1"
-                        or "clip" not in metadata.get("capabilities", ())):
-                    raise ValueError("需要 mediapipe225_rgb_v1 且支持 clip 的模型包")
-                from .inference import Recognizer
-                model = Recognizer.load(path)
-            else:
-                model = loader(path)
-            manifest = model.bundle.manifest
-            if manifest.input_spec.representation_id != "mediapipe225_rgb_v1" or "clip" not in manifest.capabilities:
-                raise ValueError("需要 mediapipe225_rgb_v1 且支持 clip 的模型包")
-            return model
+            return self.model_manager.prepare(path, loader=loader,
+                                              required_representation="mediapipe225_rgb_v1")
 
-        return self._submit(load, kind="model", require_model=False)
+        with self._lock:
+            if self.state == "RECORDING":
+                raise RuntimeError("请先结束或取消当前录制，再更换识别模型")
+            return self._submit(load, kind="model", require_model=False)
+
+    def rollback_model(self):
+        with self._lock:
+            if self.closed or self._busy or self.state == "RECORDING":
+                raise RuntimeError("请先结束当前录制或识别，再恢复模型")
+            self.model_manager.rollback()
+            self._invalidate()
+            self.state = "PREVIEW" if self.source is not None else "IDLE"
+            self._event("model", self.recognizer)
 
     def _run_worker(self):
+        try:
+            self._work_loop()
+        finally:
+            self.model_manager.close()
+
+    def _work_loop(self):
         while True:
             task = self._tasks.get()
             if task is None:
@@ -247,23 +263,34 @@ class RecognitionSession:
                     return
             request_id, epoch, operation, kind, model = task
             try:
-                value = operation(model)
+                value = (operation(model) if kind == "model" else
+                         self.model_manager.run(operation, expected_model=model))
                 error = None
             except Exception as exc:
                 value, error = None, str(exc)
             with self._lock:
                 self._busy = False
                 if self.closed:
+                    if kind == "model" and value is not None:
+                        self.model_manager.discard(value)
                     return
                 if (request_id, epoch) != (self.request_id, self.epoch):
+                    if kind == "model" and value is not None:
+                        self.model_manager.discard(value)
                     continue
+                if error is None and kind == "model":
+                    try:
+                        self.model_manager.activate(value)
+                    except Exception as exc:
+                        self.model_manager.discard(value)
+                        value, error = None, str(exc)
                 if error is not None:
                     self.buffer.clear()
                     self.state = "ERROR"
                     self._event("error", error)
                 else:
                     if kind == "model":
-                        self.recognizer = value
+                        value = value.recognizer
                         self.state = "PREVIEW" if self.source is not None else "IDLE"
                     else:
                         self.state = "RESULT" if value.status == "recognized" else "REJECTED"
