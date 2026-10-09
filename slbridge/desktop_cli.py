@@ -26,7 +26,7 @@ def main(argv=None):
     configure_utf8_streams()
     parser = argparse.ArgumentParser(
         prog="slbridge-desktop",
-        description="Libras 完整动作片段识别与中文/葡语字幕（非连续翻译）",
+        description="Libras 动作分类与中国手语词序列识别、中文字幕",
     )
     parser.add_argument("--model", type=Path, help="RGB clip 模型包目录")
     parser.add_argument("--catalog", type=Path, help="字幕词典 JSON")

@@ -32,6 +32,9 @@ class ModelDescriptor(ApiModel):
     runtime: dict[str, Any]
     options: dict[str, Any] = Field(default_factory=dict)
     warmup_ms: float = 0
+    task_type: str = "classification"
+    score_type: str = "uncalibrated_class_probability"
+    vocabulary_size: int | None = None
 
 
 class RuntimeStatus(ApiModel):
@@ -92,5 +95,39 @@ class RecognitionResponse(ApiModel):
     request_id: str
     model_generation: int
     result: RecognitionResult
+    runtime: dict[str, Any]
+    timing_ms: dict[str, float]
+
+
+class GlossToken(ApiModel):
+    token_id: int
+    gloss: str
+    score: float | None
+    time_range: tuple[float, float] | None
+
+
+class GlossSequencePrediction(ApiModel):
+    tokens: list[GlossToken]
+    decoder: str
+
+
+class SequenceRecognitionResult(ApiModel):
+    status: str
+    sample_id: str
+    model_id: str
+    sign_language: str | None
+    prediction: GlossSequencePrediction | None
+    quality: dict[str, Any]
+    reason: str | None
+    task_type: Literal["gloss_sequence"]
+    score_type: Literal["ctc_token_probability"]
+    time_range: tuple[float, float] | None
+
+
+class SequenceRecognitionResponse(ApiModel):
+    schema_version: Literal[2] = 2
+    request_id: str
+    model_generation: int
+    result: SequenceRecognitionResult
     runtime: dict[str, Any]
     timing_ms: dict[str, float]

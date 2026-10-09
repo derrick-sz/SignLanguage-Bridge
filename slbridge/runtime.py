@@ -62,11 +62,14 @@ def _describe(version: _Version | None) -> dict | None:
     return deepcopy({"model_id": getattr(manifest, "run_id", "injected-model"),
                      "generation": version.generation,
                      "backend": getattr(manifest, "backend", "unknown"),
+                     "task_type": getattr(manifest, "task_type", "classification"),
+                     "score_type": getattr(manifest, "score_type", "uncalibrated_class_probability"),
                      "sign_language": getattr(manifest, "sign_language", None),
                      "input_spec": (spec.to_dict() if hasattr(spec, "to_dict") else
                                     {"representation_id": spec.representation_id} if spec is not None else None),
                      "capabilities": list(getattr(manifest, "capabilities", ())),
                      "labels": getattr(bundle, "labels", {}),
+                     **({"vocabulary_size": len(bundle.vocabulary)} if hasattr(bundle, "vocabulary") else {}),
                      "runtime": getattr(model, "runtime_info", {}),
                      "options": version.options.to_dict(), "warmup_ms": version.warmup_ms})
 
@@ -135,7 +138,7 @@ class ModelManager:
                     "error": deepcopy(self._error)}
 
     def prepare(self, path: str | Path, *, options: RuntimeOptions | None = None,
-                loader=None, required_representation: str | None = None) -> ModelCandidate:
+                loader=None, required_representation: str | tuple[str, ...] | None = None) -> ModelCandidate:
         with self._lock:
             self._check_open()
             if self._inflight or self._transition:
@@ -157,8 +160,12 @@ class ModelManager:
             manifest = model.bundle.manifest
             if "clip" not in manifest.capabilities:
                 raise ValueError("Model does not support clip inference")
-            if required_representation is not None and manifest.input_spec.representation_id != required_representation:
-                raise ValueError(f"需要 {required_representation} 且支持 clip 的模型包")
+            if required_representation is not None:
+                allowed = (required_representation,) if isinstance(required_representation, str) else required_representation
+                if (not isinstance(allowed, tuple) or not allowed or any(not isinstance(value, str) for value in allowed)):
+                    raise ValueError("required_representation must be a string or nonempty tuple of strings")
+                if manifest.input_spec.representation_id not in allowed:
+                    raise ValueError(f"需要 {required_representation} 且支持 clip 的模型包")
             start = time.perf_counter()
             warmup = getattr(model, "warmup", None)
             if warmup is not None:
@@ -257,6 +264,8 @@ class ModelManager:
         with self._lease() as version:
             model = version.recognizer
             manifest = model.bundle.manifest
+            if request.expected_task_type is not None and request.expected_task_type != getattr(manifest, "task_type", "classification"):
+                raise ValueError("Declared task type is incompatible with the model")
             if request.sign_language is not None and request.sign_language != manifest.sign_language:
                 raise ValueError("Declared sign language is incompatible with the model")
             if request.representation_id is not None and request.representation_id != manifest.input_spec.representation_id:

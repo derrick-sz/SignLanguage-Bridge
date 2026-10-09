@@ -1,4 +1,4 @@
-"""Run the v1 API with one shared runtime and a server-owned model catalog."""
+"""Run classification v1 and sequence v2 APIs over one server-owned model catalog."""
 from __future__ import annotations
 
 import argparse

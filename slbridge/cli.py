@@ -47,7 +47,7 @@ def _parser() -> argparse.ArgumentParser:
     predict = commands.add_parser("predict", help="Recognize a compatible landmark clip or raw video")
     predict.add_argument("--model", type=Path, required=True)
     predict.add_argument("--input", type=Path, required=True)
-    predict.add_argument("--representation", choices=("hand63_v1", "pose_hands225_legacy", "mediapipe225_rgb_v1"))
+    predict.add_argument("--representation", choices=("hand63_v1", "pose_hands225_legacy", "mediapipe225_rgb_v1", "tfnet_rgb_v1"))
     predict.add_argument("--sample-id")
     return parser
 

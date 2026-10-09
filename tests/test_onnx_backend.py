@@ -158,15 +158,95 @@ def test_graph_must_support_single_clip_batches(tmp_path, sequence):
         backend.predict_proba([sample, sample])
 
 
-def test_external_unhashed_weights_are_not_read(tmp_path):
+def test_external_unhashed_weights_are_not_read(tmp_path, monkeypatch):
     path = tmp_path / "external.onnx"
     spec = _graph(path)
     model = onnx.load(path)
     onnx.save_model(model, path, save_as_external_data=True, all_tensors_to_one_file=True,
                     location="untracked_weights.bin", size_threshold=0)
     assert (tmp_path / "untracked_weights.bin").is_file()
-    with pytest.raises(ValueError, match="Cannot create ONNX"):
+    # Serialized bytes are not enough: ORT can resolve this file against CWD.
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setattr(ort, "InferenceSession", lambda *args, **kwargs: pytest.fail("External tensors must be rejected before ORT session creation"))
+    with pytest.raises(ValueError, match="Cannot create ONNX.*external tensor data"):
         _load(path, spec)
+
+
+@pytest.mark.parametrize("location", ["tensor_attribute", "nested_graph", "sparse_values", "sparse_indices",
+                                      "function_body", "training_graph"])
+@pytest.mark.parametrize("external_flag", [False, True])
+def test_external_tensor_references_in_nested_messages_are_rejected_before_ort(tmp_path, monkeypatch, location, external_flag):
+    path = tmp_path / "nested_external.onnx"
+    spec = _graph(path)
+    model = onnx.load(path)
+    tensor = onnx.TensorProto()
+    tensor.name, tensor.data_type = "unhashed", TensorProto.FLOAT
+    tensor.dims.append(1)
+    if external_flag:
+        tensor.data_location = TensorProto.EXTERNAL
+    tensor.external_data.add(key="location", value="external.bin")
+    # The file exists where ORT would resolve it. Some deliberately unused
+    # messages below need not be executable: every reference must be rejected.
+    (tmp_path / "external.bin").write_bytes(np.zeros(1, dtype=np.float32).tobytes())
+    if location == "tensor_attribute":
+        node = model.graph.node.add(op_type="Constant")
+        node.attribute.add(name="value", type=onnx.AttributeProto.TENSOR).t.CopyFrom(tensor)
+    elif location == "nested_graph":
+        node = model.graph.node.add(op_type="If")
+        branch = node.attribute.add(name="then_branch", type=onnx.AttributeProto.GRAPH).g
+        branch.initializer.add().CopyFrom(tensor)
+    elif location in {"sparse_values", "sparse_indices"}:
+        sparse = model.graph.sparse_initializer.add()
+        getattr(sparse, "values" if location == "sparse_values" else "indices").CopyFrom(tensor)
+    elif location == "function_body":
+        function = model.functions.add(name="unused", domain="local")
+        node = function.node.add(op_type="Constant")
+        node.attribute.add(name="value", type=onnx.AttributeProto.TENSOR).t.CopyFrom(tensor)
+    else:
+        model.training_info.add().initialization.initializer.add().CopyFrom(tensor)
+    path.write_bytes(model.SerializeToString())
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setattr(ort, "InferenceSession", lambda *args, **kwargs: pytest.fail("Nested external tensor reached native ORT"))
+    with pytest.raises(ValueError, match="Cannot create ONNX.*external tensor data"):
+        _load(path, spec)
+
+
+def test_external_data_location_alone_is_rejected(tmp_path, monkeypatch):
+    path = tmp_path / "external_flag_only.onnx"
+    spec = _graph(path)
+    model = onnx.load(path)
+    model.graph.initializer[0].data_location = TensorProto.EXTERNAL
+    path.write_bytes(model.SerializeToString())
+    monkeypatch.setattr(ort, "InferenceSession", lambda *args, **kwargs: pytest.fail("EXTERNAL flag reached native ORT"))
+    with pytest.raises(ValueError, match="Cannot create ONNX.*external tensor data"):
+        _load(path, spec)
+
+
+def test_model_parse_failure_releases_cuda_dll_handles_before_session(tmp_path, monkeypatch):
+    from slbridge.onnx_backend import create_onnx_session
+
+    path = tmp_path / "invalid.onnx"
+    path.write_bytes(b"\x80")  # Truncated protobuf varint.
+    handles = []
+
+    class Handle:
+        closed = False
+
+        def close(self):
+            self.closed = True
+
+    def add_directory(directory):
+        handle = Handle()
+        handles.append(handle)
+        return handle
+
+    monkeypatch.setattr(ort, "get_available_providers", lambda: ["CUDAExecutionProvider", "CPUExecutionProvider"])
+    monkeypatch.setattr(ort, "preload_dlls", lambda **kwargs: None)
+    monkeypatch.setattr(os, "add_dll_directory", add_directory, raising=False)
+    monkeypatch.setattr(ort, "InferenceSession", lambda *args, **kwargs: pytest.fail("Invalid protobuf reached native ORT"))
+    with pytest.raises(ValueError, match="Cannot create ONNX.*invalid model protobuf"):
+        create_onnx_session(path, options=RuntimeOptions(cuda_dll_dirs=(str(tmp_path.resolve()),)), backend_id="onnx_ctc")
+    assert len(handles) == 1 and handles[0].closed
 
 
 @pytest.mark.parametrize("constant", [[-1, 2], [.2, .2], [np.nan, 0], [np.inf, 0]])
@@ -207,6 +287,35 @@ def test_auto_reports_actual_cpu_fallback_and_strict_cuda_refuses_it(tmp_path, m
     backend.warmup()
     with pytest.raises(ValueError, match="actual ONNX session"):
         _load(path, spec, options=RuntimeOptions(device="cuda"))
+
+
+@pytest.mark.parametrize("backend_id", ["onnx_classifier_v1", "onnx_ctc"])
+def test_ctc_disables_cuda_tf32_without_changing_classifier_provider_options(tmp_path, monkeypatch, backend_id):
+    from slbridge.onnx_backend import create_onnx_session
+
+    path = tmp_path / "model.onnx"
+    _graph(path)
+    factory = ort.InferenceSession
+    requested = []
+    monkeypatch.setattr(ort, "get_available_providers", lambda: ["CUDAExecutionProvider", "CPUExecutionProvider"])
+    monkeypatch.setattr(ort, "preload_dlls", lambda **kwargs: None)
+
+    def initialize_cpu(*args, **kwargs):
+        requested.append(kwargs["providers"])
+        return factory(*args, **{**kwargs, "providers": ["CPUExecutionProvider"]})
+
+    monkeypatch.setattr(ort, "InferenceSession", initialize_cpu)
+    session, info, handles = create_onnx_session(path, options=RuntimeOptions(device="auto"), backend_id=backend_id)
+    expected_options = {"device_id": "0", "gpu_mem_limit": str(2048 * 1024 * 1024)}
+    if backend_id == "onnx_ctc":
+        expected_options["use_tf32"] = "0"
+        expected_options["arena_extend_strategy"] = "kSameAsRequested"
+        assert info["precision"] == "float32_tf32_disabled" and info["use_tf32"] is False
+        assert info["cuda_arena_extend_strategy"] is None and info["cuda_arena_shrinkage"] is None
+    else:
+        assert "precision" not in info and "use_tf32" not in info
+    assert requested == [[("CUDAExecutionProvider", expected_options), "CPUExecutionProvider"]]
+    assert handles == []
 
 
 def test_cuda_unavailable_fails_before_session_creation_and_auto_records_reason(tmp_path, monkeypatch):

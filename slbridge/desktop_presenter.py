@@ -38,7 +38,8 @@ class ResultPresentation:
 
 
 _LANGUAGES = {"libras": "巴西手语", "csl": "中国手语"}
-_BACKENDS = {"random_forest_v1": "随机森林", "onnx_classifier_v1": "ONNX 动作分类模型"}
+_BACKENDS = {"random_forest_v1": "随机森林", "onnx_classifier_v1": "ONNX 动作分类模型",
+             "onnx_ctc": "ONNX 连续词序列模型"}
 _CAPABILITIES = {"clip": "单个动作识别"}
 _MISSING_ZH = "中文释义待补充"
 _MISSING_PT = "葡语释义待补充"
@@ -64,9 +65,16 @@ def describe_model(recognizer: Recognizer | None,
     language = _LANGUAGES.get(manifest.sign_language, "手语类型未指定")
     capabilities = tuple(manifest.capabilities)
     capability_text = "、".join(_CAPABILITIES.get(value, value) for value in capabilities)
+    if getattr(manifest, "task_type", "classification") == "gloss_sequence":
+        capability_text = "完整表达词序列识别"
     words = []
     catalog_matches = catalog is not None and catalog.sign_language == manifest.sign_language
-    for label, model_text in bundle.labels.items():
+    if getattr(manifest, "task_type", "classification") == "gloss_sequence":
+        vocabulary = getattr(bundle, "vocabulary", ())
+        for index, gloss in enumerate(vocabulary):
+            if index != getattr(bundle, "blank_id", 0):
+                words.append(VocabularyWord(str(index), gloss, _MISSING_PT, False))
+    for label, model_text in getattr(bundle, "labels", {}).items():
         text = dict(model_text)
         entry = catalog.labels.get(label) if catalog_matches else None
         draft = False
@@ -78,7 +86,8 @@ def describe_model(recognizer: Recognizer | None,
         zh, pt = _display_text(text, label)
         words.append(VocabularyWord(label, zh, pt, draft))
 
-    summary = f"{language} · {len(words)} 个词"
+    unit = "词表项" if getattr(manifest, "task_type", "classification") == "gloss_sequence" else "词"
+    summary = f"{language} · {len(words)} 个{unit}"
     if capability_text:
         summary += f" · {capability_text}"
     details = {
@@ -107,11 +116,18 @@ def describe_result(result: RecognitionResult, caption: Caption) -> ResultPresen
     if result.status == "rejected":
         if result.reason:
             details["未识别原因"] = result.reason
-        return ResultPresentation("暂未识别出动作", caption.zh, "", "", details)
+        title = "暂未识别出词序列" if result.task_type == "gloss_sequence" else "暂未识别出动作"
+        return ResultPresentation(title, caption.zh, "", "", details)
     if result.status != "recognized" or result.prediction is None:
         raise ValueError("A presentation requires a recognized or rejected result")
 
     prediction = result.prediction
+    if result.task_type == "gloss_sequence":
+        details["识别任务"] = "中文手语词序列"
+        details["解码方式"] = prediction.decoder
+        details["词数"] = str(len(prediction.tokens))
+        details["分数说明"] = "CTC 词概率未经校准；词时间边界尚未标定"
+        return ResultPresentation("词序列识别完成", caption.zh, caption.pt, caption.notice, details)
     zh = caption.zh if caption.zh and caption.zh != prediction.label_id else _MISSING_ZH
     pt = caption.pt if caption.pt and caption.pt != prediction.label_id else _MISSING_PT
     details["标签编号"] = prediction.label_id

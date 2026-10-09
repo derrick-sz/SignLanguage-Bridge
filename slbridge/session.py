@@ -230,7 +230,7 @@ class RecognitionSession:
     def load_model(self, path, loader=None):
         def load(_):
             return self.model_manager.prepare(path, loader=loader,
-                                              required_representation="mediapipe225_rgb_v1")
+                                              required_representation=("mediapipe225_rgb_v1", "tfnet_rgb_v1"))
 
         with self._lock:
             if self.state == "RECORDING":

@@ -2,7 +2,18 @@
 
 面向中国与巴西听障人群交流的项目。当前已完成首轮识别核心、真实 Libras RGB 试点，以及视频／摄像头片段输入与中葡字幕桌面链路。
 
-核心支持 NPY／带时间戳的关键点序列索引、严格校验、分组切分、随机森林训练、模型包及独立推理。Libras RGB 已完成全量索引、标签冲突隔离和 12 条目／360 视频试点提取、训练及测试；当前可直接识别兼容模型对应的原始视频。连续识别与跨语言翻译仍待实现。现有 A–D 标签的手语语种及释义未经核验。
+核心支持 NPY／带时间戳的关键点序列索引、严格校验、分组切分、随机森林训练、模型包及独立推理。Libras RGB 已完成全量索引、标签冲突隔离和 12 条目／360 视频试点提取、训练及测试。0.3.0 接入 CE-CSL TFNet：完整 RGB 视频返回中文手语词序列，使用 ONNX CPU/CUDA 与独立 v2 API；该双向模型需要结束片段后识别。跨语言句子翻译仍待建设。现有 A–D 标签的手语语种及释义未经核验。
+
+## CE-CSL 中文词序列识别
+
+已冻结官方词表、预处理及划分，运行全部 500 段中文测试视频。修正 prefix beam 解码下，PyTorch/CUDA 逐句平均 WER 为 32.4794%、语料 WER 为 32.8289%；最终 ONNX CUDA 分别为32.4394%和32.7961%，两份报告499/500条词序列一致，差异项单独保留；WER 不是分类准确率。约 266 MB 的 ONNX 模型已完成动态帧数、数值、CTC 解码和实际 CUDA 算子对照，并接入共享模型切换、回滚和字幕。变长重复推理采用每次请求后回收空闲显存池区的策略。
+
+```powershell
+python -m pip install -e '.[api,rgb-sequence,onnx-gpu]'
+python -m slbridge.api_cli --catalog configs/cecsl_runtime_catalog.example.json --model csl-tfnet --device cuda --intra-op-threads 4 --gpu-mem-limit-mb 8192
+```
+
+模型与上游源码保存在本地，仓库不分发权重；CUDA/cuDNN DLL 的安装或显式目录配置见 [CE-CSL 接入与执行说明](docs/CE-CSL_TFNet_ONNX接入与验证_2026-10-09.md)。上传完整视频使用 `/v2/recognitions`；桌面可选择同一个模型目录，中文字幕为识别词序列，葡语表达待审核。共同词义候选见 [审核清单](docs/CE-CSL_Libras共同语义审核清单_2026-10-09.md)，视觉表示迁移结果见 [迁移验证](docs/CE-CSL_Libras迁移验证_2026-10-09.md)。
 
 ## 模型 API 与 ONNX
 

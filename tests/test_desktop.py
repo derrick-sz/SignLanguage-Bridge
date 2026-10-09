@@ -448,3 +448,34 @@ def test_model_metadata_survives_source_switch_before_model_event_is_polled(gui)
     words = [gui.vocabulary_list.item(index).text() for index in range(gui.vocabulary_list.count())]
     assert any('Árvore' in text for text in words) and any('Cair' in text for text in words)
     assert all('item:' not in text for text in words)
+
+
+def test_sequence_metadata_counts_nonblank_vocabulary_items(gui):
+    model = SimpleNamespace(bundle=SimpleNamespace(
+        manifest=SimpleNamespace(
+            run_id='ctc-model-v2', sign_language='csl', backend='onnx_ctc', task_type='gloss_sequence',
+            input_spec=SimpleNamespace(representation_id='tfnet_rgb_v1'), capabilities=('clip',),
+        ), vocabulary=(' ', '树', '。'), blank_id=0, labels={},
+    ))
+    gui.session.recognizer = model
+    gui._sync_model_metadata()
+    assert gui.word_count_label.text() == '2 个词表项'
+    assert gui.vocabulary_list.count() == 2
+    assert '2 个词表项' in gui.model_label.text()
+    assert gui.vocabulary_list.item(0).text().startswith('树')
+    assert gui.vocabulary_list.item(1).text().startswith('。')
+
+
+def test_successful_model_preparation_clears_busy_result_title(gui):
+    model = SimpleNamespace(bundle=SimpleNamespace(
+        manifest=SimpleNamespace(
+            run_id='loaded-ctc-v2', sign_language='csl', backend='onnx_ctc', task_type='gloss_sequence',
+            input_spec=SimpleNamespace(representation_id='tfnet_rgb_v1'), capabilities=('clip',),
+        ), vocabulary=(' ', '树'), labels={},
+    ))
+    gui._task_kind = 'model'
+    gui.result_title.setText('正在准备识别模型')
+    gui.session.load_model('fake', loader=lambda _: model)
+    pump(gui, lambda: gui.model_presentation.details.get('模型版本') == 'loaded-ctc-v2')
+    assert gui.result_title.text() == '等待一段完整手语'
+    assert gui.state_badge.text() == '模型已就绪'

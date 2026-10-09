@@ -100,7 +100,8 @@ class SignLanguageApp(QMainWindow):
         title = QVBoxLayout()
         title.setSpacing(3)
         title.addWidget(_label("手语桥", "title"))
-        title.addWidget(_label("巴西手语识别 / Libras", "muted"))
+        self.language_label = _label("手语识别 / Ponte de Sinais", "muted")
+        title.addWidget(self.language_label)
         header.addLayout(title)
         header.addStretch()
         self.state_badge = _label("等待输入", "statusBadge", wrap=False)
@@ -301,12 +302,12 @@ class SignLanguageApp(QMainWindow):
         self.caption = None
         self._last_result = None
         self._result_details = {}
-        self.result_title.setText("等待一个完整动作")
+        self.result_title.setText("等待一段完整手语")
         self.zh_label.setText("等待识别")
         self.zh_label.setProperty("state", "")
         self.zh_label.style().polish(self.zh_label)
         self.pt_label.setText("")
-        self.notice_label.setText("识别后，中葡释义会显示在这里。")
+        self.notice_label.setText("识别结果与可用释义会显示在这里。")
         self.notice_label.setProperty("tone", "")
         self.notice_label.style().polish(self.notice_label)
 
@@ -495,7 +496,10 @@ class SignLanguageApp(QMainWindow):
             elapsed = max(0, time.perf_counter() - self._record_started)
             self.record_time_label.setText(f"正在录制  {elapsed:.1f} 秒 / 15 秒")
             self.record_progress.setValue(min(150, int(elapsed * 10)))
-        self.input_hint.setText("每次录制一个完整动作，最长 15 秒。" if camera_mode else "识别整段视频，播放位置不影响结果。" if video else "每次识别一个完整动作。")
+        sequence = getattr(getattr(getattr(self.session.recognizer, "bundle", None), "manifest", None),
+                           "task_type", None) == "gloss_sequence"
+        unit = "表达" if sequence else "动作"
+        self.input_hint.setText(f"每次录制一个完整{unit}，最长 15 秒。" if camera_mode else "识别整段视频，播放位置不影响结果。" if video else f"每次识别一个完整{unit}。")
         badge = "正在录制" if recording else "正在准备模型" if busy and self._task_kind == "model" else "正在识别" if busy else "请重试" if state == "ERROR" else "模型已就绪" if loaded else "请选择识别模型"
         self.state_badge.setText(badge)
         self._refresh_details()
@@ -532,12 +536,15 @@ class SignLanguageApp(QMainWindow):
         if model is self._metadata_model and self.catalog is self._metadata_catalog:
             return
         presentation = describe_model(model, self.catalog)
+        self.language_label.setText(presentation.title)
         bundle_path = getattr(getattr(model, "bundle", None), "path", None)
         self._model_path = str(bundle_path) if bundle_path is not None else None
         self.model_presentation = presentation
         self.model_label.setText(presentation.summary)
         self.settings_model_label.setText(presentation.summary)
-        self.word_count_label.setText(f"{len(presentation.words)} 个词" if presentation.words else "")
+        task = getattr(getattr(getattr(model, "bundle", None), "manifest", None), "task_type", None)
+        unit = "词表项" if task == "gloss_sequence" else "词"
+        self.word_count_label.setText(f"{len(presentation.words)} 个{unit}" if presentation.words else "")
         self.vocabulary_list.clear()
         for word in presentation.words:
             item = QListWidgetItem(f"{word.zh}  /  {word.pt}")
@@ -598,6 +605,7 @@ class SignLanguageApp(QMainWindow):
                 elif event.kind == "result":
                     self._display_result(event.value, event.request_id, event.epoch)
                 elif event.kind == "model":
+                    self._clear_caption()
                     self._sync_model_metadata()
                     self.status_label.setText("识别模型已就绪，导入视频或录制一个动作即可开始。")
             except Exception as error:

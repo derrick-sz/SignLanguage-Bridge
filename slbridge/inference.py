@@ -21,6 +21,13 @@ class Recognizer:
 
     @classmethod
     def load(cls, path: str | Path, *, options: Any = None) -> Recognizer:
+        from ._io import read_json
+
+        raw = read_json(Path(path).resolve() / "manifest.json")
+        if isinstance(raw, dict) and raw.get("schema_version") == 2:
+            from .sequence import SequenceRecognizer
+
+            return SequenceRecognizer.load(path, options=options)
         return cls(load_bundle(path, options=options))
 
     @property

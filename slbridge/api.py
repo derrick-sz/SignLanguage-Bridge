@@ -24,7 +24,8 @@ from starlette.exceptions import HTTPException
 from starlette.formparsers import MultiPartException, MultiPartParser
 from starlette.types import ASGIApp, Message, Receive, Scope, Send
 
-from .api_schemas import ErrorResponse, ModelsResponse, RecognitionResponse, StatusResponse, SwitchRequest
+from .api_schemas import (ErrorResponse, ModelsResponse, RecognitionResponse,
+                          SequenceRecognitionResponse, StatusResponse, SwitchRequest)
 from .runtime import InferenceRequest, ModelManager, ModelUnavailable, RuntimeBusy
 from .runtime_options import RuntimeOptions
 
@@ -117,7 +118,7 @@ class _BoundedMultipartRoute(APIRoute):
         original = super().get_route_handler()
 
         async def route(request: Request):
-            if request.url.path == "/v1/recognitions":
+            if request.url.path in {"/v1/recognitions", "/v2/recognitions"}:
                 media_type, _ = parse_options_header(request.headers.get("content-type", ""))
                 if media_type != b"multipart/form-data":
                     raise ApiError(422, "invalid_request", "A multipart/form-data input file is required")
@@ -249,7 +250,7 @@ def create_app(
             await run_in_threadpool(shared.close)
 
     error_responses = {code: {"model": ErrorResponse} for code in (400, 401, 404, 409, 413, 422, 500, 503)}
-    app = FastAPI(title="SignLanguage Bridge API", version="1.0.0", lifespan=lifespan,
+    app = FastAPI(title="SignLanguage Bridge API", version="2.0.0", lifespan=lifespan,
                   responses=error_responses,
                   dependencies=[Depends(HTTPBearer(auto_error=False))] if bearer_token else [])
     app.router.route_class = _BoundedMultipartRoute
@@ -299,18 +300,18 @@ def create_app(
             paths = sensitive_paths + (_path_variants((args[0],)) if name == "infer_file" else ())
             raise ApiError(422, code, _redact(str(exc), paths)) from exc
 
-    @app.get("/v1/health", response_model=StatusResponse)
+    @app.get("/v1/health", response_model=StatusResponse, response_model_exclude_unset=True)
     async def health(request: Request):
         return {"schema_version": 1, "request_id": request.state.request_id,
                 "status": await operation(request, "status")}
 
-    @app.get("/v1/models", response_model=ModelsResponse)
+    @app.get("/v1/models", response_model=ModelsResponse, response_model_exclude_unset=True)
     async def models(request: Request):
         status = await operation(request, "status")
         return {"schema_version": 1, "request_id": request.state.request_id,
                 "models": [{"model_id": alias} for alias in sorted(catalog)], "active": status["active"]}
 
-    @app.post("/v1/models/switch", response_model=StatusResponse)
+    @app.post("/v1/models/switch", response_model=StatusResponse, response_model_exclude_unset=True)
     async def switch(body: SwitchRequest, request: Request):
         if body.model_id not in catalog:
             raise ApiError(404, "unknown_model", "The model alias is not in the server catalog")
@@ -319,7 +320,7 @@ def create_app(
         status = await operation(request, "switch", catalog[body.model_id], options=selected)
         return {"schema_version": 1, "request_id": request.state.request_id, "status": status}
 
-    @app.post("/v1/models/rollback", response_model=StatusResponse)
+    @app.post("/v1/models/rollback", response_model=StatusResponse, response_model_exclude_unset=True)
     async def rollback(request: Request):
         return {"schema_version": 1, "request_id": request.state.request_id,
                 "status": await operation(request, "rollback")}
@@ -346,10 +347,45 @@ def create_app(
             if suffix not in _SUFFIXES:
                 raise ApiError(422, "unsupported_input", "Supported files: .mp4, .avi, .mov, .mkv, .npy, .npz")
             inference_request = InferenceRequest(request_id=request.state.request_id,
-                                                 representation_id=representation_id, sign_language=sign_language)
+                                                 representation_id=representation_id, sign_language=sign_language,
+                                                 expected_task_type="classification")
             path = await run_in_threadpool(_save_upload, file, suffix, max_upload_bytes)
             response = await operation(request, "infer_file", path, inference_request)
             body = response.to_dict()
+            body["runtime"] = _public_runtime(body["runtime"], sensitive_paths + _path_variants((path,)))
+            return body
+        finally:
+            if path is not None:
+                await run_in_threadpool(path.unlink, missing_ok=True)
+            await file.close()
+
+    @app.post("/v2/recognitions", response_model=SequenceRecognitionResponse)
+    async def recognize_sequence(
+        request: Request,
+        file: Annotated[UploadFile, File(description="A complete RGB sign expression video")],
+        request_id: Annotated[str | None, Form(min_length=1, max_length=128,
+                                             pattern=r"^[A-Za-z0-9][A-Za-z0-9_.:-]*$")] = None,
+        representation_id: Annotated[Literal["tfnet_rgb_v1"] | None, Form()] = None,
+        sign_language: Annotated[str | None, Form(min_length=1, max_length=64)] = None,
+    ):
+        path: Path | None = None
+        try:
+            if request_id is not None:
+                request.state.request_id = request_id
+            for name, value in (("request_id", request_id), ("representation_id", representation_id),
+                                ("sign_language", sign_language)):
+                if value is not None and not value.strip():
+                    raise ApiError(422, "invalid_request", f"{name} must be nonempty")
+            suffix = Path(file.filename or "").suffix.lower()
+            if suffix not in _SUFFIXES - {".npy", ".npz"}:
+                raise ApiError(422, "unsupported_input", "Supported sequence inputs: .mp4, .avi, .mov, .mkv")
+            inference_request = InferenceRequest(
+                request_id=request.state.request_id, representation_id=representation_id,
+                sign_language=sign_language, expected_task_type="gloss_sequence")
+            path = await run_in_threadpool(_save_upload, file, suffix, max_upload_bytes)
+            response = await operation(request, "infer_file", path, inference_request)
+            body = response.to_dict()
+            body["schema_version"] = 2
             body["runtime"] = _public_runtime(body["runtime"], sensitive_paths + _path_variants((path,)))
             return body
         finally:

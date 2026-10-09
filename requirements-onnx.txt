@@ -1,5 +1,5 @@
 # CPU deployment. Choose this OR requirements-onnx-gpu.txt, not both.
 onnxruntime==1.23.2
-# Only required for exporting/validating graphs, not normal ONNX serving.
+# Required to reject unhashed external tensors before creating a runtime session.
 onnx==1.19.1
 skl2onnx==1.19.1

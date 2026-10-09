@@ -318,12 +318,55 @@ class ClassificationPrediction:
 
 
 @dataclass(frozen=True)
+class GlossToken:
+    token_id: int
+    gloss: str
+    score: float | None
+    time_range: tuple[float, float] | None = None
+
+    def __post_init__(self) -> None:
+        if type(self.token_id) is not int or self.token_id <= 0:
+            raise ValueError("Gloss token_id must be a positive integer; blank is not a gloss")
+        _text(self.gloss, "gloss")
+        if self.score is not None and (type(self.score) not in {int, float}
+                                       or not math.isfinite(self.score) or not 0 <= self.score <= 1):
+            raise ValueError("Gloss score must be a finite token probability or null")
+        if self.time_range is not None and (not isinstance(self.time_range, tuple) or len(self.time_range) != 2
+                                            or any(type(value) not in {int, float} or not math.isfinite(value)
+                                                   for value in self.time_range)
+                                            or self.time_range[1] < self.time_range[0]):
+            raise ValueError("Gloss time_range must contain finite ordered timestamps or null")
+
+
+@dataclass(frozen=True)
+class GlossSequencePrediction:
+    """A CTC gloss transcription; no natural-language translation is implied."""
+
+    tokens: tuple[GlossToken, ...]
+    decoder: str
+
+    def __post_init__(self) -> None:
+        if not isinstance(self.tokens, tuple) or any(not isinstance(token, GlossToken) for token in self.tokens):
+            raise ValueError("Sequence tokens must be a tuple of GlossToken objects")
+        if self.decoder not in {"greedy", "prefix_beam"}:
+            raise ValueError("Unsupported CTC decoder")
+
+    @property
+    def glosses(self) -> tuple[str, ...]:
+        return tuple(token.gloss for token in self.tokens)
+
+    @property
+    def text(self) -> str:
+        return " ".join(self.glosses)
+
+
+@dataclass(frozen=True)
 class RecognitionResult:
     status: str
     sample_id: str
     model_id: str
     sign_language: str | None
-    prediction: ClassificationPrediction | None
+    prediction: ClassificationPrediction | GlossSequencePrediction | None
     quality: dict[str, Any]
     reason: str | None = None
     task_type: str = "classification"

@@ -74,6 +74,7 @@ class Caption:
 
 
 _REJECTIONS = {
+    "ctc_all_blank": "未识别出手语词序列，请检查画面并重试",
     "insufficient_hand_frames": "手部未完整入镜，请重新录制",
     "insufficient_anchor_frames": "肩部参照不足，请让上身完整入镜",
     "at_least_two_frames_required": "片段太短，请重新录制",
@@ -92,6 +93,10 @@ def caption_from_result(result: RecognitionResult, catalog: CaptionCatalog | Non
     if result.status != "recognized" or result.prediction is None:
         raise ValueError("Caption requires a recognized prediction or rejected result")
     prediction = result.prediction
+    if result.task_type == "gloss_sequence":
+        return Caption("recognized", " / ".join(prediction.glosses), "葡语表达待审核",
+                       "中文手语词序列；尚未转换为自然语言句子",
+                       request_id=request_id, epoch=epoch)
     text = dict(prediction.display_text)
     catalog = catalog or CaptionCatalog()
     entry = catalog.labels.get(prediction.label_id) if catalog.sign_language == result.sign_language else None
