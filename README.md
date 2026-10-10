@@ -119,3 +119,5 @@ docs/              设计、数据审计、开发与验收文档
 [核心设计](docs/核心框架设计_2026-10-09.md) · [核心验收](docs/reports/core-implementation-2026-10-09.md) · [当前桌面验收](docs/reports/desktop-redesign-2026-10-09.md) · [首版输入与字幕验收](docs/reports/video-camera-captions-2026-10-09.md) · [文档入口](docs/README.md)
 
 统一模型 adapter、独立语言路由、停顿自动分段和字幕事件历史已提供实现。启动、接入和回放命令见[自动字幕与模型接入](docs/auto-captions-usage.md)，API 见[v3 契约](docs/unified-api.md)，实测状态见[开发报告](docs/reports/auto-captions-2026-10-11.md)。自动端点与未知动作拒识仍需真实长流验证；当前能力是持续采集加完整片段推理。
+
+CTC CPU 的卷积极小浮点权重处理与默认线程配置已修复；8.2 秒完整视频当前实测总耗时 6.31–6.62 秒，完整 logits 与原模型一致。对照基准、复现命令和限制见[性能修复报告](docs/reports/ctc-cpu-performance-fix-2026-10-11.md)。

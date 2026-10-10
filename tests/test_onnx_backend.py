@@ -103,7 +103,7 @@ def test_real_dense_probabilities_and_stable_logits_reuse_session(tmp_path, monk
     np.testing.assert_array_equal(probabilities, [[1, 0], [0, 1], [.5, .5]])
     np.testing.assert_array_equal(probabilities, backend.predict_proba(samples))
     assert len(created) == 1
-    assert created[0]["sess_options"].intra_op_num_threads == 1
+    assert created[0]["sess_options"].intra_op_num_threads == RuntimeOptions().intra_op_threads
     assert backend.runtime_info["providers"] == ["CPUExecutionProvider"]
     backend.close()
     backend.close()

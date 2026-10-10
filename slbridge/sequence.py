@@ -478,26 +478,34 @@ class SequenceRecognizer:
             result = RecognitionResult("rejected", identifier, manifest.run_id, manifest.sign_language,
                                        None, error.quality, error.reason, task_type=manifest.task_type,
                                        score_type=manifest.score_type)
-            return result, {"preprocess_ms": elapsed, "inference_ms": 0., "total_ms": elapsed}
+            return result, {"preprocess_ms": elapsed, "inference_ms": 0., "model_ms": 0.,
+                            "decode_ms": 0., "total_ms": elapsed}
         preprocessing = (perf_counter() - started) * 1000
         infer_start = perf_counter()
-        result = self._predict(prepared, identifier)
+        result, stages = self._predict_profiled(prepared, identifier)
         inference = (perf_counter() - infer_start) * 1000
-        return result, {"preprocess_ms": preprocessing, "inference_ms": inference,
+        return result, {"preprocess_ms": preprocessing, "inference_ms": inference, **stages,
                         "total_ms": (perf_counter() - started) * 1000}
 
     def _predict(self, prepared: Any, identifier: str) -> RecognitionResult:
+        return self._predict_profiled(prepared, identifier)[0]
+
+    def _predict_profiled(self, prepared: Any, identifier: str) -> tuple[RecognitionResult, dict[str, float]]:
+        started = perf_counter()
         logits = self.bundle.backend.predict_logits(prepared)
+        model_ms = (perf_counter() - started) * 1000
+        started = perf_counter()
         config = CTCDecoderConfig.from_dict(self.bundle.manifest.parameters)
         prediction = (greedy_decode(logits, self.bundle.vocabulary) if config.decoder == "greedy" else
                       prefix_beam_decode(logits, self.bundle.vocabulary, beam_width=config.beam_width,
                                          token_top_k=config.token_top_k))
         manifest = self.bundle.manifest
         empty = not prediction.tokens
-        return RecognitionResult("rejected" if empty else "recognized", identifier, manifest.run_id,
+        result = RecognitionResult("rejected" if empty else "recognized", identifier, manifest.run_id,
                                  manifest.sign_language, prediction, prepared.quality,
                                  "ctc_all_blank" if empty else None, task_type=manifest.task_type,
                                  score_type=manifest.score_type, time_range=getattr(prepared, "time_range", None))
+        return result, {"model_ms": model_ms, "decode_ms": (perf_counter() - started) * 1000}
 
     def begin_stream(self) -> None:
         raise NotImplementedError("capability unavailable: this sequence model supports completed clips only")

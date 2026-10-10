@@ -221,6 +221,8 @@ def test_v2_load_dispatch_preserves_vocabulary_order_and_manager_lifecycle(tmp_p
         manager.infer_file("unused", InferenceRequest("v1", expected_task_type="classification"))
     response = manager.infer_file("unused", InferenceRequest("v2", representation_id="tfnet_rgb_v1", expected_task_type="gloss_sequence"))
     assert response.result.prediction.tokens[0].gloss == "Z" and response.result.sample_id == "v2"
+    assert response.timing_ms["model_ms"] >= 0 and response.timing_ms["decode_ms"] >= 0
+    assert response.timing_ms["inference_ms"] >= response.timing_ms["model_ms"] + response.timing_ms["decode_ms"]
     candidate = manager.prepare(tmp_path, required_representation=("mediapipe225_rgb_v1", "tfnet_rgb_v1"))
     manager.activate(candidate)
     assert manager.generation == 2

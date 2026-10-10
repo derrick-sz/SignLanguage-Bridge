@@ -64,7 +64,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--port", type=int, default=8765)
     parser.add_argument("--device", choices=("auto", "cpu", "cuda"), default="auto")
     parser.add_argument("--device-id", type=int, default=0)
-    parser.add_argument("--intra-op-threads", type=int, default=1)
+    parser.add_argument("--intra-op-threads", type=int, default=4)
+    parser.add_argument("--cpu-conv-subnormals", choices=("flush_to_zero", "preserve"), default="flush_to_zero")
     parser.add_argument("--gpu-mem-limit-mb", type=int, default=2048)
     parser.add_argument("--cuda-dll-dir", type=Path, action="append", default=[],
                         help="Server-owned CUDA DLL directory; repeat for multiple directories")
@@ -82,7 +83,8 @@ def main(argv: Sequence[str] | None = None) -> int:
             raise ValueError("A bearer token environment variable is required for non-loopback hosts")
         options = RuntimeOptions(device=args.device, device_id=args.device_id,
                                  intra_op_threads=args.intra_op_threads, gpu_mem_limit_mb=args.gpu_mem_limit_mb,
-                                 cuda_dll_dirs=tuple(str(path.resolve()) for path in args.cuda_dll_dir))
+                                 cuda_dll_dirs=tuple(str(path.resolve()) for path in args.cuda_dll_dir),
+                                 cpu_conv_subnormals=args.cpu_conv_subnormals)
         catalog = load_catalog(args.catalog)
         routes = {}
         for entry in args.route:

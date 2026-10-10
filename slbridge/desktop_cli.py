@@ -33,7 +33,8 @@ def main(argv=None):
     parser.add_argument("--segment-config", type=Path, help="自动端点参数 JSON；未指定时使用未经真人验证的启发式默认值")
     parser.add_argument("--device", choices=("auto", "cpu", "cuda"), default="auto", help="模型执行设备")
     parser.add_argument("--device-id", type=int, default=0)
-    parser.add_argument("--intra-op-threads", type=int, default=1)
+    parser.add_argument("--intra-op-threads", type=int, default=4)
+    parser.add_argument("--cpu-conv-subnormals", choices=("flush_to_zero", "preserve"), default="flush_to_zero")
     parser.add_argument("--gpu-mem-limit-mb", type=int, default=2048)
     parser.add_argument("--cuda-dll-dir", type=Path, action="append", default=[])
     inputs = parser.add_mutually_exclusive_group()
@@ -44,7 +45,8 @@ def main(argv=None):
     try:
         options = RuntimeOptions(device=args.device, device_id=args.device_id,
                                  intra_op_threads=args.intra_op_threads, gpu_mem_limit_mb=args.gpu_mem_limit_mb,
-                                 cuda_dll_dirs=tuple(str(path.resolve()) for path in args.cuda_dll_dir))
+                                 cuda_dll_dirs=tuple(str(path.resolve()) for path in args.cuda_dll_dir),
+                                 cpu_conv_subnormals=args.cpu_conv_subnormals)
     except ValueError as error:
         parser.error(str(error))
     import sys

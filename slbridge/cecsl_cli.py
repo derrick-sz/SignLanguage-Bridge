@@ -459,6 +459,7 @@ def main(argv: list[str] | None = None) -> int:
             command.add_argument("--device", choices=("cpu", "cuda", "auto"), default="cpu")
             command.add_argument("--device-id", type=int, default=0)
             command.add_argument("--intra-op-threads", type=int, default=4)
+            command.add_argument("--cpu-conv-subnormals", choices=("flush_to_zero", "preserve"), default="flush_to_zero")
             command.add_argument("--gpu-mem-limit-mb", type=int, default=8192)
             command.add_argument("--cuda-dll-dir", action="append", default=[])
         command.add_argument("--max-frames", type=int)
@@ -524,7 +525,8 @@ def main(argv: list[str] | None = None) -> int:
                 options = RuntimeOptions(device=args.device, device_id=args.device_id,
                                           intra_op_threads=args.intra_op_threads,
                                           gpu_mem_limit_mb=args.gpu_mem_limit_mb,
-                                          cuda_dll_dirs=tuple(args.cuda_dll_dir))
+                                          cuda_dll_dirs=tuple(args.cuda_dll_dir),
+                                          cpu_conv_subnormals=args.cpu_conv_subnormals)
                 result = evaluate_onnx(args.frozen_dir, args.model, args.output, options=options, **common)
     if args.command in {"native", "evaluate"}:
         printed = {"output": str(Path(args.output).resolve()), "status": result["status"],

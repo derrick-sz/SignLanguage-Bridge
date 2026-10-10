@@ -74,7 +74,17 @@ provider 和两个实际模型探测：
 .venv-libras/Scripts/python.exe -m experiments.probe_unified_runtime --libras-model artifacts/runtime-acceptance-20261009/models/libras-rf-onnx-20261009 --libras-video "Libras-EQT-UECE (RGB)/7_Quero/INFORMANTE 2/IMG_0696.mp4" --csl-model artifacts/models/cecsl-tfnet-onnx-20261009 --csl-video D:/Zenodo/CE-CSL/CE-CSL/video/test/A/test-00001.mp4
 ```
 
-记录实际 ORT provider、fallback、显式 CUDA 不兼容及两个任务结果；不开展训练或大规模数据处理。当前 CTC CPU 单次探测约 11.5 分钟，不适合实时字幕；只探测 RF/provider 时省略两个 `--csl-*` 参数。报告分阶段保存，但原生同步调用仍需等待返回。
+记录实际 ORT provider、fallback、显式 CUDA 不兼容及两个任务结果；不开展训练或大规模数据处理。初次 CTC CPU 探测曾耗时约 11.5 分钟；性能修复后，同一完整视频连续三次为 6.31–6.62 秒，仍未达到动作结束后 2 秒内显示字幕的目标。只探测 RF/provider 时省略两个 `--csl-*` 参数。报告分阶段保存，但原生同步调用仍需等待返回。
+
+API、桌面和 `RuntimeOptions` 默认使用 4 个 ORT 推理线程；CPU CTC 默认仅在内存副本中将卷积权重的 float32 subnormal 值归零。原始模型包不改写，运行响应的 `cpu_numerics` 记录源文件与执行模型哈希、策略及处理数量。需要复核原始数值行为时使用 `--cpu-conv-subnormals preserve`；复现旧单线程配置还需加 `--intra-op-threads 1`。其他模型/视频应重新验证数值一致性，不应把此样本的完全一致推广为全数据集准确率证明。
+
+独立完整视频基准会保存逐次阶段耗时和完整 logits；可指定参考 logits 做数值及逐帧 argmax 对比：
+
+```powershell
+.venv-libras/Scripts/python.exe -m experiments.benchmark_ctc_cpu --model artifacts/models/cecsl-tfnet-onnx-20261009 --video D:/Zenodo/CE-CSL/CE-CSL/video/test/A/test-00001.mp4 --output artifacts/ctc-cpu-benchmark --runs 3
+```
+
+根因、单变量对照、原始 693 秒记录的复现边界及 HTTP 证据见[CPU 性能修复报告](reports/ctc-cpu-performance-fix-2026-10-11.md)。
 
 实际摄像头活动观察与释放探测（不保存像素，不评估动作准确率）：
 

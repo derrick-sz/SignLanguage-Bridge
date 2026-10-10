@@ -231,6 +231,17 @@ def test_switch_uses_alias_defaults_and_supports_rollback(tmp_path, manager):
         assert rolled.json()["status"]["generation"] == 3
 
 
+def test_switch_passes_explicit_cpu_numerical_policy_to_manager(tmp_path, manager):
+    app = create_app({"b": tmp_path / "model-b"}, manager=manager)
+    with TestClient(app) as client:
+        response = client.post("/v1/models/switch", json={"model_id": "b", "cpu_conv_subnormals": "preserve"})
+        assert response.status_code == 200, response.text
+        assert manager.switches[0][1].cpu_conv_subnormals == "preserve"
+        invalid = client.post("/v1/models/switch", json={"model_id": "b", "cpu_conv_subnormals": "anything"})
+        assert invalid.status_code == 422
+        assert len(manager.switches) == 1
+
+
 def test_unknown_alias_invalid_options_and_arbitrary_paths_are_rejected(app, manager):
     with TestClient(app) as client:
         error(client.post("/v1/models/switch", json={"model_id": "absent"}), 404, "unknown_model")

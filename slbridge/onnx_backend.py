@@ -7,6 +7,7 @@ optional dependency and is imported only when an ONNX artifact is loaded.
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass, fields
+from hashlib import sha256
 import os
 from pathlib import Path
 from typing import Any, Sequence
@@ -102,6 +103,93 @@ def _validate_self_contained_onnx(model_bytes: bytes) -> str:
     return onnx.__version__
 
 
+def _ctc_cpu_execution_model(model_bytes: bytes, policy: str) -> tuple[bytes, dict[str, Any]]:
+    """Flush only float32 Conv weight subnormals in a validated in-memory copy.
+
+    CPU arithmetic on these weights can be orders of magnitude slower. Unlike
+    ORT's process/thread flush-to-zero setting, this policy does not depend on
+    which session or calling thread was initialized first. The policy does not
+    edit inputs, activations, normal weights or the hashed source artifact.
+    """
+    import numpy as np
+    import onnx
+
+    digest = sha256(model_bytes).hexdigest()
+    info = {"policy": "preserve" if policy == "preserve" else "flush_conv_weights_v1",
+            "flushed_values": 0, "modified_initializers": 0,
+            "source_sha256": digest, "execution_sha256": digest}
+    if policy == "preserve":
+        return model_bytes, info
+    model = onnx.load_model_from_string(model_bytes)
+    initializers = {value.name: value for value in model.graph.initializer}
+    consumers: dict[str, list[tuple[Any, int]]] = {}
+    names = set(initializers)
+    protected = {value.name for value in (*model.graph.input, *model.graph.output)}
+    nested = [attribute.g for node in model.graph.node for attribute in node.attribute
+              if attribute.type == onnx.AttributeProto.GRAPH]
+    nested.extend(graph for node in model.graph.node for attribute in node.attribute
+                  if attribute.type == onnx.AttributeProto.GRAPHS for graph in attribute.graphs)
+    while nested:
+        graph = nested.pop()
+        # Nested graphs can capture a parent initializer without declaring it
+        # as an input to the parent If/Loop node. Keep those original values.
+        protected.update(value.name for value in (*graph.input, *graph.output))
+        for node in graph.node:
+            protected.update(node.input)
+            for attribute in node.attribute:
+                if attribute.type == onnx.AttributeProto.GRAPH:
+                    nested.append(attribute.g)
+                elif attribute.type == onnx.AttributeProto.GRAPHS:
+                    nested.extend(attribute.graphs)
+    for node in model.graph.node:
+        names.update(node.output)
+        for index, name in enumerate(node.input):
+            consumers.setdefault(name, []).append((node, index))
+    names.update(value.name for value in model.graph.input)
+    names.update(value.name for value in model.graph.output)
+    conv_weights = {node.input[1] for node in model.graph.node
+                    if node.op_type == "Conv" and node.domain in {"", "ai.onnx"} and len(node.input) >= 2}
+    for name in sorted(conv_weights):
+        weight = initializers.get(name)
+        if weight is None or weight.data_type != onnx.TensorProto.FLOAT:
+            continue
+        values = onnx.numpy_helper.to_array(weight)
+        # Inspect IEEE-754 bits, so detection also works on threads that an
+        # unrelated library has already configured to treat denormals as zero.
+        bits = values.view(np.uint32)
+        magnitude = bits & np.uint32(0x7fffffff)
+        mask = (magnitude != 0) & (magnitude < 0x00800000)
+        count = int(np.count_nonzero(mask))
+        if not count:
+            continue
+        clean = bits.copy()
+        clean[mask] &= np.uint32(0x80000000)  # Preserve the sign of zero.
+        uses = consumers.get(name, [])
+        exclusive = (name not in protected
+                     and all(node.op_type == "Conv" and node.domain in {"", "ai.onnx"} and index == 1
+                             for node, index in uses))
+        if exclusive:
+            weight.CopyFrom(onnx.numpy_helper.from_array(clean.view(np.float32), name))
+        else:
+            # A shared initializer might also be an observable output or a
+            # non-convolution input. Give only Conv its cleaned copy.
+            candidate = f"__slbridge_cpu_conv_{len(names)}"
+            while candidate in names:
+                candidate += "_"
+            names.add(candidate)
+            model.graph.initializer.append(onnx.numpy_helper.from_array(clean.view(np.float32), candidate))
+            for node, index in uses:
+                if node.op_type == "Conv" and node.domain in {"", "ai.onnx"} and index == 1:
+                    node.input[index] = candidate
+        info["flushed_values"] += count
+        info["modified_initializers"] += 1
+    if not info["flushed_values"]:
+        return model_bytes, info
+    execution = model.SerializeToString()
+    info["execution_sha256"] = sha256(execution).hexdigest()
+    return execution, info
+
+
 def create_onnx_session(path: str | Path, *, options: Any, backend_id: str) -> tuple[Any, dict[str, Any], list[Any]]:
     """Create a self-contained ONNX session with verified provider selection.
 
@@ -179,15 +267,27 @@ def create_onnx_session(path: str | Path, *, options: Any, backend_id: str) -> t
     except (OSError, ValueError):
         release_dll_handles()
         raise
+    cpu_bytes, cpu_numerics = None, None
+
+    def cpu_model_bytes() -> bytes:
+        nonlocal cpu_bytes, cpu_numerics
+        if cpu_bytes is None:
+            if backend_id == "onnx_ctc":
+                cpu_bytes, cpu_numerics = _ctc_cpu_execution_model(model_bytes, options.cpu_conv_subnormals)
+            else:
+                cpu_bytes = model_bytes
+        return cpu_bytes
+
     try:
-        session = ort.InferenceSession(model_bytes, sess_options=session_options, providers=providers)
+        session = ort.InferenceSession(model_bytes if use_cuda else cpu_model_bytes(),
+                                       sess_options=session_options, providers=providers)
     except Exception as error:
         if options.device != "auto" or not use_cuda:
             release_dll_handles()
             raise ValueError(f"Cannot create ONNX {options.device} session: {error}") from error
         fallback_reason = f"CUDA session initialization failed: {type(error).__name__}: {error}"
         try:
-            session = ort.InferenceSession(model_bytes, sess_options=session_options,
+            session = ort.InferenceSession(cpu_model_bytes(), sess_options=session_options,
                                           providers=["CPUExecutionProvider"])
         except Exception as cpu_error:
             release_dll_handles()
@@ -195,13 +295,27 @@ def create_onnx_session(path: str | Path, *, options: Any, backend_id: str) -> t
     # ORT can itself retry creation using CPU. Verify the constructed
     # session, not the requested provider list or merely the installed wheel.
     actual = list(session.get_providers())
-    session.disable_fallback()  # Prevent a later run from silently replacing its providers.
     active_cuda = "CUDAExecutionProvider" in actual
     if options.device == "cuda" and not active_cuda:
         release_dll_handles()
         raise ValueError("Strict CUDA requested, but the actual ONNX session did not activate CUDAExecutionProvider (check CUDA/cuDNN DLL compatibility)")
     if options.device == "auto" and use_cuda and not active_cuda:
         fallback_reason = fallback_reason or "CUDAExecutionProvider was requested but the actual ONNX session activated CPU only (check CUDA/cuDNN compatibility)"
+        # ORT may implicitly retry construction on CPU. Its first session still
+        # has raw weights; reconstruct before the first run when cleanup matters.
+        if backend_id == "onnx_ctc" and cpu_numerics is None:
+            try:
+                execution = cpu_model_bytes()
+                if execution is not model_bytes:
+                    session = None
+                    session = ort.InferenceSession(execution, sess_options=session_options,
+                                                   providers=["CPUExecutionProvider"])
+                    actual = list(session.get_providers())
+                    active_cuda = "CUDAExecutionProvider" in actual
+            except Exception as error:
+                release_dll_handles()
+                raise ValueError(f"Cannot create ONNX CPU fallback session: {error}") from error
+    session.disable_fallback()  # Prevent a later run from silently replacing its providers.
     if options.device == "cpu" and actual != ["CPUExecutionProvider"]:
         release_dll_handles()
         raise ValueError(f"ONNX CPU request created unexpected execution providers: {actual}")
@@ -220,6 +334,8 @@ def create_onnx_session(path: str | Path, *, options: Any, backend_id: str) -> t
         info.update(precision="float32_tf32_disabled", use_tf32=False,
                     cuda_arena_extend_strategy="kSameAsRequested" if active_cuda else None,
                     cuda_arena_shrinkage=f"gpu:{options.device_id}" if active_cuda else None)
+        if not active_cuda:
+            info["cpu_numerics"] = cpu_numerics
     return session, info, dll_handles
 
 

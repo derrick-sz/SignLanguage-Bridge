@@ -31,6 +31,8 @@ HTTP v3 使用同一个推理入口承载 `classification`、`gloss_sequence` �
 
 能力包括 `model_id`、`model_version`、`sign_language`、`task_type`、`inputs`、`vocabulary`、`runtime`、`devices`、`modes` 和 `score_type`。`inputs` 的每项声明 `representation_id`、shape、dtype、`preprocessing_version` 和 `input_kinds`。`model_id` 是运行模型的实际 ID；切换接口的 `model_id` 是 catalog 别名，两者可能不同。
 
+可选运行参数包括 `device`、`device_id`、`intra_op_threads`、`gpu_mem_limit_mb` 和 `cpu_conv_subnormals`。默认推理线程数为 4；数值策略为 `flush_to_zero`，仅作用于实际在 CPU 执行的 CTC 会话的 float32 卷积权重。`preserve` 保留源权重的全部数值，可用于对照复测。CLI 参数为 `--cpu-conv-subnormals`，v1/v3 模型切换 JSON 使用同名下划线字段。自动降级到 CPU 也会应用所选策略。策略不会改写源模型包；已校验源版本与实际执行副本通过 `runtime.cpu_numerics.source_sha256/execution_sha256` 区分。
+
 推理支持 `.mp4/.avi/.mov/.mkv/.npy/.npz`；文件的真实可用性继续由模型输入契约及其解析器校验。multipart 字段包括：
 
 | 字段 | 约束 |
@@ -52,6 +54,8 @@ HTTP v3 使用同一个推理入口承载 `classification`、`gloss_sequence` �
 - 分类：`label_id`、`score`、完整 `scores`、`display_text`。
 - Gloss 序列：有序 `tokens`（包括重复 token）及 `decoder`；未知 token 时间保留 null。
 - 文本：`text`、`language`、可空 `score`。
+
+CTC 的 `timing_ms` 在 `preprocess_ms/inference_ms/total_ms` 外增加 `model_ms` 和 `decode_ms`，区分 ONNX 前向计算与 CTC 解码；`inference_ms` 包含两者及少量包装开销。CPU CTC 的 `runtime.cpu_numerics` 返回 `policy`、`flushed_values`、`modified_initializers`、`source_sha256`、`execution_sha256`。当前样本数值与时延对照见[性能报告](reports/ctc-cpu-performance-fix-2026-10-11.md)。
 
 质量/阈值拒识属于 HTTP 200 `result.status=rejected`，不是服务异常。HTTP 错误保留原有 `schema_version=1`、`request_id`、`error.code/message` 的错误 envelope。
 

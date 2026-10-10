@@ -68,6 +68,7 @@ class SwitchRequest(ApiModel):
     device_id: int | None = Field(default=None, ge=0, le=63, strict=True)
     intra_op_threads: int | None = Field(default=None, ge=1, le=64, strict=True)
     gpu_mem_limit_mb: int | None = Field(default=None, ge=64, le=1048576, strict=True)
+    cpu_conv_subnormals: Literal["flush_to_zero", "preserve"] | None = None
 
 
 class ClassificationPrediction(ApiModel):
