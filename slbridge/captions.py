@@ -93,6 +93,14 @@ def caption_from_result(result: RecognitionResult, catalog: CaptionCatalog | Non
     if result.status != "recognized" or result.prediction is None:
         raise ValueError("Caption requires a recognized prediction or rejected result")
     prediction = result.prediction
+    if result.task_type == "text":
+        language = prediction.language
+        zh = prediction.text if language in {"zh", "zh-CN"} else "中文表达待审核"
+        pt = prediction.text if language in {"pt", "pt-BR"} else "葡语表达待审核"
+        if language not in {"zh", "zh-CN", "pt", "pt-BR"}:
+            zh = prediction.text
+        return Caption("recognized", zh, pt, f"模型原始文本（{language}）；未执行跨语言翻译",
+                       score=prediction.score, request_id=request_id, epoch=epoch)
     if result.task_type == "gloss_sequence":
         return Caption("recognized", " / ".join(prediction.glosses), "葡语表达待审核",
                        "中文手语词序列；尚未转换为自然语言句子",

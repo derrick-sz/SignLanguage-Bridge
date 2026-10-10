@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "models": {
+    "libras-rf": "../artifacts/experiments/libras-rf-pilot-20261009/models/libras-rf-pilot-20261009",
+    "libras-onnx": "../artifacts/runtime-acceptance-20261009/models/libras-rf-onnx-20261009",
+    "csl-tfnet": "../artifacts/models/cecsl-tfnet-onnx-20261009"
+  }
+}

@@ -30,6 +30,7 @@ def main(argv=None):
     )
     parser.add_argument("--model", type=Path, help="RGB clip 模型包目录")
     parser.add_argument("--catalog", type=Path, help="字幕词典 JSON")
+    parser.add_argument("--segment-config", type=Path, help="自动端点参数 JSON；未指定时使用未经真人验证的启发式默认值")
     parser.add_argument("--device", choices=("auto", "cpu", "cuda"), default="auto", help="模型执行设备")
     parser.add_argument("--device-id", type=int, default=0)
     parser.add_argument("--intra-op-threads", type=int, default=1)
@@ -51,8 +52,17 @@ def main(argv=None):
     from .desktop import SignLanguageApp
 
     model = args.model if args.model is not None else default_model()
+    segment_config = None
+    if args.segment_config:
+        from ._io import read_json
+        from .segmentation import SegmentConfig
+        try:
+            segment_config = SegmentConfig(**read_json(args.segment_config))
+        except (ValueError, TypeError, OSError) as error:
+            parser.error(str(error))
     qt = QApplication.instance() or QApplication([sys.argv[0]])
-    app = SignLanguageApp(model=model, video=args.video, camera=args.camera, runtime_options=options)
+    app = SignLanguageApp(model=model, video=args.video, camera=args.camera, runtime_options=options,
+                          segment_config=segment_config)
     if args.catalog is not None:
         app.load_catalog(args.catalog)
     else:

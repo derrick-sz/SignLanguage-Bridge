@@ -1,4 +1,4 @@
-"""Run classification v1 and sequence v2 APIs over one server-owned model catalog."""
+"""Run versioned task APIs over a server-owned catalog and language routes."""
 from __future__ import annotations
 
 import argparse
@@ -56,6 +56,10 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Serve SignLanguage Bridge's versioned inference API")
     parser.add_argument("--catalog", type=Path, required=True, help="Strict v1 JSON model catalog")
     parser.add_argument("--model", help="Initial model alias; omit to start without a loaded model")
+    parser.add_argument("--route", action="append", default=[], metavar="LANGUAGE=MODEL",
+                        help="Independent language model route; repeat once per language")
+    parser.add_argument("--max-caption-sessions", type=int, default=64)
+    parser.add_argument("--inference-timeout-seconds", type=float, default=120.)
     parser.add_argument("--host", default="127.0.0.1")
     parser.add_argument("--port", type=int, default=8765)
     parser.add_argument("--device", choices=("auto", "cpu", "cuda"), default="auto")
@@ -80,11 +84,21 @@ def main(argv: Sequence[str] | None = None) -> int:
                                  intra_op_threads=args.intra_op_threads, gpu_mem_limit_mb=args.gpu_mem_limit_mb,
                                  cuda_dll_dirs=tuple(str(path.resolve()) for path in args.cuda_dll_dir))
         catalog = load_catalog(args.catalog)
+        routes = {}
+        for entry in args.route:
+            language, separator, alias = entry.partition("=")
+            if not separator or not language.strip() or not alias or language in routes:
+                raise ValueError("Each --route must be a unique LANGUAGE=MODEL mapping")
+            if alias not in catalog:
+                raise ValueError(f"Unknown route model alias: {alias}")
+            routes[language] = alias
         # Keep --help available in a core-only environment without HTTP extras.
         from .api import create_app
         import uvicorn
         app = create_app(catalog, initial_model=args.model, options=options,
-                         max_upload_bytes=args.max_upload_mb * 1024 * 1024, bearer_token=token)
+                         max_upload_bytes=args.max_upload_mb * 1024 * 1024, bearer_token=token,
+                         routes=routes, max_sessions=args.max_caption_sessions,
+                         inference_timeout_seconds=args.inference_timeout_seconds)
     except (OSError, ValueError) as exc:
         parser.error(str(exc))
     except ModuleNotFoundError:

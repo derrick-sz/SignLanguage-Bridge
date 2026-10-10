@@ -361,12 +361,27 @@ class GlossSequencePrediction:
 
 
 @dataclass(frozen=True)
+class TextPrediction:
+    """Explicit text output; never inferred from classification display labels."""
+
+    text: str
+    language: str
+    score: float | None = None
+
+    def __post_init__(self) -> None:
+        _text(self.text, "text")
+        _text(self.language, "language")
+        if self.score is not None and (type(self.score) not in {int, float} or not math.isfinite(self.score)):
+            raise ValueError("Text score must be finite or null; score_type declares its meaning")
+
+
+@dataclass(frozen=True)
 class RecognitionResult:
     status: str
     sample_id: str
     model_id: str
     sign_language: str | None
-    prediction: ClassificationPrediction | GlossSequencePrediction | None
+    prediction: ClassificationPrediction | GlossSequencePrediction | TextPrediction | None
     quality: dict[str, Any]
     reason: str | None = None
     task_type: str = "classification"

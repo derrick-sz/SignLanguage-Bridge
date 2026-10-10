@@ -117,3 +117,5 @@ docs/              设计、数据审计、开发与验收文档
 `app/desktop_app.py` 已接入新核心；旧桌面原型保留为 `app/legacy_desktop_app.py`。旧采集和训练脚本尚未完成全面迁移，当前训练请使用核心 CLI。新模型包与旧的 `gesture_model.pkl` 使用不同路径。项目中没有 `app/main.py`。原始数据、训练模型和运行产物保持本地，不纳入 Git。
 
 [核心设计](docs/核心框架设计_2026-10-09.md) · [核心验收](docs/reports/core-implementation-2026-10-09.md) · [当前桌面验收](docs/reports/desktop-redesign-2026-10-09.md) · [首版输入与字幕验收](docs/reports/video-camera-captions-2026-10-09.md) · [文档入口](docs/README.md)
+
+统一模型 adapter、独立语言路由、停顿自动分段和字幕事件历史已提供实现。启动、接入和回放命令见[自动字幕与模型接入](docs/auto-captions-usage.md)，API 见[v3 契约](docs/unified-api.md)，实测状态见[开发报告](docs/reports/auto-captions-2026-10-11.md)。自动端点与未知动作拒识仍需真实长流验证；当前能力是持续采集加完整片段推理。

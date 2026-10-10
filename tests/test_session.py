@@ -199,7 +199,7 @@ def test_incompatible_model_rejected_without_replacing_previous():
         session.load_model('bad', loader=lambda _: bad)
         wait_for(lambda: not session.busy)
         assert session.recognizer is original
-        assert any('mediapipe225_rgb_v1' in e.value for e in session.poll() if e.kind == 'error')
+        assert any('captured_clip' in e.value for e in session.poll() if e.kind == 'error')
     finally:
         session.close()
 

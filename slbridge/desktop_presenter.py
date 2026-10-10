@@ -122,6 +122,11 @@ def describe_result(result: RecognitionResult, caption: Caption) -> ResultPresen
         raise ValueError("A presentation requires a recognized or rejected result")
 
     prediction = result.prediction
+    if result.task_type == "text":
+        details["识别任务"] = "文本输出"
+        details["文本语言"] = prediction.language
+        details["分数类型"] = result.score_type
+        return ResultPresentation("文本输出完成", caption.zh, caption.pt, caption.notice, details)
     if result.task_type == "gloss_sequence":
         details["识别任务"] = "中文手语词序列"
         details["解码方式"] = prediction.decoder
@@ -152,3 +157,36 @@ def describe_result(result: RecognitionResult, caption: Caption) -> ResultPresen
         if note not in notices:
             notices.append(note)
     return ResultPresentation("识别完成", zh, pt, "；".join(notices), details)
+
+
+def describe_runtime_model(info: dict | None, capabilities: dict | None,
+                           catalog: CaptionCatalog) -> ModelPresentation:
+    """Present the service contract, including adapters without legacy bundles."""
+    if info is None or capabilities is None:
+        return describe_model(None, catalog)
+    sign_language = info["sign_language"]
+    language = _LANGUAGES.get(sign_language, sign_language or "手语类型未指定")
+    task = capabilities["task_type"]
+    words = []
+    if task == "gloss_sequence":
+        words = [VocabularyWord(str(i), token, _MISSING_PT, False)
+                 for i, token in enumerate(capabilities["vocabulary"]) if i != 0]
+    elif task == "classification":
+        for label in capabilities["vocabulary"]:
+            text = dict(info["labels"].get(label, {}))
+            entry = catalog.labels.get(label) if catalog.sign_language == sign_language else None
+            if entry:
+                text.update(entry.display_text)
+            zh, pt = _display_text(text, label)
+            words.append(VocabularyWord(label, zh, pt, bool(entry and entry.review_status == "draft")))
+    task_text = {"classification": "完整动作分类", "gloss_sequence": "完整表达词序列识别", "text": "文本输出"}[task]
+    details = {"模型版本": info["model_id"], "模型generation": str(info["generation"]),
+               "识别任务": task, "输入特征": "、".join(c["representation_id"] for c in capabilities["inputs"]),
+               "识别能力": "、".join(capabilities["modes"]), "分数类型": capabilities["score_type"]}
+    runtime = info["runtime"]
+    if runtime.get("providers"):
+        details["执行引擎"] = "、".join(runtime["providers"])
+    if runtime.get("fallback_reason"):
+        details["设备说明"] = runtime["fallback_reason"]
+    return ModelPresentation(f"{language}识别模型", f"{language} · {len(words)} 个词 · {task_text}",
+                             tuple(words), details)

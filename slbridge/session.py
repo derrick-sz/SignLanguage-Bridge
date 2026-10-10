@@ -7,10 +7,13 @@ from pathlib import Path
 import queue
 import threading
 import time
+import math
 from typing import Any
 
 from .sources import ClipBuffer
 from .runtime import ModelManager
+from .runtime_contracts import InferenceRequest, CancellationToken
+from .caption_events import CaptionLedger
 
 
 @dataclass(frozen=True)
@@ -28,7 +31,10 @@ class RecognitionSession:
     that call returns another inference cannot be queued.
     """
 
-    def __init__(self, recognizer=None, *, buffer=None, options=None):
+    def __init__(self, recognizer=None, *, buffer=None, options=None, caption_catalog=None,
+                 observer_factory=None, automatic_timeout=10.):
+        if type(automatic_timeout) not in (int, float) or not math.isfinite(automatic_timeout) or automatic_timeout <= 0:
+            raise ValueError("Automatic inference timeout must be finite and positive")
         self.model_manager = ModelManager(initial_recognizer=recognizer, options=options)
         self.buffer = buffer if buffer is not None else ClipBuffer()
         self.state = "IDLE"
@@ -42,6 +48,21 @@ class RecognitionSession:
         self.paused = False
         self.closed = False
         self._busy = False
+        self.caption_catalog = caption_catalog
+        self.captions = CaptionLedger(max_pending=2)
+        self.automatic = False
+        self._auto_version = 0
+        self._auto_sequence = 0
+        self._auto_segmenter = None
+        self._observer_factory = observer_factory
+        self._auto_frames = queue.Queue(maxsize=2)
+        self._auto_pending = deque()
+        self._automatic_timeout = automatic_timeout
+        self._auto_token = None
+        self._auto_eof = None
+        self._auto_dropped_frames = 0
+        self._auto_dropped_segments = 0
+        self._auto_observed_frames = 0
         self._lock = threading.RLock()
         self._events = deque(maxlen=32)
         self._tasks = queue.Queue(maxsize=1)
@@ -51,6 +72,8 @@ class RecognitionSession:
         self._capture_thread.start()
         self._worker = threading.Thread(target=self._run_worker, name="slbridge-model", daemon=True)
         self._worker.start()
+        self._observer_worker = threading.Thread(target=self._observe_loop, name="slbridge-activity", daemon=True)
+        self._observer_worker.start()
 
     @property
     def recognizer(self):
@@ -74,6 +97,71 @@ class RecognitionSession:
         self.buffer.clear()
         self._events.clear()
         self._event("clear")
+        self._reset_automatic(disable=True)
+
+    def _reset_automatic(self, *, disable=False):
+        self._auto_version += 1
+        if disable:
+            self.automatic = False
+        self._auto_pending.clear()
+        self._auto_eof = None
+        if self._auto_token is not None:
+            self._auto_token.cancel()
+        while True:
+            try:
+                self._auto_frames.get_nowait()
+            except queue.Empty:
+                break
+        if self._auto_segmenter is not None:
+            self._auto_segmenter.reset()
+        self.captions.cancel()
+
+    def enable_automatic(self, config=None):
+        from .segmentation import AutoSegmenter
+        with self._lock:
+            if self.closed or not self.source_active:
+                raise RuntimeError("请先打开摄像头或视频回放")
+            if self._busy or self.state == "RECORDING":
+                raise RuntimeError("请先完成当前任务")
+            capabilities = self.model_manager.capabilities()
+            if capabilities is None or not any(
+                "captured_clip" in entry["input_kinds"] for entry in capabilities["inputs"]
+            ) or "clip" not in capabilities["modes"]:
+                raise RuntimeError("当前模型未声明摄像头片段输入能力")
+            self._reset_automatic(disable=True)
+            self._auto_segmenter = AutoSegmenter(config)
+            self.automatic = True
+            self.captions.bind(self.epoch, self.model_manager.generation)
+            self.state = "AUTO"
+            self._event("automatic", "自动分段已启动；完成动作后稍作停顿")
+
+    def disable_automatic(self):
+        with self._lock:
+            self._reset_automatic(disable=True)
+            self.state = "PREVIEW" if self.source is not None else "IDLE"
+            self._event("automatic", "自动分段已停止；可使用手动录制")
+
+    def undo_caption(self):
+        with self._lock:
+            self.captions.undo()
+            self._event("captions", self.captions.snapshot())
+
+    def clear_history(self):
+        with self._lock:
+            # Reset the action boundary too, so an old partial action cannot refill.
+            self.request_id += 1
+            self._events.clear()
+            self._reset_automatic()
+            self.captions.clear()
+            self._event("captions", self.captions.snapshot())
+
+    def automatic_status(self):
+        with self._lock:
+            return dict(enabled=self.automatic, observation_queue=self._auto_frames.qsize(),
+                        pending_segments=len(self._auto_pending), dropped_frames=self._auto_dropped_frames,
+                        dropped_segments=self._auto_dropped_segments,
+                        observed_frames=self._auto_observed_frames,
+                        segmentation_state=getattr(self._auto_segmenter, "state", "WAITING"))
 
     def poll(self):
         with self._lock:
@@ -152,6 +240,8 @@ class RecognitionSession:
                     with self._lock:
                         if epoch == self.epoch and not self.closed:
                             self._event("eof", "文件预览结束；仍可识别完整文件")
+                            if self.automatic:
+                                self._auto_eof = (self.epoch, self._auto_version)
                     break
                 if kind == "video":
                     if first_timestamp is None:
@@ -164,6 +254,8 @@ class RecognitionSession:
                     self.latest_frame = packet
                     if self.state == "RECORDING":
                         self.buffer.append(packet)
+                    if self.automatic:
+                        self._offer_auto_frame(packet)
         except Exception as error:
             with self._lock:
                 if epoch == self.epoch and not self.closed:
@@ -185,6 +277,134 @@ class RecognitionSession:
                     if not self.closed:
                         self._event("source_closed", "来源已释放" if kind == "camera" else "文件预览已结束并释放；仍可识别完整文件")
 
+    def _offer_auto_frame(self, packet):
+        task = (packet, self.epoch, self._auto_version, self.model_manager.generation)
+        try:
+            self._auto_frames.put_nowait(task)
+        except queue.Full:
+            # Latest two observations, no unbounded capture backlog.
+            try:
+                self._auto_frames.get_nowait()
+            except queue.Empty:
+                pass
+            self._auto_dropped_frames += 1
+            self._auto_frames.put_nowait(task)
+
+    def _observe_loop(self):
+        observer, binding = None, None
+        try:
+            while True:
+                try:
+                    task = self._auto_frames.get(timeout=.1)
+                except queue.Empty:
+                    if self.closed:
+                        return
+                    with self._lock:
+                        eof_closed = False
+                        if self._auto_eof == (self.epoch, self._auto_version) and self.automatic:
+                            for notice in self._auto_segmenter.flush():
+                                self._event("candidate", dict(state=notice.state, reason=notice.reason,
+                                                              kind=notice.kind))
+                            self._auto_eof = None
+                            eof_closed = True
+                            self._event("automatic", "回放已结束；未完成片段已丢弃，字幕记录保留")
+                        should_close = not self.automatic or eof_closed
+                    if should_close and observer is not None:
+                        self._close_observer(observer)
+                        observer, binding = None, None
+                    continue
+                packet, epoch, version, generation = task
+                with self._lock:
+                    if self.closed:
+                        return
+                    if not self.automatic or (epoch, version, generation) != (
+                        self.epoch, self._auto_version, self.model_manager.generation
+                    ):
+                        continue
+                    config = self._auto_segmenter.config
+                try:
+                    if binding != (epoch, version):
+                        if observer is not None:
+                            self._close_observer(observer)
+                            observer = None
+                        if not self.automatic:
+                            continue
+                        from .segmentation import MediaPipeActivityObserver
+                        factory = self._observer_factory or MediaPipeActivityObserver
+                        observer = factory(config)
+                        binding = (epoch, version)
+                    observation = observer.observe(packet)
+                    with self._lock:
+                        if not self.automatic or (epoch, version, generation) != (
+                            self.epoch, self._auto_version, self.model_manager.generation
+                        ):
+                            continue
+                        self._auto_observed_frames += 1
+                        for notice in self._auto_segmenter.feed(packet, observation):
+                            if notice.kind == "ready":
+                                self._accept_auto_segment(notice.segment)
+                            else:
+                                self._event("candidate", dict(state=notice.state, reason=notice.reason,
+                                                              kind=notice.kind))
+                except Exception as error:
+                    with self._lock:
+                        if (epoch, version) == (self.epoch, self._auto_version):
+                            self._reset_automatic(disable=True)
+                            self.state = "ERROR"
+                            self._event("error", "自动观察中止；可手动录制。" + str(error))
+        finally:
+            if observer is not None:
+                self._close_observer(observer)
+
+    def _close_observer(self, observer):
+        try:
+            observer.close()
+        except Exception as error:
+            with self._lock:
+                if not self.closed:
+                    self._reset_automatic(disable=True)
+                    self.state = "ERROR"
+                    self._event("error", "活动观察器释放失败；自动模式已停止。" + str(error))
+
+    def _accept_auto_segment(self, segment):
+        if len(self._auto_pending) >= 1:
+            self._auto_dropped_segments += 1
+            self._event("candidate", dict(state="REARM", kind="rejected", reason="inference_backpressure"))
+            return
+        self._auto_sequence += 1
+        generation = self.model_manager.generation
+        request = InferenceRequest(
+            request_id=f"auto-{self.captions.session_id}-{self._auto_sequence}",
+            session_id=self.captions.session_id, segment_id=segment.segment_id,
+            source_epoch=self.epoch, expected_generation=generation,
+            deadline_monotonic=time.monotonic() + self._automatic_timeout,
+            cancellation=CancellationToken())
+        self.captions.reserve(segment_id=segment.segment_id, sequence=self._auto_sequence,
+                              request_id=request.request_id, source_epoch=self.epoch,
+                              model_generation=generation, start_time=segment.start_time,
+                              end_time=segment.end_time, source_id=segment.source_id)
+        self._auto_pending.append((segment, request, self._auto_version, time.monotonic()))
+        self._event("captions", self.captions.snapshot())
+        self._dispatch_auto()
+
+    def _dispatch_auto(self):
+        if self._busy or not self._auto_pending or not self.automatic:
+            return
+        segment, request, version, queued_at = self._auto_pending.popleft()
+        if time.monotonic() >= request.deadline_monotonic:
+            self.captions.reject(segment.segment_id, "queue_timeout")
+            self._event("captions", self.captions.snapshot())
+            return
+        self._busy = True
+        self._auto_token = request.cancellation
+        def infer(_):
+            queue_ms = (time.monotonic() - queued_at) * 1000
+            response = self.model_manager.infer_clip(segment.clip, request)
+            response.timing_ms["queue_ms"] = queue_ms
+            return response
+        self._tasks.put_nowait((self.request_id, self.epoch, infer, "auto_result",
+                                (version, segment.segment_id)))
+
     def start_recording(self):
         with self._lock:
             if self.closed or self.source_kind != "camera" or not self.source_active:
@@ -204,6 +424,9 @@ class RecognitionSession:
                 self._invalidate()
                 self.state = "ERROR"
                 raise
+            if self.model_manager.supports_typed_inference:
+                request = self._manual_request()
+                return self._submit(lambda _: self.model_manager.infer_clip(clip, request), kind="typed_result")
             return self._submit(lambda recognizer: recognizer.recognize_clip(clip, sample_id=clip.source_id))
 
     def recognize_file(self):
@@ -211,7 +434,15 @@ class RecognitionSession:
             if self.video_path is None:
                 raise RuntimeError("请先打开视频文件")
             path = self.video_path
+            if self.model_manager.supports_typed_inference:
+                request = self._manual_request()
+                return self._submit(lambda _: self.model_manager.infer_file(path, request), kind="typed_result")
             return self._submit(lambda recognizer: recognizer.recognize(path))
+
+    def _manual_request(self):
+        from uuid import uuid4
+        return InferenceRequest(request_id="manual-" + uuid4().hex, session_id=self.captions.session_id,
+                                source_epoch=self.epoch, expected_generation=self.model_manager.generation)
 
     def _submit(self, operation, *, kind="result", require_model=True):
         with self._lock:
@@ -230,7 +461,7 @@ class RecognitionSession:
     def load_model(self, path, loader=None):
         def load(_):
             return self.model_manager.prepare(path, loader=loader,
-                                              required_representation=("mediapipe225_rgb_v1", "tfnet_rgb_v1"))
+                                              required_input_kind="captured_clip")
 
         with self._lock:
             if self.state == "RECORDING":
@@ -263,7 +494,7 @@ class RecognitionSession:
                     return
             request_id, epoch, operation, kind, model = task
             try:
-                value = (operation(model) if kind == "model" else
+                value = (operation(model) if kind in {"model", "auto_result", "typed_result"} else
                          self.model_manager.run(operation, expected_model=model))
                 error = None
             except Exception as exc:
@@ -277,7 +508,22 @@ class RecognitionSession:
                 if (request_id, epoch) != (self.request_id, self.epoch):
                     if kind == "model" and value is not None:
                         self.model_manager.discard(value)
+                    self._dispatch_auto()
                     continue
+                if kind == "auto_result":
+                    if model[0] == self._auto_version and self.automatic:
+                        if error:
+                            self.captions.reject(model[1], error)
+                            self._event("candidate", dict(state="REARM", kind="rejected", reason=error))
+                        else:
+                            self.captions.complete(value, self.caption_catalog)
+                            self._event("auto_result", value)
+                        self._event("captions", self.captions.snapshot())
+                    self._dispatch_auto()
+                    continue
+                if kind == "typed_result" and error is None:
+                    value = value.result
+                    kind = "result"
                 if error is None and kind == "model":
                     try:
                         self.model_manager.activate(value)
