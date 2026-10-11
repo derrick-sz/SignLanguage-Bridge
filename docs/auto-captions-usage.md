@@ -86,6 +86,32 @@ API、桌面和 `RuntimeOptions` 默认使用 4 个 ORT 推理线程；CPU CTC �
 
 根因、单变量对照、原始 693 秒记录的复现边界及 HTTP 证据见[CPU 性能修复报告](reports/ctc-cpu-performance-fix-2026-10-11.md)。
 
+## GPU 推理
+
+本机 RTX 5060 Ti 已用独立 `.venv-gpu` 验证完整 CTC 视频。原 `.venv-libras` 安装的是 CPU ORT，启动 GPU 推理应使用 GPU 环境的 Python。GPU 依赖现在包含 CUDA/cuDNN 运行库；Windows 加载器会补充预加载同版本 cuDNN 引擎。统一运行器、API 和桌面的默认显存池上限为 8192 MB，可通过 `--gpu-mem-limit-mb` 覆盖；上限不会预先占用全部显存。
+
+使用 Python 3.12 创建独立环境：
+
+```powershell
+python -m venv .venv-gpu
+.venv-gpu/Scripts/python.exe -m pip install -r requirements-api.txt -r requirements-onnx-gpu.txt "opencv-contrib-python==4.10.0.84" "scipy==1.16.3"
+.venv-gpu/Scripts/python.exe -m pip install --no-deps -e .
+.venv-gpu/Scripts/python.exe -m pip check
+.venv-gpu/Scripts/python.exe -m slbridge.api_cli --catalog configs/unified-runtime-models.example.json --model csl-tfnet --device cuda
+```
+
+`--device cuda` 要求实际 CUDA provider 激活，依赖不兼容会明确失败。`auto` 可在初始化失败时回退 CPU；真实设备和回退原因见 `/v3/health`、识别响应的 `runtime`。API 完整视频使用 `/v3/recognitions`，请求 `sign_language=csl`、`task_type=gloss_sequence`。GPU 依赖与 CPU `onnxruntime` 分别安装在各自环境。
+
+同一完整视频的 GPU 模型前向为 0.54–0.56 秒，文件推理总耗时 1.92–1.99 秒，真实 HTTP 上传为 2.07–2.25 秒，输出与 CPU 参考一致；详细数值及限制见[GPU 实测报告](reports/ctc-gpu-inference-2026-10-11.md)。本次是完整片段推理，动作结束到字幕显示的 P95 目标仍需单独验收。
+
+GPU 基准可保存完整 logits，并核对数值、逐帧 argmax 和最终 CTC token：
+
+```powershell
+.venv-gpu/Scripts/python.exe -m experiments.benchmark_ctc_runtime --device cuda --model artifacts/models/cecsl-tfnet-onnx-20261009 --video D:/Zenodo/CE-CSL/CE-CSL/video/test/A/test-00001.mp4 --output artifacts/ctc-gpu-benchmark --runs 3 --reference-logits artifacts/ctc-perf-diagnosis/production-original-one/logits-1.npy
+```
+
+参考 logits 是本机 CPU 对照产物；其他环境可先用同一入口的 `--device cpu` 保存自己的参考。旧 `experiments.benchmark_ctc_cpu` 命令继续兼容。当前 `.venv-gpu` 实测范围是模型及 API；桌面启动还需安装 `requirements-desktop.txt`，再使用 `.venv-gpu/Scripts/python.exe -m slbridge.desktop_cli --device cuda --model artifacts/models/cecsl-tfnet-onnx-20261009`。
+
 实际摄像头活动观察与释放探测（不保存像素，不评估动作准确率）：
 
 ```powershell

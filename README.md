@@ -15,6 +15,8 @@ python -m slbridge.api_cli --catalog configs/cecsl_runtime_catalog.example.json 
 
 模型与上游源码保存在本地，仓库不分发权重；CUDA/cuDNN DLL 的安装或显式目录配置见 [CE-CSL 接入与执行说明](docs/CE-CSL_TFNet_ONNX接入与验证_2026-10-09.md)。上传完整视频使用 `/v2/recognitions`；桌面可选择同一个模型目录，中文字幕为识别词序列，葡语表达待审核。共同词义候选见 [审核清单](docs/CE-CSL_Libras共同语义审核清单_2026-10-09.md)，视觉表示迁移结果见 [迁移验证](docs/CE-CSL_Libras迁移验证_2026-10-09.md)。
 
+2026-10-11 已修复当前 GPU 环境的 cuDNN 引擎加载及统一运行器 2 GB 显存池上限问题。同一 8.2 秒完整视频在 RTX 5060 Ti 上模型前向约 0.54–0.56 秒，文件推理总耗时约 1.92–1.99 秒，真实 HTTP 上传约 2.07–2.25 秒；完整 logits 与 CPU 参考在既定容差内一致，最终词序列相同。独立 GPU 环境和 v3 API 启动见[GPU 使用说明](docs/auto-captions-usage.md#gpu-推理)，数值、算子、HTTP 证据及验收边界见[实测报告](docs/reports/ctc-gpu-inference-2026-10-11.md)。
+
 ## 模型 API 与 ONNX
 
 0.2.0 新增统一模型运行管理器、HTTP v1 API、模型校验/预热/切换/回退，以及 ONNX CPU/CUDA 适配器。桌面使用同一运行管理逻辑，录制期间禁止切换，设置中可恢复上个模型。现有 RF 导出模型已用全部 72 个冻结测试输入验证数值与预测一致性；CUDA 计算路径已验证，RF 的 TreeEnsemble 算子仍在 CPU 上执行。

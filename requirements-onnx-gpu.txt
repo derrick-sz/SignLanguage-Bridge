@@ -1,4 +1,8 @@
 # CUDA deployment. Do not co-install the CPU onnxruntime distribution.
-onnxruntime-gpu==1.23.2
+# Include the CUDA 12 / cuDNN 9 runtime libraries in this environment.
+onnxruntime-gpu[cuda,cudnn]==1.23.2
 onnx==1.19.1
 skl2onnx==1.19.1
+# Matches the verified media environment; Protobuf 7 rejects the bool-valued
+# integer attributes emitted by this skl2onnx release during RF export.
+protobuf==4.25.8

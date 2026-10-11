@@ -190,6 +190,48 @@ def _ctc_cpu_execution_model(model_bytes: bytes, policy: str) -> tuple[bytes, di
     return execution, info
 
 
+def _loaded_cudnn_directory() -> Path | None:
+    """Find the Windows cuDNN already selected by ORT's DLL preloader."""
+    if os.name != "nt":
+        return None
+    import ctypes
+
+    kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)
+    get_module = kernel32.GetModuleHandleW
+    get_module.argtypes = [ctypes.c_wchar_p]
+    get_module.restype = ctypes.c_void_p
+    get_filename = kernel32.GetModuleFileNameW
+    get_filename.argtypes = [ctypes.c_void_p, ctypes.POINTER(ctypes.c_wchar), ctypes.c_uint32]
+    get_filename.restype = ctypes.c_uint32
+    module = get_module("cudnn64_9.dll")
+    if not module:
+        return None
+    filename = ctypes.create_unicode_buffer(32768)
+    length = get_filename(module, filename, len(filename))
+    if not length or length >= len(filename):
+        raise OSError(ctypes.get_last_error(), "Cannot locate the loaded cuDNN library")
+    return Path(filename.value).parent
+
+
+def _preload_cudnn_engines() -> int:
+    """Load split engine libraries from the same cuDNN distribution.
+
+    ORT's static preload list predates some cuDNN engines. cuDNN loads these
+    plugins during the first kernel; add_dll_directory alone does not cover
+    that native lookup on Windows. Absolute loads avoid changing global PATH
+    or mixing plugins from a different installed cuDNN version.
+    """
+    import ctypes
+
+    directory = _loaded_cudnn_directory()
+    if directory is None:
+        return 0
+    engines = sorted(directory.glob("cudnn_engines*_9.dll"))
+    for engine in engines:
+        ctypes.CDLL(str(engine))
+    return len(engines)
+
+
 def create_onnx_session(path: str | Path, *, options: Any, backend_id: str) -> tuple[Any, dict[str, Any], list[Any]]:
     """Create a self-contained ONNX session with verified provider selection.
 
@@ -217,6 +259,7 @@ def create_onnx_session(path: str | Path, *, options: Any, backend_id: str) -> t
     session_options.execution_mode = ort.ExecutionMode.ORT_SEQUENTIAL
     session_options.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_ALL
     use_cuda = options.device != "cpu" and cuda_available
+    cudnn_engines_preloaded = 0
     dll_handles: list[Any] = []
     dll_dirs = tuple(getattr(options, "cuda_dll_dirs", ()))
     for directory in dll_dirs:
@@ -238,6 +281,8 @@ def create_onnx_session(path: str | Path, *, options: Any, backend_id: str) -> t
                 ort.preload_dlls()
                 for directory in dll_dirs:
                     ort.preload_dlls(directory=directory)
+            if backend_id == "onnx_ctc":
+                cudnn_engines_preloaded = _preload_cudnn_engines()
         except Exception as error:
             release_dll_handles()
             if options.device == "cuda":
@@ -328,6 +373,7 @@ def create_onnx_session(path: str | Path, *, options: Any, backend_id: str) -> t
             "device_id": options.device_id, "intra_op_threads": options.intra_op_threads,
             "gpu_mem_limit_mb": options.gpu_mem_limit_mb,
             "cuda_dll_directories_configured": len(dll_dirs),
+            "cudnn_engine_libraries_preloaded": cudnn_engines_preloaded if active_cuda else 0,
             "onnx_parser_version": parser_version,
             "provider_scope": "session; individual operators may execute on CPU"}
     if backend_id == "onnx_ctc":

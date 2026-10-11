@@ -10,7 +10,9 @@ class RuntimeOptions:
     device: str = "auto"
     device_id: int = 0
     intra_op_threads: int = 4
-    gpu_mem_limit_mb: int = 2048
+    # A full RGB CTC clip exceeds the former 2 GiB arena cap. This is a
+    # ceiling, not a reservation; operators allocate only what they need.
+    gpu_mem_limit_mb: int = 8192
     cuda_dll_dirs: tuple[str, ...] = ()
     cpu_conv_subnormals: str = "flush_to_zero"
 

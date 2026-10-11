@@ -27,6 +27,13 @@ from slbridge.runtime_options import RuntimeOptions
 from slbridge.training import TrainConfig, train
 
 
+@pytest.fixture(autouse=True)
+def isolate_mock_provider_negotiation(monkeypatch):
+    # Tests here emulate provider selection; real DLL loading has its own
+    # regression seam and full-model CUDA acceptance.
+    monkeypatch.setattr("slbridge.onnx_backend._preload_cudnn_engines", lambda: 0)
+
+
 def _config(layout="feature_vector", kind="logits", *, mask=None, mask_dtype="float32"):
     return {"schema_version": 1, "input_layout": layout, "values_input": "values",
             "mask_input": mask, "mask_dtype": mask_dtype, "output_name": "scores", "output_kind": kind}
@@ -306,7 +313,7 @@ def test_ctc_disables_cuda_tf32_without_changing_classifier_provider_options(tmp
 
     monkeypatch.setattr(ort, "InferenceSession", initialize_cpu)
     session, info, handles = create_onnx_session(path, options=RuntimeOptions(device="auto"), backend_id=backend_id)
-    expected_options = {"device_id": "0", "gpu_mem_limit": str(2048 * 1024 * 1024)}
+    expected_options = {"device_id": "0", "gpu_mem_limit": str(RuntimeOptions().gpu_mem_limit_mb * 1024 * 1024)}
     if backend_id == "onnx_ctc":
         expected_options["use_tf32"] = "0"
         expected_options["arena_extend_strategy"] = "kSameAsRequested"

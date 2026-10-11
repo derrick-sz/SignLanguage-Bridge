@@ -110,6 +110,11 @@ def test_classifier_and_preserve_policy_keep_exact_execution_bytes(tmp_path, mon
         assert info["cpu_numerics"]["flushed_values"] == 0
 
 
+@pytest.fixture(autouse=True)
+def isolate_cuda_preload(monkeypatch):
+    monkeypatch.setattr("slbridge.onnx_backend._preload_cudnn_engines", lambda: 0)
+
+
 @pytest.mark.parametrize("fallback", ["initialization_error", "implicit_cpu"])
 def test_gpu_to_cpu_fallback_uses_sanitized_cpu_execution(tmp_path, monkeypatch, fallback):
     path = tmp_path / "model.onnx"

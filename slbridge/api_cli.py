@@ -66,7 +66,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--device-id", type=int, default=0)
     parser.add_argument("--intra-op-threads", type=int, default=4)
     parser.add_argument("--cpu-conv-subnormals", choices=("flush_to_zero", "preserve"), default="flush_to_zero")
-    parser.add_argument("--gpu-mem-limit-mb", type=int, default=2048)
+    parser.add_argument("--gpu-mem-limit-mb", type=int, default=RuntimeOptions().gpu_mem_limit_mb)
     parser.add_argument("--cuda-dll-dir", type=Path, action="append", default=[],
                         help="Server-owned CUDA DLL directory; repeat for multiple directories")
     parser.add_argument("--max-upload-mb", type=int, default=128)

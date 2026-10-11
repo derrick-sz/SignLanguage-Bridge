@@ -6,6 +6,7 @@ from importlib import resources
 from pathlib import Path
 
 from ._io import configure_utf8_streams
+from .runtime_options import RuntimeOptions
 
 
 def default_catalog():
@@ -35,13 +36,12 @@ def main(argv=None):
     parser.add_argument("--device-id", type=int, default=0)
     parser.add_argument("--intra-op-threads", type=int, default=4)
     parser.add_argument("--cpu-conv-subnormals", choices=("flush_to_zero", "preserve"), default="flush_to_zero")
-    parser.add_argument("--gpu-mem-limit-mb", type=int, default=2048)
+    parser.add_argument("--gpu-mem-limit-mb", type=int, default=RuntimeOptions().gpu_mem_limit_mb)
     parser.add_argument("--cuda-dll-dir", type=Path, action="append", default=[])
     inputs = parser.add_mutually_exclusive_group()
     inputs.add_argument("--video", type=Path, help="启动时打开的视频文件")
     inputs.add_argument("--camera", type=int, help="启动时打开的摄像头设备编号")
     args = parser.parse_args(argv)
-    from .runtime_options import RuntimeOptions
     try:
         options = RuntimeOptions(device=args.device, device_id=args.device_id,
                                  intra_op_threads=args.intra_op_threads, gpu_mem_limit_mb=args.gpu_mem_limit_mb,
