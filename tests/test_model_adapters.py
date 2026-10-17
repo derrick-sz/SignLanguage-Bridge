@@ -293,17 +293,23 @@ def test_empty_ctc_rejection_remains_valid_but_nonempty_rejected_gloss_is_refuse
 
 @pytest.mark.parametrize("when", ["before", "during"])
 @pytest.mark.parametrize("reason", ["cancel", "deadline"])
-def test_cooperative_cancel_or_deadline_never_delivers_late_result(when, reason):
+def test_cooperative_cancel_or_deadline_never_delivers_late_result(when, reason, monkeypatch):
+    # A fixed 90 ms sleep does not ensure an 80 ms monotonic deadline elapsed
+    # on Windows GetTickCount64 (15.625 ms ticks). Advance the request clock
+    # while native work is held, keeping the real worker and release events.
+    clock = [1000.]
+    monkeypatch.setattr("slbridge.runtime_contracts.time",
+                        SimpleNamespace(monotonic=lambda: clock[0]))
     model = TextAdapter()
     manager = ModelManager(initial_recognizer=model)
     token = CancellationToken()
-    deadline = (time.monotonic() - 1) if when == "before" and reason == "deadline" else None
+    deadline = (clock[0] - 1) if when == "before" and reason == "deadline" else None
     if when == "before" and reason == "cancel":
         token.cancel()
     if when == "during":
         model.entered, model.release = threading.Event(), threading.Event()
         if reason == "deadline":
-            deadline = time.monotonic() + .08
+            deadline = clock[0] + .08
     work_request = request(cancellation=token, deadline_monotonic=deadline)
     errors, delivered = [], []
     def work():
@@ -322,7 +328,7 @@ def test_cooperative_cancel_or_deadline_never_delivers_late_result(when, reason)
             if reason == "cancel":
                 token.cancel()
             else:
-                time.sleep(.09)
+                clock[0] = work_request.deadline_monotonic + .01
             assert model.closed == 0 and manager.status()["state"] == "inferencing"
             model.release.set()
             worker.join(3)

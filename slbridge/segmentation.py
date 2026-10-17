@@ -415,6 +415,14 @@ class MediaPipeActivityObserver:
                                   min_detection_confidence=0.5, min_tracking_confidence=0.5)
 
     def observe(self, packet: FramePacket) -> ActivityObservation:
+        return self.observe_landmarks(packet)[0]
+
+    def observe_landmarks(self, packet: FramePacket) -> tuple[ActivityObservation, Any]:
+        """Return activity and its raw landmarks from one persistent graph call.
+
+        This is an extraction outlet, not a new activity-quality contract.
+        Callers must consume the result before the next graph observation.
+        """
         import cv2
         import numpy as np
 
@@ -479,8 +487,9 @@ class MediaPipeActivityObserver:
                                  for points in hands.values())
         self._previous_packet = _FrameIdentity.of(packet)
         self._previous_hands = hands if quality else {}
-        return ActivityObservation(packet.timestamp, bool(hands_visible), quality, motion,
-                                   bool(active), visible["left"], visible["right"])
+        observation = ActivityObservation(packet.timestamp, bool(hands_visible), quality, motion,
+                                          bool(active), visible["left"], visible["right"])
+        return observation, result
 
     def close(self) -> None:
         graph, self._graph = self._graph, None

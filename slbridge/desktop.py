@@ -67,6 +67,7 @@ class SignLanguageApp(QMainWindow):
         self._source_path = None
         self._photo = None
         self._closed = False
+        self._keypoint_workbench = None
         self._task_kind = None
         self._cancel_pending = False
         self._record_started = None
@@ -111,6 +112,9 @@ class SignLanguageApp(QMainWindow):
         header.addStretch()
         self.state_badge = _label("等待输入", "statusBadge", wrap=False)
         header.addWidget(self.state_badge)
+        self.keypoint_button = _button("关键点工作台", self.open_keypoint_workbench, "video", "ghost")
+        self.keypoint_button.setObjectName("openKeypointWorkbench")
+        header.addWidget(self.keypoint_button)
         self.settings_button = _button("设置", self.open_settings, "settings", "ghost")
         header.addWidget(self.settings_button)
         outer.addLayout(header)
@@ -317,6 +321,15 @@ class SignLanguageApp(QMainWindow):
         self.settings_dialog.show()
         self.settings_dialog.raise_()
         self.settings_dialog.activateWindow()
+
+    def open_keypoint_workbench(self):
+        if self._keypoint_workbench is None or self._keypoint_workbench._closed:
+            self.stop_source()
+            from .keypoint_desktop import KeypointWorkbench
+            self._keypoint_workbench = KeypointWorkbench(self)
+        self._keypoint_workbench.show()
+        self._keypoint_workbench.raise_()
+        self._keypoint_workbench.activateWindow()
 
     def _select_camera_index(self, index):
         item = self.camera_combo.findData(index)
@@ -723,6 +736,8 @@ class SignLanguageApp(QMainWindow):
             self._closed = True
             self._timer.stop()
             self.settings_dialog.close()
+            if self._keypoint_workbench is not None:
+                self._keypoint_workbench.close()
             self.session.close()
         event.accept()
 

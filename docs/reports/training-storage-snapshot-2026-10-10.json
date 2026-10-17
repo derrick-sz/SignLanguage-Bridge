@@ -1,0 +1,124 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-10-10T13:38:35+08:00",
+  "scope": "Libras small causal TCN using existing pre-extracted features; disk only; training not started",
+  "units": "GiB = 1073741824 bytes",
+  "volumes": [
+    {
+      "drive": "C:",
+      "reported_drive_type": 3,
+      "filesystem": "NTFS",
+      "label": "系统",
+      "total_bytes": 317497012224,
+      "free_bytes": 62721982464,
+      "free_gib": 58.414398193359375,
+      "in_training_capacity_budget": true
+    },
+    {
+      "drive": "D:",
+      "reported_drive_type": 3,
+      "filesystem": "NTFS",
+      "label": "软件",
+      "total_bytes": 408650641408,
+      "free_bytes": 97740886016,
+      "free_gib": 91.02829360961914,
+      "in_training_capacity_budget": true
+    },
+    {
+      "drive": "E:",
+      "reported_drive_type": 3,
+      "filesystem": "NTFS",
+      "label": "文档",
+      "total_bytes": 273721675776,
+      "free_bytes": 36022616064,
+      "free_gib": 33.548675537109375,
+      "in_training_capacity_budget": true
+    },
+    {
+      "drive": "F:",
+      "reported_drive_type": 3,
+      "filesystem": "NTFS",
+      "label": "game",
+      "total_bytes": 500106784768,
+      "free_bytes": 273663438848,
+      "free_gib": 254.86893844604492,
+      "in_training_capacity_budget": true
+    },
+    {
+      "drive": "G:",
+      "reported_drive_type": 3,
+      "filesystem": "FAT32",
+      "label": "Google Drive",
+      "total_bytes": 500106784768,
+      "free_bytes": 259980263424,
+      "free_gib": 242.12548828125,
+      "in_training_capacity_budget": false
+    }
+  ],
+  "asset_measurements": {
+    "method": "read-only file enumeration/stat by training_disk_audit; logical sizes, not allocation sizes",
+    "hand_npy": {
+      "files": 5347,
+      "bytes": 296822216,
+      "payload_bytes": 296137800
+    },
+    "full_npy": {
+      "files": 5335,
+      "bytes": 746960192,
+      "payload_bytes": 746277312
+    },
+    "libras_png": {
+      "files": 586477,
+      "bytes": 36685172202
+    },
+    "libras_t_zip": {
+      "files": 1,
+      "bytes": 35604881215
+    },
+    "libras_annotations": {
+      "files": 3,
+      "bytes": 656131
+    },
+    "libras_rgb_mp4": {
+      "files": 5347,
+      "bytes": 8983189952
+    },
+    "cecsl_rgb_mp4": {
+      "files": 5988,
+      "bytes": 9846246512
+    },
+    "cecsl_original_checkpoint": {
+      "files": 1,
+      "bytes": 879605267
+    }
+  },
+  "estimated_first_round_budget": {
+    "status": "planning_estimate_not_measured_peak",
+    "max_model_parameters": 5000000,
+    "new_environment": false,
+    "duplicate_rgb_or_png": false,
+    "materialize_all_rgb_float32": false,
+    "ceiling_gib": 10,
+    "preferred_output_root": "D:/SignLanguage-Bridge-runs/libras-tcn",
+    "cache_gib": [
+      1,
+      3
+    ],
+    "checkpoints_exports_staging_gib": [
+      1,
+      2
+    ],
+    "reports_predictions_manifests_gib": [
+      0.2,
+      1
+    ],
+    "other_transient_allowance_gib": [
+      1,
+      2
+    ],
+    "remaining_buffer_within_ceiling_gib": 2
+  },
+  "storage_outcome": "sufficient_under_estimated_feature_training_plan",
+  "training_status": "not_started; new input adapter, frozen cleaned split and TCN trainer still required",
+  "scenario_attributes_status": "design_recommended; optional application metadata; no product code changes"
+}

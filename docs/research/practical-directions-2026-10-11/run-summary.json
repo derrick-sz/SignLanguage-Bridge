@@ -1,0 +1,46 @@
+{
+  "skill_version": "8.0",
+  "timestamp": "2026-10-11T05:40:28.917746+00:00",
+  "output_type": "full",
+  "stakes": "medium",
+  "orchestration_mode": "lead+subagents",
+  "used_subagents": true,
+  "used_tension_discovery": true,
+  "used_landscape_scan": false,
+  "used_reverse_search": false,
+  "manual_spotcheck_run": true,
+  "search_count": 20,
+  "fetch_count": null,
+  "word_count": 4715,
+  "citation_count": 32,
+  "unique_citations": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+  ],
+  "source_count": 14,
+  "evaluation_run": true,
+  "evaluation_verdict": "PASS",
+  "dimension_scores": {
+    "Evidence & grounding": 9.0,
+    "Synthesis quality": 9.0,
+    "Coverage & limitations": 9.0,
+    "Coherence & usability": 8.0,
+    "Calibration & insight": 9.0
+  },
+  "issues": [
+    "Local product demand and task efficacy remain unverified; no competitor API exercised",
+    "fetch_count not aggregated"
+  ]
+}

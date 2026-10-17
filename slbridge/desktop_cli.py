@@ -30,6 +30,7 @@ def main(argv=None):
         description="Libras 动作分类与中国手语词序列识别、中文字幕",
     )
     parser.add_argument("--model", type=Path, help="RGB clip 模型包目录")
+    parser.add_argument("--keypoints", action="store_true", help="直接打开关键点采集与回放工作台，不加载识别模型")
     parser.add_argument("--catalog", type=Path, help="字幕词典 JSON")
     parser.add_argument("--segment-config", type=Path, help="自动端点参数 JSON；未指定时使用未经真人验证的启发式默认值")
     parser.add_argument("--device", choices=("auto", "cpu", "cuda"), default="auto", help="模型执行设备")
@@ -42,6 +43,23 @@ def main(argv=None):
     inputs.add_argument("--video", type=Path, help="启动时打开的视频文件")
     inputs.add_argument("--camera", type=int, help="启动时打开的摄像头设备编号")
     args = parser.parse_args(argv)
+    if args.keypoints:
+        if args.model is not None or args.catalog is not None or args.segment_config is not None:
+            parser.error("关键点工作台不使用识别模型、字幕词典或自动分段配置")
+        if args.camera is not None and not 0 <= args.camera <= 32:
+            parser.error("关键点工作台的摄像头设备编号须在 0 到 32 之间")
+        import sys
+        from PySide6.QtWidgets import QApplication
+        from .keypoint_desktop import KeypointWorkbench
+        qt = QApplication.instance() or QApplication([sys.argv[0]])
+        app = KeypointWorkbench()
+        if args.video:
+            app.open_video(args.video)
+        elif args.camera is not None:
+            app.camera_index.setValue(args.camera)
+            app.open_camera()
+        app.show()
+        return qt.exec()
     try:
         options = RuntimeOptions(device=args.device, device_id=args.device_id,
                                  intra_op_threads=args.intra_op_threads, gpu_mem_limit_mb=args.gpu_mem_limit_mb,

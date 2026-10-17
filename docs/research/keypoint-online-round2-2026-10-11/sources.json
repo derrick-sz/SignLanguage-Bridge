@@ -1,0 +1,11 @@
+[
+  {"id":1,"url":"https://developers.google.com/edge/mediapipe/solutions/vision/hand_landmarker/python","type":"OFFICIAL"},
+  {"id":2,"url":"https://www.cs.cmu.edu/~christos/PUBLICATIONS/spring-icde07.pdf","type":"PRIMARY"},
+  {"id":3,"url":"https://pmc.ncbi.nlm.nih.gov/articles/PMC5668684/","type":"PRIMARY"},
+  {"id":4,"url":"https://github.com/locuslab/TCN/blob/8845f88f31def1e7ffccb8811ea966e9f58d9695/TCN/tcn.py","type":"AUTHOR_SOURCE"},
+  {"id":5,"url":"https://docs.pytorch.org/docs/main/generated/torch.nn.GRU.html","type":"OFFICIAL"},
+  {"id":6,"url":"https://aclanthology.org/2024.emnlp-main.619.pdf","type":"PRIMARY"},
+  {"id":7,"url":"https://raw.githubusercontent.com/FangyunWei/SLRT/main/Online/CSLR/prediction_slide.py","type":"AUTHOR_SOURCE"},
+  {"id":8,"url":"https://gery.casiez.net/1euro/","type":"AUTHOR_SOURCE"},
+  {"id":9,"url":"https://pmc.ncbi.nlm.nih.gov/articles/PMC6816304/","type":"PRIMARY"}
+]

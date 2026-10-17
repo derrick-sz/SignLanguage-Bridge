@@ -1,0 +1,253 @@
+{
+  "checked_at": "2026-10-09",
+  "source_root": "D:\\Zenodo\\CE-CSL\\CE-CSL",
+  "source_headers": [
+    "Number",
+    "Translator",
+    "Chinese Sentences",
+    "Gloss",
+    "Note"
+  ],
+  "source_files": [
+    "D:\\Zenodo\\CE-CSL\\CE-CSL\\label\\train.csv",
+    "D:\\Zenodo\\CE-CSL\\CE-CSL\\label\\dev.csv",
+    "D:\\Zenodo\\CE-CSL\\CE-CSL\\label\\test.csv"
+  ],
+  "rows": 5988,
+  "rows_by_split": {
+    "train": 4973,
+    "dev": 515,
+    "test": 500
+  },
+  "rows_by_translator": {
+    "A": 600,
+    "B": 600,
+    "C": 600,
+    "D": 600,
+    "E": 600,
+    "F": 600,
+    "G": 600,
+    "H": 119,
+    "J": 397,
+    "I": 84,
+    "K": 600,
+    "L": 588
+  },
+  "unique_record_ids": 5988,
+  "video_pairing_rule": "video/{split}/{Translator}/{Number}.mp4",
+  "missing_video_record_ids": [],
+  "candidate_rows": 50,
+  "candidate_rows_by_scene": {
+    "澄清与纠错": 12,
+    "否定与不能": 4,
+    "活动安排与校园地点": 8,
+    "校园学习与活动": 7,
+    "文化交流": 4,
+    "日常求助与办事": 8,
+    "自我介绍与欢迎": 7
+  },
+  "candidate_csv": "E:\\githubproject\\SignLanguage-Bridge\\docs\\reports\\csl-scene-candidates-2026-10-09.csv",
+  "exact_term_counts": [
+    {
+      "term": "中国",
+      "exact_gloss_rows": 66,
+      "exact_gloss_occurrences": 66,
+      "sentence_substring_rows": 44
+    },
+    {
+      "term": "巴西",
+      "exact_gloss_rows": 0,
+      "exact_gloss_occurrences": 0,
+      "sentence_substring_rows": 0
+    },
+    {
+      "term": "葡萄牙",
+      "exact_gloss_rows": 0,
+      "exact_gloss_occurrences": 0,
+      "sentence_substring_rows": 0
+    },
+    {
+      "term": "手语",
+      "exact_gloss_rows": 0,
+      "exact_gloss_occurrences": 0,
+      "sentence_substring_rows": 0
+    },
+    {
+      "term": "学校",
+      "exact_gloss_rows": 28,
+      "exact_gloss_occurrences": 29,
+      "sentence_substring_rows": 25
+    },
+    {
+      "term": "学生",
+      "exact_gloss_rows": 12,
+      "exact_gloss_occurrences": 12,
+      "sentence_substring_rows": 8
+    },
+    {
+      "term": "大学",
+      "exact_gloss_rows": 9,
+      "exact_gloss_occurrences": 9,
+      "sentence_substring_rows": 9
+    },
+    {
+      "term": "老师",
+      "exact_gloss_rows": 30,
+      "exact_gloss_occurrences": 30,
+      "sentence_substring_rows": 27
+    },
+    {
+      "term": "学习",
+      "exact_gloss_rows": 23,
+      "exact_gloss_occurrences": 23,
+      "sentence_substring_rows": 28
+    },
+    {
+      "term": "学习1",
+      "exact_gloss_rows": 17,
+      "exact_gloss_occurrences": 17,
+      "sentence_substring_rows": 0
+    },
+    {
+      "term": "活动",
+      "exact_gloss_rows": 13,
+      "exact_gloss_occurrences": 13,
+      "sentence_substring_rows": 13
+    },
+    {
+      "term": "时间",
+      "exact_gloss_rows": 175,
+      "exact_gloss_occurrences": 176,
+      "sentence_substring_rows": 95
+    },
+    {
+      "term": "哪里",
+      "exact_gloss_rows": 46,
+      "exact_gloss_occurrences": 46,
+      "sentence_substring_rows": 56
+    },
+    {
+      "term": "帮助",
+      "exact_gloss_rows": 46,
+      "exact_gloss_occurrences": 47,
+      "sentence_substring_rows": 20
+    },
+    {
+      "term": "申请",
+      "exact_gloss_rows": 7,
+      "exact_gloss_occurrences": 7,
+      "sentence_substring_rows": 5
+    },
+    {
+      "term": "服务",
+      "exact_gloss_rows": 17,
+      "exact_gloss_occurrences": 17,
+      "sentence_substring_rows": 17
+    },
+    {
+      "term": "重复",
+      "exact_gloss_rows": 1,
+      "exact_gloss_occurrences": 1,
+      "sentence_substring_rows": 2
+    },
+    {
+      "term": "慢",
+      "exact_gloss_rows": 11,
+      "exact_gloss_occurrences": 11,
+      "sentence_substring_rows": 18
+    },
+    {
+      "term": "慢1",
+      "exact_gloss_rows": 2,
+      "exact_gloss_occurrences": 2,
+      "sentence_substring_rows": 0
+    },
+    {
+      "term": "慢2",
+      "exact_gloss_rows": 5,
+      "exact_gloss_occurrences": 5,
+      "sentence_substring_rows": 0
+    },
+    {
+      "term": "明白",
+      "exact_gloss_rows": 3,
+      "exact_gloss_occurrences": 3,
+      "sentence_substring_rows": 8
+    },
+    {
+      "term": "理解",
+      "exact_gloss_rows": 5,
+      "exact_gloss_occurrences": 5,
+      "sentence_substring_rows": 4
+    },
+    {
+      "term": "懂",
+      "exact_gloss_rows": 3,
+      "exact_gloss_occurrences": 3,
+      "sentence_substring_rows": 9
+    },
+    {
+      "term": "不懂",
+      "exact_gloss_rows": 4,
+      "exact_gloss_occurrences": 4,
+      "sentence_substring_rows": 6
+    },
+    {
+      "term": "不明白",
+      "exact_gloss_rows": 1,
+      "exact_gloss_occurrences": 1,
+      "sentence_substring_rows": 4
+    },
+    {
+      "term": "不",
+      "exact_gloss_rows": 229,
+      "exact_gloss_occurrences": 231,
+      "sentence_substring_rows": 722
+    },
+    {
+      "term": "没有",
+      "exact_gloss_rows": 104,
+      "exact_gloss_occurrences": 106,
+      "sentence_substring_rows": 124
+    },
+    {
+      "term": "没有2",
+      "exact_gloss_rows": 78,
+      "exact_gloss_occurrences": 78,
+      "sentence_substring_rows": 0
+    },
+    {
+      "term": "不是",
+      "exact_gloss_rows": 21,
+      "exact_gloss_occurrences": 21,
+      "sentence_substring_rows": 56
+    },
+    {
+      "term": "名字",
+      "exact_gloss_rows": 9,
+      "exact_gloss_occurrences": 9,
+      "sentence_substring_rows": 6
+    },
+    {
+      "term": "姓名",
+      "exact_gloss_rows": 9,
+      "exact_gloss_occurrences": 9,
+      "sentence_substring_rows": 3
+    }
+  ],
+  "limits": [
+    "CSV does not contain scene_id, intent, scenario, semantic_id, or bilingual Libras pairing.",
+    "Candidate scene labels are a text review of complete Chinese sentences, not official dataset categories or a sign-language expert audit.",
+    "Keyword counts are exact slash-delimited gloss token counts or explicit Chinese sentence substring counts and are not counts of usable scene expressions.",
+    "This audit checks video file existence only, without decoding videos or running models.",
+    "Variants such as 慢, 慢1, 慢2 or 学习, 学习1 are intentionally kept distinct.",
+    "No 巴西, 葡萄牙, 手语 sentence substring was found; this is literal evidence, not proof there is no relevant gesture concept in all videos."
+  ],
+  "candidate_distinct_sentences": 49,
+  "candidate_distinct_glosses": 50,
+  "candidate_rows_by_original_split": {
+    "train": 42,
+    "dev": 4,
+    "test": 4
+  }
+}

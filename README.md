@@ -51,6 +51,16 @@ python -m venv .venv-libras
 
 安装后也可使用 `slbridge-desktop`；原启动方式 `python app/desktop_app.py` 继续有效。详细操作、输入边界与验收命令见[使用说明](docs/视频摄像头与字幕_使用说明_2026-10-09.md)，当前界面设计见[桌面改版方案](docs/桌面界面改版_设计与执行_2026-10-09.md)，验证结果见[新版验收报告](docs/reports/desktop-redesign-2026-10-09.md)。
 
+## 关键点采集与回放
+
+新增独立工作台，可使用视频或摄像头查看身体与双手关键点、质量和时间信息，录制为 `.slkp.jsonl`，保存后回放骨架。它不加载手语词义识别模型，采集使用 MediaPipe，尚未接入动作分类或字幕生成；录制不含原始视频，人工标签保留为待审核草案。
+
+```powershell
+.venv-libras/Scripts/python.exe -m slbridge.desktop_cli --keypoints
+```
+
+主界面也可点击“关键点工作台”。需要提取视频每一帧时使用 `python -m slbridge.keypoint_cli extract`，已保存文件使用 `inspect` 校验。启动参数、完整操作、独立关键点协议和资源限制见[使用说明](docs/keypoint-workbench-usage.md)，验证范围见[开发验收报告](docs/reports/keypoint-workbench-2026-10-11.md)。
+
 ## 开始使用核心
 
 推荐使用 Python 3.12。已验证版本为 Python 3.12.7、NumPy 1.26.3、scikit-learn 1.4.0、joblib 1.4.2。核心不需要摄像头、MediaPipe、OpenCV 或 GUI。

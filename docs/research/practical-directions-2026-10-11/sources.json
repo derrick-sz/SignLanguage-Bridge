@@ -1,0 +1,128 @@
+[
+  {
+    "id": 1,
+    "title": "Chinese Deaf Online Content Creators",
+    "url": "https://arxiv.org/html/2602.10235v1",
+    "type": "ORIGINAL_QUALITATIVE_STUDY",
+    "date": "2026-02-10; interviews 2022-2023",
+    "note": "A3; 13 selected Chinese creators; design proposals, not product efficacy.",
+    "quality": "Strong relevance and transparent limitations; not population representative."
+  },
+  {
+    "id": 2,
+    "title": "U.S. Deaf Community Perspectives on Automatic Sign Language Translation",
+    "url": "https://danibragg.com/papers/Automatic_Sign_Language_Translation_Perspectives.pdf",
+    "type": "ORIGINAL_SURVEY",
+    "date": "2023-10",
+    "note": "A1; 32 ASL users; U.S. stated preferences, not deployment.",
+    "quality": "Original methods; cannot extrapolate to CSL/Libras."
+  },
+  {
+    "id": 3,
+    "title": "WFD AI and Sign Languages",
+    "url": "https://wfdeaf.org/artificial-intelligence-and-sign-languages/",
+    "type": "REPRESENTATIVE_ORGANIZATION_REPORT",
+    "date": "2025-08-12",
+    "note": "A2; participation, ownership, transparency and real-world performance.",
+    "quality": "Organizational position, not technical efficacy study."
+  },
+  {
+    "id": 4,
+    "title": "SWR Customer Report March 2025",
+    "url": "https://www.southwesternrailway.com/-/media/files/other/about-us/customer-report/customer-report-march-2025.pdf",
+    "type": "DEPLOYER_REPORT",
+    "date": "2025-03",
+    "note": "B9; One Scan BSL deployment; pdf metadata title inaccurate relative to dated cover/content.",
+    "quality": "Deployment corroboration; no isolated BSL user efficacy measure."
+  },
+  {
+    "id": 5,
+    "title": "SignStudio",
+    "url": "https://www.signapse.ai/signstudio-platform",
+    "type": "VENDOR_FIRST_PARTY",
+    "date": "undated; checked 2026-10-11",
+    "note": "B8; content production, quality check/human options; AI ASL package text conflicts.",
+    "quality": "Feature claims only; avoid advertised quality/precise coverage."
+  },
+  {
+    "id": 6,
+    "title": "SignStream API",
+    "url": "https://www.signapse.ai/signstream-api",
+    "type": "VENDOR_FIRST_PARTY",
+    "date": "undated; checked 2026-10-11",
+    "note": "B7; text to BSL/ASL and no human grammatical review.",
+    "quality": "Good for stated workflow/limitations; not independent accuracy evidence."
+  },
+  {
+    "id": 7,
+    "title": "Hand Talk App",
+    "url": "https://www.handtalk.me/en/app/",
+    "type": "VENDOR_FIRST_PARTY",
+    "date": "undated; checked 2026-10-11",
+    "note": "B1; Portuguese-Libras and English-ASL, dictionary/speed/offline/learning.",
+    "quality": "Feature claims only; no camera recognition/CSL inference."
+  },
+  {
+    "id": 8,
+    "title": "Automatic Annotation Elaboration as Feedback to Sign Language Learners",
+    "url": "https://aclanthology.org/2024.law-1.5.pdf",
+    "type": "ORIGINAL_EXPERIMENT",
+    "date": "2024-03",
+    "note": "D1; expert annotations, 100 sentences, five learner evaluators; observed omissions/hallucinations.",
+    "quality": "Explicit small scope; no direct camera error recognition or learning gain."
+  },
+  {
+    "id": 9,
+    "title": "ELAN",
+    "url": "https://archive.mpi.nl/tla/elan",
+    "type": "OFFICIAL_SOFTWARE_DOC",
+    "date": "undated; checked 2026-10-11",
+    "note": "D2; tiers/time alignment/EAF/GPL3.",
+    "quality": "Primary feature documentation, not demand evidence."
+  },
+  {
+    "id": 10,
+    "title": "FluentSigners-50",
+    "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0273649",
+    "type": "ORIGINAL_DATASET_STUDY",
+    "date": "2022-09-12",
+    "note": "D3; KRSL independent-signers/unseen-sentences protocols.",
+    "quality": "Supports evaluation design only; not transferable accuracy."
+  },
+  {
+    "id": 11,
+    "title": "Towards Online CSLR and Translation",
+    "url": "https://aclanthology.org/2024.emnlp-main.619/",
+    "type": "ORIGINAL_MODEL_STUDY",
+    "date": "2024-11",
+    "note": "D4; dictionary-trained isolated model and sliding windows.",
+    "quality": "Online methodology; no local camera acceptance."
+  },
+  {
+    "id": 12,
+    "title": "Access to healthcare services",
+    "url": "https://scielo.br/j/csp/a/f7xLDvF3cHXKJhzJBLTndLh/abstract/?ilang=en&lang=en",
+    "type": "ORIGINAL_CROSS_SECTIONAL_STUDY",
+    "date": "2025",
+    "note": "A4; Brazilian Libras respondents; abstract/table1; no automatic-translation intervention.",
+    "quality": "Demand/obstacle evidence in one region; no technology effect."
+  },
+  {
+    "id": 13,
+    "title": "VLibras Terms of Use",
+    "url": "https://www.vlibras.gov.br/privacy.html",
+    "type": "OFFICIAL_TERMS",
+    "date": "2026-08-27",
+    "note": "B3; scope restrictions and commercial authorization, source/assets/services distinct.",
+    "quality": "Current stated terms; not a full legal opinion."
+  },
+  {
+    "id": 14,
+    "title": "VLibras translator-text-core LICENSE",
+    "url": "https://github.com/spbgovbr-vlibras/vlibras-translator-text-core/blob/dev/LICENSE",
+    "type": "PRIMARY_CODE_LICENSE",
+    "date": "current dev; checked 2026-10-11",
+    "note": "B5; LGPLv3 for this component only.",
+    "quality": "Specific component license; not all hosted services/assets."
+  }
+]

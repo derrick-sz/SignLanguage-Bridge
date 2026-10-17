@@ -22,6 +22,7 @@ tfnet = ["torch==2.9.1", "torchvision==0.24.1", "einops==0.8.1", "opencv-python-
 [project.scripts]
 slbridge = "slbridge.cli:main"
 slbridge-desktop = "slbridge.desktop_cli:main"
+slbridge-keypoints = "slbridge.keypoint_cli:main"
 slbridge-api = "slbridge.api_cli:main"
 slbridge-cecsl = "slbridge.cecsl_cli:main"
 
