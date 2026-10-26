@@ -37,6 +37,22 @@ Model bundle layout (the "model directory" of a replay backend)::
       "limit": null                     # optional max rows to load
     }
 
+Minimal bundle setup (PowerShell, repo root)::
+
+    $b = "artifacts/replay-bundles/unisign-a"   # any directory OUTSIDE git
+    New-Item -ItemType Directory -Force $b | Out-Null
+    @{ backend = "replay_jsonl_v1"; source_kind = "text_candidates";
+       candidate_id = "A";
+       data_path = "E:/githubproject/SignLanguage-Bridge/experiments/p1/e02/candidate_outputs.jsonl" } |
+      ConvertTo-Json | Set-Content "$b/manifest.json" -Encoding UTF8
+    # Serve it like any other catalog model:
+    #   python -m slbridge.api_cli --catalog <catalog.json> --model <alias>
+    # where catalog.json maps the alias to this bundle directory (see
+    # slbridge/api_cli.py:load_catalog for the strict v1 catalog format).
+    # A bundle binds its source by path only; the loader re-runs the GT guard
+    # and row validation on every start, so a swapped-in source carrying GT
+    # keys or corrupt rows fails loudly instead of replaying silently.
+
 Input queries are small JSON files (``{"sample_id": "..."}``) handed to
 ``ModelManager.infer_file`` exactly like an uploaded video would be; the
 adapter resolves the sample against its loaded rows and returns a typed
