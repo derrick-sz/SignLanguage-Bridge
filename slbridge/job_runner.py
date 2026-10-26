@@ -125,6 +125,10 @@ class JobRecord:
     created_at: str = field(default_factory=_utc_now)
     updated_at: str = field(default_factory=_utc_now)
     attempts: int = 0
+    media_metadata: dict[str, Any] | None = None       # T-A3-1: ffprobe result (or null)
+    media_probe_error: str | None = None               # T-A3-1: honest failure reason
+    upload_path: Path | None = None                    # T-A3-1: temp upload to clean up
+    upload_expires_at: float | None = None             # T-A3-1: monotonic TTL deadline
     lock: threading.RLock = field(default_factory=threading.RLock, repr=False)
 
     def transition(self, target: str) -> None:
@@ -153,6 +157,8 @@ class JobRecord:
                 payload["text"] = self.text
             if self.gloss_tokens is not None:
                 payload["gloss_tokens"] = list(self.gloss_tokens)
+            payload["media_metadata"] = self.media_metadata
+            payload["media_probe_error"] = self.media_probe_error
             return payload
 
 
@@ -178,6 +184,7 @@ class JobStore:
         if isinstance(max_jobs, bool) or not isinstance(max_jobs, int) or max_jobs < 1:
             raise ValueError("max_jobs must be a positive integer")
         self._records: dict[str, JobRecord] = {}
+        self._retired: set[str] = set()
         self._lock = threading.RLock()
         self._persistence = Path(persistence_path) if persistence_path is not None else None
         self._max_jobs = max_jobs
@@ -190,8 +197,9 @@ class JobStore:
                 if (existing.sign_system, existing.sample_id) == key:
                     return existing                      # idempotent re-submit
                 raise ValueError(f"job_id {job_id!r} is bound to another payload")
-            if len(self._records) >= self._max_jobs:
-                raise RuntimeError(f"job store capacity reached ({self._max_jobs}); flush or raise max_jobs")
+            active = len(self._records) - len(self._retired)
+            if active >= self._max_jobs:
+                raise RuntimeError(f"job store capacity reached ({self._max_jobs}); retire jobs or raise max_jobs")
             record = JobRecord(job_id=job_id, state=JobState.QUEUED,
                                sign_system=sign_system, sample_id=sample_id)
             self._records[job_id] = record
@@ -201,6 +209,54 @@ class JobStore:
     def get(self, job_id: str) -> JobRecord | None:
         with self._lock:
             return self._records.get(job_id)
+
+    def retire(self, job_id: str) -> bool:
+        """Retire a *terminal* job from capacity accounting (record stays).
+
+        The record remains queryable through :meth:`get`; only the bounded
+        capacity slot is freed.  Non-terminal or unknown jobs are refused.
+        """
+
+        with self._lock:
+            record = self._records.get(job_id)
+            if record is None or record.state not in JobState.TERMINAL:
+                return False
+            self._retired.add(job_id)
+        self._collect_upload(record)
+        return True
+
+    def sweep_uploads(self, *, now: float | None = None) -> list[str]:
+        """Delete expired uploads of terminal jobs; returns cleaned job ids.
+
+        Prediction JSONL / manifests are evidence and are never touched --
+        only the uploaded temp files (``record.upload_path``) are removed.
+        """
+
+        import time as _time
+        clock = _time.monotonic() if now is None else now
+        cleaned: list[str] = []
+        with self._lock:
+            records = list(self._records.values())
+        for record in records:
+            if record.state in JobState.TERMINAL and record.upload_path is not None:
+                if record.upload_expires_at is None or clock >= record.upload_expires_at:
+                    if self._collect_upload(record):
+                        cleaned.append(record.job_id)
+        return cleaned
+
+    @staticmethod
+    def _collect_upload(record: JobRecord) -> bool:
+        with record.lock:
+            path = record.upload_path
+            record.upload_path = None
+            record.upload_expires_at = None
+        if path is None:
+            return False
+        try:
+            Path(path).unlink(missing_ok=True)
+            return True
+        except OSError:
+            return False
 
     def _journal(self, record: JobRecord) -> None:
         if self._persistence is None:
@@ -366,21 +422,40 @@ class JobRunner:
         record.request_id = response.request_id
         try:
             self._recorder().append_response(response, job_id=record.job_id)
-            self._recorder().write_manifest()
+            # T-A3-1: the run manifest carries the job's honest media metadata
+            # (null + probe_error when probing failed -- never fabricated).
+            self._recorder().write_manifest(
+                media_metadata={record.job_id: {
+                    "metadata": record.media_metadata,
+                    "probe_error": record.media_probe_error,
+                }})
         except Exception as error:                   # recording failure fails the job loudly
             self._fail(record, error)
             return JobResult(record)
         self._advance(record, JobState.SUCCEEDED)
         return JobResult(record)
 
+    def _manifest_media(self, record: JobRecord) -> None:
+        """Best-effort manifest refresh so failed jobs still expose metadata."""
+        try:
+            self._recorder().write_manifest(
+                media_metadata={record.job_id: {
+                    "metadata": record.media_metadata,
+                    "probe_error": record.media_probe_error,
+                }})
+        except Exception:
+            pass                                    # metadata must never mask the real failure
+
     def _fail(self, record: JobRecord, error: BaseException) -> None:
         record.error_code = map_error_code(_legacy_code_of(error))
         record.error_message = f"{type(error).__name__}: {error}"[:512]
+        self._manifest_media(record)               # failed jobs keep their metadata
         self._advance(record, JobState.FAILED)
 
     def _timeout(self, record: JobRecord) -> None:
         record.error_code = ContractErrorCodes.INFERENCE_TIMEOUT
         record.error_message = "job deadline elapsed before a result was produced"
+        self._manifest_media(record)
         self._advance(record, JobState.TIMED_OUT)
 
     def _cancelled(self, record: JobRecord) -> None:

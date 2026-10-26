@@ -289,6 +289,8 @@ def create_app(
     job_max_store: int = 1024,
     job_timeout_seconds: float | None = 120.,
     job_runner_factory: Any = None,
+    job_upload_ttl_seconds: float | None = 300.,
+    job_media_probe: Any = None,
 ) -> FastAPI:
     """Create an app owning a manager or independent language runtimes.
 
@@ -329,6 +331,9 @@ def create_app(
     if job_timeout_seconds is not None and (
             type(job_timeout_seconds) not in {float, int} or not 0 < job_timeout_seconds <= 3600):
         raise ValueError("job_timeout_seconds must be between 0 and 3600, or null")
+    if job_upload_ttl_seconds is not None and (
+            type(job_upload_ttl_seconds) not in {float, int} or job_upload_ttl_seconds < 0):
+        raise ValueError("job_upload_ttl_seconds must be nonnegative or null")
     sensitive_paths = _path_variants((*catalog.values(), *defaults.cuda_dll_dirs))
 
     @asynccontextmanager
@@ -361,6 +366,8 @@ def create_app(
             app.state.job_run_id = job_run_id
             app.state.job_timeout_seconds = job_timeout_seconds
             app.state.job_runner_factory = job_runner_factory
+            app.state.job_upload_ttl_seconds = job_upload_ttl_seconds
+            app.state.job_media_probe = job_media_probe
             if app.state.job_run_directory is not None:
                 app.state.job_store.persistence_path = app.state.job_run_directory / "jobs.jsonl"
             yield
@@ -962,7 +969,7 @@ def create_app(
             # background: the 202 must return with status QUEUED (contract
             # VideoInferAccepted), never block on inference.
             try:
-                await run_in_threadpool(
+                record = await run_in_threadpool(
                     request.app.state.job_store.create, job_id=resolved_job_id,
                     sign_system="CSL", sample_id=sample_id)
             except ValueError as exc:
@@ -974,11 +981,38 @@ def create_app(
                 raise ApiError(429, "request_capacity", str(exc)) from exc
             native_path, path = path, None
 
+            # T-A3-1: probe media metadata honestly (failures stay null with a
+            # recorded reason) before execution, and arm the upload TTL.
+            # Idempotent re-submission must not re-probe: the record already
+            # carries its (job-bound) metadata and re-probing would tie the
+            # record to the new temp file's name.
+            import time as _time
+            with record.lock:
+                fresh = record.media_metadata is None and record.media_probe_error is None
+            if fresh:
+                probe = request.app.state.job_media_probe
+                if probe is None:
+                    from .media_probe import probe_media as probe
+                probed = await run_in_threadpool(probe, native_path)
+                ttl = request.app.state.job_upload_ttl_seconds
+                with record.lock:
+                    record.media_metadata = probed.get("metadata")
+                    record.media_probe_error = probed.get("probe_error")
+                    record.upload_path = native_path
+                    record.upload_expires_at = (_time.monotonic() + ttl
+                                                if ttl is not None else None)
+                request.app.state.job_store.journal(record)
+
             async def execute():
                 try:
                     await run_in_threadpool(runner.run, job_id=resolved_job_id,
                                             sample_id=sample_id, query_path=native_path)
                 finally:
+                    # TTL=0 (or expired) cleans immediately; larger TTLs are
+                    # swept on later submits/queries.  Prediction JSONL and
+                    # manifests are evidence and are never touched.
+                    await run_in_threadpool(
+                        request.app.state.job_store.sweep_uploads)
                     await run_in_threadpool(native_path.unlink, missing_ok=True)
 
             task = asyncio.create_task(execute())
@@ -1019,6 +1053,8 @@ def create_app(
             "final_event": final_event,
             "error": payload.get("error"),
             "metrics": payload.get("metrics", {}),
+            "media_metadata": record.media_metadata,
+            "media_probe_error": record.media_probe_error,
         }
         return JSONResponse(status_code=200, content=body)
 
