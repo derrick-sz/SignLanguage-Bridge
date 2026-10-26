@@ -284,6 +284,11 @@ def create_app(
     max_session_actions: int = 1024,
     inference_timeout_seconds: float = 120.,
     caption_catalog: Any = None,
+    job_run_directory: Path | str | None = None,
+    job_run_id: str = "p0a-jobs-v1",
+    job_max_store: int = 1024,
+    job_timeout_seconds: float | None = 120.,
+    job_runner_factory: Any = None,
 ) -> FastAPI:
     """Create an app owning a manager or independent language runtimes.
 
@@ -315,6 +320,15 @@ def create_app(
             raise ValueError(f"{name} must be a positive integer")
     if type(inference_timeout_seconds) not in {float, int} or not 0 < inference_timeout_seconds <= 3600:
         raise ValueError("inference_timeout_seconds must be between 0 and 3600")
+    if job_run_directory is not None and not isinstance(job_run_directory, (Path, str)):
+        raise ValueError("job_run_directory must be a path or null")
+    if not isinstance(job_run_id, str) or not job_run_id.strip():
+        raise ValueError("job_run_id must be a nonempty string")
+    if type(job_max_store) is not int or job_max_store <= 0:
+        raise ValueError("job_max_store must be a positive integer")
+    if job_timeout_seconds is not None and (
+            type(job_timeout_seconds) not in {float, int} or not 0 < job_timeout_seconds <= 3600):
+        raise ValueError("job_timeout_seconds must be between 0 and 3600, or null")
     sensitive_paths = _path_variants((*catalog.values(), *defaults.cuda_dll_dirs))
 
     @asynccontextmanager
@@ -338,6 +352,17 @@ def create_app(
                     raise ValueError("Route language does not match its model")
             if initial_model is not None:
                 await run_in_threadpool(shared.switch, catalog[initial_model], options=defaults)
+            # P0-A V1 job layer (T-A2-2/T-A2-3): store + optional recorder.
+            from .job_runner import JobStore
+            app.state.job_store = JobStore(max_jobs=job_max_store)
+            app.state.job_runner = None
+            app.state.job_run_directory = (Path(job_run_directory)
+                                           if job_run_directory is not None else None)
+            app.state.job_run_id = job_run_id
+            app.state.job_timeout_seconds = job_timeout_seconds
+            app.state.job_runner_factory = job_runner_factory
+            if app.state.job_run_directory is not None:
+                app.state.job_store.persistence_path = app.state.job_run_directory / "jobs.jsonl"
             yield
         finally:
             for session in app.state.sessions.values():
@@ -862,5 +887,139 @@ def create_app(
             if path is not None:
                 await run_in_threadpool(path.unlink, missing_ok=True)
             await file.close()
+
+    # ------------------------------------------------------------------
+    # P0-A V1 contract endpoints (T-A2-3): POST /v1/videos/infer and
+    # GET /v1/jobs/{job_id}.  These reuse the existing auth middleware,
+    # bounded-upload middleware, error mapping and path redaction; existing
+    # v1/v2/v3 endpoints above are untouched.
+    # ------------------------------------------------------------------
+    _JOB_SUFFIXES = frozenset({".mp4", ".avi", ".mov", ".mkv", ".json", ".npy", ".npz"})
+
+    def _job_runner(request: Request):
+        if request.app.state.job_runner is None:
+            from .job_runner import JobRunner
+            manager = shared(request)
+            description = manager.describe() if hasattr(manager, "describe") else None
+            if description is None:
+                raise ApiError(503, "model_unavailable", "No model is loaded")
+            sign_language = description.get("sign_language") or "csl"
+            sign_system = {"csl": "CSL", "libras": "LIBRAS"}.get(sign_language, "UNKNOWN")
+            task_type = description.get("task_type", "text")
+            task = {"text": "CSLT", "gloss_sequence": "CSLR",
+                    "classification": "ISLR"}[task_type]
+            run_directory = request.app.state.job_run_directory
+            request.app.state.job_runner = JobRunner(
+                manager, request.app.state.job_store,
+                run_directory=(run_directory if run_directory is not None
+                               else Path(tempfile.gettempdir()) / f"slbridge-jobs-{job_run_id}"),
+                run_id=request.app.state.job_run_id,
+                model_id=description.get("model_id", "unknown"),
+                model_version=str(description.get("generation", "1")),
+                preprocess_version=description.get("input_spec", {}).get(
+                    "representation_id", "unknown")
+                if isinstance(description.get("input_spec"), dict) else "unknown",
+                task=task, sign_system=sign_system,
+                timeout_seconds=request.app.state.job_timeout_seconds)
+        return request.app.state.job_runner
+
+    @app.post("/v1/videos/infer", status_code=202)
+    async def submit_video_infer(
+        request: Request,
+        video: Annotated[UploadFile, File(description="A video, or a replay query JSON document")],
+        sign_system: Annotated[Literal["CSL", "LIBRAS", "UNKNOWN"], Form()],
+        mode: Annotated[Literal["parallel_fusion", "adaptive_cascade", "single_model"], Form()],
+        sample_id: Annotated[str | None, Form(min_length=1, max_length=128)] = None,
+        job_id: Annotated[str | None, Form(min_length=1, max_length=128,
+                                            pattern=r"^[A-Za-z0-9][A-Za-z0-9_.:-]*$")] = None,
+        output_zh: Annotated[bool, Form()] = True,
+        output_pt_br: Annotated[bool, Form()] = True,
+    ):
+        if mode != "single_model":
+            # Legal enum value, intentionally not enabled in P0-A (G2 FAILED:
+            # fusion stays out of the main path).  Explicit refusal, never a
+            # silent fallback to single_model.
+            raise ApiError(422, "invalid_input",
+                           f"mode '{mode}' is not enabled in P0-A; only 'single_model' is available")
+        if sign_system == "LIBRAS":
+            raise ApiError(503, "model_unavailable",
+                           "no Libras-trained weights; LIBRAS routing is unavailable")
+        if sign_system == "UNKNOWN":
+            raise ApiError(422, "invalid_input",
+                           "sign_system must be explicitly CSL in P0/P1")
+        if sample_id is None or not sample_id.strip():
+            raise ApiError(422, "invalid_input", "sample_id is required for replay-driven inference")
+        runner = _job_runner(request)
+        resolved_job_id = job_id or str(uuid4())
+        path: Path | None = None
+        try:
+            suffix = Path(video.filename or "").suffix.lower()
+            if suffix not in _JOB_SUFFIXES:
+                raise ApiError(422, "unsupported_input",
+                               "Supported files: .mp4, .avi, .mov, .mkv, .json, .npy, .npz")
+            path = await run_in_threadpool(_save_upload, video, suffix, max_upload_bytes)
+            # Register the job (idempotent) synchronously, then execute in the
+            # background: the 202 must return with status QUEUED (contract
+            # VideoInferAccepted), never block on inference.
+            try:
+                await run_in_threadpool(
+                    request.app.state.job_store.create, job_id=resolved_job_id,
+                    sign_system="CSL", sample_id=sample_id)
+            except ValueError as exc:
+                message = str(exc)
+                if "bound to another payload" in message:
+                    raise ApiError(409, "request_conflict", _redact(message, sensitive_paths)) from exc
+                raise ApiError(422, "invalid_input", _redact(message, sensitive_paths)) from exc
+            except RuntimeError as exc:
+                raise ApiError(429, "request_capacity", str(exc)) from exc
+            native_path, path = path, None
+
+            async def execute():
+                try:
+                    await run_in_threadpool(runner.run, job_id=resolved_job_id,
+                                            sample_id=sample_id, query_path=native_path)
+                finally:
+                    await run_in_threadpool(native_path.unlink, missing_ok=True)
+
+            task = asyncio.create_task(execute())
+            request.app.state.jobs.add(task)
+
+            def finished(job):
+                request.app.state.jobs.discard(job)
+                if not job.cancelled():
+                    job.exception()
+
+            task.add_done_callback(finished)
+            body = {"job_id": resolved_job_id, "status": request.app.state.job_store.get(resolved_job_id).state}
+            return JSONResponse(status_code=202, content=body)
+        finally:
+            if path is not None:
+                await run_in_threadpool(path.unlink, missing_ok=True)
+            await video.close()
+
+    @app.get("/v1/jobs/{job_id}")
+    async def get_v1_job(job_id: str, request: Request):
+        record = request.app.state.job_store.get(job_id)
+        if record is None:
+            raise ApiError(404, "unknown_job", "Job not found")
+        payload = record.to_dict()
+        # Contract-level shape: JobStatus with an optional final subtitle event.
+        final_event = None
+        if record.state == "SUCCEEDED" and record.text is not None:
+            final_event = {
+                "event": "subtitle.final", "schema_version": "1.0",
+                "session_id": "offline", "utterance_id": record.job_id, "revision": 1,
+                "time_span_ms": {"start": 0, "end": 0},
+                "sign_system": record.sign_system, "status": "FINAL",
+                "text": {"zh-CN": record.text}, "evidence_ids": [record.job_id],
+            }
+        body = {
+            "job_id": record.job_id, "status": record.state,
+            "sign_system": record.sign_system,
+            "final_event": final_event,
+            "error": payload.get("error"),
+            "metrics": payload.get("metrics", {}),
+        }
+        return JSONResponse(status_code=200, content=body)
 
     return app
