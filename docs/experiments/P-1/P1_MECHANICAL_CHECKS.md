@@ -1,15 +1,15 @@
 # P-1 / G2 独立机械审计（自动生成）
 
-- 生成时间：2026-10-26T16:06:48+00:00
+- 生成时间：2026-10-26T16:13:49+00:00
 - 工具：`experiments/p1/verify_all.py`（确定性脚本；不依赖 LLM 判断）
-- Git：`723721289433e8665a502dfe049108f5f4b16fdb`（dirty=True）
+- Git：`d8df2c61075f5876867964a044b69bbe6f592169`（dirty=False）
 - 结论：**14/14 项 PASS**
 
 | 检查项 | 结果 | 细节 | 证据 |
 |---|---|---|---|
 | run 目录 manifest 状态 | PASS | 9 个 run，PASS=9，非 PASS=无 | `experiments/p1/runs/*/manifest.json` |
 | GT 隔离（预测/候选/融合载荷） | PASS | 扫描 11 个 JSONL、12756 行，GT 键命中 0 | `experiments\p1\e02\candidate_outputs.jsonl, experiments\p1\e06\candidate_inputs.jsonl, experiments\p1\runs\e01-pilot50-s1-slrt-gloss-20261026\model_outputs.jsonl …` |
-| git 冻结边界（原始 GT/媒体/vendored 不入库） | PASS | tracked=641，违规=无 | `git ls-files` |
+| git 冻结边界（原始 GT/媒体/vendored 不入库） | PASS | tracked=654，违规=无 | `git ls-files` |
 | 被排除文件仍受 .gitignore 保护 | PASS | check-ignore [True, True, True, True] | `.gitignore` |
 | E02 canonical BLEU | PASS | {"A_unisign_video": 24.8157, "A2_unisign_pose": 25.5846, "B0_gloss_join": 12.2183} | `experiments/p1/e02/translation_metrics.json` |
 | E03 校准关键值存在 | PASS | raw ECE≈0.304 / OOF AUC≈0.745 在 calibration_results.json 中可检索 | `experiments/p1/e03/calibration_results.json` |

@@ -399,3 +399,11 @@ def _load_slrt(path: Path, options: RuntimeOptions) -> ModelAdapter:
 
 
 register_model_adapter(AdapterDefinition("slrt_online_csl", _load_slrt))
+
+
+def _load_replay(path: Path, options: RuntimeOptions) -> ModelAdapter:
+    from .replay_adapter import load_replay_adapter
+    return load_replay_adapter(path, options)
+
+
+register_model_adapter(AdapterDefinition("replay_jsonl_v1", _load_replay))
