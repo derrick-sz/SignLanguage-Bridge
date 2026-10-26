@@ -43,7 +43,7 @@ GROUP_DESCRIPTIONS = {
 }
 
 ABLATION_COLUMNS = [
-    "run_id", "data_status", "backend", "group", "description", "n",
+    "run_id", "data_status", "prompt_version", "backend", "group", "description", "n",
     "bleu4_13a", "chrf", "mean_char_edit_similarity", "exact_match_count",
     "delta_bleu_vs_A", "delta_bleu_ci_lower", "delta_bleu_ci_upper",
     "delta_edit_vs_A", "delta_edit_ci_lower", "delta_edit_ci_upper",
@@ -279,8 +279,14 @@ def evaluate_run(
         "run_id": run_id,
         "status": manifest.get("status", "UNKNOWN"),
         "data_status": manifest.get("data_status", "UNKNOWN"),
+        "prompt_version": (manifest.get("prompt") or {}).get("version"),
+        "prompt_sha256": ((manifest.get("prompt") or {}).get("files") or {}).get("json_sha256"),
+        "prompt_md_sha256": ((manifest.get("prompt") or {}).get("files") or {}).get("md_sha256"),
         "backend": (manifest.get("backend") or {}).get("name", "unknown"),
+        "provider": (manifest.get("llm_endpoint") or {}).get("provider"),
+        "model": (manifest.get("llm_endpoint") or {}).get("model"),
         "model_version": (manifest.get("model") or {}).get("model_version"),
+        "decoding": (manifest.get("model") or {}).get("decoding"),
         "labels": {
             "stub_backend": (manifest.get("backend") or {}).get("is_stub", False),
             "warning": "STUB_ONLY numbers validate the pipeline; they are NOT LLM model results"
@@ -329,10 +335,14 @@ def write_ablation_csv(run_ids: list[str], *, path: Path = ABLATION_CSV) -> Path
             corpus = entry.get("metrics") or {}
             delta_bleu = entry.get("delta_bleu_vs_A") or {}
             delta_edit = entry.get("delta_edit_vs_A") or {}
+            prompt_version = payload.get("prompt_version")
+            if not prompt_version and (RUNS_DIR / run_id / "manifest.json").exists():
+                prompt_version = (common.read_json(RUNS_DIR / run_id / "manifest.json").get("prompt") or {}).get("version")
             rows.append(
                 {
                     "run_id": run_id,
                     "data_status": payload.get("data_status"),
+                    "prompt_version": prompt_version or "unknown",
                     "backend": payload.get("backend"),
                     "group": group,
                     "description": entry.get("description"),
@@ -366,6 +376,7 @@ def write_ablation_csv(run_ids: list[str], *, path: Path = ABLATION_CSV) -> Path
         {
             "run_id": ",".join(run_ids),
             "data_status": "BLOCKED",
+            "prompt_version": "n/a",
             "backend": "none",
             "group": "B",
             "description": GROUP_DESCRIPTIONS["B"],

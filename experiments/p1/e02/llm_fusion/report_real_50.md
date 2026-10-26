@@ -20,7 +20,7 @@
 - v2 仍有的失败：3 次（按组 {'D': 1, 'E': 2}），均为超长内部推理导致 `finish_reason=length`（completion 顶到 max_tokens=2048，详见 `fusion_outputs.jsonl` 的 status/error 字段）；对应 D/E 的有效 n 少 1–2 条。
 - 参考口径：GT `ref_sentence_upstream`（EVAL ONLY）；canonical `p1-v1`（BLEU-4 13a + 逐字加空格后处理 / chrF / 字符编辑相似度）。
 
-## 2. 各组质量（真实 LLM；A=50，D/E 因 2 次截断为 49/48）
+## 2. 各组质量（真实 LLM；A=50，D/E 因 3 次失败为 49/48）
 
 | 组 | n | BLEU-4 | chrF | mean char edit | exact | ΔBLEU vs A (95%CI) | Δedit vs A (95%CI) |
 |---|---:|---:|---:|---:|---:|---|---|

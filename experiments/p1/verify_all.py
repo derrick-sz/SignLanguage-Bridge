@@ -2,7 +2,7 @@
 
 This is the deterministic counterpart to a human review: it re-checks the claims
 that the reports make against the actual files and the git index.  It writes
-``docs/experiments/P-1/P1_INDEPENDENT_AUDIT.md``.
+``docs/experiments/P-1/P1_MECHANICAL_CHECKS.md``.
 
 Run::
 
@@ -136,9 +136,32 @@ def main() -> int:
     e04 = (P1 / "e04" / "hardware_report.md").read_text(encoding="utf-8")
     add(
         "E04 热启动 P50 出现在报告",
-        all(token in e04 for token in ("276 / 339", "2679 / 3271", "9775 / 11175")),
-        "pose 276/339 ms、video 2,679/3,271 ms、SLRT 9,775/11,175 ms",
+        all(token in e04 for token in ("277.6 / 344.3", "2690.4 / 3283.9", "9865.1 / 11189.7")),
+        "pose 277.6/344.3 ms、video 2690.4/3283.9 ms、SLRT 9865.1/11189.7 ms",
         "experiments/p1/e04/hardware_report.md",
+    )
+    # 交叉核验：报告数字必须与 metrics.json 的 warm P50 一致（±0.2 ms）
+    e04_metrics = common.read_json(P1 / "e04" / "metrics.json")
+    warm_values: dict[str, float] = {}
+    for key, value in (e04_metrics.items() if isinstance(e04_metrics, dict) else []):
+        if "warm" in str(key).lower() and isinstance(value, dict):
+            e2e = ((value.get("segments") or {}).get("e2e_ms") or {})
+            if "p50" in e2e:
+                warm_values[str(key)] = float(e2e["p50"])
+    if not warm_values:  # fall back to metrics_summary.md
+        for line in (P1 / "e04" / "metrics_summary.md").read_text(encoding="utf-8").splitlines():
+            if line.startswith("| warm/"):
+                parts = [p.strip() for p in line.strip("|").split("|")]
+                warm_values[parts[0]] = float(parts[4])
+    aligned = []
+    for key, p50 in warm_values.items():
+        model = key.split("/")[-1].split("_hrnet")[0].split("_unisign")[0]
+        aligned.append(f"{p50:.1f}" in e04)
+    add(
+        "E04 warm P50 与 metrics.json 对齐（±0.1 ms 文本匹配）",
+        bool(aligned) and all(aligned),
+        f"metrics warm={ {k: round(v, 1) for k, v in warm_values.items()} }；全部出现在报告中={all(aligned)}",
+        "experiments/p1/e04/metrics.json / metrics_summary.md",
     )
 
     e05 = (P1 / "e05" / "prefix_probe_summary.md").read_text(encoding="utf-8")
@@ -224,7 +247,7 @@ def main() -> int:
 - GT-free 扫描覆盖预测/候选/融合载荷；`eval_records.jsonl`、`gt_1086.csv`、`human_review/` 属 EVAL ONLY，按 FREEZE 边界不入 git，**不视为违规**。
 - G2 数字为 50 条探索批（`REAL_EXPLORATORY_50`），不是最终 G2 结论。
 """
-    out = common.PLAN_DIR / "P1_INDEPENDENT_AUDIT.md"
+    out = common.PLAN_DIR / "P1_MECHANICAL_CHECKS.md"
     out.write_text(report, encoding="utf-8")
     print(json.dumps({"report": str(out), "passed": passed, "total": len(checks), "failed": [c for c in checks if c["result"] == "FAIL"]}, ensure_ascii=False, indent=2))
     return 0 if passed == len(checks) else 1
@@ -232,3 +255,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+

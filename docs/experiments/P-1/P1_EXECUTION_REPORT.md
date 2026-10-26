@@ -36,7 +36,7 @@
 
 ## 2. 方法与基础设施（`experiments/p1/`）
 
-- **GT 隔离**：`experiments/p1/gt_guard.py` + `common.write_jsonl` 默认守卫。推理/融合载荷出现 `reference/gt_*/wer/edit_similarity/...` 会抛 `GroundTruthLeakError`。全部预测/候选 JSONL 已扫描：E02 candidate_outputs 3,258 行、E06 candidate_inputs 1,086 行、各 run 的 model_outputs 共 3,458 行，**GT 泄漏 0**。
+- **GT 隔离**：`experiments/p1/gt_guard.py` + `common.write_jsonl` 默认守卫。推理/融合载荷出现 `reference/gt_*/wer/edit_similarity/...` 会抛 `GroundTruthLeakError`。全部预测/候选 JSONL 已扫描：E02 candidate_outputs 3,258 行、E06 candidate_inputs 1,086 行、各 run 的 model_outputs 共 3,408 行，**GT 泄漏 0**。
 - **canonical 指标**：`eval/metrics.py`（sacreBLEU 13a + 上游 mT5 逐字加空格后处理；chrF；token 级 WER；char ROUGE-L/编辑相似度；按 signer 聚类 bootstrap）。回归测试断言：对既冻结快照重算必须得到 **24.8157 / 21.7974**（已通过，见 `tests/test_p1_infra.py`：12 passed）。
 - **运行记录**：每实验一个 `runs/<run_id>/`，含 `manifest.json`（git/硬件/权重/数据哈希/命令/样本数/失败数/状态）、`model_outputs.jsonl`（预测-only）、`metrics.json`、`eval_records.jsonl`（GT 仅存在于 EvaluationWorker 输出）。
 - **measured / imported / simulated**：本轮 E01 是 measured；E02/E03/E06 的模型文本是 imported 历史快照，路由/选择/级联是 simulated 离线分析；报告逐项标注。
@@ -81,7 +81,7 @@
 |---|---:|---:|---:|---:|---:|---|
 | A Uni-Sign 视频 | 1,086 | **24.8157** | 21.7974 | 0.4157 | 15 | IMPORTED_MEASURED |
 | A2 Uni-Sign 官方 pose | 1,086 | **25.5846** | 22.4284 | 0.4212 | 18 | IMPORTED_MEASURED |
-| SLRT Gloss（CSLR） | 1,086 | — | — | — | — | WER **0.3018**（S1,154/D805/I522） |
+| SLRT Gloss（CSLR） | 1,086 | — | — | — | — | WER **0.3018**（canonical 回溯拆分 S1,330/D717/I434；历史 R18 拆分 S1,154/D805/I522，总编辑数同为 2,481，差异仅 Levenshtein 并列回溯顺序） |
 | B0 Gloss 确定性 join | 1,086 | 12.2183 | 13.8087 | 0.3484 | 0 | DERIVED_BASELINE（不是训练型 Gloss2Text） |
 | B1 / C / D / E / F / G | — | — | — | — | — | **BLOCKED**（缺 G2T 权重 / 无 LLM 端点） |
 | GT oracle A/A2 | 1,086 | **26.598** | 23.2554 | 0.4430 | — | OFFLINE_ORACLE（不可部署） |
@@ -91,6 +91,23 @@
 - 误差重叠：两者都差 661、仅 A 差 43、仅 A2 差 29、两者都好 353 → 存在互补空间，但需要**无 GT 的可观测信号**才能利用。
 - Legacy vs canonical：视频 legacy BLEU 24.8156828061 → canonical 24.8157；SLRT legacy WER 0.3018248175 → 0.3018（口径一致）。
 - **人评未做**（`NOT_RUN`）：严重语义错误率/关键事实正确率必须由人工评审协议给出，本文不冒充。
+
+### E02-G2 · 真实 LLM 融合消融（探索性 50 条，2026-10-26 追加）
+
+端点：wb-proxy `http://127.0.0.1:8788/v1/chat/completions`，`deepseek-v4.1-flash`，temperature=0，串行；样本 = E01 Pilot-50（10 signer × 5）；分组按用户批复字母（A 直通 / C=Uni-Sign→LLM / D=+SLRT Gloss / E=+证据约束）。
+
+| 组 | v1 prompt BLEU-4 | v2 prompt BLEU-4 | v2 chrF | v2 edit | v2 n |
+|---|---:|---:|---:|---:|---:|
+| A Uni-Sign 原句（基准） | 31.2308 | 31.2308 | 27.1849 | 0.4831 | 50 |
+| C 润色对照 | 26.6838 | **28.9518** | 24.8547 | 0.4858 | 50 |
+| D + SLRT Gloss | 26.9450 | **28.5872** | 24.2824 | 0.4831 | 50 |
+| E + 证据约束 | 28.6302 | **29.1880** | 24.8223 | 0.4930 | 45（5 次长推理截断） |
+
+- v1 配对：C−A **−4.55**（CI −8.02…−1.38，不含 0）；D−C −0.04（n.s.）；E−D +1.62（n.s.）；**E−C edit +0.040（CI +0.0019…+0.0821，显著）**。
+- v2 配对：C−A **−2.28**（CI −4.04…−0.70，仍显著为负）；D−C −0.365（n.s.）；E−D −0.416（n.s.）；edit 差均 n.s.。
+- 成本（v2）：**113k tokens**（C 25.7k / D 38.9k / E 48.7k）；P50 C 2.04 s、D 3.01 s、E 4.48 s；P95 5.0–9.5 s。
+- 事故（v1 首轮）：`max_tokens=256` 导致 **73/150 空 completion**（推理 token 吃满预算），该轮不进入对比表；v2 用 2048，剩 3/150（v1 复跑 3 次失败）+ v2 5/150（E）。
+- **结论：两组 prompt 下 LLM 融合都没有超过 A；D−C（Gloss 新增价值）与 E−D（约束价值）均不显著。按 Gate G2 的"无质量提升则保留单模型路线"规则处理。** 边界：50 条探索批、retrospective_seen、单端点单模型、prompt 未系统调优；最终结论需新独立集 + 人评（Round-1 评审包已就绪，待用户回填）。
 
 ## 6. E03 · 原始分数、校准与错误风险
 
@@ -110,14 +127,14 @@
 
 | 模型 | 冷启动加载 P50 / P95 | 热启动（30 次）e2e P50 / P95 | RTF | 吞吐 | 显存（torch peak alloc / reserved；整卡峰值） |
 |---|---|---:|---:|---:|---|
-| Uni-Sign **pose**（模型-only） | 17.66 / 18.74 s | **276 / 339 ms** | **0.078** | 3.27 条/s | 1,206 / 2,738 MB；5.64 GB |
-| Uni-Sign **video**（端到端） | 26.62 / 65.06 s（2 次 CUDA OOM 重试成功） | **2,679 / 3,271 ms**（pose 2,152 ms = 80%；decode 290、forward 36、文本 200） | **0.748** | 0.339 条/s | 1,206 / 2,738 MB；5.66 GB |
-| SLRT（hrnet-npz） | 3.14 / 3.15 s | **9,775 / 11,175 ms**（≈90 ms/窗 ×109 窗；S3D forward 3,690 ms，其余 ~5.6 s 是逐窗 CPU 热力图预处理） | **2.534** | 0.099 条/s | 374 / 600 MB；3.73 GB |
+| Uni-Sign **pose**（模型-only） | 17.66 / 18.74 s | **277.6 / 344.3 ms** | **0.078** | 3.27 条/s | 1,206 / 2,738 MB；5.64 GB |
+| Uni-Sign **video**（端到端） | 26.62 / 65.06 s（2 次 CUDA OOM 重试成功） | **2,690.4 / 3,283.9 ms**（pose 2,156 ms = 80%；decode 290、forward 36、文本 200） | **0.748** | 0.339 条/s | 1,206 / 2,738 MB；5.66 GB |
+| SLRT（hrnet-npz） | 3.14 / 3.15 s | **9,865.1 / 11,189.7 ms**（≈90 ms/窗 ×109 窗；S3D forward 3,701 ms，其余 ~5.6 s 是逐窗 CPU 热力图预处理） | **2.534** | 0.099 条/s | 374 / 600 MB；3.73 GB |
 
 - 连续负载 2 分钟：pose 419 次（3.49/s）、video 42 次（0.348/s）、SLRT 13 次（0.105/s），**0 失败 / 0 OOM、无显存增长**。
 - 串行 vs 两进程并行（同 5 条样本）：串行 batch 和 **40.28 s**；并行 compute wall **34.10 s**（serial_sum/parallel_wall = **1.181**，总墙钟 −15%），但单模型延迟变差：video 2.36→4.27 s/条（1.81×）、SLRT 5.69→6.69 s/条（1.18×）；整卡峰值 **6.45 GB**、GPU util 均值仅 27.8% → **并行不提高 GPU 效率，只适合离线批处理**。
 - 结论：**H1 单卡串行可行**（重试后 0 OOM）；**H3 Uni-Sign 延迟 80% 在姿态前端**（pose 2,152 ms vs forward 36 ms）；**H2 修正**：并行缩短总墙钟 15% 但抬高单条 P95 与显存，实时/交互语义默认串行。
-- 与 E01 交叉核对：E01 的 50 条视频端到端 P50 3.625 s / P95 5.336 s，与本批 5 条（更短片段）P50 2.679 s 量级一致。
+- 与 E01 交叉核对：E01 的 50 条视频端到端 P50 3.625 s / P95 5.336 s，与本批 5 条（更短片段）P50 2.690 s 量级一致。
 - 如实记录的失败：首轮编排 argparse bug；第二轮 cold video 在宿主 commit 压力下 2 次 `CUDA error: out of memory`（GPU 空闲 >13 GB，committed 55.7/65.2 GB），按坑点 §7 重试后 3/3 成功——**不计模型失败**。
 
 ## 8. E05 · 视频前缀压力测试与真正在线能力核验
@@ -160,7 +177,7 @@
 |---|---|---|
 | **G0 资产可追溯** | **PASS** | E00 model_registry（实测 SHA256/许可）+ E01 受控 smoke（Uni-Sign 视频 50/50、SLRT 50/50）；两条既有路径均真实可运行；缺权重的 SLT/TwoStream-SLR 分支显式 BLOCKED |
 | **G1 输入与推理复现** | **PASS** | E01：三路 50/50 成功、历史文本 100% 逐字复现、零差异样本、输入 SHA/帧数/裁剪逐条审计、无 silent preprocess mismatch |
-| **G2 同任务价值** | **PARTIAL** | 可比的 A（24.8157）与 B0（12.2183）已取得；A2（25.5846）为同任务第二路径；C/B1（SLRT 句子翻译）BLOCKED，D–G（LLM 融合）BLOCKED，人评 NOT_RUN → 不能宣称融合增益；按 Gate 规则默认保留单模型路线 |
+| **G2 同任务价值** | **FAIL（融合）/ PARTIAL（基线）** | 可比的 A（24.8157）与 B0（12.2183）已取得，A2（25.5846）为同任务第二路径；**真实 LLM 融合 v1/v2 两组 prompt 均未超过 A**（v1 C−A −4.55 显著；v2 C−A −2.28 显著；D−C、E−D 均不显著；成本 113k tokens、P50 2–4.5 s）→ 按 Gate 规则**保留单模型路线，融合不进主链路**；C/B1（SLRT 句子翻译）仍 BLOCKED，人评 NOT_RUN |
 | **G3 性能及流式能力** | **PASS（以实测为准）** | E04：三模型冷/热/负载/串并行全部实测、0 失败（重试后）、峰值显存与 P50/P95 有 trace；E05：前缀探针 80/80 + 40/40、future-frame 源码审计、流式能力矩阵；如实分类"Uni-Sign 无原生 Partial，SLRT partial 需 11 帧 lookahead" |
 | **G4 决策归档** | **PASS（本轮）** | 本报告 §11 ADR + `experiments/p1/summary.json` 证据索引；每个决策可回溯到 run_id/产物 |
 
@@ -218,6 +235,13 @@
 - 验收三问：①质量（canonical BLEU/chrF + signer 聚类 bootstrap，禁个案）②关键事实错误（六槽位盲评、纠对/改错、双评审）③成本（调用数/tokens/P50/P95 vs 单模型基线）。
 - LLM 前置条件：固定端点+模型版本+prompt 版本（sha256 记录）+预算；GT 严禁入 LLM 输入；探索用 1086，结论需新独立集+人评。
 - 详见：`NEXT_PHASE_PLAN.md` §2。
+
+### ADR-P1-010 G2 结论：融合不进主链路（2026-10-27）
+- 状态：ACCEPTED；对应 RQ3/RQ7、E02-G2、Gate G2。
+- 证据：两组 prompt（v1/v2）的 50 条探索批均显示 LLM 融合不优于 A——v1 C−A −4.55（CI −8.02…−1.38）、v2 C−A −2.28（CI −4.04…−0.70，仍显著为负）；D−C（Gloss 价值）与 E−D（约束价值）在两版均不显著；选择性级联（默认 A、规则触发 28% 才调 E）BLEU 29.09（Δ −2.14，CI −5.27…+0.44），成本 15k tokens/71 s。全调 E 为 −6.56 BLEU、113k tokens、P95 5–9.5 s。
+- 结论：**G2 = FAIL（无质量增益证据）**；生产默认单模型（A/A2），融合只保留可插拔接口与离线管线；不扩到 1086；B（SLRT G2T/SLT）仍 BLOCKED，B0 不得用于否定 SLRT。
+- 重启条件与边界：见 `G2_DECISION_MEMO.md` §5–§6（需新独立集、开发集 prompt 调优、人评"纠对>改错"、成本上限、CI 不含 0）。
+- 待补：Round-1 人工评审回填（"关键事实错误"维度目前**未验证**，不是通过）。
 
 ## 12. 交付物索引
 
