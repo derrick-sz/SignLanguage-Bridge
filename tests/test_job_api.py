@@ -143,9 +143,10 @@ def test_submit_mode_not_enabled_returns_422(app_client):
         response = submit(client, "S000020_P0004_T00", job_id=f"job-{mode}", mode=mode)
         assert response.status_code == 422
         body = response.json()
-        # Legacy snake_case codes on the wire; the contract-level mapping to
-        # the 8-value enum is map_error_code (T-A2-1) -- asserted separately.
-        assert body["error"]["code"] == "invalid_input"
+        # T-A4-2 unified error shape on V1 endpoints: contract uppercase code
+        # plus the legacy snake_case under error.legacy_code.
+        assert body["error"]["code"] == "INVALID_INPUT"
+        assert body["error"]["legacy_code"] == "invalid_input"
         assert "not enabled" in body["error"]["message"]
 
 

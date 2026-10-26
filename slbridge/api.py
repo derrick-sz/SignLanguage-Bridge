@@ -44,8 +44,13 @@ _COPY_CHUNK_BYTES = 64 * 1024
 
 
 class ApiError(Exception):
-    def __init__(self, status_code: int, code: str, message: str) -> None:
+    def __init__(self, status_code: int, code: str, message: str,
+                 contract_code: str | None = None) -> None:
         self.status_code, self.code, self.message = status_code, code, message
+        # T-A4-2: on V1 contract endpoints the error body uses the contract
+        # uppercase enum as ``error.code`` plus the legacy snake_case under
+        # ``error.legacy_code``; legacy endpoints leave this None (unchanged).
+        self.contract_code = contract_code
         super().__init__(message)
 
 
@@ -58,6 +63,17 @@ def _error(request_id: str, status: int, code: str, message: str, **kwargs: Any)
         status_code=status,
         content={"schema_version": 1, "request_id": request_id, "error": {"code": code, "message": message}},
         **kwargs,
+    )
+
+
+def _contract_error(request_id: str, status: int, legacy_code: str, message: str) -> JSONResponse:
+    """V1-contract error body: contract uppercase code + legacy_code field."""
+    from .api_contract_v1 import map_error_code
+    return JSONResponse(
+        status_code=status,
+        content={"schema_version": 1, "request_id": request_id,
+                 "error": {"code": map_error_code(legacy_code), "legacy_code": legacy_code,
+                           "message": message}},
     )
 
 
@@ -388,6 +404,9 @@ def create_app(
 
     @app.exception_handler(ApiError)
     async def api_error(request: Request, exc: ApiError):
+        if exc.contract_code is not None:
+            return _contract_error(request.state.request_id, exc.status_code, exc.code,
+                                   _redact(exc.message, sensitive_paths))
         return _error(request.state.request_id, exc.status_code, exc.code, _redact(exc.message, sensitive_paths))
 
     @app.exception_handler(_BodyTooLarge)
@@ -930,6 +949,47 @@ def create_app(
                 timeout_seconds=request.app.state.job_timeout_seconds)
         return request.app.state.job_runner
 
+    # ------------------------------------------------------------------
+    # T-A4-2 health endpoints per the V1 contract: /v1/health/live is
+    # process-only liveness; /v1/health/ready reflects model availability
+    # (not ready -> 503 with a contract error body).  The legacy /v1/health
+    # and /v3/health endpoints above are untouched.
+    # ------------------------------------------------------------------
+    @app.get("/v1/health/live")
+    async def v1_health_live():
+        return JSONResponse(status_code=200, content={"status": "alive"})
+
+    @app.get("/v1/health/ready")
+    async def v1_health_ready(request: Request):
+        workers: dict[str, str] = {}
+        ready = True
+        runtime = shared(request)
+        try:
+            if hasattr(runtime, "manager_for"):
+                capabilities = await operation(request, "capabilities")
+                for language in capabilities or {}:
+                    description = await operation(request, "describe",
+                                                  _manager=runtime.manager_for(language))
+                    workers[language] = "ready" if description else "unavailable"
+                    ready = ready and bool(description)
+            else:
+                description = await operation(request, "describe")
+                workers["default"] = "ready" if description else "unavailable"
+                ready = ready and bool(description)
+        except (ApiError, ModelUnavailable):
+            ready = False
+            workers["default"] = "unavailable"
+        if ready:
+            return JSONResponse(status_code=200,
+                                 content={"status": "ready", "workers": workers})
+        return JSONResponse(
+            status_code=503,
+            content={"schema_version": 1, "request_id": request.state.request_id,
+                     "status": "not_ready", "workers": workers,
+                     "error": {"code": "MODEL_UNAVAILABLE",
+                               "legacy_code": "model_unavailable",
+                               "message": "No model is loaded; the service is not ready"}})
+
     @app.post("/v1/videos/infer", status_code=202)
     async def submit_video_infer(
         request: Request,
@@ -942,20 +1002,26 @@ def create_app(
         output_zh: Annotated[bool, Form()] = True,
         output_pt_br: Annotated[bool, Form()] = True,
     ):
+        # T-A4-2: every error on the V1 contract endpoints carries the
+        # contract uppercase code (+ legacy_code transition field).
         if mode != "single_model":
             # Legal enum value, intentionally not enabled in P0-A (G2 FAILED:
             # fusion stays out of the main path).  Explicit refusal, never a
             # silent fallback to single_model.
             raise ApiError(422, "invalid_input",
-                           f"mode '{mode}' is not enabled in P0-A; only 'single_model' is available")
+                           f"mode '{mode}' is not enabled in P0-A; only 'single_model' is available",
+                           contract_code="INVALID_INPUT")
         if sign_system == "LIBRAS":
             raise ApiError(503, "model_unavailable",
-                           "no Libras-trained weights; LIBRAS routing is unavailable")
+                           "no Libras-trained weights; LIBRAS routing is unavailable",
+                           contract_code="MODEL_UNAVAILABLE")
         if sign_system == "UNKNOWN":
             raise ApiError(422, "invalid_input",
-                           "sign_system must be explicitly CSL in P0/P1")
+                           "sign_system must be explicitly CSL in P0/P1",
+                           contract_code="INVALID_INPUT")
         if sample_id is None or not sample_id.strip():
-            raise ApiError(422, "invalid_input", "sample_id is required for replay-driven inference")
+            raise ApiError(422, "invalid_input", "sample_id is required for replay-driven inference",
+                           contract_code="INVALID_INPUT")
         runner = _job_runner(request)
         resolved_job_id = job_id or str(uuid4())
         path: Path | None = None
@@ -963,7 +1029,8 @@ def create_app(
             suffix = Path(video.filename or "").suffix.lower()
             if suffix not in _JOB_SUFFIXES:
                 raise ApiError(422, "unsupported_input",
-                               "Supported files: .mp4, .avi, .mov, .mkv, .json, .npy, .npz")
+                               "Supported files: .mp4, .avi, .mov, .mkv, .json, .npy, .npz",
+                               contract_code="INVALID_INPUT")
             path = await run_in_threadpool(_save_upload, video, suffix, max_upload_bytes)
             # Register the job (idempotent) synchronously, then execute in the
             # background: the 202 must return with status QUEUED (contract
@@ -975,10 +1042,13 @@ def create_app(
             except ValueError as exc:
                 message = str(exc)
                 if "bound to another payload" in message:
-                    raise ApiError(409, "request_conflict", _redact(message, sensitive_paths)) from exc
-                raise ApiError(422, "invalid_input", _redact(message, sensitive_paths)) from exc
+                    raise ApiError(409, "request_conflict", _redact(message, sensitive_paths),
+                                   contract_code="INVALID_INPUT") from exc
+                raise ApiError(422, "invalid_input", _redact(message, sensitive_paths),
+                               contract_code="INVALID_INPUT") from exc
             except RuntimeError as exc:
-                raise ApiError(429, "request_capacity", str(exc)) from exc
+                raise ApiError(429, "request_capacity", str(exc),
+                               contract_code="INVALID_INPUT") from exc
             native_path, path = path, None
 
             # T-A3-1: probe media metadata honestly (failures stay null with a
@@ -1035,7 +1105,7 @@ def create_app(
     async def get_v1_job(job_id: str, request: Request):
         record = request.app.state.job_store.get(job_id)
         if record is None:
-            raise ApiError(404, "unknown_job", "Job not found")
+            raise ApiError(404, "unknown_job", "Job not found", contract_code="INVALID_INPUT")
         payload = record.to_dict()
         # Contract-level shape: JobStatus with an optional final subtitle event.
         final_event = None
