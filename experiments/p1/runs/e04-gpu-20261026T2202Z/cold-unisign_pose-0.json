@@ -1,0 +1,90 @@
+{
+  "status": "ok",
+  "error": null,
+  "load_seconds": 17.446123800007626,
+  "runtime_info": {
+    "backend": "TorchUniSignRuntime",
+    "model_total_ms": null,
+    "capabilities": [
+      "pose_pkl"
+    ],
+    "load": {
+      "model_load_ms_runtime": 17319.168,
+      "dtype": "bfloat16",
+      "num_beams": 4,
+      "max_new_tokens": 100,
+      "max_frames": 256,
+      "parameter_count": 587747368,
+      "cold_first_forward_ms": 11199.592
+    },
+    "runtime": {
+      "backend": "pytorch_uni_sign",
+      "providers": [
+        "PyTorch CUDA"
+      ],
+      "device": "cuda",
+      "dtype": "bfloat16",
+      "load_ms": 17319.168400019407,
+      "parameter_count": 587747368,
+      "gpu_allocated_mb": 1148.85009765625,
+      "gpu_reserved_mb": 2688.0,
+      "gpu_peak_allocated_mb": 1171.64892578125,
+      "gpu_peak_reserved_mb": 2696.0
+    }
+  },
+  "vram_after_load": {
+    "torch_resident_allocated_mb": 1158.1,
+    "scope": "process_torch_allocator_peak, no other process",
+    "torch_peak_allocated_mb": 1171.6,
+    "torch_peak_reserved_mb": 2696.0,
+    "device_free_mb_at_read": 12436.0,
+    "device_total_mb": 16283.4
+  },
+  "timings": {
+    "video_decode_ms": null,
+    "pose_ms": 1.1260999599471688,
+    "forward_ms": 100.43619998032227,
+    "text_decode_ms": 234.53479999443516,
+    "queue_ms": 0.0,
+    "e2e_ms": 336.1641999799758,
+    "raw": {
+      "model_forward_ms": 100.436,
+      "generation_ms": 234.261,
+      "decode_ms": 0.274,
+      "model_total_ms": 334.971,
+      "pose_prepare_raw_ms": 1.126
+    },
+    "input": {
+      "pose_frames_total": 123,
+      "pose_frames_used": 109,
+      "pose_crop": [
+        2,
+        111
+      ],
+      "sampled_frames": 109,
+      "body_scale": 1.047,
+      "valid_body_fraction": 1.0,
+      "pose_sha256": "f08ca68a1856c5946bc897524eb06da3bcaae05ae4a4ad1ed6a572f18b41b69b"
+    },
+    "vram": {
+      "torch_resident_allocated_mb": 1158.1,
+      "scope": "process_torch_allocator_peak, no other process",
+      "torch_peak_allocated_mb": 1202.7,
+      "torch_peak_reserved_mb": 2738.0,
+      "device_free_mb_at_read": 12394.0,
+      "device_total_mb": 16283.4
+    },
+    "text": "学校太大了,很累。"
+  },
+  "text": "学校太大了,很累。",
+  "gloss": null,
+  "vram_after_inference": {
+    "torch_resident_allocated_mb": 1158.1,
+    "scope": "process_torch_allocator_peak, no other process",
+    "torch_peak_allocated_mb": 1202.7,
+    "torch_peak_reserved_mb": 2738.0,
+    "device_free_mb_at_read": 12394.0,
+    "device_total_mb": 16283.4
+  },
+  "process_seconds": 29.142
+}

@@ -1,0 +1,211 @@
+{
+  "phase": "cold",
+  "model": "unisign_video",
+  "repeats": 3,
+  "successful": 3,
+  "failed": 0,
+  "gpu_guard": {
+    "phase": "cold",
+    "gpu_baseline": {
+      "sampled_at": "2026-10-26T14:14:25+00:00",
+      "devices": [
+        {
+          "index": 0,
+          "name": "NVIDIA GeForce RTX 5060 Ti",
+          "driver_version": "616.92",
+          "memory_total_mb": 16311.0,
+          "memory_used_mb": 2415.0,
+          "memory_free_mb": 13636.0,
+          "utilization_gpu_pct": 9.0
+        }
+      ]
+    },
+    "ram": {
+      "total_gb": 31.84,
+      "available_gb": 7.65,
+      "used_percent": 76.0
+    },
+    "shared_gpu_detected": false
+  },
+  "rows": [
+    {
+      "schema_version": 1,
+      "run_id": "e04-gpu-20261026T2202Z",
+      "created_at": "2026-10-26T14:15:39+00:00",
+      "phase": "cold",
+      "model": "unisign_video",
+      "model_display": "Uni-Sign video path (trimmed mp4 -> RTMPose wholebody -> mT5)",
+      "sample_id": "S000502_P0000_T00",
+      "signer_id": "P0000",
+      "repetition": 0,
+      "status": "ok",
+      "error": null,
+      "video_seconds": 3.6,
+      "fps": 30.0,
+      "frames": 108,
+      "rtf": 0.9295,
+      "timing_method": {
+        "cpu": "time.perf_counter",
+        "gpu": "torch.cuda.synchronize inside runtime around each GPU segment"
+      },
+      "video_decode_ms": 332.212,
+      "pose_ms": 2188.399,
+      "forward_ms": 91.743,
+      "text_decode_ms": 718.297,
+      "queue_ms": 0.0,
+      "e2e_ms": 3346.362,
+      "timings_raw": {},
+      "vram": {
+        "torch_resident_allocated_mb": 1158.1,
+        "scope": "process_torch_allocator_peak, no other process",
+        "torch_peak_allocated_mb": 1202.4,
+        "torch_peak_reserved_mb": 2738.0,
+        "device_free_mb_at_read": 12036.0,
+        "device_total_mb": 16283.4
+      },
+      "input": {
+        "window_frames": 108,
+        "sampled_frames": 108,
+        "source_frames": 108,
+        "valid_body_fraction": 1.0,
+        "body_scale": 1.072,
+        "extractor_calls": 108,
+        "pose_cache_hit_frames": 0
+      },
+      "output_text": "学校太大了,很累。",
+      "process_exit_code": 0,
+      "process_wall_seconds": 73.892,
+      "model_load_seconds": 69.335,
+      "first_inference_ms": 3346.362,
+      "cold_start_scope": "fresh process: imports + asset verification + model load + one inference",
+      "spawn_attempts": 1,
+      "retryable_failure": false,
+      "shared_gpu": false
+    },
+    {
+      "schema_version": 1,
+      "run_id": "e04-gpu-20261026T2202Z",
+      "created_at": "2026-10-26T14:16:08+00:00",
+      "phase": "cold",
+      "model": "unisign_video",
+      "model_display": "Uni-Sign video path (trimmed mp4 -> RTMPose wholebody -> mT5)",
+      "sample_id": "S000502_P0000_T00",
+      "signer_id": "P0000",
+      "repetition": 1,
+      "status": "ok",
+      "error": null,
+      "video_seconds": 3.6,
+      "fps": 30.0,
+      "frames": 108,
+      "rtf": 0.7934,
+      "timing_method": {
+        "cpu": "time.perf_counter",
+        "gpu": "torch.cuda.synchronize inside runtime around each GPU segment"
+      },
+      "video_decode_ms": 321.995,
+      "pose_ms": 2218.716,
+      "forward_ms": 63.423,
+      "text_decode_ms": 238.139,
+      "queue_ms": 0.0,
+      "e2e_ms": 2856.355,
+      "timings_raw": {},
+      "vram": {
+        "torch_resident_allocated_mb": 1158.1,
+        "scope": "process_torch_allocator_peak, no other process",
+        "torch_peak_allocated_mb": 1202.4,
+        "torch_peak_reserved_mb": 2738.0,
+        "device_free_mb_at_read": 12034.0,
+        "device_total_mb": 16283.4
+      },
+      "input": {
+        "window_frames": 108,
+        "sampled_frames": 108,
+        "source_frames": 108,
+        "valid_body_fraction": 1.0,
+        "body_scale": 1.072,
+        "extractor_calls": 108,
+        "pose_cache_hit_frames": 0
+      },
+      "output_text": "学校太大了,很累。",
+      "process_exit_code": 0,
+      "process_wall_seconds": 29.166,
+      "model_load_seconds": 25.195,
+      "first_inference_ms": 2856.355,
+      "cold_start_scope": "fresh process: imports + asset verification + model load + one inference",
+      "spawn_attempts": 1,
+      "retryable_failure": false,
+      "shared_gpu": false
+    },
+    {
+      "schema_version": 1,
+      "run_id": "e04-gpu-20261026T2202Z",
+      "created_at": "2026-10-26T14:16:39+00:00",
+      "phase": "cold",
+      "model": "unisign_video",
+      "model_display": "Uni-Sign video path (trimmed mp4 -> RTMPose wholebody -> mT5)",
+      "sample_id": "S000502_P0000_T00",
+      "signer_id": "P0000",
+      "repetition": 2,
+      "status": "ok",
+      "error": null,
+      "video_seconds": 3.6,
+      "fps": 30.0,
+      "frames": 108,
+      "rtf": 0.7666,
+      "timing_method": {
+        "cpu": "time.perf_counter",
+        "gpu": "torch.cuda.synchronize inside runtime around each GPU segment"
+      },
+      "video_decode_ms": 322.93,
+      "pose_ms": 2172.393,
+      "forward_ms": 52.091,
+      "text_decode_ms": 198.868,
+      "queue_ms": 0.0,
+      "e2e_ms": 2759.788,
+      "timings_raw": {},
+      "vram": {
+        "torch_resident_allocated_mb": 1158.1,
+        "scope": "process_torch_allocator_peak, no other process",
+        "torch_peak_allocated_mb": 1202.4,
+        "torch_peak_reserved_mb": 2738.0,
+        "device_free_mb_at_read": 12036.0,
+        "device_total_mb": 16283.4
+      },
+      "input": {
+        "window_frames": 108,
+        "sampled_frames": 108,
+        "source_frames": 108,
+        "valid_body_fraction": 1.0,
+        "body_scale": 1.072,
+        "extractor_calls": 108,
+        "pose_cache_hit_frames": 0
+      },
+      "output_text": "学校太大了,很累。",
+      "process_exit_code": 0,
+      "process_wall_seconds": 30.518,
+      "model_load_seconds": 26.616,
+      "first_inference_ms": 2759.788,
+      "cold_start_scope": "fresh process: imports + asset verification + model load + one inference",
+      "spawn_attempts": 1,
+      "retryable_failure": false,
+      "shared_gpu": false
+    }
+  ],
+  "model_load_seconds": {
+    "count": 3,
+    "p50": 26.616,
+    "p95": 65.06309999999999,
+    "mean": 40.382,
+    "min": 25.195,
+    "max": 69.335
+  },
+  "process_wall_seconds": {
+    "count": 3,
+    "p50": 30.518,
+    "p95": 69.5546,
+    "mean": 44.52533333333333,
+    "min": 29.166,
+    "max": 73.892
+  },
+  "note": "cold rows count fresh-process attempts; allocation-type failures are retried (spawn_attempts > 1) and reported separately from model failures"
+}

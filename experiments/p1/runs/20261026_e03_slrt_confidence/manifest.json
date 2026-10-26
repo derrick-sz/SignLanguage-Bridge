@@ -1,0 +1,79 @@
+{
+  "run_id": "20261026_e03_slrt_confidence",
+  "run_status": "PASS",
+  "created_at": "2026-10-26T13:36:44+00:00",
+  "purpose": "E03 SLRT confidence calibration + error-risk prediction (CPU only, no model inference)",
+  "operator": "p1-agent",
+  "code": {
+    "repository": "SignLanguage-Bridge",
+    "git_sha": "cf291c2a81558faf6de0dc5a7243e730531e4367",
+    "branch": "codex/model-contract-auto-captions",
+    "dirty_tree": true,
+    "dirty_path_count": 132
+  },
+  "host": {
+    "host_alias": "PC-HPVYVOTACGSS"
+  },
+  "privacy_and_licensing": {
+    "rights_checked": false,
+    "no_raw_media_export": true,
+    "no_credentials_in_logs": true
+  },
+  "experiment_id": "E03",
+  "model": {
+    "model_id": "slrt-emnlp24-csl-daily (imported historical outputs)",
+    "checkpoint_sha256": "e9fdd3a66d9667e7685c2b1437c67b8cbc9e45d2562730f04c0226717b7cbd4d",
+    "score_type": "uncalibrated_mean_ensemble_probability",
+    "score_object": "token"
+  },
+  "data": {
+    "gt_sha256": "feb1b42daa74ed3efa992b50746c29f145550d381a80460669060ca00c087bb7",
+    "manifest_sha256": "22cd0e4969557ce7e40f96e83f3ff0f466c1e3081a883c267fbabe8f1119851f",
+    "slrt_dir": "artifacts\\csldaily-video-test-627-20261026\\slrt",
+    "slrt_json_count": 1086,
+    "unisign_video_preds_sha256": "8573129ba0b4d3008dd165f4d45a3eb58565e598a3081e9dd34540bd8f3b568d",
+    "n_samples": 1086,
+    "scope": "retrospective_seen_1086"
+  },
+  "code_assets": {
+    "script": "experiments/p1/e03/build_e03.py",
+    "script_sha256": "37e28eb2d65d8bb501d465aac0a75bd9c5e9a0340f0c674e3ea9c7de0a80162f",
+    "supporting_modules": {
+      "experiments/p1/common.py": "201f61e2e8b3f650eb61616ae8662219f5363903ab63357f9141bcd69b21ea62",
+      "experiments/p1/eval/metrics.py": "d4dbd4c4252cbcfea0fbc9fb62160a709db4fe3b61832cd6d53c411029459967",
+      "experiments/p1/gt_guard.py": "80b3037252053cd03c4da0d8e40edc06a110e323619ab1300cf96f7bea641a79"
+    }
+  },
+  "command": ".conda-env\\python.exe experiments/p1/e03/build_e03.py (PYTHONPATH=E:\\githubproject\\SignLanguage-Bridge)",
+  "device": {
+    "device": "cpu",
+    "gpu_used": false,
+    "note": "CPU-only analysis; GPU reserved for E01"
+  },
+  "outputs": {
+    "per_sample_scores.csv": {
+      "sha256": "b43f88f8f20ecf6290b6aa49f9525bf8229375c78b2a4e34b0b4bd40bc5ea585",
+      "n_rows": 1086
+    },
+    "calibration_results.json": {
+      "sha256": "ebe270c0b12800bf9a6cf47f8f80a0274a9ccfe48c5a9722e7970aa48a0558ae"
+    },
+    "risk_coverage.csv": {
+      "sha256": "f80f8867fcccfa1adc83c62e43f7dd6f20e8bb327dd8b32b46982083c5ed7eb0",
+      "n_rows": 300
+    },
+    "score_definition.md": {
+      "sha256": "8aa0974f4213c242958a93701cd9f6d87050a61bddfcf9a5f7266cfe5cdead02"
+    },
+    "report.md": {
+      "sha256": "3a55283319dcae2520cccd384794bb55d79b0cc0977ceea74bee1ec08aa097a1"
+    }
+  },
+  "limitations": [
+    "retrospective_seen_1086, not a fresh blind test",
+    "SLRT output is gloss (CSLR), not sentence translation",
+    "Uni-Sign confidence BLOCKED (no score/logprob exported)",
+    "should_upgrade truth is an eval-side proxy, not human annotation"
+  ],
+  "script_status": "executed_in_this_run"
+}

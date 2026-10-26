@@ -1,0 +1,163 @@
+{
+  "manifest_1086": {
+    "path": "experiments/p1/datasets/manifest_1086.csv",
+    "rows": 1086,
+    "columns": [
+      "sample_id",
+      "signer_id",
+      "split",
+      "source_dataset",
+      "analysis_scope",
+      "cohort",
+      "frames",
+      "raw_video_path",
+      "raw_video_present",
+      "trimmed_video_path",
+      "trimmed_video_present",
+      "trimmed_video_sha256",
+      "pose_npz_path",
+      "pose_npz_present"
+    ],
+    "sha256": "22cd0e4969557ce7e40f96e83f3ff0f466c1e3081a883c267fbabe8f1119851f",
+    "bytes": 454569,
+    "raw_video_present_true": 1086,
+    "raw_video_present_false": 0,
+    "splits": {
+      "test": 1086
+    },
+    "cohorts": {
+      "added_459": 459,
+      "existing_627": 627
+    },
+    "unique_sample_ids": 1086,
+    "signers": 10
+  },
+  "pilot_50": {
+    "path": "experiments/p1/datasets/pilot_50.csv",
+    "rows": 50,
+    "columns": [
+      "sample_id",
+      "signer_id",
+      "frames",
+      "cohort",
+      "usage",
+      "raw_video_path",
+      "raw_video_present",
+      "trimmed_video_path",
+      "pose_npz_path",
+      "fps_measured"
+    ],
+    "sha256": "f0f46125a6acf9768e696d1053450652ddca1146bb6ac2962be2b4efe4c99c4b",
+    "bytes": 16871,
+    "raw_video_present_true": 50,
+    "raw_video_present_false": 0,
+    "cohorts": {
+      "existing_627": 20,
+      "added_459": 30
+    },
+    "usage": {
+      "retrospective_diagnostic_only": 50
+    },
+    "unique_sample_ids": 50,
+    "signers": 10
+  },
+  "gt_1086": {
+    "path": "experiments/p1/references/gt_1086.csv",
+    "rows": 1086,
+    "columns": [
+      "sample_id",
+      "signer_id",
+      "ref_sentence_upstream",
+      "gt_sentence_official",
+      "gt_gloss"
+    ],
+    "sha256": "feb1b42daa74ed3efa992b50746c29f145550d381a80460669060ca00c087bb7",
+    "bytes": 196651,
+    "unique_sample_ids": 1086
+  },
+  "local_csl_daily_videos": {
+    "dir": "D:\\Zenodo\\csl-daliy",
+    "mp4_files": 19528,
+    "total_bytes": 26959704328,
+    "manifest_1086_matched_local": 1086
+  },
+  "official_pose_archive": {
+    "dir": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\cslnews-eval\\csl-daily-pose\\pose-format",
+    "files": 1176,
+    "total_bytes": 556506793,
+    "exists": true,
+    "zip_path": "artifacts/cslnews-eval/csl-daily-pose/csl_daily_pose_format.zip",
+    "zip_bytes": 4594281295
+  },
+  "upstream_test_tmp_refs": {
+    "path": "models/external/uni_sign_source/out/eval_csl_daily_pose_only/test_tmp_refs.txt",
+    "sha256": "042cd94c44f9652f9fa127134565877a7a1cd1c58d2a12776c6698bb65150aab",
+    "bytes": 123714,
+    "lines": 1176,
+    "nonempty_lines": 1176,
+    "local_coverage_of_refs": 1086,
+    "refs_without_local_video": 90
+  },
+  "f_model_weigth_data": {
+    "csl-daily-keypoints.pkl": {
+      "bytes": 1971425633,
+      "sha256": "23f8ab1063cfcfb882cc912f5ca918e77ee1dcc8d8ad2fac28c195b627107461"
+    },
+    "csl-daily.test": {
+      "bytes": 105205,
+      "sha256": "ebbbb48a3ff4430106eac39977759398a82afe2f448ca6378a0012ade4972458"
+    },
+    "csl-daily.train": {
+      "bytes": 1282351,
+      "sha256": "ef77f56e517cf5ecf16a7bf8035de1965975164b92a4ca3348c920912365481f"
+    },
+    "csl-daily.dev": {
+      "bytes": 99259,
+      "sha256": "f14660c46f9714425db2de33d0f037a8ed19cf945fd70ae9e0cde2efbd62bd4a"
+    },
+    "gloss2ids.pkl": {
+      "bytes": 35491,
+      "sha256": "3b347a8a3c81ad2a2e79eaa28b89dcc0502cd09070f29175bb3e86f338afdf4d"
+    }
+  },
+  "official_sentence_meta": {
+    "csl-daily.test": {
+      "entries": 1176,
+      "type": "list",
+      "sample_keys": [
+        "gloss",
+        "name",
+        "num_frames",
+        "sign",
+        "signer",
+        "text"
+      ],
+      "local_video_coverage": 1086,
+      "missing_local_video": 90
+    },
+    "csl-daily.train": {
+      "entries": 18401,
+      "type": "list",
+      "sample_keys": [
+        "gloss",
+        "name",
+        "num_frames",
+        "sign",
+        "signer",
+        "text"
+      ]
+    },
+    "csl-daily.dev": {
+      "entries": 1077,
+      "type": "list",
+      "sample_keys": [
+        "gloss",
+        "name",
+        "num_frames",
+        "sign",
+        "signer",
+        "text"
+      ]
+    }
+  }
+}

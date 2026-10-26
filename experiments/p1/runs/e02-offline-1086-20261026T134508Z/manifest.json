@@ -1,0 +1,71 @@
+{
+  "run_id": "e02-offline-1086-20261026T134508Z",
+  "run_status": "PASS",
+  "created_at": "2026-10-26T13:45:08+00:00",
+  "purpose": "E02",
+  "operator": "p1-agent",
+  "code": {
+    "repository": "SignLanguage-Bridge",
+    "git_sha": "cf291c2a81558faf6de0dc5a7243e730531e4367",
+    "branch": "codex/model-contract-auto-captions",
+    "dirty_tree": true,
+    "dirty_path_count": 132
+  },
+  "host": {
+    "host_alias": "PC-HPVYVOTACGSS"
+  },
+  "privacy_and_licensing": {
+    "rights_checked": false,
+    "no_raw_media_export": true,
+    "no_credentials_in_logs": true
+  },
+  "scope": "retrospective_seen_1086 (imported historical predictions; no model re-run)",
+  "hardware": {
+    "device": "n/a (offline CPU evaluation)"
+  },
+  "dataset": {
+    "dataset_name": "CSL-Daily",
+    "split": "test",
+    "scope": "retrospective_seen_1086",
+    "manifest": "experiments/p1/datasets/manifest_1086.csv",
+    "manifest_sha256": "22cd0e4969557ce7e40f96e83f3ff0f466c1e3081a883c267fbabe8f1119851f",
+    "gt_reference_path": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\references\\gt_1086.csv",
+    "gt_reference_sha256": "feb1b42daa74ed3efa992b50746c29f145550d381a80460669060ca00c087bb7",
+    "fps_source": "not_applicable_for_text_metrics"
+  },
+  "sources": {
+    "A_unisign_video": {
+      "path": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\unisign-video-1086-paperrefs\\predictions.jsonl",
+      "sha256": "8573129ba0b4d3008dd165f4d45a3eb58565e598a3081e9dd34540bd8f3b568d",
+      "rows": 1086
+    },
+    "A2_unisign_pose": {
+      "path": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\cslnews-eval\\csldaily-test-1086-pose-20261026\\predictions.jsonl",
+      "sha256": "758621291e87a4e14dcca43cdac2e42ee23ea0b8a464e0ddc1f77b56885de3e5",
+      "rows": 1086
+    },
+    "slrt_gloss_dir": {
+      "path": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\slrt",
+      "result_jsons": 1086
+    }
+  },
+  "inference": {
+    "note": "imported snapshots; no inference in this run"
+  },
+  "metrics": {
+    "metric_definition_version": "p1-v1"
+  },
+  "outputs": {
+    "candidate_outputs_jsonl": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\e02\\candidate_outputs.jsonl",
+    "translation_metrics_json": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\e02\\translation_metrics.json",
+    "fusion_ablation_csv": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\e02\\fusion_ablation.csv",
+    "comparison_table_md": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\e02\\comparison_table.md",
+    "error_analysis_md": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\e02\\error_analysis.md",
+    "report_md": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\e02\\report.md"
+  },
+  "counts": {
+    "samples": 1086,
+    "candidates": 3258,
+    "blocked_branches": 6
+  }
+}

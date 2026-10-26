@@ -1,0 +1,125 @@
+{
+  "schema_version": 1,
+  "audited_at": "2026-10-26T21:45:00+08:00",
+  "auditor": "auditor (P-1 E00 audit)",
+  "scope_note": "只做索引/小文件哈希与目录计数；未对 19,528 个视频或 4.59 GB pose zip 做全量哈希（按任务约束）。哈希算法 SHA256。",
+  "datasets": {
+    "manifest_1086": {
+      "path": "experiments/p1/datasets/manifest_1086.csv",
+      "bytes": 454569,
+      "sha256": "22cd0e4969557ce7e40f96e83f3ff0f466c1e3081a883c267fbabe8f1119851f",
+      "rows": 1086,
+      "unique_sample_ids": 1086,
+      "signers": 10,
+      "columns": ["sample_id", "signer_id", "split", "source_dataset", "analysis_scope", "cohort", "frames", "raw_video_path", "raw_video_present", "trimmed_video_path", "trimmed_video_present", "trimmed_video_sha256", "pose_npz_path", "pose_npz_present"],
+      "split_counts": {"test": 1086},
+      "cohort_counts": {"existing_627": 627, "added_459": 459},
+      "raw_video_present_true": 1086,
+      "raw_video_present_false": 0,
+      "note": "全部为 CSL-Daily test 的 retrospective_seen_1086 子集；manifest 由 experiments/p1/datasets/build_manifest.py 于 2026-10-26T13:29:14+00:00 生成（source_meta.json）"
+    },
+    "pilot_50": {
+      "path": "experiments/p1/datasets/pilot_50.csv",
+      "bytes": 16871,
+      "sha256": "f0f46125a6acf9768e696d1053450652ddca1146bb6ac2962be2b4efe4c99c4b",
+      "rows": 50,
+      "unique_sample_ids": 50,
+      "signers": 10,
+      "columns": ["sample_id", "signer_id", "frames", "cohort", "usage", "raw_video_path", "raw_video_present", "trimmed_video_path", "pose_npz_path", "fps_measured"],
+      "cohort_counts": {"existing_627": 20, "added_459": 30},
+      "usage_counts": {"retrospective_diagnostic_only": 50},
+      "raw_video_present_true": 50,
+      "raw_video_present_false": 0,
+      "note": "10 名 signer × 5 条；诊断样本，不是独立测试集（PLAN.md §3）"
+    },
+    "gt_1086": {
+      "path": "experiments/p1/references/gt_1086.csv",
+      "bytes": 196651,
+      "sha256": "feb1b42daa74ed3efa992b50746c29f145550d381a80460669060ca00c087bb7",
+      "rows": 1086,
+      "unique_sample_ids": 1086,
+      "columns": ["sample_id", "signer_id", "ref_sentence_upstream", "gt_sentence_official", "gt_gloss"],
+      "eval_only": true,
+      "note": "EVAL ONLY，供 EvalWorker 使用；不得进入推理输入（experiments/p1/references/source_meta.json eval_only=true）"
+    },
+    "pilot_50_diagnostic_EVAL_ONLY": {
+      "path": "experiments/p1/references/pilot_50_diagnostic_EVAL_ONLY.csv",
+      "bytes": 3339,
+      "sha256": "924bd4b7a7cf0be21e195f3a022f1e69e99bb1f9fe1ca5ddbcb4145c56b40046"
+    }
+  },
+  "local_videos": {
+    "dir": "D:\\Zenodo\\csl-daliy",
+    "mp4_files": 19528,
+    "total_bytes": 26959704328,
+    "total_gb": 25.11,
+    "manifest_1086_matched_local": 1086,
+    "note": "与 docs/agents/model-evaluation-pitfalls.md 第116行记录一致（19,528 条 / 约 25.1 GB；test 1,086 / dev 1,004 / train 17,438）"
+  },
+  "official_test_coverage": {
+    "official_test_source": "F:\\model_weigth\\data\\csl-daily\\csl-daily.test（作者 data.zip 句级标注）",
+    "official_test_entries": 1176,
+    "local_video_coverage_in_official_test": 1086,
+    "missing_local_video": 90,
+    "coverage_ratio": 0.9234693877551021,
+    "upstream_refs": {
+      "path": "models/external/uni_sign_source/out/eval_csl_daily_pose_only/test_tmp_refs.txt",
+      "bytes": 123714,
+      "sha256": "042cd94c44f9652f9fa127134565877a7a1cd1c58d2a12776c6698bb65150aab",
+      "lines": 1176,
+      "nonempty_lines": 1176,
+      "format": "sample: <sample_id>, ground-truth: <参考句（上游空格分字）>",
+      "local_coverage": 1086,
+      "refs_without_local_video": 90
+    },
+    "note": "1,086 是官方 1,176 test 的子集，不是完整官方 test；引用覆盖时必须写清版本（pitfalls §7 第116行）"
+  },
+  "official_pose_archive": {
+    "dir": "artifacts/cslnews-eval/csl-daily-pose/pose-format",
+    "files": 1176,
+    "total_bytes": 556506793,
+    "content": "按 test_tmp_refs.txt 的 1,176 个 sample ID 从作者归档抽出的 test pose pkl",
+    "zip": {
+      "path": "artifacts/cslnews-eval/csl-daily-pose/csl_daily_pose_format.zip",
+      "bytes": 4594281295,
+      "sha256": null,
+      "sha256_note": "4.59 GB；按任务约束未做全量哈希"
+    },
+    "sample_shape_evidence": "docs/agents/model-evaluation-pitfalls.md 第12行：4.59 GB / 20,654 pkl，[T,133,3]；test 抽 1,176"
+  },
+  "f_model_weigth_csl_daily": {
+    "dir": "F:\\model_weigth\\data\\csl-daily",
+    "files": {
+      "csl-daily-keypoints.pkl": {"bytes": 1971425633, "sha256": "23f8ab1063cfcfb882cc912f5ca918e77ee1dcc8d8ad2fac28c195b627107461", "note": "20,654 视频 [T,133,3] float16（与 keypoints_hrnet_dark_coco_wholebody{,_iso}.pkl 同文件硬链接）"},
+      "csl-daily.test": {"bytes": 105205, "sha256": "ebbbb48a3ff4430106eac39977759398a82afe2f448ca6378a0012ade4972458", "entries": 1176, "keys": ["name", "signer", "gloss", "text", "sign", "num_frames"], "format": "gzip pickle（gzip.open+pickle.load）"},
+      "csl-daily.train": {"bytes": 1282351, "sha256": "ef77f56e517cf5ecf16a7bf8035de1965975164b92a4ca3348c920912365481f", "entries": 18401},
+      "csl-daily.dev": {"bytes": 99259, "sha256": "f14660c46f9714425db2de33d0f037a8ed19cf945fd70ae9e0cde2efbd62bd4a", "entries": 1077},
+      "gloss2ids.pkl": {"bytes": 35491, "sha256": "3b347a8a3c81ad2a2e79eaa28b89dcc0502cd09070f29175bb3e86f338afdf4d", "note": "2,004 项 CSL S2G 词表"}
+    },
+    "data_consistency_crosscheck": "authors data 一致性记录：artifacts/slrt-gdrive-20261025/data-consistency.json（1,303 B）；csl.train/dev/test = 18,401/1,077/1,176、keypoints 20,654 视频、0 缺失/0 形状不匹配（docs/reports/slrt-assets-bootstrap-2026-10-25.md §6）"
+  },
+  "critical_asset_hashes": {
+    "unisign_pose_only": {"sha256": "73bea87a9603f719b4f4a481a3a1a5ed24e7e5f7b81afd14ef498c40469c1a6c", "bytes": 1186925112, "path": "models/external/uni_sign/csl_daily_pose_only_slt.pth"},
+    "mt5_base": {"sha256": "180573b534144580f04af026da62bf71bc976ee1b7eb311b8945e2fefde8d614", "bytes": 2329735129, "path": "models/external/uni_sign/mt5-base/pytorch_model.bin"},
+    "slrt_online_cslr": {"sha256": "e9fdd3a66d9667e7685c2b1437c67b8cbc9e45d2562730f04c0226717b7cbd4d", "bytes": 499554423, "path": "models/external/EMNLP24_Online/CSL-Daily/ckpts/cslr_best.ckpt"},
+    "slrt_vocab": {"sha256": "0c4984f0dd3e7897b8c8d9e6e99a848b60814a5d9cf7a49baf7cc9b9cd124c76", "bytes": 28821, "path": "models/external/EMNLP24_Online/CSL-Daily/meta/csl_iso_with_blank.vocab"},
+    "slrt_twostream_s2g": {"sha256": "54d2cb65c7d47085e1868326abbbb3a6e21774c383f57cd29f999d2009609739", "bytes": 504360673, "path": "F:/model_weigth/ckpts/TwoStreamSLT/TwoStream/csl-daily_s2g/ckpts/best.ckpt"},
+    "unisign_source_zip": {"sha256": "8022b073bb1de962a8e3f424e9858ee50465e46228bc8854b966d54107d8cc97", "bytes": 8600007, "path": "models/external/.downloads/Uni-Sign-eed438bcb49e30405cd6ccdfcccca330c134e830.zip"}
+  },
+  "freshness_and_generation": {
+    "experiments_p1_source_meta": {
+      "datasets/source_meta.json": {"created_at": "2026-10-26T13:29:14+00:00", "counts": {"manifest_1086": 1086, "raw_videos_present": 1086, "trimmed_clips_present": 1086, "pose_npz_present": 1086, "pilot_50": 50}},
+      "references/source_meta.json": {"created_at": "2026-10-26T13:29:14+00:00", "eval_only": true, "upstream_refs_sha256": "042cd94c44f9652f9fa127134565877a7a1cd1c58d2a12776c6698bb65150aab", "upstream_refs_total": 1176}
+    },
+    "usage_rules": [
+      "manifest_1086/pilot_50 不含 GT 派生字段，可进入推理输入；references/gt_1086.csv 为 EVAL ONLY，禁止进入推理/LLM 输入。",
+      "1086 不是独立测试集（retrospective_seen），统计显著性结论应使用新未见视频。",
+      "同一 BLEU/chrF 对照必须固定参考文本文件（ref_sentence_upstream vs gt_sentence_official 标点不同，589/1086 条差异；pitfalls §7 第118行）。"
+    ]
+  },
+  "commands": [
+    "\\.conda-env\\python.exe experiments/p1/e00/_data_snapshot.py > experiments/p1/e00/_data_snapshot_raw.json",
+    "Get-CimInstance Win32_LogicalDisk（磁盘）",
+    "Get-ChildItem D:\\Zenodo\\csl-daliy -Recurse（mp4 计数 19,528 / 26,959,704,328 B）"
+  ]
+}

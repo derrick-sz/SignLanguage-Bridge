@@ -1,0 +1,60 @@
+# P-1 运行记录模板：复制后填写，每次 run_id 不可复用。YAML 内 placeholder 不代表真实完成的运行。
+run_id: null
+run_status: PLANNED       # PLANNED | RUNNING | PASS | FAIL | BLOCKED
+created_at: null         # ISO 8601 with timezone
+purpose: null            # E00 | E01 | E02 | E03 | E04 | E05 | E06
+operator: null
+code:
+  repository: SignLanguage-Bridge
+  git_sha: null
+  branch: null
+  dirty_tree: null
+  container_image_digest: null
+hardware:
+  host_alias: null       # 不写敏感 IP / SSH 凭据
+  os: null
+  gpu_name: null
+  gpu_count: null
+  total_vram_mb: null
+  driver_version: null
+  cuda_version: null
+  torch_version: null
+  device_precision: null # fp32 | fp16 | bf16 | other
+  batch_size: 1
+dataset:
+  dataset_name: CSL-Daily
+  scope: retrospective_seen_1086
+  sample_manifest_sha256: null
+  raw_video_root: null   # 通过本地配置或环境变量读取，不提交真实视频
+  fps_source: null      # ffprobe | container PTS | camera measured | unknown
+  gt_reference_path: null  # eval-only; do not expose to inference/LLM
+model:
+  model_id: null
+  git_sha: null
+  checkpoint_sha256: null
+  preprocess_version: null
+  tokenizer_version: null
+  decode_config_hash: null
+inference:
+  seed: 20261026
+  temperature: null
+  decoding: null
+  max_generation_length: null
+  input_window_policy: null
+metrics:
+  metric_definition_version: p1-v1
+  sacrebleu_signature: null
+  wer_gloss_tokenizer: whitespace-v1
+  evaluator_gt_only: true
+privacy_and_licensing:
+  rights_checked: false
+  no_raw_media_export: true
+  no_credentials_in_logs: true
+outputs:
+  model_outputs_jsonl: null
+  runtime_metrics_jsonl: null
+  stream_events_jsonl: null
+  fusion_outputs_jsonl: null
+  metrics_json: null
+  report_md: null
+notes: null

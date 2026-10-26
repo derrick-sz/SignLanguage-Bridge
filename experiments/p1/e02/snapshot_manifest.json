@@ -1,0 +1,20 @@
+{
+  "created_at": "2026-10-26T13:54:41+00:00",
+  "frozen_historical_1086": {
+    "A": {
+      "path": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\unisign-video-1086-paperrefs\\predictions.jsonl",
+      "sha256": "8573129ba0b4d3008dd165f4d45a3eb58565e598a3081e9dd34540bd8f3b568d",
+      "rows": 1086
+    },
+    "A2": {
+      "path": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\cslnews-eval\\csldaily-test-1086-pose-20261026\\predictions.jsonl",
+      "sha256": "758621291e87a4e14dcca43cdac2e42ee23ea0b8a464e0ddc1f77b56885de3e5",
+      "rows": 1086
+    },
+    "SLRT_gloss": {
+      "path": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\slrt",
+      "result_jsons": 1086
+    }
+  },
+  "note": "read-only evidence; do not overwrite these artifacts"
+}

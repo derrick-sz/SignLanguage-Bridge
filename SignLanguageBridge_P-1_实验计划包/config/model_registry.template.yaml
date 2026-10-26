@@ -1,0 +1,80 @@
+# 模型注册表模板（不是实际安装检测结果）；UNKNOWN/BLOCKED 需要实测更新。
+models:
+  - model_id: unisign_rgb
+    task: CSLT
+    language: CSL
+    modality: RGB_or_RGB_Pose_as_verified
+    source_url: https://github.com/ZechengLi19/Uni-Sign
+    status: UNKNOWN
+    local_checkpoint: null
+    checkpoint_sha256: null
+    git_sha: null
+    preprocess_version: null
+    outputs: [text]
+    supports_partial: UNKNOWN
+    license_checked: false
+  - model_id: unisign_pose_released
+    task: CSLT
+    language: CSL
+    modality: released_pose
+    source_url: https://github.com/ZechengLi19/Uni-Sign/blob/main/demo/README.md
+    status: UNKNOWN
+    local_checkpoint: null
+    checkpoint_sha256: null
+    git_sha: null
+    preprocess_version: null
+    outputs: [text]
+    supports_partial: UNKNOWN
+    license_checked: false
+  - model_id: slrt_twostream_slr
+    task: CSLR
+    language: CSL
+    modality: RGB_and_HRNet_pose
+    source_url: https://github.com/FangyunWei/SLRT/blob/main/TwoStreamNetwork/README.md
+    status: UNKNOWN
+    local_checkpoint: null
+    checkpoint_sha256: null
+    git_sha: null
+    preprocess_version: local_alignment_unverified
+    outputs: [gloss_tokens]
+    supports_partial: UNKNOWN
+    license_checked: false
+  - model_id: slrt_twostream_slt
+    task: CSLT
+    language: CSL
+    modality: RGB_and_HRNet_pose_as_verified
+    source_url: https://github.com/FangyunWei/SLRT/blob/main/TwoStreamNetwork/README.md
+    status: UNKNOWN
+    local_checkpoint: null
+    checkpoint_sha256: null
+    git_sha: null
+    preprocess_version: null
+    outputs: [text]
+    supports_partial: UNKNOWN
+    license_checked: false
+  - model_id: slrt_online
+    task: CSLR_or_CSLT_verify
+    language: CSL
+    modality: video_and_keypoints_as_verified
+    source_url: https://github.com/FangyunWei/SLRT/blob/main/Online/README.md
+    status: UNKNOWN
+    local_checkpoint: null
+    checkpoint_sha256: null
+    git_sha: null
+    preprocess_version: null
+    outputs: [gloss_tokens, text]
+    supports_partial: UNKNOWN
+    license_checked: false
+  - model_id: rf_mediapipe_legacy
+    task: ISLR
+    language: CSL_demo
+    modality: mediapipe_225
+    source_url: project_local_repository
+    status: TO_AUDIT
+    local_checkpoint: null
+    checkpoint_sha256: null
+    git_sha: null
+    preprocess_version: null
+    outputs: [gesture_id]
+    supports_partial: UNKNOWN
+    license_checked: false

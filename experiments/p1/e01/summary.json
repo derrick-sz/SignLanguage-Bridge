@@ -1,0 +1,487 @@
+{
+  "experiment_id": "E01",
+  "title": "预处理一致性与推理可复现性（Pilot-50：U1 Uni-Sign 视频 / U2 Uni-Sign 官方 pose / S1 SLRT Gloss）",
+  "created_at": "2026-10-26T13:55:33+00:00",
+  "git": {
+    "repository": "SignLanguage-Bridge",
+    "git_sha": "cf291c2a81558faf6de0dc5a7243e730531e4367",
+    "branch": "codex/model-contract-auto-captions",
+    "dirty_tree": true,
+    "dirty_path_count": 132
+  },
+  "pilot": {
+    "n": 50,
+    "signers": [
+      "P0000",
+      "P0001",
+      "P0002",
+      "P0003",
+      "P0004",
+      "P0005",
+      "P0006",
+      "P0007",
+      "P0008",
+      "P0009"
+    ],
+    "signer_count": 10,
+    "cohorts": {
+      "added_459": 30,
+      "existing_627": 20
+    },
+    "annotation_frames": {
+      "min": 50,
+      "median": 116.0,
+      "max": 172,
+      "equals_raw_frame_count": 0,
+      "note": "pilot CSV 'frames' is the annotated sentence length, not the raw recording length"
+    },
+    "pilot_csv": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\datasets\\pilot_50.csv",
+    "pilot_csv_sha256": "f0f46125a6acf9768e696d1053450652ddca1146bb6ac2962be2b4efe4c99c4b",
+    "sample_of": "selection-1086.json (the 1,086 locally available CSL-Daily test clips)",
+    "boundary": "Pilot-50 is a 50/1,086 subset of the local test coverage (1,086/1,176 of the official test split); retrospective diagnostic only. Metrics here are subset numbers and are not comparable to full-split paper numbers."
+  },
+  "inputs": {
+    "video_probe": {
+      "rows": 50,
+      "all_ok": true,
+      "probe_method": "ffprobe -count_frames (decoded frame count); fps from ffprobe avg_frame_rate",
+      "raw_frames": {
+        "min": 70,
+        "median": 157.0,
+        "max": 332,
+        "sum": 8133
+      },
+      "annotation_frames": {
+        "min": 50,
+        "median": 116.0,
+        "max": 172,
+        "equals_raw_frame_count": 0,
+        "note": "pilot CSV 'frames' is the annotated sentence length, not the raw recording length"
+      },
+      "dims": [
+        [
+          "1080",
+          "1080"
+        ],
+        [
+          "1280",
+          "1280"
+        ]
+      ],
+      "fps_values": [
+        "29.97003",
+        "30.0"
+      ],
+      "codec": [
+        "h264"
+      ],
+      "pix_fmt": [
+        "yuv420p"
+      ],
+      "bytes_total": 67558288,
+      "sha256_recorded": 50,
+      "counted_equals_declared": 50,
+      "csv": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\e01\\video_probe.csv"
+    },
+    "preprocess_audit": {
+      "rows": 50,
+      "trimmed_sha256_matches_npz_metadata": 50,
+      "trimmed_frames_equal_npz_frames": 50,
+      "trimmed_frames_equal_annotation": 50,
+      "ffprobe_equal_alignment_frames": 50,
+      "low_confidence_samples": 0,
+      "best_mean_px": {
+        "min": 3.695,
+        "mean": 6.622,
+        "max": 13.265
+      },
+      "confidence_clipped_total": 56267,
+      "npz": {
+        "coordinate_systems": [
+          "coco_wholebody_133_xyc_512_v1"
+        ],
+        "frontends": [
+          "hrnet_w48_dark"
+        ],
+        "keypoint_shapes": [
+          "101x133x3",
+          "102x133x3",
+          "103x133x3",
+          "106x133x3",
+          "107x133x3",
+          "108x133x3",
+          "109x133x3",
+          "113x133x3",
+          "114x133x3",
+          "116x133x3",
+          "119x133x3",
+          "120x133x3",
+          "121x133x3",
+          "122x133x3",
+          "123x133x3",
+          "125x133x3",
+          "127x133x3",
+          "130x133x3",
+          "136x133x3",
+          "137x133x3",
+          "139x133x3",
+          "143x133x3",
+          "152x133x3",
+          "158x133x3",
+          "160x133x3",
+          "162x133x3",
+          "163x133x3",
+          "172x133x3",
+          "50x133x3",
+          "53x133x3",
+          "64x133x3",
+          "82x133x3",
+          "90x133x3",
+          "91x133x3",
+          "94x133x3",
+          "96x133x3",
+          "97x133x3",
+          "98x133x3"
+        ]
+      },
+      "frame_sampling": {
+        "video_path": "deterministic linspace over decoded frames when T>256 (slbridge/uni_sign_preprocess.py:100-115)",
+        "pilot_clips_over_256": 0,
+        "pose_pkls_over_256": 1,
+        "note": "all 50 pilot sentence clips are <=172 annotated frames; no downsampling in practice except the one released pose pkl whose start/end crop is 303 frames"
+      },
+      "released_pose_crop": {
+        "pkl_frames_total_equals_raw_video": 50,
+        "crop_frames_minus_annotation": {
+          "min": -2,
+          "median": 3.0,
+          "max": 140,
+          "nonzero": 45,
+          "abs_gt_5": 15
+        },
+        "note": "released pkl keeps full-video 133-point poses; the crop [start,end) is the segment the model consumes and does not always equal the annotated sentence length"
+      },
+      "normalization": {
+        "video_path": "isotropic_short_side (all clips are square 1280x1280 / 1080x1080, so this equals x/W,y/H)",
+        "pose_path": "x/W,y/H normalized released pose on square frames; rescale_x=1.0",
+        "equivalence": "square frames -> both conventions are numerically identical; only the pose frontend (local RTMPose vs released HRNet archive) and the crop/frame set differ"
+      },
+      "input_diff_explained": 50,
+      "csv": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\e01\\preprocess_audit.csv"
+    }
+  },
+  "paths": {
+    "U1_unisign_video": {
+      "run_id": "e01-pilot50-u1-unisign-video-20261026",
+      "run_dir": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\runs\\e01-pilot50-u1-unisign-video-20261026",
+      "status": "PASS",
+      "manifest": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\runs\\e01-pilot50-u1-unisign-video-20261026\\manifest.json",
+      "model_outputs": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\runs\\e01-pilot50-u1-unisign-video-20261026\\model_outputs.jsonl",
+      "metrics_json": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\runs\\e01-pilot50-u1-unisign-video-20261026\\metrics.json",
+      "eval_records": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\runs\\e01-pilot50-u1-unisign-video-20261026\\eval_records.jsonl",
+      "comparison_json": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\runs\\e01-pilot50-u1-unisign-video-20261026\\comparison.json",
+      "sample_counts": {
+        "planned": 50,
+        "rows_written": 50,
+        "successful": 50,
+        "failed": 0,
+        "empty_outputs": 0
+      },
+      "failure_samples": [],
+      "history_compare": {
+        "raw_exact": 50,
+        "nfkc_normalized": 50,
+        "denominator": 50,
+        "raw_rate": 1.0,
+        "nfkc_rate": 1.0
+      },
+      "history_label": "unisign-video-1086-paperrefs (imported_1086_video)",
+      "canonical_metrics_rerun": {
+        "n": 50,
+        "bleu4_13a": 31.2308,
+        "chrf": 27.1849,
+        "rouge_l_f1_char": null,
+        "mean_char_edit_similarity": 0.4831,
+        "exact_match_count": 2
+      },
+      "canonical_metrics_history_same_subset": {
+        "n": 50,
+        "bleu4_13a": 31.2308,
+        "chrf": 27.1849,
+        "rouge_l_f1_char": null,
+        "mean_char_edit_similarity": 0.4831,
+        "exact_match_count": 2
+      },
+      "script_metrics_secondary_reference": {
+        "n": 50,
+        "bleu4_13a": 28.101109491973773,
+        "bleu4_13a_definition": "SacreBLEU 13a on character-separated text after the upstream 'fix mt5 tokenizer bug' rewrite",
+        "bleu4_13a_raw_no_mt5_fix": 0.9860713466075962,
+        "bleu4_precisions": [
+          60.46,
+          37.95,
+          25.46,
+          18.05
+        ],
+        "bp": 0.8769,
+        "chrf": 24.22611740567663,
+        "rouge_l_f1_char": 0.5925148904433687,
+        "mean_char_edit_similarity": 0.48308312711129375,
+        "edit_similarity_p50": 0.3765182186234818,
+        "exact_match_count": 2,
+        "prediction_chars_total": 693,
+        "reference_chars_total": 784
+      },
+      "script_paired_comparison_vs_upstream": null,
+      "latency": {
+        "e2e_seconds": {
+          "n": 50,
+          "mean": 3.776,
+          "p50": 3.625,
+          "p95": 5.336
+        },
+        "pose_ms": {
+          "n": 50,
+          "mean": 3311.128,
+          "p50": 3226.141,
+          "p95": 4769.489
+        },
+        "model_total_ms": {
+          "n": 50,
+          "mean": 444.786,
+          "p50": 387.656,
+          "p95": 797.874
+        }
+      },
+      "metric_scope": "successful_subset_all_succeeded_corpus_metrics"
+    },
+    "U2_unisign_pose": {
+      "run_id": "e01-pilot50-u2-unisign-pose-20261026",
+      "run_dir": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\runs\\e01-pilot50-u2-unisign-pose-20261026",
+      "status": "PASS",
+      "manifest": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\runs\\e01-pilot50-u2-unisign-pose-20261026\\manifest.json",
+      "model_outputs": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\runs\\e01-pilot50-u2-unisign-pose-20261026\\model_outputs.jsonl",
+      "metrics_json": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\runs\\e01-pilot50-u2-unisign-pose-20261026\\metrics.json",
+      "eval_records": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\runs\\e01-pilot50-u2-unisign-pose-20261026\\eval_records.jsonl",
+      "comparison_json": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\runs\\e01-pilot50-u2-unisign-pose-20261026\\comparison.json",
+      "sample_counts": {
+        "planned": 50,
+        "rows_written": 50,
+        "successful": 50,
+        "failed": 0,
+        "empty_outputs": 0
+      },
+      "failure_samples": [],
+      "history_compare": {
+        "raw_exact": 50,
+        "nfkc_normalized": 50,
+        "denominator": 50,
+        "raw_rate": 1.0,
+        "nfkc_rate": 1.0
+      },
+      "history_label": "csldaily-test-1086-pose-20261026 (imported_1086_pose)",
+      "canonical_metrics_rerun": {
+        "n": 50,
+        "bleu4_13a": 31.7823,
+        "chrf": 27.9108,
+        "rouge_l_f1_char": null,
+        "mean_char_edit_similarity": 0.4885,
+        "exact_match_count": 3
+      },
+      "canonical_metrics_history_same_subset": {
+        "n": 50,
+        "bleu4_13a": 31.7823,
+        "chrf": 27.9108,
+        "rouge_l_f1_char": null,
+        "mean_char_edit_similarity": 0.4885,
+        "exact_match_count": 3
+      },
+      "script_metrics_secondary_reference": {
+        "n": 50,
+        "bleu4_13a": 31.78227936200339,
+        "bleu4_13a_definition": "sacrebleu tokenize=13a after the upstream 'fix mt5 tokenizer bug' rewrite",
+        "bleu4_13a_raw_no_mt5_fix": 0.0028586466542001574,
+        "bleu4_13a_raw_brevity_penalty": 0.00107,
+        "protocol_trap_note": "bleu4_13a_raw_no_mt5_fix is only for demonstrating the format trap; never quote it as accuracy",
+        "bleu4_precisions": [
+          65.73,
+          42.47,
+          30.66,
+          22.9
+        ],
+        "bp": 0.8494,
+        "chrf": 27.91075123870001,
+        "rouge_l_f1_char": 0.604174898995278,
+        "mean_char_edit_similarity": 0.4884602529953856,
+        "edit_similarity_p50": 0.4494949494949495,
+        "exact_match_count": 3,
+        "prediction_chars_total": 674,
+        "reference_chars_total": 784
+      },
+      "script_paired_comparison_vs_upstream": {
+        "paired_n": 50,
+        "this_bleu4": 31.78227936200339,
+        "upstream_bleu4": 32.0631095196952,
+        "identical_prediction_count_raw_format": 0,
+        "identical_prediction_count_after_mt5_fix": 48,
+        "mean_edit_delta_this_minus_upstream": -0.004000000000000001,
+        "note": "Upstream uses random frame sampling; agreement is not bit-exact."
+      },
+      "latency": {
+        "e2e_seconds": {
+          "n": 50,
+          "mean": 0.663,
+          "p50": 0.351,
+          "p95": 0.476
+        },
+        "model_total_ms": {
+          "n": 50,
+          "mean": 660.319,
+          "p50": 348.792,
+          "p95": 473.391
+        },
+        "model_forward_ms": {
+          "n": 50,
+          "mean": 355.539,
+          "p50": 61.933,
+          "p95": 96.045
+        },
+        "generation_ms": {
+          "n": 50,
+          "mean": 304.376,
+          "p50": 283.823,
+          "p95": 403.295
+        }
+      },
+      "metric_scope": "successful_subset_all_succeeded_corpus_metrics"
+    },
+    "S1_slrt_gloss": {
+      "run_id": "e01-pilot50-s1-slrt-gloss-20261026",
+      "run_dir": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\runs\\e01-pilot50-s1-slrt-gloss-20261026",
+      "status": "PASS",
+      "manifest": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\runs\\e01-pilot50-s1-slrt-gloss-20261026\\manifest.json",
+      "model_outputs": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\runs\\e01-pilot50-s1-slrt-gloss-20261026\\model_outputs.jsonl",
+      "metrics_json": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\runs\\e01-pilot50-s1-slrt-gloss-20261026\\metrics.json",
+      "eval_records": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\runs\\e01-pilot50-s1-slrt-gloss-20261026\\eval_records.jsonl",
+      "comparison_json": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\runs\\e01-pilot50-s1-slrt-gloss-20261026\\comparison.json",
+      "sample_counts": {
+        "planned": 50,
+        "successful": 50,
+        "failed": 0,
+        "empty_outputs": 0,
+        "corpus_wer_scope": "all 50 samples"
+      },
+      "failure_samples": [],
+      "history_compare": {
+        "gloss_sequence_exact": 50,
+        "token_multiset_equal": 50,
+        "denominator": 50,
+        "exact_rate": 1.0
+      },
+      "history_label": null,
+      "canonical_metrics_rerun": {
+        "n": 50,
+        "corpus_wer": 0.317,
+        "substitutions": 72,
+        "deletions": 21,
+        "insertions": 17,
+        "reference_tokens": 347,
+        "hypothesis_tokens": null
+      },
+      "canonical_metrics_history_same_subset": null,
+      "script_metrics_secondary_reference": null,
+      "script_paired_comparison_vs_upstream": null,
+      "latency": {
+        "n": 50,
+        "mean": 14.46,
+        "p50": 14.193,
+        "p95": 19.172,
+        "scope": "per-sample elapsed of the SLRT CLI subprocess incl. ~3.9 s weight load"
+      },
+      "metric_scope": "successful_subset_all_succeeded_corpus_metrics"
+    }
+  },
+  "comparisons": {
+    "unisign_video_vs_pose_on_pilot50": {
+      "video_minus_pose_bleu4": -0.5515,
+      "video_minus_pose_chrf": -0.7259,
+      "video_minus_pose_edit_similarity": -0.0054,
+      "n": 50,
+      "scope": "same 50 pilot samples, same checkpoint/decode, same canonical reference; the two input paths differ only in pose frontend and frame set"
+    },
+    "historical_baselines_imported_1086": {
+      "U1_unisign_video": {
+        "path": "artifacts/csldaily-video-test-627-20261026/unisign-video-1086-paperrefs/predictions.jsonl",
+        "bleu4_13a": 24.81568280610249,
+        "chrf": 21.79739979299852,
+        "mean_char_edit_similarity": 0.4156886922997997,
+        "baseline_n": 1086,
+        "role": "imported",
+        "comparable_to": "same reference file and subset rules; not re-inferred by this task"
+      },
+      "U2_unisign_pose": {
+        "path": "artifacts/cslnews-eval/csldaily-test-1086-pose-20261026/predictions.jsonl",
+        "bleu4_13a": 25.58456044558977,
+        "chrf": 22.428395124236005,
+        "mean_char_edit_similarity": 0.42119971772304904,
+        "baseline_n": 1086,
+        "role": "imported",
+        "comparable_to": "same reference file and subset rules; not re-inferred by this task"
+      },
+      "S1_slrt_gloss": {
+        "path": "artifacts/csldaily-video-test-627-20261026/slrt/<sample>.json",
+        "corpus_wer": 0.3018,
+        "baseline_n": 1086,
+        "note": "historical 1086 SLRT corpus WER 0.3018 (S1,154/D805/I522); the artifact tree here holds the 1,086 per-sample Gloss files",
+        "role": "imported",
+        "comparable_to": "same reference file and subset rules; not re-inferred by this task"
+      }
+    }
+  },
+  "reference_variants": {
+    "canonical_primary": "gt_1086.csv :: ref_sentence_upstream (upstream test_tmp_refs style: character-separated, half-width punctuation) -> used for all cross-run comparisons here",
+    "official_annotation": "csl-daily.test text / gt_1086.gt_sentence_official (full-width punctuation, no spaces) -> only the frozen video script's own BLEU summary uses it",
+    "warning": "the two variants differ by ~2.8-3.1 BLEU for identical predictions; never mix them in one comparison",
+    "observed_gap_pilot50": {
+      "video_script_official_ref_bleu4": 28.101109491973773,
+      "video_canonical_upstream_ref_bleu4": 31.2308,
+      "delta": 3.1297
+    }
+  },
+  "status": {
+    "overall": "PASS",
+    "per_path": {
+      "U1_unisign_video": "PASS",
+      "U2_unisign_pose": "PASS",
+      "S1_slrt_gloss": "PASS"
+    },
+    "evidence_gate": "PASS only where the run actually executed and saved evidence; imported historical numbers are marked 'imported'"
+  },
+  "measured_vs_imported": {
+    "measured": [
+      "video_probe.csv",
+      "preprocess_audit.csv",
+      "U1 predictions + timings",
+      "U2 predictions + timings",
+      "S1 Gloss + exit codes + timings",
+      "canonical metrics on the 50 subset"
+    ],
+    "imported": [
+      "historical 1086 Uni-Sign video predictions",
+      "historical 1086 Uni-Sign pose predictions",
+      "historical 1086 SLRT Gloss outputs",
+      "trimmed clips / NPZ poses / alignment records used as S1 input (reused, not re-extracted)"
+    ],
+    "not_run": [
+      "S2 official crop/keypoint tooling re-check (optional branch)",
+      "repeatability repeats (same input twice) for the stochastic sampling path"
+    ]
+  },
+  "limitations": [
+    "SLRT align stage was not re-run for S1: trimmed clips, HRNet NPZ poses and alignment records are the reviewed historical artifacts (byte-identical, verified by NPZ metadata video_sha256), so S1 measures inference reproducibility only.",
+    "The released pose path consumes keypoints[start:end]; for 45/50 samples this differs from the annotated sentence length (median +3, max +140 frames). That is an imported-artifact property, identical in the historical run, and is recorded per sample in preprocess_audit.csv.",
+    "Uni-Sign video path uses the local RTMPose frontend, not the official HRNet extractor.",
+    "Pilot-50 has 10 signers; per-signer metrics are unstable at n=5.",
+    "No legal/licence review was performed for the model weights or the dataset (CC-BY-NC-4.0 weights, CSL-Daily terms apply)."
+  ]
+}

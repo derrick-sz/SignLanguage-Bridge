@@ -1,0 +1,78 @@
+{
+  "metric_definition_version": "p1-v1",
+  "task": "CSLT",
+  "created_at": "2026-10-26T13:42:20+00:00",
+  "predictions_path": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\runs\\e01-pilot50-u2-unisign-pose-20261026\\model_outputs.jsonl",
+  "predictions_sha256": "5bfb6c6980e366b53938575e84a44ed70fa2a450c4b173ba279ca3acf2457899",
+  "references_path": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\references\\gt_1086.csv",
+  "references_sha256": "feb1b42daa74ed3efa992b50746c29f145550d381a80460669060ca00c087bb7",
+  "attempted": 50,
+  "unique_samples": 50,
+  "successful": 50,
+  "failed": 0,
+  "failure_rate": 0.0,
+  "missing_reference": 0,
+  "failures": [],
+  "metric_scope": "successful_subset_all_succeeded_corpus_metrics",
+  "metrics": {
+    "metric_definition_version": "p1-v1",
+    "n": 50,
+    "bleu4_13a": 31.7823,
+    "bleu4_13a_precisions": [
+      65.73,
+      42.47,
+      30.66,
+      22.9
+    ],
+    "bleu4_13a_bp": 0.8494,
+    "chrf": 27.9108,
+    "mean_char_edit_similarity": 0.4885,
+    "char_rogue_l_f1": 0.6042,
+    "exact_match_count": 3,
+    "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0",
+    "bleu4_13a_alternate_reference": 28.784,
+    "bleu4_13a_alternate_reference_note": "diagnostic only; alternate caliber (e.g. official annotation punctuation) cannot be compared to the canonical reference"
+  },
+  "per_signer": {
+    "P0000": {
+      "n": 5,
+      "bleu4_13a": 40.8508
+    },
+    "P0001": {
+      "n": 5,
+      "bleu4_13a": 42.41
+    },
+    "P0002": {
+      "n": 5,
+      "bleu4_13a": 36.6804
+    },
+    "P0003": {
+      "n": 5,
+      "bleu4_13a": 31.8533
+    },
+    "P0004": {
+      "n": 5,
+      "bleu4_13a": 38.8897
+    },
+    "P0005": {
+      "n": 5,
+      "bleu4_13a": 18.1064
+    },
+    "P0006": {
+      "n": 5,
+      "bleu4_13a": 25.2962
+    },
+    "P0007": {
+      "n": 5,
+      "bleu4_13a": 28.9623
+    },
+    "P0008": {
+      "n": 5,
+      "bleu4_13a": 44.712
+    },
+    "P0009": {
+      "n": 5,
+      "bleu4_13a": 15.0836
+    }
+  }
+}

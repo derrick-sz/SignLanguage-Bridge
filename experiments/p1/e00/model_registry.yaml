@@ -1,0 +1,220 @@
+# P-1 E00 实际模型注册表（审计实测，不是模板）
+# 审计人：auditor（P-1 实验团队）；审计日期：2026-10-26
+# 结构沿用 docs/experiments/P-1/config/model_registry.template.yaml；所有 status 为 E00 实测判定。
+# 判定口径：
+#   READY   = 权重文件在本地、SHA256/字节经本次审计实测（或与仓库文档记载交叉核对一致）、
+#             且仓库中存在已跑通并留有运行记录的推理入口（证据见 evidence 字段）；GPU smoke 由 E01 负责，本表不冒充 smoke PASS。
+#   BLOCKED = 关键权重缺失，或权重在但仓库/环境内没有可运行的推理路径（未接入/依赖栈缺失/从未跑通）。
+#   UNKNOWN = 本地无文件、也无足够文档判定。
+# 哈希均为本机实测 SHA256（小写 hex），除注明 documented_only 的项。证据汇总：experiments/p1/e00/_hash_raw.txt、_hash_raw_slrt.txt。
+
+schema_version: 1
+audited_at: "2026-10-26"
+auditor: "auditor (P-1 E00)"
+workspace: "E:\\githubproject\\SignLanguage-Bridge"
+git_head: "cf291c2a81558faf6de0dc5a7243e730531e4367"
+git_branch: "codex/model-contract-auto-captions"
+git_worktree: "dirty（132 项；slbridge/slrt、scripts 实验入口、docs/experiments/P-1 均未提交，见 inventory_report.md）"
+
+models:
+  - model_id: unisign_rgb
+    task: CSLT
+    language: CSL
+    modality: "RGB_video -> RTMPose wholebody 133 -> 69 点 -> 模型"
+    source_url: "https://huggingface.co/ZechengLi19/Uni-Sign（权重）; https://github.com/ZechengLi19/Uni-Sign（源码）"
+    status: READY
+    status_scope: "资产+本地视频路径已跑通；GPU smoke 由 E01 复核"
+    local_checkpoint: "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\csl_daily_pose_only_slt.pth"
+    checkpoint_sha256: "73bea87a9603f719b4f4a481a3a1a5ed24e7e5f7b81afd14ef498c40469c1a6c"
+    bytes: 1186925112
+    companion_assets:
+      mt5_base: {path: "models/external/uni_sign/mt5-base", sha256: "180573b534144580f04af026da62bf71bc976ee1b7eb311b8945e2fefde8d614", bytes: 2329735129}
+      rtmpose_onnx: {path: "models/external/uni_sign/rtmlib-cache/hub/checkpoints/rtmw-dw-l-m_simcc-cocktail14_270e-256x192_20231122.onnx", sha256: "68db326c5c6f3273456f803eae0faf5440478369f2c3ee67258d2f36512e8d76", bytes: 128976616}
+      yolox_onnx: {path: "models/external/uni_sign/rtmlib-cache/hub/checkpoints/yolox_tiny_8xb8-300e_humanart-6f3252f9.onnx", sha256: "ceb11c07298f95c50d7c5abeb906d03340c85f23aa79e3e66966e7fb6c307250", bytes: 20283006}
+    upstream_commit: "源代码 pinned commit eed438bcb49e30405cd6ccdfcccca330c134e830；HF model revision 182913ca7a8b7dd9837d7d6f10717353f4408f80（来源：models/external/uni_sign/model_bundle/manifest.json、uni_sign_source/UPSTREAM_COMMIT.txt）"
+    preprocess_version: "unisign-video-v1（RTMPose lightweight wholebody 133 取 69 点 xy+c；isotropic_short_side 归一化；max_frames=256，num_beams=4）"
+    outputs: [text]
+    supports_partial: "PARTIAL/滑动窗口实验（非因果 mT5，无原生流式）"
+    license: "CC BY-NC 4.0（权重，来源：docs/uni-sign-integration.md §许可与源码限制、HF model card）；mT5-base Apache-2.0；上游源码树 pinned commit 无 LICENSE 文件"
+    evidence: "实测 SHA256 2026-10-26（_hash_raw.txt 第2行）与 model_bundle/manifest.json、download_manifest.json 记载一致；1086 条视频端到端历史运行 BLEU-4 24.8157（docs/agents/model-evaluation-pitfalls.md 第117行，边界=上游参考 test_tmp_refs.txt，非官方 sentence_frames 协议）"
+    gaps: "1086/1176 官方 test 覆盖；官方 sentence_frames-512x512.zip 缺失（见 data_snapshot.json）；历史分数是 1086 子集近似对齐，不是官方 1,176 协议"
+
+  - model_id: unisign_pose_released
+    task: CSLT
+    language: CSL
+    modality: released_pose
+    source_url: "https://huggingface.co/ZechengLi19/Uni-Sign/blob/main/demo/README.md（作者发布的 CSL-Daily pose 归档）"
+    status: READY
+    status_scope: "资产+released pose 路径已跑通；GPU smoke 由 E01 复核"
+    local_checkpoint: "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\csl_daily_pose_only_slt.pth"
+    checkpoint_sha256: "73bea87a9603f719b4f4a481a3a1a5ed24e7e5f7b81afd14ef498c40469c1a6c"
+    bytes: 1186925112
+    companion_assets:
+      pose_archive_dir: {path: "artifacts/cslnews-eval/csl-daily-pose/pose-format（1,176 个 test pkl，556,506,793 B）", note: "作者 csl_daily_pose_format.zip 解出的 test 片段：4,594,281,295 B（zip 未做 SHA256）"}
+      upstream_refs: {path: "models/external/uni_sign_source/out/eval_csl_daily_pose_only/test_tmp_refs.txt", sha256: "042cd94c44f9652f9fa127134565877a7a1cd1c58d2a12776c6698bb65150aab", lines: 1176}
+    upstream_commit: "eed438bcb49e30405cd6ccdfcccca330c134e830（源码）；权重 revision 182913ca7a8b7dd9837d7d6f10717353f4408f80"
+    preprocess_version: "released-pose-v1（上游 pkl: [T,133,3] x/y/confidence，w_h 各轴归一；CSL-Daily 为正方形故 isotropic 与 wh 等价；须按 start/end 裁剪）"
+    outputs: [text]
+    supports_partial: "否（整句非因果模型；前缀诊断需另行构造）"
+    license: "CC BY-NC 4.0（同上）；pose 归档来自作者发布（许可未单独声明，随模型资产）"
+    evidence: "官方 pose 复现 BLEU-4 25.55（论文 25.61，1,029/1,176 与作者快照逐字相同）见 docs/agents/model-evaluation-pitfalls.md 第12行；1086 条 released-pose 历史 BLEU-4 25.5846（同文档第117行）；本次实测 test_tmp_refs.txt sha 与文件数"
+    gaps: "pose 归档仅 test 1,176 个 pkl 的本地目录（zip 全量 4.59 GB 未解到独立目录）；未做 GPU smoke（E01）"
+
+  - model_id: unisign_pinned
+    task: CSLT
+    language: CSL
+    modality: pose_only_pinned_production
+    source_url: "https://huggingface.co/ZechengLi19/Uni-Sign"
+    status: READY
+    local_checkpoint: "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\csl_daily_pose_only_slt.pth"
+    checkpoint_sha256: "73bea87a9603f719b4f4a481a3a1a5ed24e7e5f7b81afd14ef498c40469c1a6c"
+    bytes: 1186925112
+    upstream_commit: "182913ca7a8b7dd9837d7d6f10717353f4408f80（HF revision，见 model_bundle/manifest.json）"
+    preprocess_version: "model_bundle/manifest.json runtime: pose_normalization=isotropic_short_side, max_frames=256, num_beams=4, max_video_frames=600"
+    outputs: [text]
+    supports_partial: "滑动窗口近似（非原生）"
+    license: "CC BY-NC 4.0；mT5 Apache-2.0"
+    evidence: "生产加载路径 slbridge/uni_sign_assets.py 固定校验 UNISIGN_CHECKPOINT_SHA256=73bea87a…；model_bundle 与 model_bundle_stride5（manifest sha256 462ea712… / c4789c6f…）均引用同一权重；本次实测哈希一致"
+    gaps: "生产校验只接受这一份权重，换其他 checkpoint 会报 incomplete/corrupt（pitfalls §7）"
+
+  - model_id: unisign_rgb_pose_checkpoint
+    task: CSLT
+    language: CSL
+    modality: RGB_and_pose（上游 RGB+pose 权重）
+    source_url: "https://huggingface.co/ZechengLi19/Uni-Sign"
+    status: BLOCKED
+    status_scope: "权重存在且哈希实测通过，但本仓库没有接入/固定该校验、无运行记录"
+    local_checkpoint: "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\csl_daily_rgb_pose_slt.pth"
+    checkpoint_sha256: "c2ba5d7ae32f3fa40f7c6807b5004042be81fca192abe7d8ed7182c0d13470f6"
+    bytes: 1197268371
+    upstream_commit: "HF revision 182913ca7a8b7dd9837d7d6f10717353f4408f80"
+    preprocess_version: "upstream RGB+pose 协议，本地未实现"
+    outputs: [text]
+    supports_partial: UNKNOWN
+    license: "CC BY-NC 4.0"
+    evidence: "本次实测 SHA256 与 models/external/uni_sign/extra-downloads.json 的 sha256_expected 一致（_hash_raw.txt 第1行）；slbridge 生产路径固定 pose-only（uni_sign_assets.py:20-22），仓库内无引用此权重的推理入口"
+    gaps: "缺 RGB+pose 输入协议实现与运行验证；不得用 pose-only 权重开 RGB 开关冒充"
+    missing: "集成代码与验证运行（不是权重）"
+
+  - model_id: slrt_twostream_slr
+    task: CSLR
+    language: CSL
+    modality: "RGB_and_HRNet_pose（双流 S3D）"
+    source_url: "https://github.com/FangyunWei/SLRT/blob/main/TwoStreamNetwork/README.md"
+    status: BLOCKED
+    status_scope: "S2G 主权重本地存在、SHA256 与仓库文档一致；但无项目内推理入口/依赖栈，从未在本仓库跑通"
+    local_checkpoint: "F:\\model_weigth\\ckpts\\TwoStreamSLT\\TwoStream\\csl-daily_s2g\\ckpts\\best.ckpt"
+    checkpoint_sha256: "54d2cb65c7d47085e1868326abbbb3a6e21774c383f57cd29f999d2009609739"
+    bytes: 504360673
+    alternate_copies:
+      - {path: "Paper-algorithm/SLRT-main/Online/CTC_fusion/results/csl-daily_s2g/ckpts/best.ckpt", sha256: "54d2cb65c7d47085e1868326abbbb3a6e21774c383f57cd29f999d2009609739", bytes: 504360673}
+      - {path: "F:/model_weigth/ckpts/TwoStreamSLT/TwoStream/csl-daily_joint/ckpts/best.ckpt", sha256: "4e83f36695bfe63db5413d00e04b9fbfd7a84dced12b88f11c7c9c90b0f2f7b3", bytes: 1748231929, note: "joint 变体"}
+      - {path: "F:/model_weigth/ckpts/TwoStreamSLT/TwoStream/csl-daily_keypoint/ckpts/best.ckpt", sha256: "fe884f416dfd1e11bc8fd7f51680f762cbd9b5c34c8e4cc9dfe1fd6c288ffe0c", bytes: 1748231929}
+      - {path: "F:/model_weigth/ckpts/TwoStreamSLT/TwoStream/csl-daily_video/ckpts/best.ckpt", sha256: "02812b445b114f9b696fc720ccaeb9f9394a7abb7ebf231e01b779a831daedec", bytes: 1748231929}
+    upstream_commit: "本地镜像 Paper-algorithm/SLRT-main 无 .git；docs/reports/slrt-online-reproduction-gap-2026-10-25.md 记录 latest_directory_commit=cb393becf08e47ecdf4196de4cd41449a4b02cbc，GitHub main=38a4f7b（引用自该报告，未联网复核）"
+    preprocess_version: "官方 TwoStreamNetwork 协议（未实现）；本地 HRNet NPZ 只覆盖在线 CSLR 的 63 点热力图路径"
+    outputs: [gloss_tokens]
+    supports_partial: UNKNOWN
+    license: "UNKNOWN — 本地镜像与发布包均无 LICENSE 文件；上游仓库许可未查到（缺口，需向作者/仓库确认）"
+    evidence: "本次实测 S2G sha=54d2cb65…（与 docs/reports/slrt-assets-bootstrap-2026-10-25.md 第27行一致，912 键/2,004 类记录见该报告）；slbridge 无 TwoStreamNetwork adapter（grep 仅 online network 类名）；scripts/check_slrt_reproduction_assets.py 只证明文件 present"
+    gaps: "缺 timm/ctcdecode/官方旧依赖栈；缺在线特征 pkl（prediction_slide --save_fea）与 CTC_fusion 代码路径；未做严格加载或推理验证；许可未知"
+
+  - model_id: slrt_twostream_slt
+    task: CSLT
+    language: CSL
+    modality: "RGB_and_HRNet_pose / G2T as verified"
+    source_url: "https://github.com/FangyunWei/SLRT/blob/main/Online/SLT"
+    status: BLOCKED
+    status_scope: "官方 CSL-Daily G2T（wait-2）权重与作者 mBART_zh 均缺失；本地只有其他角色权重，未接入"
+    local_checkpoint: null
+    checkpoint_sha256: null
+    bytes: null
+    candidate_weights_checked:
+      - {path: "F:/model_weigth/ckpts/TwoStreamSLT/SingleStream/csl-daily_s2t/ckpts/best.ckpt", sha256: "b6bdf7c2d8babe4d8ced724783f966f101d27468fd0494be864e73e03e8bd66c", bytes: 1503041809, note: "作者包中的离线 SingleStream CSL-Daily S2T 权重（非官方 Online G2T，未接入）"}
+      - {path: "F:/model_weigth/ckpts/TwoStreamSLT/SingleStream/csl-daily_s2g/ckpts/best.ckpt", sha256: "55bb1cd5710779d4647905b1415729fd8e4f77be55baacbddf1145f3c711e477", bytes: 60404865, note: "SingleStream S2G 特征模型"}
+      - {path: "models/external/EMNLP24_Online/Phoenix-2014T/ckpts/slt_best.ckpt", sha256: null, bytes: 1434238071, note: "Phoenix-2014T G2T，非 CSL-Daily；当前 CSL-only 配置拒绝加载，未实测哈希"}
+    upstream_commit: "同 SLRT 上游（见 slrt_twostream_slr）"
+    preprocess_version: "官方 Online/SLT wait-2 协议（w=16, wait_k=2），未实现"
+    outputs: [text]
+    supports_partial: UNKNOWN
+    license: "UNKNOWN（同上，SLRT 上游许可未查到）"
+    evidence: "docs/reports/slrt-online-reproduction-gap-2026-10-25.md 第14/28-29行、slrt-assets-bootstrap-2026-10-25.md §3.2/§4 明确 CSL-Daily G2T 与作者 mBART_zh 缺失；本地仅 base mBART（6e55bd7b…）与全词表 fallback；本次实测 s2t/s2g 权重哈希"
+    gaps: "缺：CSL-Daily G2T best.ckpt（官方未发布/未获取）、作者 mBART_zh（文本侧剪枝）、csl_pred.dev/.test、官方旧依赖栈"
+
+  - model_id: slrt_online
+    task: CSLR
+    language: CSL
+    modality: "RGB + COCO-WholeBody133 选 63 点热力图（双流 S3D，16 窗/stride1/7 窗投票）"
+    source_url: "https://github.com/FangyunWei/SLRT/blob/main/Online/README.md"
+    status: READY
+    status_scope: "权重严格加载+本地推理入口已跑通并留有 1,086 条运行记录；GPU smoke 由 E01 复核"
+    local_checkpoint: "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\EMNLP24_Online\\CSL-Daily\\ckpts\\cslr_best.ckpt"
+    checkpoint_sha256: "e9fdd3a66d9667e7685c2b1437c67b8cbc9e45d2562730f04c0226717b7cbd4d"
+    bytes: 499554423
+    alternate_copies:
+      - {path: "models/external/SLRT_Online/Online/CSLR/results/csl-daily_ISLR/ckpts/best.ckpt", sha256: "e9fdd3a66d9667e7685c2b1437c67b8cbc9e45d2562730f04c0226717b7cbd4d", bytes: 499554423}
+      - {path: "Paper-algorithm/SLRT-main/Online/CSLR/results/csl-daily_ISLR/ckpts/best.ckpt", bytes: 499554423, note: "硬链接副本"}
+    companion_assets:
+      vocab: {path: "models/external/EMNLP24_Online/CSL-Daily/meta/csl_iso_with_blank.vocab", sha256: "0c4984f0dd3e7897b8c8d9e6e99a848b60814a5d9cf7a49baf7cc9b9cd124c76", bytes: 28821}
+      bundle_manifest: {path: "models/external/slrt_csl_bundle/manifest.json", note: "checkpoint_sha256 与本次实测一致"}
+    upstream_commit: "本地镜像 Paper-algorithm/SLRT-main 无 .git；latest_directory_commit=cb393becf08e47ecdf4196de4cd41449a4b02cbc（引用自 docs/reports/slrt-online-reproduction-gap-2026-10-25.md §6）"
+    preprocess_version: "slrt-online-csl-v1（窗口16/stride1/vote7；RGB 320→中心裁270→224；热力图 512→170→裁143→112；blank=0；词表 2001 类）"
+    outputs: [gloss_tokens]
+    supports_partial: "是（原生滑窗 Partial/Final，见 slbridge/slrt/stream.py + decoder.py）"
+    license: "UNKNOWN — 本地发布包与上游镜像均无 LICENSE 文件；上游许可未查到（缺口）"
+    evidence: "本次实测 sha 与 docs/slrt-integration.md、bundle manifest 记载 e9fdd3a6… 一致；938 键/2001 类/blank=0 严格加载记录见 slrt-online-reproduction-gap §6；1,086 条 test 运行 1,086/1,086 成功、0 空输出、corpus WER 0.3018（docs/agents/model-evaluation-pitfalls.md 第119行、docs/reports/csldaily-video-slrt-unisign-full-1086-2026-10-26.md）"
+    gaps: "运行使用 RTMPose 全帧滑窗近似对齐官方 keypoints 裁出的句段，不是官方 sentence_frames-512x512 协议；缺 90 条 test 视频；代码未提交（slbridge/slrt 未跟踪）；未跑 GPU smoke（E01）"
+
+  - model_id: rf_mediapipe_legacy
+    task: ISLR
+    language: CSL_demo
+    modality: mediapipe_225
+    source_url: "project_local_repository（data/gestures/gesture_model.pkl；artifacts/experiments/libras-rf-pilot-20261009）"
+    status: READY
+    status_scope: "项目本地遗留 RF 演示模型，资产存在；运行环境为 .venv-libras（无 torch）"
+    local_checkpoint: "E:\\githubproject\\SignLanguage-Bridge\\data\\gestures\\gesture_model.pkl"
+    checkpoint_sha256: "06205b684a7120d71b9e45a5000c42ca5ad48c46110ed6e613decf05dc8861b4"
+    bytes: 332473
+    alternate_checkpoints:
+      - {path: "artifacts/experiments/libras-rf-pilot-20261009/models/libras-rf-pilot-20261009/weights/model.joblib", sha256: "3450d09ccd44ae60cdf19d5dd90dc3d34f1810ad0edf65218ae1c2bb555db35d", bytes: 440668, note: "Libras RF 试点模型（README 默认加载路径的一部分）"}
+    upstream_commit: "N/A（项目本地训练产物；文件不在 git 跟踪内：data/、artifacts/ 均 .gitignore）"
+    preprocess_version: "MediaPipe 225 维关键点协议（不能替代官方 HRNet 133 点路径）"
+    outputs: [gesture_id]
+    supports_partial: "否（片段分类）"
+    license: "项目本地产物；仓库根目录与 data/、artifacts/ 均无 LICENSE 文件，再分发许可 UNKNOWN"
+    evidence: "本次实测文件大小+SHA256；README 第 54/75 行记载默认模型路径与 .venv-libras 运行命令；.venv-libras 实测 sklearn 1.4.0/joblib 可用、无 torch"
+    gaps: "MediaPipe225 与 SLRT/Uni-Sign 的 133 点协议不可互换；RF 训练产物未纳入 git"
+
+supporting_assets_for_g0:
+  slrt_hrnet_frontend:
+    hrnet_checkpoint: {path: "models/external/uni_sign/hrnet_w48_coco_wholebody_384x288_dark-f5726563_20200918.pth", sha256: "f572656370050193134ef50e27745cdcdda54986d396ff78e6169608efcdc3c1", bytes: 254976311}
+    faster_rcnn_checkpoint: {path: "models/external/uni_sign/faster_rcnn_r50_fpn_1x_coco-person_20201216_175929-d022e227.pth", sha256: "d022e22795c17ecd53915ea8231bac43dd7b62ae2b322f1d59bf5b66af217bf9", bytes: 165671301}
+    status: READY
+    runtime_env: "F:\\DSH-envs\\slrt-legacy（Python 3.8.20, torch 1.13.1+cpu, mmcv 1.7.0, mmdet 2.25.3, mmpose 0.29.0）"
+    evidence: "权重哈希本次实测（文件名中的 f5726563/d022e227 与 SHA256 前缀一致）；官方 HRNet 提取 202 帧跑通记录见 docs/reports/slrt-assets-bootstrap-2026-10-25.md §2"
+  base_mbart_and_gloss_assets:
+    base_mbart: {path: "models/external/SLRT_Online/pretrained_models/mBart/pytorch_model.bin", sha256: "6e55bd7b105d99e6e25fafd4125cd5acb956ad2daef209b74fc4fb72113dcf84", bytes: 2444517405, status: READY, note: "base facebook/mbart-large-cc25，不是作者 mBART_zh"}
+    gloss_assets: {path: "models/external/SLRT_Online/pretrained_models/mBART_zh_gloss_assets/gloss_embeddings.bin", sha256: "b293fdade93d2d0406e606300852979ab4a77b79a7ce37ed9bf5f005a09e4ff5", bytes: 8810325, status: READY, note: "gloss 侧已生成；文本侧为全词表 fallback（map_ids sha256 df5ac826…, 2,238,436 B）"}
+  s3d_k400:
+    path: "models/external/SLRT_Online/pretrained_models/s3ds_actioncls_ckpt"
+    sha256: "6b7f0229a0797525d3b14074d8063f4a7dfc7ff2d65bf8ee80c5ecb5f9e0b2d2"
+    bytes: 33453443
+    status: READY
+    note: "仅训练/融合初始化需要；发布在线权重推理不需要"
+
+blocked_or_missing_summary:
+  - item: "CSL-Daily G2T（wait-2 mBART-zh）best.ckpt"
+    status: BLOCKED
+    why: "官方发布包无此权重；官方 SLT README 未给链接；本地/作者 Google Drive 包均无（docs/reports/slrt-online-reproduction-gap-2026-10-25.md 第28-29行、slrt-assets-bootstrap-2026-10-25.md §4）"
+  - item: "作者 mBART_zh（文本侧剪枝）"
+    status: BLOCKED
+    why: "只有 base mBART + gloss 侧资产 + 全词表 fallback；不是作者等价 mBART_zh"
+  - item: "sentence_frames-512x512.zip（官方 CSL-Daily 视频帧）"
+    status: BLOCKED
+    why: "官方 sentence 级 RGB 协议缺失；本地 19,528 原始 MP4 不是该 zip（见 data_snapshot.json）"
+  - item: "官方 prediction_slide.py 旧依赖栈"
+    status: BLOCKED
+    why: "torch 1.9.0+cu102/transformers 4.11.3/timm 0.4.12/ctcdecode/Lintel 与 RTX 5060 Ti 不兼容；.conda-env 无 timm，legacy 环境无 transformers/timm"
+  - item: "slrt_twostream_slr / slrt_twostream_slt 集成路径与许可"
+    status: BLOCKED
+    why: "无 adapter、无严格加载/推理记录；SLRT 上游许可本地查不到"

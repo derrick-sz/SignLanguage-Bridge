@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/signbridge/p1/run_record.schema.json",
+  "title": "P1 experiment run record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["run_id", "experiment_id", "status", "git_sha", "dataset_snapshot_sha256", "model_id", "checkpoint_sha256", "device", "preprocess_version", "metric_definition_version"],
+  "properties": {
+    "run_id": {"type": "string", "minLength": 1},
+    "experiment_id": {"enum": ["E00", "E01", "E02", "E03", "E04", "E05", "E06"]},
+    "status": {"enum": ["PLANNED", "RUNNING", "PASS", "FAIL", "BLOCKED", "SKIPPED", "IMPLEMENTED_UNTESTED"]},
+    "git_sha": {"type": ["string", "null"]},
+    "dataset_snapshot_sha256": {"type": ["string", "null"]},
+    "model_id": {"type": ["string", "null"]},
+    "checkpoint_sha256": {"type": ["string", "null"]},
+    "device": {"type": ["string", "null"]},
+    "precision": {"type": ["string", "null"]},
+    "preprocess_version": {"type": ["string", "null"]},
+    "metric_definition_version": {"type": "string", "minLength": 1},
+    "sample_count": {"type": ["integer", "null"], "minimum": 0},
+    "failure_count": {"type": ["integer", "null"], "minimum": 0},
+    "reason": {"type": ["string", "null"]},
+    "outputs": {"type": "object", "additionalProperties": {"type": ["string", "null"]}}
+  }
+}

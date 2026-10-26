@@ -1,0 +1,132 @@
+{
+  "run_id": "e01-pilot50-u1-unisign-video-20261026",
+  "experiment_id": "E01",
+  "run_status": "PASS",
+  "path": "video",
+  "purpose": "E01 video reproduction on Pilot-50",
+  "created_at": "2026-10-26T13:41:54+00:00",
+  "operator": "reproducer",
+  "code": {
+    "repository": "SignLanguage-Bridge",
+    "git_sha": "cf291c2a81558faf6de0dc5a7243e730531e4367",
+    "branch": "codex/model-contract-auto-captions",
+    "dirty_tree": true,
+    "dirty_path_count": 132
+  },
+  "host": {
+    "host_alias": "PC-HPVYVOTACGSS",
+    "python": "3.10.22",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "machine": "AMD64",
+    "processor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+    "cpu_count": 20,
+    "torch": "2.9.1+cu128",
+    "torch_cuda_available": true,
+    "cuda_version": "12.8",
+    "gpu_name": "NVIDIA GeForce RTX 5060 Ti",
+    "gpu_total_vram_mb": 16283
+  },
+  "model": {
+    "model_id": "unisign-csldaily-pose-only-slt",
+    "task": "CSLT (CSL-Daily pose-only sign-language translation)",
+    "checkpoint": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\csl_daily_pose_only_slt.pth",
+    "checkpoint_bytes": 1186925112,
+    "checkpoint_sha256": "73bea87a9603f719b4f4a481a3a1a5ed24e7e5f7b81afd14ef498c40469c1a6c",
+    "bundle_manifest": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\model_bundle\\manifest.json",
+    "bundle_manifest_sha256": "462ea712c73ba0b0c7a91a4c6d5e596e8ff5bd58854dca53f8c73e03b8cdba7e",
+    "mt5_model_file_sha256": "180573b534144580f04af026da62bf71bc976ee1b7eb311b8945e2fefde8d614",
+    "source_commit": "eed438bcb49e30405cd6ccdfcccca330c134e830",
+    "precision": "bfloat16 (cuda)",
+    "decode": {
+      "num_beams": 4,
+      "max_new_tokens": 100,
+      "max_frames": 256
+    },
+    "license": {
+      "model": "CC-BY-NC-4.0",
+      "model_note": "Uni-Sign model weights are CC BY-NC 4.0: attribution is required and commercial use is not permitted by that license.",
+      "mt5": "Apache-2.0",
+      "source_note": "The pinned Uni-Sign source tree contains no explicit LICENSE file. Do not redistribute the upstream source in this repository or use it commercially without written clarification from the authors.",
+      "source_status": "no-license-file-at-pinned-commit"
+    }
+  },
+  "input_protocol": {
+    "kind": "video",
+    "description": "trimmed mp4 -> local RTMPose wholebody 133 -> isotropic_short_side -> mT5",
+    "pose_normalization": "isotropic_short_side",
+    "pose_orientation": "preserve",
+    "frame_sampling": "deterministic linspace when T>256 (all pilot clips are <=256 frames)"
+  },
+  "dataset_snapshot": {
+    "pilot_50_csv": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\datasets\\pilot_50.csv",
+    "pilot_50_csv_sha256": "f0f46125a6acf9768e696d1053450652ddca1146bb6ac2962be2b4efe4c99c4b",
+    "pilot_ids": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\e01\\inputs\\pilot_50_ids.txt",
+    "pilot_ids_sha256": "30c6b086a18c27e3721e60f7227787e16192006025422515c9a5e3d48cddac7c",
+    "sample_count": 50,
+    "signers": [
+      "P0000",
+      "P0001",
+      "P0002",
+      "P0003",
+      "P0004",
+      "P0005",
+      "P0006",
+      "P0007",
+      "P0008",
+      "P0009"
+    ],
+    "reference_table": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\references\\gt_1086.csv",
+    "reference_table_sha256": "feb1b42daa74ed3efa992b50746c29f145550d381a80460669060ca00c087bb7",
+    "reference_table_role": "EVAL ONLY (not fed to the model)",
+    "artifact_dir": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026",
+    "selection_1086": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\selection-1086.json",
+    "selection_1086_sha256": "a37355a0c90563b9fe8b9e7db61b9068062bcf99b5350c181025ecd479dbdf23",
+    "trimmed_clip_sha256_aggregate": "9a4282d3c0c8ec939bd59ded8929c1ec3a6198f634c7cbfba6951fab2df95120",
+    "preprocessed_input": "trimmed/<sample>.mp4 from the reviewed 1086 artifacts"
+  },
+  "history_reference": {
+    "label": "unisign-video-1086-paperrefs (imported_1086_video)",
+    "path": "artifacts/csldaily-video-test-627-20261026/unisign-video-1086-paperrefs/predictions.jsonl",
+    "samples_available_in_snapshot": 50,
+    "samples_missing_from_snapshot": [],
+    "role": "historical 1086 imported predictions; compared sample-by-sample, not re-inferred"
+  },
+  "command": ".conda-env\\python.exe -X utf8 scripts\\evaluate_unisign_csldaily_video.py --selection artifacts\\csldaily-video-test-627-20261026\\selection-1086.json --artifact-dir artifacts\\csldaily-video-test-627-20261026 --output-dir experiments\\p1\\runs\\e01-pilot50-u1-unisign-video-20261026 --only-file experiments\\p1\\e01\\inputs\\pilot_50_ids.txt",
+  "cwd": "E:\\githubproject\\SignLanguage-Bridge",
+  "outputs": {
+    "model_outputs": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\runs\\e01-pilot50-u1-unisign-video-20261026\\model_outputs.jsonl",
+    "runtime_metrics": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\runs\\e01-pilot50-u1-unisign-video-20261026\\runtime_metrics.jsonl",
+    "metrics": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\runs\\e01-pilot50-u1-unisign-video-20261026\\metrics.json",
+    "eval_records": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\runs\\e01-pilot50-u1-unisign-video-20261026\\eval_records.jsonl",
+    "predictions_raw_dir": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\runs\\e01-pilot50-u1-unisign-video-20261026\\predictions-raw",
+    "predictions_raw_note": "frozen evaluation script output; embeds the reference text, so it is kept in predictions-raw/ and never merged into model_outputs.jsonl",
+    "comparison_csv": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\e01\\compare_unisign_video.csv",
+    "comparison": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\runs\\e01-pilot50-u1-unisign-video-20261026\\comparison.json"
+  },
+  "sample_counts": {
+    "planned": 50,
+    "rows_written": 50,
+    "successful": 50,
+    "failed": 0,
+    "empty_outputs": 0
+  },
+  "failure_samples": [],
+  "gt_policy": {
+    "model_outputs_gt_free": true,
+    "gt_used_only_in": [
+      "metrics.json",
+      "eval_records.jsonl",
+      "comparison metrics"
+    ],
+    "guarded_writer": "experiments.p1.common.write_jsonl(assert_gt_clean)"
+  },
+  "privacy_and_licensing": {
+    "rights_checked": false,
+    "no_raw_media_export": true,
+    "no_credentials_in_logs": true
+  },
+  "notes": [
+    "single process, exclusive GPU (other P-1 GPU work was blocked for this run)",
+    "historical artifacts were only read; nothing under artifacts/ was modified"
+  ]
+}

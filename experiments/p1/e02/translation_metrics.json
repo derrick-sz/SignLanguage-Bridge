@@ -1,0 +1,577 @@
+{
+  "metric_definition_version": "p1-v1",
+  "run_id": "e02-offline-1086-20261026T134508Z",
+  "created_at": "2026-10-26T13:54:41+00:00",
+  "scope": "CSL-Daily test, retrospective_seen_1086, imported historical predictions (no model re-run)",
+  "reference_caliber": "upstream test_tmp_refs.txt (half-width punctuation, character-separated)",
+  "paths": {
+    "A_unisign_video": {
+      "metric_definition_version": "p1-v1",
+      "task": "CSLT",
+      "created_at": "2026-10-26T13:45:09+00:00",
+      "predictions_path": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\unisign-video-1086-paperrefs\\predictions.jsonl",
+      "predictions_sha256": "8573129ba0b4d3008dd165f4d45a3eb58565e598a3081e9dd34540bd8f3b568d",
+      "references_path": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\references\\gt_1086.csv",
+      "references_sha256": "feb1b42daa74ed3efa992b50746c29f145550d381a80460669060ca00c087bb7",
+      "attempted": 1086,
+      "unique_samples": 1086,
+      "successful": 1086,
+      "failed": 0,
+      "failure_rate": 0.0,
+      "missing_reference": 0,
+      "failures": [],
+      "metric_scope": "successful_subset_all_succeeded_corpus_metrics",
+      "metrics": {
+        "metric_definition_version": "p1-v1",
+        "n": 1086,
+        "bleu4_13a": 24.8157,
+        "bleu4_13a_precisions": [
+          57.31,
+          32.82,
+          20.42,
+          13.72
+        ],
+        "bleu4_13a_bp": 0.9211,
+        "chrf": 21.7974,
+        "mean_char_edit_similarity": 0.4157,
+        "char_rogue_l_f1": 0.5273,
+        "exact_match_count": 15,
+        "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0",
+        "bleu4_13a_alternate_reference": 22.0319,
+        "bleu4_13a_alternate_reference_note": "diagnostic only; alternate caliber (e.g. official annotation punctuation) cannot be compared to the canonical reference"
+      },
+      "per_signer": {
+        "P0000": {
+          "n": 374,
+          "bleu4_13a": 24.9096
+        },
+        "P0001": {
+          "n": 53,
+          "bleu4_13a": 17.3496
+        },
+        "P0002": {
+          "n": 102,
+          "bleu4_13a": 19.0955
+        },
+        "P0003": {
+          "n": 96,
+          "bleu4_13a": 24.3547
+        },
+        "P0004": {
+          "n": 77,
+          "bleu4_13a": 36.5234
+        },
+        "P0005": {
+          "n": 69,
+          "bleu4_13a": 18.7475
+        },
+        "P0006": {
+          "n": 55,
+          "bleu4_13a": 23.8759
+        },
+        "P0007": {
+          "n": 90,
+          "bleu4_13a": 23.5797
+        },
+        "P0008": {
+          "n": 102,
+          "bleu4_13a": 37.891
+        },
+        "P0009": {
+          "n": 68,
+          "bleu4_13a": 18.5476
+        }
+      }
+    },
+    "A2_unisign_pose": {
+      "metric_definition_version": "p1-v1",
+      "task": "CSLT",
+      "created_at": "2026-10-26T13:45:10+00:00",
+      "predictions_path": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\cslnews-eval\\csldaily-test-1086-pose-20261026\\predictions.jsonl",
+      "predictions_sha256": "758621291e87a4e14dcca43cdac2e42ee23ea0b8a464e0ddc1f77b56885de3e5",
+      "references_path": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\references\\gt_1086.csv",
+      "references_sha256": "feb1b42daa74ed3efa992b50746c29f145550d381a80460669060ca00c087bb7",
+      "attempted": 1086,
+      "unique_samples": 1086,
+      "successful": 1086,
+      "failed": 0,
+      "failure_rate": 0.0,
+      "missing_reference": 0,
+      "failures": [],
+      "metric_scope": "successful_subset_all_succeeded_corpus_metrics",
+      "metrics": {
+        "metric_definition_version": "p1-v1",
+        "n": 1086,
+        "bleu4_13a": 25.5846,
+        "bleu4_13a_precisions": [
+          58.15,
+          33.67,
+          21.15,
+          14.2
+        ],
+        "bleu4_13a_bp": 0.924,
+        "chrf": 22.4284,
+        "mean_char_edit_similarity": 0.4212,
+        "char_rogue_l_f1": 0.5351,
+        "exact_match_count": 18,
+        "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0",
+        "bleu4_13a_alternate_reference": 22.6401,
+        "bleu4_13a_alternate_reference_note": "diagnostic only; alternate caliber (e.g. official annotation punctuation) cannot be compared to the canonical reference"
+      },
+      "per_signer": {
+        "P0000": {
+          "n": 374,
+          "bleu4_13a": 25.4858
+        },
+        "P0001": {
+          "n": 53,
+          "bleu4_13a": 18.9987
+        },
+        "P0002": {
+          "n": 102,
+          "bleu4_13a": 20.1462
+        },
+        "P0003": {
+          "n": 96,
+          "bleu4_13a": 24.9768
+        },
+        "P0004": {
+          "n": 77,
+          "bleu4_13a": 35.5995
+        },
+        "P0005": {
+          "n": 69,
+          "bleu4_13a": 20.99
+        },
+        "P0006": {
+          "n": 55,
+          "bleu4_13a": 26.5571
+        },
+        "P0007": {
+          "n": 90,
+          "bleu4_13a": 22.6715
+        },
+        "P0008": {
+          "n": 102,
+          "bleu4_13a": 39.0917
+        },
+        "P0009": {
+          "n": 68,
+          "bleu4_13a": 20.0622
+        }
+      }
+    },
+    "B0_gloss_join": {
+      "metric_definition_version": "p1-v1",
+      "task": "CSLT",
+      "created_at": "2026-10-26T13:45:11+00:00",
+      "predictions_path": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\e02\\b_gloss_join_predictions.jsonl",
+      "predictions_sha256": "aef4490e754b88341f0e253ad4cf0ffa5d093fab5bbeaf62497070fa86e727e2",
+      "references_path": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\references\\gt_1086.csv",
+      "references_sha256": "feb1b42daa74ed3efa992b50746c29f145550d381a80460669060ca00c087bb7",
+      "attempted": 1086,
+      "unique_samples": 1086,
+      "successful": 1086,
+      "failed": 0,
+      "failure_rate": 0.0,
+      "missing_reference": 0,
+      "failures": [],
+      "metric_scope": "successful_subset_all_succeeded_corpus_metrics",
+      "metrics": {
+        "metric_definition_version": "p1-v1",
+        "n": 1086,
+        "bleu4_13a": 12.2183,
+        "bleu4_13a_precisions": [
+          62.57,
+          31.25,
+          12.06,
+          5.68
+        ],
+        "bleu4_13a_bp": 0.6388,
+        "chrf": 13.8087,
+        "mean_char_edit_similarity": 0.3484,
+        "char_rogue_l_f1": 0.4753,
+        "exact_match_count": 0,
+        "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0",
+        "bleu4_13a_alternate_reference": 12.2183,
+        "bleu4_13a_alternate_reference_note": "diagnostic only; alternate caliber (e.g. official annotation punctuation) cannot be compared to the canonical reference"
+      },
+      "per_signer": {
+        "P0000": {
+          "n": 374,
+          "bleu4_13a": 12.0211
+        },
+        "P0001": {
+          "n": 53,
+          "bleu4_13a": 9.3485
+        },
+        "P0002": {
+          "n": 102,
+          "bleu4_13a": 9.8149
+        },
+        "P0003": {
+          "n": 96,
+          "bleu4_13a": 14.4726
+        },
+        "P0004": {
+          "n": 77,
+          "bleu4_13a": 12.2342
+        },
+        "P0005": {
+          "n": 69,
+          "bleu4_13a": 10.2677
+        },
+        "P0006": {
+          "n": 55,
+          "bleu4_13a": 12.7315
+        },
+        "P0007": {
+          "n": 90,
+          "bleu4_13a": 10.9767
+        },
+        "P0008": {
+          "n": 102,
+          "bleu4_13a": 17.7531
+        },
+        "P0009": {
+          "n": 68,
+          "bleu4_13a": 12.3083
+        }
+      }
+    },
+    "SLRT_gloss": {
+      "metric_definition_version": "p1-v1",
+      "task": "CSLR",
+      "created_at": "2026-10-26T13:45:11+00:00",
+      "predictions_path": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\e02\\slrt_gloss_predictions.jsonl",
+      "predictions_sha256": "177cd08f136a53c58eb541810862c74d9c83e28cd0caff2124b89612c5873160",
+      "references_path": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\references\\gt_1086.csv",
+      "references_sha256": "feb1b42daa74ed3efa992b50746c29f145550d381a80460669060ca00c087bb7",
+      "attempted": 1086,
+      "unique_samples": 1086,
+      "successful": 1086,
+      "failed": 0,
+      "failure_rate": 0.0,
+      "missing_reference": 0,
+      "failures": [],
+      "metric_scope": "successful_subset_all_succeeded_corpus_metrics",
+      "metrics": {
+        "metric_definition_version": "p1-v1",
+        "n": 1086,
+        "reference_tokens": 8220,
+        "substitutions": 1330,
+        "deletions": 717,
+        "insertions": 434,
+        "corpus_wer": 0.3018
+      }
+    }
+  },
+  "bootstrap_by_signer": {
+    "A_unisign_video": {
+      "bleu4_13a": {
+        "point": 24.81568280610249,
+        "lower": 21.3417,
+        "upper": 28.1529,
+        "iterations": 1000,
+        "groups": 10,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "mean_char_edit_similarity": {
+        "point": 0.4156875690607735,
+        "lower": 0.3766,
+        "upper": 0.4586,
+        "iterations": 1000,
+        "groups": 10,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      }
+    },
+    "A2_unisign_pose": {
+      "bleu4_13a": {
+        "point": 25.58456044558977,
+        "lower": 22.4101,
+        "upper": 28.8414,
+        "iterations": 1000,
+        "groups": 10,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "mean_char_edit_similarity": {
+        "point": 0.4211987108655617,
+        "lower": 0.3829,
+        "upper": 0.4613,
+        "iterations": 1000,
+        "groups": 10,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      }
+    },
+    "B0_gloss_join": {
+      "bleu4_13a": {
+        "point": 12.218276318809119,
+        "lower": 11.0717,
+        "upper": 13.5147,
+        "iterations": 1000,
+        "groups": 10,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "mean_char_edit_similarity": {
+        "point": 0.3483684162062615,
+        "lower": 0.3216,
+        "upper": 0.3705,
+        "iterations": 1000,
+        "groups": 10,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      }
+    }
+  },
+  "paired_a_vs_a2": {
+    "n_paired": 1086,
+    "mean_sim_a": 0.4157,
+    "mean_sim_a2": 0.4212,
+    "mean_delta_sim": 0.0055,
+    "delta_sim_ci": {
+      "point": 0.0055,
+      "lower": -0.0013,
+      "upper": 0.0116,
+      "iterations": 1000,
+      "method": "paired_cluster_bootstrap_by_signer"
+    },
+    "delta_bleu_ci": {
+      "point": 0.7689,
+      "lower": 0.2299,
+      "upper": 1.4372,
+      "iterations": 1000,
+      "method": "paired_cluster_bootstrap_by_signer"
+    },
+    "wins_a2": 241,
+    "wins_a": 203,
+    "ties": 642,
+    "corrections_a2_fixes_a": 93,
+    "regressions_a2_breaks_a": 50,
+    "correction_definition": "A sim<0.5 and A2 sim>=A sim+0.1",
+    "regression_definition": "A sim>=0.5 and A2 sim<=A sim-0.1",
+    "example_corrections": [
+      {
+        "sample_id": "S000236_P0000_T00",
+        "sim_a": 0.125,
+        "sim_a2": 0.3636
+      },
+      {
+        "sample_id": "S000440_P0000_T00",
+        "sim_a": 0.3571,
+        "sim_a2": 0.5385
+      },
+      {
+        "sample_id": "S000452_P0004_T00",
+        "sim_a": 0.25,
+        "sim_a2": 0.4667
+      },
+      {
+        "sample_id": "S000460_P0000_T00",
+        "sim_a": 0.0526,
+        "sim_a2": 0.2105
+      },
+      {
+        "sample_id": "S000504_P0008_T00",
+        "sim_a": 0.375,
+        "sim_a2": 0.625
+      },
+      {
+        "sample_id": "S000690_P0000_T00",
+        "sim_a": 0.25,
+        "sim_a2": 0.3571
+      },
+      {
+        "sample_id": "S000823_P0000_T00",
+        "sim_a": 0.3333,
+        "sim_a2": 0.5
+      },
+      {
+        "sample_id": "S001447_P0004_T00",
+        "sim_a": 0.2174,
+        "sim_a2": 0.3333
+      },
+      {
+        "sample_id": "S001788_P0000_T00",
+        "sim_a": 0.1905,
+        "sim_a2": 0.3462
+      },
+      {
+        "sample_id": "S001813_P0000_T00",
+        "sim_a": 0.1667,
+        "sim_a2": 0.2778
+      }
+    ],
+    "example_regressions": [
+      {
+        "sample_id": "S000195_P0004_T00",
+        "sim_a": 0.5556,
+        "sim_a2": 0.4444
+      },
+      {
+        "sample_id": "S000213_P0008_T00",
+        "sim_a": 0.8889,
+        "sim_a2": 0.7778
+      },
+      {
+        "sample_id": "S000291_P0004_T00",
+        "sim_a": 0.5556,
+        "sim_a2": 0.2727
+      },
+      {
+        "sample_id": "S000331_P0008_T00",
+        "sim_a": 0.8125,
+        "sim_a2": 0.6875
+      },
+      {
+        "sample_id": "S000637_P0000_T00",
+        "sim_a": 0.7273,
+        "sim_a2": 0.5385
+      },
+      {
+        "sample_id": "S000638_P0004_T00",
+        "sim_a": 0.7692,
+        "sim_a2": 0.5385
+      },
+      {
+        "sample_id": "S000638_P0008_T00",
+        "sim_a": 0.7692,
+        "sim_a2": 0.5385
+      },
+      {
+        "sample_id": "S000695_P0004_T00",
+        "sim_a": 0.6667,
+        "sim_a2": 0.4667
+      },
+      {
+        "sample_id": "S000903_P0000_T00",
+        "sim_a": 0.8182,
+        "sim_a2": 0.2727
+      },
+      {
+        "sample_id": "S000912_P0008_T00",
+        "sim_a": 0.6,
+        "sim_a2": 0.375
+      }
+    ]
+  },
+  "error_overlap": {
+    "both_wrong_sim_lt_0_5": 661,
+    "a_wrong_a2_ok": 43,
+    "a_ok_a2_wrong": 29,
+    "both_ok": 353,
+    "threshold": "char edit similarity 0.5 (analysis threshold, not a calibrated probability)"
+  },
+  "oracle": {
+    "a_a2": {
+      "sources": [
+        "A",
+        "A2"
+      ],
+      "n": 1086,
+      "bleu4_13a": 26.598,
+      "chrf": 23.2554,
+      "mean_char_edit_similarity": 0.443,
+      "selection_counts": {
+        "A": 830,
+        "A2": 256
+      },
+      "note": "offline GT oracle: picks the better candidate per sample using the reference; theoretical upper bound, not a deployable method"
+    }
+  },
+  "per_signer": {
+    "P0000": {
+      "n": 374,
+      "bleu4_a": 24.9096,
+      "bleu4_a2": 25.4858,
+      "mean_sim_a": 0.4089,
+      "mean_sim_a2": 0.4164
+    },
+    "P0001": {
+      "n": 53,
+      "bleu4_a": 17.3496,
+      "bleu4_a2": 18.9987,
+      "mean_sim_a": 0.3262,
+      "mean_sim_a2": 0.3519
+    },
+    "P0002": {
+      "n": 102,
+      "bleu4_a": 19.0955,
+      "bleu4_a2": 20.1462,
+      "mean_sim_a": 0.3696,
+      "mean_sim_a2": 0.3765
+    },
+    "P0003": {
+      "n": 96,
+      "bleu4_a": 24.3547,
+      "bleu4_a2": 24.9768,
+      "mean_sim_a": 0.4095,
+      "mean_sim_a2": 0.4223
+    },
+    "P0004": {
+      "n": 77,
+      "bleu4_a": 36.5234,
+      "bleu4_a2": 35.5995,
+      "mean_sim_a": 0.5539,
+      "mean_sim_a2": 0.5355
+    },
+    "P0005": {
+      "n": 69,
+      "bleu4_a": 18.7475,
+      "bleu4_a2": 20.99,
+      "mean_sim_a": 0.3269,
+      "mean_sim_a2": 0.332
+    },
+    "P0006": {
+      "n": 55,
+      "bleu4_a": 23.8759,
+      "bleu4_a2": 26.5571,
+      "mean_sim_a": 0.4105,
+      "mean_sim_a2": 0.4406
+    },
+    "P0007": {
+      "n": 90,
+      "bleu4_a": 23.5797,
+      "bleu4_a2": 22.6715,
+      "mean_sim_a": 0.3889,
+      "mean_sim_a2": 0.3802
+    },
+    "P0008": {
+      "n": 102,
+      "bleu4_a": 37.891,
+      "bleu4_a2": 39.0917,
+      "mean_sim_a": 0.5641,
+      "mean_sim_a2": 0.5631
+    },
+    "P0009": {
+      "n": 68,
+      "bleu4_a": 18.5476,
+      "bleu4_a2": 20.0622,
+      "mean_sim_a": 0.3512,
+      "mean_sim_a2": 0.3538
+    }
+  },
+  "legacy_vs_canonical": {
+    "unisign_video_legacy_bleu4": 24.8156828061,
+    "unisign_video_canonical_bleu4": 24.8157,
+    "legacy_source": "csldaily-video-comparison-1086.xlsx Summary (as documented in R18)",
+    "slrt_legacy_corpus_wer": 0.3018248175,
+    "slrt_recomputed_corpus_wer": 0.3018,
+    "note": "canonical recomputation over the same frozen snapshots; differences would indicate a metric-definition drift"
+  },
+  "human_review": {
+    "status": "NOT_RUN",
+    "reason": "requires human reviewers; automated metrics cannot be a substitute for the PLAN/02 §6 semantic review"
+  },
+  "boundaries": [
+    "1086/1176 test videos; 90 long-sentence test videos are still missing locally",
+    "A is the local video end-to-end path (RTMPose + approximate sentence-clip trimming), not the paper's pose protocol",
+    "A2 uses the released pose archive and is the closest available in-domain reference path",
+    "B0 is a deterministic join of SLRT gloss tokens, not a trained Gloss-to-Text model",
+    "BLOCKED branches (B1/C/D/E/F/G) must not be counted as negative results"
+  ]
+}

@@ -1,0 +1,465 @@
+{
+  "experiment": "E06",
+  "run_id": "20261026_e06_rule_judge_cascade",
+  "status": "PASS",
+  "n_samples": 1086,
+  "ablation": {
+    "P0_always_A": {
+      "quality": {
+        "n": 1086,
+        "bleu4_13a": 24.8157,
+        "chrf": 21.7974,
+        "bleu4_precisions": [
+          57.31,
+          32.82,
+          20.42,
+          13.72
+        ],
+        "bleu4_bp": 0.9211,
+        "mean_char_edit_sim": 0.4157,
+        "char_rogue_l_f1": 0.5273,
+        "exact_match_count": 15,
+        "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+      },
+      "mean_edit_sim": 0.4157,
+      "bad_rate_edit_sim_lt_0.5": 0.6483,
+      "second_path_call_rate": 0.0,
+      "error_accept_rate_among_accept_decisions": 0.6483,
+      "missed_upgrade_rate": 1.0,
+      "correction_rate_when_a_bad": 0.0,
+      "miscorrection_rate_when_a_ok": 0.0,
+      "missed_winner_rate": 0.046,
+      "severe_slot_error_rate": {
+        "numbers": 0.1133,
+        "persons": 0.3564,
+        "negation": 0.1335,
+        "question": 0.0921,
+        "any": 0.5322
+      },
+      "decision_counts": {
+        "ACCEPT": 1086
+      }
+    },
+    "P0_always_A2": {
+      "quality": {
+        "n": 1086,
+        "bleu4_13a": 25.5846,
+        "chrf": 22.4284,
+        "bleu4_precisions": [
+          58.15,
+          33.67,
+          21.15,
+          14.2
+        ],
+        "bleu4_bp": 0.924,
+        "mean_char_edit_sim": 0.4212,
+        "char_rogue_l_f1": 0.5351,
+        "exact_match_count": 18,
+        "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+      },
+      "mean_edit_sim": 0.4212,
+      "bad_rate_edit_sim_lt_0.5": 0.6354,
+      "second_path_call_rate": 1.0,
+      "error_accept_rate_among_accept_decisions": 0.6354,
+      "missed_upgrade_rate": 0.0,
+      "correction_rate_when_a_bad": 0.0611,
+      "miscorrection_rate_when_a_ok": 0.0759,
+      "missed_winner_rate": null,
+      "severe_slot_error_rate": {
+        "numbers": 0.1123,
+        "persons": 0.3389,
+        "negation": 0.1234,
+        "question": 0.0976,
+        "any": 0.5129
+      },
+      "decision_counts": {
+        "ACCEPT": 1086
+      }
+    },
+    "P0_always_B": {
+      "quality": {
+        "n": 1086,
+        "bleu4_13a": 12.2183,
+        "chrf": 13.8087,
+        "bleu4_precisions": [
+          62.57,
+          31.25,
+          12.06,
+          5.68
+        ],
+        "bleu4_bp": 0.6388,
+        "mean_char_edit_sim": 0.3484,
+        "char_rogue_l_f1": 0.4753,
+        "exact_match_count": 0,
+        "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+      },
+      "mean_edit_sim": 0.3484,
+      "bad_rate_edit_sim_lt_0.5": 0.7919,
+      "second_path_call_rate": 0.0,
+      "error_accept_rate_among_accept_decisions": 0.7919,
+      "missed_upgrade_rate": 1.0,
+      "correction_rate_when_a_bad": 0.1136,
+      "miscorrection_rate_when_a_ok": 0.6178,
+      "missed_winner_rate": 0.046,
+      "severe_slot_error_rate": {
+        "numbers": 0.128,
+        "persons": 0.3057,
+        "negation": 0.0921,
+        "question": 0.0856,
+        "any": 0.4926
+      },
+      "decision_counts": {
+        "ACCEPT": 1086
+      }
+    },
+    "P1_rule_only_no_second": {
+      "quality": {
+        "n": 1086,
+        "bleu4_13a": 24.8157,
+        "chrf": 21.7974,
+        "bleu4_precisions": [
+          57.31,
+          32.82,
+          20.42,
+          13.72
+        ],
+        "bleu4_bp": 0.9211,
+        "mean_char_edit_sim": 0.4157,
+        "char_rogue_l_f1": 0.5273,
+        "exact_match_count": 15,
+        "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+      },
+      "mean_edit_sim": 0.4157,
+      "bad_rate_edit_sim_lt_0.5": 0.6483,
+      "second_path_call_rate": 0.0,
+      "error_accept_rate_among_accept_decisions": 0.5952,
+      "missed_upgrade_rate": 0.5568,
+      "correction_rate_when_a_bad": 0.0,
+      "miscorrection_rate_when_a_ok": 0.0,
+      "missed_winner_rate": 0.046,
+      "severe_slot_error_rate": {
+        "numbers": 0.1133,
+        "persons": 0.3564,
+        "negation": 0.1335,
+        "question": 0.0921,
+        "any": 0.5322
+      },
+      "decision_counts": {
+        "UNCERTAIN": 414,
+        "ACCEPT": 672
+      }
+    },
+    "P2_rule_cascade_A2": {
+      "quality": {
+        "n": 1086,
+        "bleu4_13a": 24.9861,
+        "chrf": 21.9575,
+        "bleu4_precisions": [
+          57.77,
+          33.14,
+          20.64,
+          13.82
+        ],
+        "bleu4_bp": 0.919,
+        "mean_char_edit_sim": 0.4179,
+        "char_rogue_l_f1": 0.5303,
+        "exact_match_count": 16,
+        "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+      },
+      "mean_edit_sim": 0.4179,
+      "bad_rate_edit_sim_lt_0.5": 0.6455,
+      "second_path_call_rate": 0.3812,
+      "error_accept_rate_among_accept_decisions": 0.5952,
+      "missed_upgrade_rate": 0.5568,
+      "correction_rate_when_a_bad": 0.0071,
+      "miscorrection_rate_when_a_ok": 0.0052,
+      "missed_winner_rate": 0.0521,
+      "severe_slot_error_rate": {
+        "numbers": 0.1068,
+        "persons": 0.349,
+        "negation": 0.1096,
+        "question": 0.0958,
+        "any": 0.5074
+      },
+      "decision_counts": {
+        "UNCERTAIN": 334,
+        "ACCEPT": 672,
+        "RETRY": 80
+      }
+    },
+    "P2c_cascade_rule_or_score": {
+      "quality": {
+        "n": 1086,
+        "bleu4_13a": 25.1061,
+        "chrf": 22.0563,
+        "bleu4_precisions": [
+          57.91,
+          33.28,
+          20.78,
+          13.94
+        ],
+        "bleu4_bp": 0.9185,
+        "mean_char_edit_sim": 0.4188,
+        "char_rogue_l_f1": 0.5315,
+        "exact_match_count": 16,
+        "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+      },
+      "mean_edit_sim": 0.4188,
+      "bad_rate_edit_sim_lt_0.5": 0.6446,
+      "second_path_call_rate": 0.4153,
+      "error_accept_rate_among_accept_decisions": 0.5874,
+      "missed_upgrade_rate": 0.5227,
+      "correction_rate_when_a_bad": 0.0085,
+      "miscorrection_rate_when_a_ok": 0.0052,
+      "missed_winner_rate": 0.0504,
+      "severe_slot_error_rate": {
+        "numbers": 0.1068,
+        "persons": 0.349,
+        "negation": 0.1096,
+        "question": 0.0958,
+        "any": 0.5074
+      },
+      "decision_counts": {
+        "UNCERTAIN": 337,
+        "ACCEPT": 635,
+        "RETRY": 114
+      }
+    },
+    "P3_full_run_rule_select": {
+      "quality": {
+        "n": 1086,
+        "bleu4_13a": 24.9559,
+        "chrf": 21.9326,
+        "bleu4_precisions": [
+          57.72,
+          33.14,
+          20.62,
+          13.8
+        ],
+        "bleu4_bp": 0.9189,
+        "mean_char_edit_sim": 0.4174,
+        "char_rogue_l_f1": 0.5297,
+        "exact_match_count": 16,
+        "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+      },
+      "mean_edit_sim": 0.4174,
+      "bad_rate_edit_sim_lt_0.5": 0.6455,
+      "second_path_call_rate": 1.0,
+      "error_accept_rate_among_accept_decisions": 0.6455,
+      "missed_upgrade_rate": 0.0,
+      "correction_rate_when_a_bad": 0.0071,
+      "miscorrection_rate_when_a_ok": 0.0052,
+      "missed_winner_rate": null,
+      "severe_slot_error_rate": {
+        "numbers": 0.1068,
+        "persons": 0.3481,
+        "negation": 0.1096,
+        "question": 0.0967,
+        "any": 0.5074
+      },
+      "decision_counts": {
+        "ACCEPT": 1086
+      }
+    },
+    "P4b_gt_oracle_AB": {
+      "quality": {
+        "n": 1086,
+        "bleu4_13a": 26.598,
+        "chrf": 23.2554,
+        "bleu4_precisions": [
+          59.7,
+          35.17,
+          22.35,
+          15.15
+        ],
+        "bleu4_bp": 0.916,
+        "mean_char_edit_sim": 0.443,
+        "char_rogue_l_f1": 0.5501,
+        "exact_match_count": 19,
+        "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+      },
+      "mean_edit_sim": 0.443,
+      "bad_rate_edit_sim_lt_0.5": 0.6087,
+      "second_path_call_rate": 1.0,
+      "error_accept_rate_among_accept_decisions": null,
+      "missed_upgrade_rate": 0.0,
+      "correction_rate_when_a_bad": 0.0611,
+      "miscorrection_rate_when_a_ok": 0.0,
+      "missed_winner_rate": null,
+      "severe_slot_error_rate": {
+        "numbers": 0.1068,
+        "persons": 0.3407,
+        "negation": 0.1197,
+        "question": 0.0866,
+        "any": 0.5101
+      },
+      "decision_counts": {
+        "ORACLE": 1086
+      }
+    },
+    "P4_gt_oracle_all3": {
+      "quality": {
+        "n": 1086,
+        "bleu4_13a": 27.295,
+        "chrf": 24.2314,
+        "bleu4_precisions": [
+          65.98,
+          40.29,
+          25.16,
+          17.18
+        ],
+        "bleu4_bp": 0.8336,
+        "mean_char_edit_sim": 0.4805,
+        "char_rogue_l_f1": 0.584,
+        "exact_match_count": 19,
+        "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+      },
+      "mean_edit_sim": 0.4805,
+      "bad_rate_edit_sim_lt_0.5": 0.5516,
+      "second_path_call_rate": 1.0,
+      "error_accept_rate_among_accept_decisions": null,
+      "missed_upgrade_rate": 0.0,
+      "correction_rate_when_a_bad": 0.1491,
+      "miscorrection_rate_when_a_ok": 0.0,
+      "missed_winner_rate": null,
+      "severe_slot_error_rate": {
+        "numbers": 0.1059,
+        "persons": 0.3011,
+        "negation": 0.0958,
+        "question": 0.082,
+        "any": 0.4705
+      },
+      "decision_counts": {
+        "ORACLE": 1086
+      }
+    }
+  },
+  "judge_per_slot": {
+    "numbers": {
+      "fires": 122,
+      "true_positive": 63,
+      "false_alarm": 59,
+      "gt_errors": 123,
+      "detected": 63,
+      "precision_when_fires": 0.5164,
+      "false_alarm_rate_when_fires": 0.4836,
+      "detection_rate_when_A_slot_error": 0.5122
+    },
+    "negation": {
+      "fires": 125,
+      "true_positive": 85,
+      "false_alarm": 40,
+      "gt_errors": 145,
+      "detected": 85,
+      "precision_when_fires": 0.68,
+      "false_alarm_rate_when_fires": 0.32,
+      "detection_rate_when_A_slot_error": 0.5862
+    },
+    "person": {
+      "fires": 164,
+      "true_positive": 125,
+      "false_alarm": 39,
+      "gt_errors": 387,
+      "detected": 125,
+      "precision_when_fires": 0.7622,
+      "false_alarm_rate_when_fires": 0.2378,
+      "detection_rate_when_A_slot_error": 0.323
+    },
+    "question": {
+      "fires": 79,
+      "true_positive": 43,
+      "false_alarm": 36,
+      "gt_errors": 100,
+      "detected": 43,
+      "precision_when_fires": 0.5443,
+      "false_alarm_rate_when_fires": 0.4557,
+      "detection_rate_when_A_slot_error": 0.43
+    }
+  },
+  "state_machine_selfcheck": {
+    "n_cases": 5,
+    "all_assertions_passed": true,
+    "cases": [
+      {
+        "case": "clean_accept",
+        "A": "我吃面条。",
+        "A2": "我吃面条。",
+        "B": "我 吃 面条",
+        "decision": "ACCEPT",
+        "final_source": "A",
+        "final_text": "我吃面条。",
+        "fuse_applied": false
+      },
+      {
+        "case": "negation_conflict_retry",
+        "A": "我不去吃。",
+        "A2": "我去吃。",
+        "B": "我 去 吃",
+        "decision": "RETRY",
+        "final_source": "A2",
+        "final_text": "我去吃。",
+        "fuse_applied": false
+      },
+      {
+        "case": "numeric_conflict_fuse",
+        "A": "我吃3个苹果。",
+        "A2": "他吃4个苹果。",
+        "B": "我 吃 4 个 苹果",
+        "decision": "FUSE",
+        "final_source": "A_fused",
+        "final_text": "我吃4个苹果。",
+        "fuse_applied": true
+      },
+      {
+        "case": "unresolved_uncertain",
+        "A": "我吃3个苹果。",
+        "A2": "我吃3个苹果。",
+        "B": "我 吃 4 个 苹果",
+        "decision": "UNCERTAIN",
+        "final_source": "A",
+        "final_text": "我吃3个苹果。",
+        "fuse_applied": false
+      },
+      {
+        "case": "empty_primary_retry",
+        "A": "",
+        "A2": "他去学校。",
+        "B": "他 去 学校",
+        "decision": "RETRY",
+        "final_source": "A2",
+        "final_text": "他去学校。",
+        "fuse_applied": false
+      }
+    ],
+    "note": "deterministic state machine exercised on synthetic texts; the measured snapshot does not trigger FUSE by itself (A2 often conflicts with the gloss too)"
+  },
+  "blocked": {
+    "D_E_F_G_llm": {
+      "status": "BLOCKED",
+      "evidence": "no LLM/API env vars (names inspected, no values printed); repo grep openai|anthropic|deepseek|api_key|chat/completions hits only local app test base_urls and vendored upstream transformers model names, no provider client/endpoint config",
+      "needed": [
+        "reachable LLM endpoint + secret injection",
+        "fixed provider/model version",
+        "prompt version + decoding params",
+        "call budget",
+        "prompt must stay GT-free"
+      ]
+    },
+    "jev": {
+      "status": "BLOCKED",
+      "evidence": "no Jev client/protocol implementation or endpoint in this repo/environment"
+    },
+    "unisign_self_confidence": {
+      "status": "BLOCKED",
+      "evidence": "Uni-Sign runtime TextPrediction(score=None); historical predictions have no score/logprob field",
+      "needed": "re-run Uni-Sign with generate(output_scores=True) on the same inputs"
+    }
+  },
+  "limitations": [
+    "retrospective_seen_1086, no independent dev/test split; rule set designed and evaluated on the same seen data",
+    "candidate texts are measured imported historical predictions, not re-run in E06",
+    "routing/selection/FUSE/oracle are simulated offline",
+    "B is a deterministic gloss join baseline, not a trained Gloss2Text",
+    "savings counted as model invocations, not measured latency"
+  ]
+}

@@ -1,0 +1,5 @@
+﻿run_id,mode,model,samples,successes,failures,oom_failures,wall_seconds,batch_seconds,p50_e2e_ms,p95_e2e_ms,p50_forward_ms,p95_forward_ms,p50_pose_ms,p95_pose_ms,peak_torch_vram_mb,peak_device_memory_used_mb,throughput_items_per_second,mean_rtf,speedup_vs_serial,notes
+e04-gpu-20261026T2202Z,serial,unisign_video,5,5,0,0,83.32,11.813,2602.822,3198.18,49.755,59.291,2139.795,2620.018,1211.1,,0.4233,0.6333,,load/warm-up excluded from batch_seconds
+e04-gpu-20261026T2202Z,serial,slrt_hrnet_npz,5,5,0,0,83.32,28.463,5831.764,6575.811,2237.217,2731.287,4.18,4.98,373.9,,0.1757,1.5296,,load/warm-up excluded from batch_seconds
+e04-gpu-20261026T2202Z,parallel,unisign_video,5,5,0,0,34.1,21.33,4800.039,5942.441,58.996,78.618,4157.308,5168.199,1211.1,6451.0,0.2344,1.1391,0.5538,load/warm-up excluded from batch_seconds
+e04-gpu-20261026T2202Z,parallel,slrt_hrnet_npz,5,5,0,0,34.1,33.452,6160.082,8282.564,2812.779,3763.701,3.95,4.95,373.9,6451.0,0.1495,1.7982,0.8509,load/warm-up excluded from batch_seconds

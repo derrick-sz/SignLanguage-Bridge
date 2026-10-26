@@ -1,0 +1,211 @@
+{
+  "phase": "cold",
+  "model": "unisign_pose",
+  "repeats": 3,
+  "gpu_guard": {
+    "phase": "cold",
+    "gpu_baseline": {
+      "sampled_at": "2026-10-26T14:06:28+00:00",
+      "devices": [
+        {
+          "index": 0,
+          "name": "NVIDIA GeForce RTX 5060 Ti",
+          "driver_version": "616.92",
+          "memory_total_mb": 16311.0,
+          "memory_used_mb": 2752.0,
+          "memory_free_mb": 13299.0,
+          "utilization_gpu_pct": 13.0
+        }
+      ]
+    },
+    "ram": {
+      "total_gb": 31.84,
+      "available_gb": 5.75,
+      "used_percent": 81.9
+    },
+    "shared_gpu_detected": false
+  },
+  "rows": [
+    {
+      "schema_version": 1,
+      "run_id": "e04-gpu-20261026T2202Z",
+      "created_at": "2026-10-26T14:06:59+00:00",
+      "phase": "cold",
+      "model": "unisign_pose",
+      "model_display": "Uni-Sign pose path (official released CSL-Daily pkl -> mT5)",
+      "sample_id": "S000502_P0000_T00",
+      "signer_id": "P0000",
+      "repetition": 0,
+      "status": "ok",
+      "error": null,
+      "video_seconds": 3.6,
+      "fps": 30.0,
+      "frames": 108,
+      "rtf": 0.0934,
+      "timing_method": {
+        "cpu": "time.perf_counter",
+        "gpu": "torch.cuda.synchronize inside runtime around each GPU segment"
+      },
+      "video_decode_ms": null,
+      "pose_ms": 1.126,
+      "forward_ms": 100.436,
+      "text_decode_ms": 234.535,
+      "queue_ms": 0.0,
+      "e2e_ms": 336.164,
+      "timings_raw": {},
+      "vram": {
+        "torch_resident_allocated_mb": 1158.1,
+        "scope": "process_torch_allocator_peak, no other process",
+        "torch_peak_allocated_mb": 1202.7,
+        "torch_peak_reserved_mb": 2738.0,
+        "device_free_mb_at_read": 12394.0,
+        "device_total_mb": 16283.4
+      },
+      "input": {
+        "pose_frames_total": 123,
+        "pose_frames_used": 109,
+        "pose_crop": [
+          2,
+          111
+        ],
+        "sampled_frames": 109,
+        "body_scale": 1.047,
+        "valid_body_fraction": 1.0,
+        "pose_sha256": "f08ca68a1856c5946bc897524eb06da3bcaae05ae4a4ad1ed6a572f18b41b69b"
+      },
+      "output_text": "学校太大了,很累。",
+      "process_exit_code": 0,
+      "process_wall_seconds": 30.58,
+      "model_load_seconds": 17.446,
+      "first_inference_ms": 336.164,
+      "cold_start_scope": "fresh process: imports + asset verification + model load + one inference",
+      "shared_gpu": false
+    },
+    {
+      "schema_version": 1,
+      "run_id": "e04-gpu-20261026T2202Z",
+      "created_at": "2026-10-26T14:07:23+00:00",
+      "phase": "cold",
+      "model": "unisign_pose",
+      "model_display": "Uni-Sign pose path (official released CSL-Daily pkl -> mT5)",
+      "sample_id": "S000502_P0000_T00",
+      "signer_id": "P0000",
+      "repetition": 1,
+      "status": "ok",
+      "error": null,
+      "video_seconds": 3.6,
+      "fps": 30.0,
+      "frames": 108,
+      "rtf": 0.0843,
+      "timing_method": {
+        "cpu": "time.perf_counter",
+        "gpu": "torch.cuda.synchronize inside runtime around each GPU segment"
+      },
+      "video_decode_ms": null,
+      "pose_ms": 1.243,
+      "forward_ms": 71.402,
+      "text_decode_ms": 230.578,
+      "queue_ms": 0.0,
+      "e2e_ms": 303.34,
+      "timings_raw": {},
+      "vram": {
+        "torch_resident_allocated_mb": 1158.1,
+        "scope": "process_torch_allocator_peak, no other process",
+        "torch_peak_allocated_mb": 1202.7,
+        "torch_peak_reserved_mb": 2738.0,
+        "device_free_mb_at_read": 12394.0,
+        "device_total_mb": 16283.4
+      },
+      "input": {
+        "pose_frames_total": 123,
+        "pose_frames_used": 109,
+        "pose_crop": [
+          2,
+          111
+        ],
+        "sampled_frames": 109,
+        "body_scale": 1.047,
+        "valid_body_fraction": 1.0,
+        "pose_sha256": "f08ca68a1856c5946bc897524eb06da3bcaae05ae4a4ad1ed6a572f18b41b69b"
+      },
+      "output_text": "学校太大了,很累。",
+      "process_exit_code": 0,
+      "process_wall_seconds": 24.21,
+      "model_load_seconds": 18.857,
+      "first_inference_ms": 303.34,
+      "cold_start_scope": "fresh process: imports + asset verification + model load + one inference",
+      "shared_gpu": false
+    },
+    {
+      "schema_version": 1,
+      "run_id": "e04-gpu-20261026T2202Z",
+      "created_at": "2026-10-26T14:07:44+00:00",
+      "phase": "cold",
+      "model": "unisign_pose",
+      "model_display": "Uni-Sign pose path (official released CSL-Daily pkl -> mT5)",
+      "sample_id": "S000502_P0000_T00",
+      "signer_id": "P0000",
+      "repetition": 2,
+      "status": "ok",
+      "error": null,
+      "video_seconds": 3.6,
+      "fps": 30.0,
+      "frames": 108,
+      "rtf": 0.0818,
+      "timing_method": {
+        "cpu": "time.perf_counter",
+        "gpu": "torch.cuda.synchronize inside runtime around each GPU segment"
+      },
+      "video_decode_ms": null,
+      "pose_ms": 0.831,
+      "forward_ms": 67.784,
+      "text_decode_ms": 225.891,
+      "queue_ms": 0.0,
+      "e2e_ms": 294.567,
+      "timings_raw": {},
+      "vram": {
+        "torch_resident_allocated_mb": 1158.1,
+        "scope": "process_torch_allocator_peak, no other process",
+        "torch_peak_allocated_mb": 1202.7,
+        "torch_peak_reserved_mb": 2738.0,
+        "device_free_mb_at_read": 12394.0,
+        "device_total_mb": 16283.4
+      },
+      "input": {
+        "pose_frames_total": 123,
+        "pose_frames_used": 109,
+        "pose_crop": [
+          2,
+          111
+        ],
+        "sampled_frames": 109,
+        "body_scale": 1.047,
+        "valid_body_fraction": 1.0,
+        "pose_sha256": "f08ca68a1856c5946bc897524eb06da3bcaae05ae4a4ad1ed6a572f18b41b69b"
+      },
+      "output_text": "学校太大了,很累。",
+      "process_exit_code": 0,
+      "process_wall_seconds": 21.416,
+      "model_load_seconds": 17.659,
+      "first_inference_ms": 294.567,
+      "cold_start_scope": "fresh process: imports + asset verification + model load + one inference",
+      "shared_gpu": false
+    }
+  ],
+  "model_load_seconds": {
+    "count": 3,
+    "p50": 17.659,
+    "p95": 18.7372,
+    "mean": 17.987333333333336,
+    "min": 17.446,
+    "max": 18.857
+  },
+  "process_wall_seconds": {
+    "count": 3,
+    "p50": 24.21,
+    "p95": 29.942999999999998,
+    "mean": 25.402,
+    "min": 21.416,
+    "max": 30.58
+  }
+}

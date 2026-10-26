@@ -1,0 +1,205 @@
+{
+  "phase": "cold",
+  "model": "slrt_hrnet_npz",
+  "repeats": 3,
+  "gpu_guard": {
+    "phase": "cold",
+    "gpu_baseline": {
+      "sampled_at": "2026-10-26T14:05:47+00:00",
+      "devices": [
+        {
+          "index": 0,
+          "name": "NVIDIA GeForce RTX 5060 Ti",
+          "driver_version": "616.92",
+          "memory_total_mb": 16311.0,
+          "memory_used_mb": 2746.0,
+          "memory_free_mb": 13305.0,
+          "utilization_gpu_pct": 12.0
+        }
+      ]
+    },
+    "ram": {
+      "total_gb": 31.84,
+      "available_gb": 5.74,
+      "used_percent": 82.0
+    },
+    "shared_gpu_detected": false
+  },
+  "rows": [
+    {
+      "schema_version": 1,
+      "run_id": "e04-gpu-20261026T2202Z",
+      "created_at": "2026-10-26T14:06:00+00:00",
+      "phase": "cold",
+      "model": "slrt_hrnet_npz",
+      "model_display": "SLRT Online CSL-Daily (trimmed mp4 + HRNet NPZ -> S3D windows -> vote)",
+      "sample_id": "S000502_P0000_T00",
+      "signer_id": "P0000",
+      "repetition": 0,
+      "status": "ok",
+      "error": null,
+      "video_seconds": 3.6,
+      "fps": 30.0,
+      "frames": 108,
+      "rtf": 2.6552,
+      "timing_method": {
+        "cpu": "time.perf_counter",
+        "gpu": "torch.cuda.synchronize inside runtime around each GPU segment"
+      },
+      "video_decode_ms": 438.104,
+      "pose_ms": 5.616,
+      "forward_ms": 3213.081,
+      "text_decode_ms": null,
+      "queue_ms": 0.0,
+      "e2e_ms": 9558.8,
+      "timings_raw": {},
+      "vram": {
+        "torch_resident_allocated_mb": 169.5,
+        "scope": "process_torch_allocator_peak, no other process",
+        "torch_peak_allocated_mb": 519.8,
+        "torch_peak_reserved_mb": 600.0,
+        "device_free_mb_at_read": 14532.0,
+        "device_total_mb": 16283.4
+      },
+      "input": {
+        "frames_received": 108,
+        "windows_processed": 108,
+        "pose_backend": "hrnet-npz",
+        "video_sha256": "d60a918e199e13ce3b7ab4eac1d34785222bbe9d5e77304a15613f32be16f5e3"
+      },
+      "gloss_sequence": [
+        "学校",
+        "大",
+        "累"
+      ],
+      "process_exit_code": 0,
+      "process_wall_seconds": 13.547,
+      "model_load_seconds": 3.064,
+      "first_inference_ms": 9558.8,
+      "cold_start_scope": "fresh process: imports + asset verification + model load + one inference",
+      "shared_gpu": false
+    },
+    {
+      "schema_version": 1,
+      "run_id": "e04-gpu-20261026T2202Z",
+      "created_at": "2026-10-26T14:06:14+00:00",
+      "phase": "cold",
+      "model": "slrt_hrnet_npz",
+      "model_display": "SLRT Online CSL-Daily (trimmed mp4 + HRNet NPZ -> S3D windows -> vote)",
+      "sample_id": "S000502_P0000_T00",
+      "signer_id": "P0000",
+      "repetition": 1,
+      "status": "ok",
+      "error": null,
+      "video_seconds": 3.6,
+      "fps": 30.0,
+      "frames": 108,
+      "rtf": 2.6972,
+      "timing_method": {
+        "cpu": "time.perf_counter",
+        "gpu": "torch.cuda.synchronize inside runtime around each GPU segment"
+      },
+      "video_decode_ms": 455.198,
+      "pose_ms": 5.572,
+      "forward_ms": 3319.299,
+      "text_decode_ms": null,
+      "queue_ms": 0.0,
+      "e2e_ms": 9710.015,
+      "timings_raw": {},
+      "vram": {
+        "torch_resident_allocated_mb": 169.5,
+        "scope": "process_torch_allocator_peak, no other process",
+        "torch_peak_allocated_mb": 519.8,
+        "torch_peak_reserved_mb": 600.0,
+        "device_free_mb_at_read": 14532.0,
+        "device_total_mb": 16283.4
+      },
+      "input": {
+        "frames_received": 108,
+        "windows_processed": 108,
+        "pose_backend": "hrnet-npz",
+        "video_sha256": "d60a918e199e13ce3b7ab4eac1d34785222bbe9d5e77304a15613f32be16f5e3"
+      },
+      "gloss_sequence": [
+        "学校",
+        "大",
+        "累"
+      ],
+      "process_exit_code": 0,
+      "process_wall_seconds": 13.802,
+      "model_load_seconds": 3.147,
+      "first_inference_ms": 9710.015,
+      "cold_start_scope": "fresh process: imports + asset verification + model load + one inference",
+      "shared_gpu": false
+    },
+    {
+      "schema_version": 1,
+      "run_id": "e04-gpu-20261026T2202Z",
+      "created_at": "2026-10-26T14:06:28+00:00",
+      "phase": "cold",
+      "model": "slrt_hrnet_npz",
+      "model_display": "SLRT Online CSL-Daily (trimmed mp4 + HRNet NPZ -> S3D windows -> vote)",
+      "sample_id": "S000502_P0000_T00",
+      "signer_id": "P0000",
+      "repetition": 2,
+      "status": "ok",
+      "error": null,
+      "video_seconds": 3.6,
+      "fps": 30.0,
+      "frames": 108,
+      "rtf": 2.5563,
+      "timing_method": {
+        "cpu": "time.perf_counter",
+        "gpu": "torch.cuda.synchronize inside runtime around each GPU segment"
+      },
+      "video_decode_ms": 434.687,
+      "pose_ms": 5.316,
+      "forward_ms": 3103.971,
+      "text_decode_ms": null,
+      "queue_ms": 0.0,
+      "e2e_ms": 9202.633,
+      "timings_raw": {},
+      "vram": {
+        "torch_resident_allocated_mb": 169.5,
+        "scope": "process_torch_allocator_peak, no other process",
+        "torch_peak_allocated_mb": 519.8,
+        "torch_peak_reserved_mb": 600.0,
+        "device_free_mb_at_read": 14532.0,
+        "device_total_mb": 16283.4
+      },
+      "input": {
+        "frames_received": 108,
+        "windows_processed": 108,
+        "pose_backend": "hrnet-npz",
+        "video_sha256": "d60a918e199e13ce3b7ab4eac1d34785222bbe9d5e77304a15613f32be16f5e3"
+      },
+      "gloss_sequence": [
+        "学校",
+        "大",
+        "累"
+      ],
+      "process_exit_code": 0,
+      "process_wall_seconds": 13.294,
+      "model_load_seconds": 3.141,
+      "first_inference_ms": 9202.633,
+      "cold_start_scope": "fresh process: imports + asset verification + model load + one inference",
+      "shared_gpu": false
+    }
+  ],
+  "model_load_seconds": {
+    "count": 3,
+    "p50": 3.141,
+    "p95": 3.1464,
+    "mean": 3.1173333333333333,
+    "min": 3.064,
+    "max": 3.147
+  },
+  "process_wall_seconds": {
+    "count": 3,
+    "p50": 13.547,
+    "p95": 13.7765,
+    "mean": 13.547666666666666,
+    "min": 13.294,
+    "max": 13.802
+  }
+}

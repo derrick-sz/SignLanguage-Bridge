@@ -1,0 +1,117 @@
+{
+  "run_id": "e05-prefix-video-20261026T2232Z",
+  "created_at": "2026-10-26T14:25:46+00:00",
+  "gpu_guard": {
+    "gpu_baseline": {
+      "sampled_at": "2026-10-26T14:25:44+00:00",
+      "devices": [
+        {
+          "index": 0,
+          "name": "NVIDIA GeForce RTX 5060 Ti",
+          "driver_version": "616.92",
+          "memory_total_mb": 16311.0,
+          "memory_used_mb": 2453.0,
+          "memory_free_mb": 13598.0,
+          "utilization_gpu_pct": 5.0
+        }
+      ]
+    },
+    "ram": {
+      "total_gb": 31.84,
+      "available_gb": 12.09,
+      "used_percent": 62.0
+    },
+    "shared_gpu_detected": false
+  },
+  "fractions": [
+    0.125,
+    0.25,
+    0.375,
+    0.5,
+    0.625,
+    0.75,
+    0.875,
+    1.0
+  ],
+  "video_fractions": [
+    0.25,
+    0.5,
+    0.75,
+    1.0
+  ],
+  "video": {
+    "phase": "video",
+    "load_seconds": 24.759742499969434,
+    "aggregate": {
+      "samples": 10,
+      "rows": 40,
+      "failures": 0,
+      "successes": 40,
+      "empty_outputs": 0,
+      "by_fraction": {
+        "25%": {
+          "attempts": 10,
+          "successes": 10,
+          "p50_e2e_ms": 820.389,
+          "p50_pose_ms": 585.105,
+          "p50_forward_ms": 51.719
+        },
+        "50%": {
+          "attempts": 10,
+          "successes": 10,
+          "p50_e2e_ms": 870.196,
+          "p50_pose_ms": 598.589,
+          "p50_forward_ms": 52.662
+        },
+        "75%": {
+          "attempts": 10,
+          "successes": 10,
+          "p50_e2e_ms": 937.597,
+          "p50_pose_ms": 583.613,
+          "p50_forward_ms": 53.372
+        },
+        "100%": {
+          "attempts": 10,
+          "successes": 10,
+          "p50_e2e_ms": 901.426,
+          "p50_pose_ms": 557.968,
+          "p50_forward_ms": 53.953
+        }
+      },
+      "pose_vs_video": {
+        "compared": 0,
+        "identical": 0,
+        "mean_char_similarity": null,
+        "note": "Different frontends (official released pose vs local RTMPose) and different truncation handling; disagreement is expected and is not a correctness label.",
+        "details": []
+      },
+      "feasibility": "video end-to-end accepts observed prefixes down to 20 frames; no padding used"
+    },
+    "modes": [
+      "clip"
+    ],
+    "fractions": [
+      0.25,
+      0.5,
+      0.75,
+      1.0
+    ],
+    "sample_ids": [
+      "S000502_P0000_T00",
+      "S003181_P0001_T00",
+      "S002951_P0002_T00",
+      "S004204_P0003_T00",
+      "S000414_P0004_T00",
+      "S001656_P0005_T00",
+      "S005040_P0006_T00",
+      "S002092_P0007_T00",
+      "S000230_P0008_T00",
+      "S005276_P0009_T00"
+    ]
+  },
+  "elapsed_seconds": 70.49,
+  "failures": {
+    "pose": 0,
+    "video": 0
+  }
+}

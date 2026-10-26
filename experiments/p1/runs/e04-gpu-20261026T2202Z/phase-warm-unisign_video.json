@@ -1,0 +1,120 @@
+{
+  "phase": "warm",
+  "model": "unisign_video",
+  "warmup_iterations": 2,
+  "timed_iterations": 30,
+  "failures": 0,
+  "oom_failures": 0,
+  "phase_seconds": 88.59,
+  "throughput_items_per_second": 0.3387,
+  "resident_vram_after": {
+    "torch_resident_allocated_mb": 1158.1,
+    "scope": "process_torch_allocator_peak, no other process",
+    "torch_peak_allocated_mb": 1205.9,
+    "torch_peak_reserved_mb": 2738.0,
+    "device_free_mb_at_read": 12036.0,
+    "device_total_mb": 16283.4
+  },
+  "runtime_info": {
+    "backend": "UniSignBackend.recognize_file",
+    "load": {
+      "model_load_ms_backend": 26942.366,
+      "model_warmup_ms": 14833.009,
+      "max_frames": 256,
+      "num_beams": 4,
+      "pose_sample_only": false,
+      "pose_detect_stride": 1,
+      "pose_normalization": "isotropic_short_side",
+      "pose_orientation": "preserve"
+    },
+    "runtime": {
+      "backend": "pytorch_uni_sign",
+      "providers": [
+        "PyTorch CUDA"
+      ],
+      "device": "cuda",
+      "dtype": "bfloat16",
+      "load_ms": 9269.883900007699,
+      "model_warmup_ms": 14833.008699992206,
+      "checkpoint": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\csl_daily_pose_only_slt.pth",
+      "checkpoint_sha256": "73bea87a9603f719b4f4a481a3a1a5ed24e7e5f7b81afd14ef498c40469c1a6c",
+      "mt5_dir": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\mt5-base",
+      "source_dir": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign_source",
+      "source_commit": "eed438bcb49e30405cd6ccdfcccca330c134e830",
+      "model_revision": "182913ca7a8b7dd9837d7d6f10717353f4408f80",
+      "license": "CC-BY-NC-4.0",
+      "source_license_status": "no-license-file-at-pinned-commit",
+      "pose_normalization": "isotropic_short_side",
+      "pose_orientation": "preserve",
+      "pose_mode": "lightweight",
+      "pose_sample_only": false,
+      "pose_detect_stride": 1,
+      "max_frames": 256,
+      "streaming": "sliding_window_over_complete_windows",
+      "pose_backend": "onnxruntime",
+      "pose_requested_device": "cuda",
+      "pose_device": "cuda",
+      "pose_detection_providers": [
+        "CUDAExecutionProvider",
+        "CPUExecutionProvider"
+      ],
+      "pose_estimation_providers": [
+        "CUDAExecutionProvider",
+        "CPUExecutionProvider"
+      ],
+      "pose_fallback_reason": null,
+      "pose_preload_failures": [],
+      "pose_warmup_error": null,
+      "pose_cache_dir": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\rtmlib-cache",
+      "pose_warmup_image": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign_source\\demo\\rtmlib-main\\demo.jpg",
+      "parameter_count": 587747368,
+      "gpu_allocated_mb": 1148.85009765625,
+      "gpu_reserved_mb": 2688.0,
+      "gpu_peak_allocated_mb": 1205.8828125,
+      "gpu_peak_reserved_mb": 2738.0
+    }
+  },
+  "device_sampling": {
+    "interval_seconds": 1.0,
+    "scope": "whole_device_including_other_processes",
+    "peak": {
+      "samples": 83,
+      "peak_memory_used_mb": 5659.0,
+      "mean_memory_used_mb": 5642.4,
+      "mean_utilization_gpu_pct": 43.6,
+      "max_utilization_gpu_pct": 49.0
+    }
+  },
+  "gpu_guard": {
+    "phase": "warm",
+    "gpu_baseline": {
+      "sampled_at": "2026-10-26T14:16:47+00:00",
+      "devices": [
+        {
+          "index": 0,
+          "name": "NVIDIA GeForce RTX 5060 Ti",
+          "driver_version": "616.92",
+          "memory_total_mb": 16311.0,
+          "memory_used_mb": 2423.0,
+          "memory_free_mb": 13628.0,
+          "utilization_gpu_pct": 6.0
+        }
+      ]
+    },
+    "ram": {
+      "total_gb": 31.84,
+      "available_gb": 11.97,
+      "used_percent": 62.4
+    },
+    "shared_gpu_detected": false
+  },
+  "load_seconds": 29.479523900023196,
+  "load_retries": 0,
+  "samples": [
+    "S000502_P0000_T00",
+    "S003181_P0001_T00",
+    "S002951_P0002_T00",
+    "S004204_P0003_T00",
+    "S000414_P0004_T00"
+  ]
+}

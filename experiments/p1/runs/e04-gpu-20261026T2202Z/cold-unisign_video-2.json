@@ -1,0 +1,119 @@
+{
+  "status": "ok",
+  "error": null,
+  "load_seconds": 26.615926800004672,
+  "runtime_info": {
+    "backend": "UniSignBackend.recognize_file",
+    "load": {
+      "model_load_ms_backend": 24050.983,
+      "model_warmup_ms": 13403.687,
+      "max_frames": 256,
+      "num_beams": 4,
+      "pose_sample_only": false,
+      "pose_detect_stride": 1,
+      "pose_normalization": "isotropic_short_side",
+      "pose_orientation": "preserve"
+    },
+    "runtime": {
+      "backend": "pytorch_uni_sign",
+      "providers": [
+        "PyTorch CUDA"
+      ],
+      "device": "cuda",
+      "dtype": "bfloat16",
+      "load_ms": 8434.011600038502,
+      "model_warmup_ms": 13403.686800040305,
+      "checkpoint": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\csl_daily_pose_only_slt.pth",
+      "checkpoint_sha256": "73bea87a9603f719b4f4a481a3a1a5ed24e7e5f7b81afd14ef498c40469c1a6c",
+      "mt5_dir": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\mt5-base",
+      "source_dir": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign_source",
+      "source_commit": "eed438bcb49e30405cd6ccdfcccca330c134e830",
+      "model_revision": "182913ca7a8b7dd9837d7d6f10717353f4408f80",
+      "license": "CC-BY-NC-4.0",
+      "source_license_status": "no-license-file-at-pinned-commit",
+      "pose_normalization": "isotropic_short_side",
+      "pose_orientation": "preserve",
+      "pose_mode": "lightweight",
+      "pose_sample_only": false,
+      "pose_detect_stride": 1,
+      "max_frames": 256,
+      "streaming": "sliding_window_over_complete_windows",
+      "pose_backend": "onnxruntime",
+      "pose_requested_device": "cuda",
+      "pose_device": "cuda",
+      "pose_detection_providers": [
+        "CUDAExecutionProvider",
+        "CPUExecutionProvider"
+      ],
+      "pose_estimation_providers": [
+        "CUDAExecutionProvider",
+        "CPUExecutionProvider"
+      ],
+      "pose_fallback_reason": null,
+      "pose_preload_failures": [],
+      "pose_warmup_error": null,
+      "pose_cache_dir": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\rtmlib-cache",
+      "pose_warmup_image": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign_source\\demo\\rtmlib-main\\demo.jpg",
+      "parameter_count": 587747368,
+      "gpu_allocated_mb": 1148.85009765625,
+      "gpu_reserved_mb": 2688.0,
+      "gpu_peak_allocated_mb": 1183.4521484375,
+      "gpu_peak_reserved_mb": 2708.0
+    }
+  },
+  "vram_after_load": {
+    "torch_resident_allocated_mb": 1158.1,
+    "scope": "process_torch_allocator_peak, no other process",
+    "torch_peak_allocated_mb": 1183.5,
+    "torch_peak_reserved_mb": 2708.0,
+    "device_free_mb_at_read": 12066.0,
+    "device_total_mb": 16283.4
+  },
+  "timings": {
+    "video_decode_ms": 322.93039991054684,
+    "pose_ms": 2172.3934001056477,
+    "forward_ms": 52.09130002185702,
+    "text_decode_ms": 198.86780000524595,
+    "queue_ms": 0.0,
+    "e2e_ms": 2759.788000024855,
+    "raw": {
+      "pose_extract_ms": 2494.737,
+      "pose_instrumented_extract_ms": 2171.807,
+      "pose_preprocess_ms": 0.587,
+      "adapter_total_ms": 2759.564,
+      "model_total_ms": 250.959,
+      "window_duration_seconds": 3.567,
+      "real_time_factor": 0.774
+    },
+    "input": {
+      "window_frames": 108,
+      "sampled_frames": 108,
+      "source_frames": 108,
+      "valid_body_fraction": 1.0,
+      "body_scale": 1.072,
+      "extractor_calls": 108,
+      "pose_cache_hit_frames": 0
+    },
+    "vram": {
+      "torch_resident_allocated_mb": 1158.1,
+      "scope": "process_torch_allocator_peak, no other process",
+      "torch_peak_allocated_mb": 1202.4,
+      "torch_peak_reserved_mb": 2738.0,
+      "device_free_mb_at_read": 12036.0,
+      "device_total_mb": 16283.4
+    },
+    "text": "学校太大了,很累。",
+    "status": "recognized"
+  },
+  "text": "学校太大了,很累。",
+  "gloss": null,
+  "vram_after_inference": {
+    "torch_resident_allocated_mb": 1158.1,
+    "scope": "process_torch_allocator_peak, no other process",
+    "torch_peak_allocated_mb": 1202.4,
+    "torch_peak_reserved_mb": 2738.0,
+    "device_free_mb_at_read": 12036.0,
+    "device_total_mb": 16283.4
+  },
+  "process_seconds": 29.568
+}

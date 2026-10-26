@@ -1,0 +1,56 @@
+{
+  "status": "ok",
+  "error": null,
+  "model": "slrt_hrnet_npz",
+  "batch_seconds": 28.463,
+  "samples": 5,
+  "failures": 0,
+  "resident_vram_after": {
+    "torch_resident_allocated_mb": 169.5,
+    "scope": "process_torch_allocator_peak, no other process",
+    "torch_peak_allocated_mb": 373.9,
+    "torch_peak_reserved_mb": 600.0,
+    "device_free_mb_at_read": 14532.0,
+    "device_total_mb": 16283.4
+  },
+  "load_seconds": 2.735856400046032,
+  "load_retries": 0,
+  "runtime_info": {
+    "backend": "SLRTBackend.recognize_video",
+    "load": {
+      "backend": "pytorch_slrt",
+      "device": "cuda:0",
+      "dtype": "float32",
+      "torch_version": "2.9.1+cu128",
+      "state_keys": 938,
+      "strict_load": true,
+      "classes": 2001,
+      "blank_id": 0,
+      "load_ms": 2735.856400046032,
+      "checkpoint_sha256": "e9fdd3a66d9667e7685c2b1437c67b8cbc9e45d2562730f04c0226717b7cbd4d",
+      "vocabulary_sha256": "0c4984f0dd3e7897b8c8d9e6e99a848b60814a5d9cf7a49baf7cc9b9cd124c76",
+      "gpu_name": "NVIDIA GeForce RTX 5060 Ti",
+      "gpu_peak_allocated_mb": 160.38671875,
+      "gpu_peak_reserved_mb": 180.0,
+      "window_size": 16,
+      "stride": 1,
+      "vote_size": 7
+    },
+    "runtime": {
+      "backend": "pytorch_slrt",
+      "device": "cuda:0",
+      "dtype": "float32",
+      "torch_version": "2.9.1+cu128",
+      "state_keys": 938,
+      "strict_load": true,
+      "classes": 2001,
+      "blank_id": 0,
+      "load_ms": 2735.856400046032,
+      "checkpoint_sha256": "e9fdd3a66d9667e7685c2b1437c67b8cbc9e45d2562730f04c0226717b7cbd4d",
+      "vocabulary_sha256": "0c4984f0dd3e7897b8c8d9e6e99a848b60814a5d9cf7a49baf7cc9b9cd124c76",
+      "gpu_name": "NVIDIA GeForce RTX 5060 Ti",
+      "gpu_peak_allocated_mb": 373.91796875,
+      "gpu_peak_reserved_mb": 600.0
+    }
+  }
+}

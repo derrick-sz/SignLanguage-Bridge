@@ -1,0 +1,202 @@
+{
+  "schema_version": 1,
+  "audited_at": "2026-10-26T21:37:59+08:00",
+  "auditor": "auditor (P-1 E00 audit)",
+  "scope": "E00 运行环境清点；不含 GPU 推理/模型加载 smoke（属 E01）",
+  "host": {
+    "hostname_source": "Win32_OperatingSystem / Win32_Processor / nvidia-smi",
+    "os": {
+      "caption": "Microsoft Windows 10 专业版",
+      "version": "10.0.19045",
+      "build": "19045",
+      "architecture": "64-bit"
+    },
+    "cpu": {
+      "name": "Intel(R) Core(TM) i5-14600KF",
+      "cores": 14,
+      "logical_processors": 20,
+      "max_clock_mhz": 3500
+    },
+    "ram": {
+      "total_gb": 31.84,
+      "free_gb_at_probe": 1.55,
+      "note": "可用内存仅约 1.55 GB（探测时 GPU 上另一成员的 E01 推理进程在跑）；不得并发大内存任务（见 model-evaluation-pitfalls.md §7）"
+    },
+    "gpu": {
+      "nvidia_smi_timestamp": "Mon Oct 26 21:37:59 2026",
+      "name": "NVIDIA GeForce RTX 5060 Ti",
+      "driver_version": "616.92",
+      "kmd_version": "616.92",
+      "cuda_umd_version": "13.4",
+      "memory_total_mib": 16311,
+      "memory_free_mib": 10140,
+      "memory_used_mib": 5911,
+      "temperature_c": 42,
+      "utilization_gpu_pct": 33,
+      "display_mode": "WDDM",
+      "compute_capability": "未查询（nvidia-smi 默认输出；E01 负责实际算力/冒烟）"
+    },
+    "cuda_env_vars_explicit": {
+      "CUDA_PATH": "D:\\NVlDlA GPU ComputingToolkit",
+      "CUDA_PATH_V12_9": "D:\\NVlDlA GPU ComputingToolkit",
+      "note": "环境变量名/值与 Get-ChildItem Env: 实测一致；Test-Path CUDA_PATH = True。未设置 TORCH_CUDA_ARCH_LIST / CUDNN_* / NVIDIA_* 显式变量。torch 的 CUDA_HOME 也指向该路径（运行 .env probe 时 stderr 实测）"
+    },
+    "docker": {
+      "cli_note": "docs/reports/slrt-online-reproduction-gap-2026-10-25.md §5 记录 Docker CLI 29.7.2，官方镜像未拉取、daemon 与 GPU 透传未验证（本轮 E00 未重复验证，沿用该报告；不作为已验证事实）"
+    },
+    "ffmpeg": {
+      "ffmpeg": {
+        "which": "E:\\ffmpeg\\ffmpeg-2026-04-16-git-5abc240a27-full_build\\bin\\ffmpeg.EXE",
+        "version_line": "ffmpeg version 2026-04-16-git-5abc240a27-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers"
+      },
+      "ffprobe": {
+        "which": "E:\\ffmpeg\\ffmpeg-2026-04-16-git-5abc240a27-full_build\\bin\\ffprobe.EXE",
+        "version_line": "ffprobe version 2026-04-16-git-5abc240a27-full_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers"
+      },
+      "available": true
+    },
+    "disks_free_gb": [
+      {"drive": "C:", "size_gb": 295.69, "free_gb": 47.02},
+      {"drive": "D:", "size_gb": 380.59, "free_gb": 50.19},
+      {"drive": "E:", "size_gb": 254.92, "free_gb": 11.95, "note": "项目盘，剩余空间偏紧；大文件均在 E 盘"},
+      {"drive": "F:", "size_gb": 465.76, "free_gb": 183.02, "note": "SLRT TwoStream 权重与 legacy 环境所在盘"},
+      {"drive": "G:", "size_gb": 465.76, "free_gb": 173.87}
+    ]
+  },
+  "python_environments": {
+    "conda_main": {
+      "path": "E:\\githubproject\\SignLanguage-Bridge\\.conda-env\\python.exe",
+      "role": "Uni-Sign / SLRT Online / E02 离线评测的主 ML 环境",
+      "python": "3.10.22",
+      "python_bits": "64bit",
+      "probe_command": "\\.conda-env\\python.exe experiments/p1/e00/_env_probe.py",
+      "raw_output": "experiments/p1/e00/_env_probe_conda.json",
+      "torch": {
+        "version": "2.9.1+cu128",
+        "cuda_version": "12.8",
+        "cudnn_version": 91002,
+        "cuda_available": true,
+        "device_count": 1,
+        "device_name": "NVIDIA GeForce RTX 5060 Ti"
+      },
+      "packages": {
+        "torchvision": {"version": "0.24.1+cu128", "import": "OK"},
+        "numpy": {"version": "1.26.3", "import": "OK"},
+        "cv2": {"version": "4.10.0", "import": "OK"},
+        "onnxruntime": {"version": "1.23.2", "import": "OK", "note": "包名为 onnxruntime（CPU wheel）；E01 需确认 GPU provider 可用性"},
+        "transformers": {"version": "4.40.0", "import": "OK"},
+        "rtmlib": {"version": null, "import": "OK", "file": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign_source\\demo\\rtmlib-main\\rtmlib\\__init__.py", "note": "editable 安装自上游 pinned 源码树"},
+        "slbridge": {"version": "0.3.0", "import": "OK"},
+        "slbridge.slrt": {"version": null, "import": "OK", "file": "E:\\githubproject\\SignLanguage-Bridge\\slbridge\\slrt\\__init__.py"},
+        "PIL": {"version": "12.3.0", "import": "OK"},
+        "scipy": {"version": "1.15.3", "import": "OK"},
+        "sklearn": {"version": "1.4.0", "import": "OK"},
+        "PySide6": {"version": "6.8.3", "import": "OK"},
+        "mediapipe": {"version": null, "import": "OK", "note": "importlib.util.find_spec 实测 OK"},
+        "joblib": {"version": null, "import": "OK"},
+        "sacrebleu": {"version": null, "import": "OK"},
+        "rouge_score": {"version": null, "import": "OK"},
+        "psutil": {"version": null, "import": "OK"},
+        "mmpose": {"import": "FAIL", "error": "ModuleNotFoundError: No module named 'mmpose'"},
+        "mmdet": {"import": "FAIL", "error": "ModuleNotFoundError: No module named 'mmdet'"},
+        "mmcv": {"import": "FAIL", "error": "ModuleNotFoundError: No module named 'mmcv'"},
+        "timm": {"import": "MISSING"}
+      },
+      "installed_console_scripts": {
+        "dir": "E:\\githubproject\\SignLanguage-Bridge\\.conda-env\\Scripts",
+        "present": ["slbridge.exe", "slbridge-api.exe", "slbridge-cecsl.exe", "slbridge-desktop.exe", "slbridge-keypoints.exe"],
+        "missing_vs_pyproject": ["slbridge-slrt.exe"],
+        "note": "pyproject.toml 已声明 slbridge-slrt = slbridge.slrt.cli:main，但当前 .conda-env 安装的包没有该入口；docs/slrt-integration.md 第111行的『安装项目后的入口为 slbridge-slrt』当前不成立，只能用 python -m slbridge.slrt.cli"
+      }
+    },
+    "venv_libras": {
+      "path": "E:\\githubproject\\SignLanguage-Bridge\\.venv-libras\\Scripts\\python.exe",
+      "role": "桌面/API/RF 遗留兼容环境（不能跑 torch 模型）",
+      "python": "3.12.7",
+      "python_bits": "64bit",
+      "probe_command": "\\.venv-libras\\Scripts\\python.exe experiments/p1/e00/_env_probe.py",
+      "raw_output": "experiments/p1/e00/_env_probe_libras.json",
+      "torch": {"import": "FAIL", "error": "ModuleNotFoundError: No module named 'torch'"},
+      "packages": {
+        "torchvision": {"import": "FAIL", "error": "ModuleNotFoundError: No module named 'torchvision'"},
+        "numpy": {"version": "1.26.3", "import": "OK"},
+        "cv2": {"version": "4.10.0", "import": "OK"},
+        "onnxruntime": {"version": "1.23.2", "import": "OK"},
+        "transformers": {"import": "FAIL", "error": "ModuleNotFoundError: No module named 'transformers'"},
+        "rtmlib": {"import": "FAIL", "error": "ModuleNotFoundError: No module named 'rtmlib'"},
+        "slbridge": {"import": "FAIL", "error": "ModuleNotFoundError: No module named 'slbridge'（注：脚本探测时 sys.path 不含仓库根；从仓库根 `python -m slbridge` 可用，但 .venv-libras 未 pip install 本项目）"},
+        "slbridge.slrt": {"import": "FAIL", "error": "ModuleNotFoundError: No module named 'slbridge'"},
+        "PIL": {"version": "12.3.0", "import": "OK"},
+        "scipy": {"version": "1.16.3", "import": "OK"},
+        "sklearn": {"version": "1.4.0", "import": "OK"},
+        "PySide6": {"version": "6.8.3", "import": "OK"},
+        "mediapipe": {"import": "OK"},
+        "joblib": {"import": "OK"},
+        "sacrebleu": {"import": "MISSING"},
+        "rouge_score": {"import": "MISSING"},
+        "psutil": {"import": "MISSING"},
+        "timm": {"import": "MISSING"},
+        "mmpose": {"import": "FAIL", "error": "ModuleNotFoundError: No module named 'mmpose'"},
+        "mmdet": {"import": "FAIL", "error": "ModuleNotFoundError: No module named 'mmdet'"},
+        "mmcv": {"import": "FAIL", "error": "ModuleNotFoundError: No module named 'mmcv'"}
+      },
+      "installed_console_scripts": {
+        "slbridge_scripts_present": [],
+        "note": "实测 .venv-libras\\Scripts 无 slbridge*.exe；README 的 `.venv-libras/Scripts/python.exe -m slbridge...` 只在仓库根目录运行有效（cwd 在 sys.path）"
+      }
+    },
+    "legacy_openmmlab": {
+      "path": "F:\\DSH-envs\\slrt-legacy\\python.exe",
+      "exists": true,
+      "role": "仅官方 HRNet/Faster-RCNN 姿态提取（scripts/extract_slrt_hrnet_pose.py）；不能跑项目主推理",
+      "python": "3.8.20",
+      "python_bits": "64bit",
+      "probe_command": "F:\\DSH-envs\\slrt-legacy\\python.exe experiments/p1/e00/_env_probe.py",
+      "raw_output": "experiments/p1/e00/_env_probe_legacy.json",
+      "torch": {"version": "1.13.1+cpu", "cuda_version": null, "cudnn": null, "cuda_available": false},
+      "packages": {
+        "torchvision": {"version": "0.14.1+cpu", "import": "OK"},
+        "numpy": {"version": "1.23.5", "import": "OK"},
+        "cv2": {"version": "5.0.0", "import": "OK"},
+        "PIL": {"version": "10.4.0", "import": "OK"},
+        "scipy": {"version": "1.10.1", "import": "OK"},
+        "mmpose": {"version": "0.29.0", "import": "OK"},
+        "mmdet": {"version": "2.25.3", "import": "OK"},
+        "mmcv": {"version": "1.7.0", "import": "OK"},
+        "onnxruntime": {"import": "FAIL", "error": "ModuleNotFoundError: No module named 'onnxruntime'"},
+        "transformers": {"import": "FAIL", "error": "ModuleNotFoundError: No module named 'transformers'"},
+        "timm": {"import": "MISSING"},
+        "rtmlib": {"import": "FAIL", "error": "ModuleNotFoundError: No module named 'rtmlib'"},
+        "slbridge": {"import": "FAIL", "error": "ModuleNotFoundError: No module named 'slbridge'"},
+        "sklearn": {"import": "FAIL", "error": "ModuleNotFoundError: No module named 'sklearn'"},
+        "PySide6": {"import": "FAIL", "error": "ModuleNotFoundError: No module named 'PySide6'"}
+      },
+      "probe_stderr": "No CUDA runtime is found, using CUDA_HOME='D:\\NVlDlA GPU ComputingToolkit'"
+    },
+    "not_present": {
+      ".venv-gpu": "不存在（Test-Path .venv-gpu\\python.exe = False）；README/文档中的 .venv-gpu 名称不可用"
+    }
+  },
+  "model_environment_matrix": {
+    "unisign_rgb": {"env": ".conda-env", "reason": "torch 2.9.1+cu128 + rtmlib + onnxruntime + transformers 4.40；生产路径 pinned checkpoint 校验在 slbridge/uni_sign_assets.py"},
+    "unisign_pose_released": {"env": ".conda-env", "reason": "同上；released pose 直接读 pkl，不需要 RTMPose"},
+    "unisign_pinned": {"env": ".conda-env", "reason": "同上（生产固定权重）"},
+    "unisign_rgb_pose_checkpoint": {"env": "无", "reason": "无集成代码，不能声明环境"},
+    "slrt_online": {"env": ".conda-env", "reason": "slbridge/slrt 实测 import OK；torch+CUDA+onnxruntime 姿态前端"},
+    "slrt_twostream_slr": {"env": "无现成可用环境", "reason": "官方 TwoStreamNetwork/CTC_fusion 需旧栈（timm/ctcdecode/wandb/官方 torch）+ 在线特征；.conda-env 无 timm，legacy 无 transformers/timm 且有 GPU 不兼容事实（报告记录）"},
+    "slrt_twostream_slt": {"env": "无现成可用环境", "reason": "同上；且缺 CSL-Daily G2T 权重与作者 mBART_zh"},
+    "slrt_hrnet_frontend": {"env": "F:\\DSH-envs\\slrt-legacy", "reason": "mmpose 0.29.0 + mmdet 2.25.3 + mmcv 1.7.0 + torch 1.13.1+cpu；仅 CPU 姿态提取"},
+    "rf_mediapipe_legacy": {"env": ".venv-libras", "reason": "Python 3.12.7 + sklearn 1.4.0 + joblib；无 torch；MediaPipe 225 维协议"}
+  },
+  "separation_notes": [
+    "三个 Python 环境互相独立、不可混装：.conda-env（torch 2.9.1+cu128）与 legacy（torch 1.13.1+cpu + mmcv-full 1.7.0）不能同时装同一份 mmcv；.venv-libras 无 torch。",
+    "Windows 坑：必须 torch 先于 onnxruntime/RTMPose 导入，否则 WinError 127（docs/agents/model-evaluation-pitfalls.md §7；docs/uni-sign-integration.md 第77行）。",
+    "环境名含 GPU 不代表有 torch：.venv-gpu 不存在，.venv-libras 无 torch；判断模型可运行性必须读实际 import 与 device/dtype/providers。",
+    "本机 32 GB RAM 并发重任务会假失败（pitfalls §7，2026-10-26 实测 47/627 失败后分片重跑 627/627）；E01/E04 需串行或分片。"
+  ],
+  "probes_not_run": [
+    "未加载任何模型权重、未跑 GPU 推理（由 E01 负责）",
+    "未启动 API/桌面服务（README 中 http://127.0.0.1:8765/docs 未验证）",
+    "未验证 Docker daemon / GPU passthrough（沿用既有报告，标未验证）"
+  ]
+}

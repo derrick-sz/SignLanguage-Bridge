@@ -1,0 +1,122 @@
+{
+  "run_id": "20261026_e06_rule_judge_cascade",
+  "run_status": "PASS",
+  "created_at": "2026-10-26T13:42:48+00:00",
+  "purpose": "E06 Rule-only arbitration + cascade shadow analysis (CPU only; measured imported candidates, simulated routing)",
+  "operator": "p1-agent",
+  "code": {
+    "repository": "SignLanguage-Bridge",
+    "git_sha": "cf291c2a81558faf6de0dc5a7243e730531e4367",
+    "branch": "codex/model-contract-auto-captions",
+    "dirty_tree": true,
+    "dirty_path_count": 132
+  },
+  "host": {
+    "host_alias": "PC-HPVYVOTACGSS"
+  },
+  "privacy_and_licensing": {
+    "rights_checked": false,
+    "no_raw_media_export": true,
+    "no_credentials_in_logs": true
+  },
+  "model": {
+    "A": "unisign_rgb (imported historical, E02 candidate_outputs)",
+    "A2": "unisign_pose_released (imported historical, E02 candidate_outputs)",
+    "B": "slrt-emnlp24-csl-daily gloss deterministic join (deterministic join baseline, NOT trained Gloss2Text)",
+    "llm": null,
+    "jev": null
+  },
+  "data": {
+    "gt_sha256": "feb1b42daa74ed3efa992b50746c29f145550d381a80460669060ca00c087bb7",
+    "e02_candidate_outputs_sha256": "01466b185c02922cfefd871ffb2e22bcea96a953a24b4faae7e2a42b4f9f2387",
+    "e02_rows": 3258,
+    "e03_scores_sha256": "b43f88f8f20ecf6290b6aa49f9525bf8229375c78b2a4e34b0b4bd40bc5ea585",
+    "n_samples": 1086,
+    "scope": "retrospective_seen_1086",
+    "b_join_reconstruction_mismatch_vs_e02_b0": 0
+  },
+  "code_assets": {
+    "script": "experiments/p1/e06/build_e06.py",
+    "script_sha256": "58ac09699a1aaf0e603a722ea6116887264ad78dd27cf3e946e5ce19a9e779eb",
+    "supporting_modules": {
+      "experiments/p1/common.py": "201f61e2e8b3f650eb61616ae8662219f5363903ab63357f9141bcd69b21ea62",
+      "experiments/p1/eval/metrics.py": "d4dbd4c4252cbcfea0fbc9fb62160a709db4fe3b61832cd6d53c411029459967"
+    }
+  },
+  "command": ".conda-env\\python.exe experiments/p1/e06/build_e06.py (PYTHONPATH=E:\\githubproject\\SignLanguage-Bridge)",
+  "device": {
+    "device": "cpu",
+    "gpu_used": false,
+    "note": "CPU-only analysis; no model inference"
+  },
+  "outputs": {
+    "candidate_inputs.jsonl": {
+      "sha256": "a12ecdfa0a0697258516aa4635bcc78d9f1b1bace80dec06d39b0460048adc65",
+      "n_rows": 1086,
+      "guard": "passed"
+    },
+    "router_ablation.jsonl": {
+      "sha256": "e04b25ff9374bdb01818484b41e94598e4d8e8391eedba9236e94d413655d28c",
+      "n_rows": 9
+    },
+    "judge_error_analysis.md": {
+      "sha256": "2891c10c5be8c0441f9f62ca8588cf2c8bdbff85ba152f8790ed180449e4a73a"
+    },
+    "policy_candidate.yaml": {
+      "sha256": "f51e40fcb84bc8494bc8935c429bcc9245ccdde12d4d3b0196735120f75e5533"
+    },
+    "report.md": {
+      "sha256": "c13f42d1d18ddaaf64d7817b18beb41b8e39ada798914ce1847f4918d4ca34ad"
+    },
+    "eval_router_decisions.jsonl": {
+      "sha256": "356ba1fe1947cc56b794517943bf7a2b9d4a9aed9c07265018eff2d136cc4cba",
+      "n_rows": 3258
+    }
+  },
+  "blocked_branches": {
+    "D_E_F_G_llm": {
+      "status": "BLOCKED",
+      "evidence": "no LLM/API env vars (names inspected, no values printed); repo grep openai|anthropic|deepseek|api_key|chat/completions hits only local app test base_urls and vendored upstream transformers model names, no provider client/endpoint config",
+      "needed": [
+        "reachable LLM endpoint + secret injection",
+        "fixed provider/model version",
+        "prompt version + decoding params",
+        "call budget",
+        "prompt must stay GT-free"
+      ]
+    },
+    "jev": {
+      "status": "BLOCKED",
+      "evidence": "no Jev client/protocol implementation or endpoint in this repo/environment"
+    },
+    "unisign_self_confidence": {
+      "status": "BLOCKED",
+      "evidence": "Uni-Sign runtime TextPrediction(score=None); historical predictions have no score/logprob field",
+      "needed": "re-run Uni-Sign with generate(output_scores=True) on the same inputs"
+    }
+  },
+  "measured_vs_simulated": {
+    "measured_imported": [
+      "A text",
+      "A2 text",
+      "B gloss tokens",
+      "SLRT token/window scores"
+    ],
+    "simulated_offline": [
+      "rule decisions",
+      "cascade routing",
+      "FUSE patches",
+      "policy selection",
+      "GT oracle",
+      "all metrics"
+    ]
+  },
+  "limitations": [
+    "retrospective_seen_1086, no independent dev/test split; rule set designed and evaluated on the same seen data",
+    "candidate texts are measured imported historical predictions, not re-run in E06",
+    "routing/selection/FUSE/oracle are simulated offline",
+    "B is a deterministic gloss join baseline, not a trained Gloss2Text",
+    "savings counted as model invocations, not measured latency"
+  ],
+  "script_status": "executed_in_this_run"
+}

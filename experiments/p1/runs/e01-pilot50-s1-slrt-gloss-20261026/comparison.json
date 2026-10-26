@@ -1,0 +1,41 @@
+{
+  "kind": "slrt_gloss",
+  "run_id": "e01-pilot50-s1-slrt-gloss-20261026",
+  "n_samples": 50,
+  "history_available": 50,
+  "compared_n": 50,
+  "rerun_successful": 50,
+  "rerun_failed": 0,
+  "rerun_empty": 0,
+  "match_rates": {
+    "gloss_sequence_exact": 50,
+    "token_multiset_equal": 50,
+    "denominator": 50,
+    "exact_rate": 1.0
+  },
+  "canonical_metrics_rerun_vs_gt1086": {
+    "n": 50,
+    "corpus_wer": 0.317,
+    "substitutions": 72,
+    "deletions": 21,
+    "insertions": 17,
+    "reference_tokens": 347,
+    "hypothesis_tokens": null
+  },
+  "latency_seconds": {
+    "n": 50,
+    "mean": 14.46,
+    "p50": 14.193,
+    "p95": 19.172,
+    "scope": "per-sample elapsed of the SLRT CLI subprocess incl. ~3.9 s weight load"
+  },
+  "latency_seconds_history": {
+    "n": 50,
+    "mean": 16.832,
+    "p50": 16.402,
+    "p95": 22.822,
+    "scope": "historical infer/<sample>.json elapsed (may include GPU contention)"
+  },
+  "evaluation_scope": "Pilot-50 subset of the 1,086 local CSL-Daily test clips; corpus WER over all 50 successful rows; reference = gt_1086.gt_gloss (EVAL ONLY)",
+  "gloss_diff_samples": []
+}

@@ -1,0 +1,98 @@
+{
+  "phase": "warm",
+  "model": "slrt_hrnet_npz",
+  "warmup_iterations": 2,
+  "timed_iterations": 30,
+  "failures": 0,
+  "oom_failures": 0,
+  "phase_seconds": 301.72,
+  "throughput_items_per_second": 0.0994,
+  "resident_vram_after": {
+    "torch_resident_allocated_mb": 169.5,
+    "scope": "process_torch_allocator_peak, no other process",
+    "torch_peak_allocated_mb": 373.9,
+    "torch_peak_reserved_mb": 600.0,
+    "device_free_mb_at_read": 14532.0,
+    "device_total_mb": 16283.4
+  },
+  "runtime_info": {
+    "backend": "SLRTBackend.recognize_video",
+    "load": {
+      "backend": "pytorch_slrt",
+      "device": "cuda:0",
+      "dtype": "float32",
+      "torch_version": "2.9.1+cu128",
+      "state_keys": 938,
+      "strict_load": true,
+      "classes": 2001,
+      "blank_id": 0,
+      "load_ms": 3008.109299989883,
+      "checkpoint_sha256": "e9fdd3a66d9667e7685c2b1437c67b8cbc9e45d2562730f04c0226717b7cbd4d",
+      "vocabulary_sha256": "0c4984f0dd3e7897b8c8d9e6e99a848b60814a5d9cf7a49baf7cc9b9cd124c76",
+      "gpu_name": "NVIDIA GeForce RTX 5060 Ti",
+      "gpu_peak_allocated_mb": 160.38671875,
+      "gpu_peak_reserved_mb": 180.0,
+      "window_size": 16,
+      "stride": 1,
+      "vote_size": 7
+    },
+    "runtime": {
+      "backend": "pytorch_slrt",
+      "device": "cuda:0",
+      "dtype": "float32",
+      "torch_version": "2.9.1+cu128",
+      "state_keys": 938,
+      "strict_load": true,
+      "classes": 2001,
+      "blank_id": 0,
+      "load_ms": 3008.109299989883,
+      "checkpoint_sha256": "e9fdd3a66d9667e7685c2b1437c67b8cbc9e45d2562730f04c0226717b7cbd4d",
+      "vocabulary_sha256": "0c4984f0dd3e7897b8c8d9e6e99a848b60814a5d9cf7a49baf7cc9b9cd124c76",
+      "gpu_name": "NVIDIA GeForce RTX 5060 Ti",
+      "gpu_peak_allocated_mb": 373.91796875,
+      "gpu_peak_reserved_mb": 600.0
+    }
+  },
+  "device_sampling": {
+    "interval_seconds": 1.0,
+    "scope": "whole_device_including_other_processes",
+    "peak": {
+      "samples": 277,
+      "peak_memory_used_mb": 3729.0,
+      "mean_memory_used_mb": 3533.4,
+      "mean_utilization_gpu_pct": 39.1,
+      "max_utilization_gpu_pct": 64.0
+    }
+  },
+  "gpu_guard": {
+    "phase": "warm",
+    "gpu_baseline": {
+      "sampled_at": "2026-10-26T13:58:14+00:00",
+      "devices": [
+        {
+          "index": 0,
+          "name": "NVIDIA GeForce RTX 5060 Ti",
+          "driver_version": "616.92",
+          "memory_total_mb": 16311.0,
+          "memory_used_mb": 2777.0,
+          "memory_free_mb": 13274.0,
+          "utilization_gpu_pct": 10.0
+        }
+      ]
+    },
+    "ram": {
+      "total_gb": 31.84,
+      "available_gb": 6.29,
+      "used_percent": 80.2
+    },
+    "shared_gpu_detected": false
+  },
+  "load_seconds": 3.008109299989883,
+  "samples": [
+    "S000502_P0000_T00",
+    "S003181_P0001_T00",
+    "S002951_P0002_T00",
+    "S004204_P0003_T00",
+    "S000414_P0004_T00"
+  ]
+}

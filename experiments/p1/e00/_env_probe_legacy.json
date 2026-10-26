@@ -1,0 +1,99 @@
+{
+  "python_executable": "F:\\DSH-envs\\slrt-legacy\\python.exe",
+  "python_version": "3.8.20",
+  "python_bits": "64bit",
+  "platform": "Windows-10-10.0.19045-SP0",
+  "machine": "AMD64",
+  "processor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+  "modules": {
+    "torch": {
+      "import": "OK",
+      "version": "1.13.1+cpu",
+      "file": "F:\\DSH-envs\\slrt-legacy\\lib\\site-packages\\torch\\__init__.py"
+    },
+    "torchvision": {
+      "import": "OK",
+      "version": "0.14.1+cpu",
+      "file": "F:\\DSH-envs\\slrt-legacy\\lib\\site-packages\\torchvision\\__init__.py"
+    },
+    "numpy": {
+      "import": "OK",
+      "version": "1.23.5",
+      "file": "F:\\DSH-envs\\slrt-legacy\\lib\\site-packages\\numpy\\__init__.py"
+    },
+    "cv2": {
+      "import": "OK",
+      "version": "5.0.0",
+      "file": "F:\\DSH-envs\\slrt-legacy\\lib\\site-packages\\cv2\\__init__.py"
+    },
+    "onnxruntime": {
+      "import": "FAIL",
+      "error": "ModuleNotFoundError: No module named 'onnxruntime'"
+    },
+    "transformers": {
+      "import": "FAIL",
+      "error": "ModuleNotFoundError: No module named 'transformers'"
+    },
+    "rtmlib": {
+      "import": "FAIL",
+      "error": "ModuleNotFoundError: No module named 'rtmlib'"
+    },
+    "slbridge": {
+      "import": "FAIL",
+      "error": "ModuleNotFoundError: No module named 'slbridge'"
+    },
+    "slbridge.slrt": {
+      "import": "FAIL",
+      "error": "ModuleNotFoundError: No module named 'slbridge'"
+    },
+    "PIL": {
+      "import": "OK",
+      "version": "10.4.0",
+      "file": "F:\\DSH-envs\\slrt-legacy\\lib\\site-packages\\PIL\\__init__.py"
+    },
+    "scipy": {
+      "import": "OK",
+      "version": "1.10.1",
+      "file": "F:\\DSH-envs\\slrt-legacy\\lib\\site-packages\\scipy\\__init__.py"
+    },
+    "sklearn": {
+      "import": "FAIL",
+      "error": "ModuleNotFoundError: No module named 'sklearn'"
+    },
+    "PySide6": {
+      "import": "FAIL",
+      "error": "ModuleNotFoundError: No module named 'PySide6'"
+    },
+    "mmpose": {
+      "import": "OK",
+      "version": "0.29.0",
+      "file": "F:\\DSH-envs\\slrt-legacy\\lib\\site-packages\\mmpose\\__init__.py"
+    },
+    "mmdet": {
+      "import": "OK",
+      "version": "2.25.3",
+      "file": "F:\\DSH-envs\\slrt-legacy\\lib\\site-packages\\mmdet\\__init__.py"
+    },
+    "mmcv": {
+      "import": "OK",
+      "version": "1.7.0",
+      "file": "F:\\DSH-envs\\slrt-legacy\\lib\\site-packages\\mmcv\\__init__.py"
+    }
+  },
+  "torch": {
+    "version": "1.13.1+cpu",
+    "cuda_version": null,
+    "cudnn": null,
+    "cuda_available": false,
+    "device_count": 0,
+    "device_name": null
+  },
+  "ffmpeg": {
+    "which": "E:\\ffmpeg\\ffmpeg-2026-04-16-git-5abc240a27-full_build\\bin\\ffmpeg.EXE",
+    "version_line": "ffmpeg version 2026-04-16-git-5abc240a27-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers"
+  },
+  "ffprobe": {
+    "which": "E:\\ffmpeg\\ffmpeg-2026-04-16-git-5abc240a27-full_build\\bin\\ffprobe.EXE",
+    "version_line": "ffprobe version 2026-04-16-git-5abc240a27-full_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers"
+  }
+}

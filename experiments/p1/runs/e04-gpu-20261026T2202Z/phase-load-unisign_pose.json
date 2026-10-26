@@ -1,0 +1,92 @@
+{
+  "phase": "load",
+  "model": "unisign_pose",
+  "warmup_iterations": 2,
+  "timed_iterations": 419,
+  "failures": 0,
+  "oom_failures": 0,
+  "phase_seconds": 120.04,
+  "throughput_items_per_second": 3.4906,
+  "resident_vram_after": {
+    "torch_resident_allocated_mb": 1158.1,
+    "scope": "process_torch_allocator_peak, no other process",
+    "torch_peak_allocated_mb": 1202.4,
+    "torch_peak_reserved_mb": 2738.0,
+    "device_free_mb_at_read": 12392.0,
+    "device_total_mb": 16283.4
+  },
+  "runtime_info": {
+    "backend": "TorchUniSignRuntime",
+    "model_total_ms": null,
+    "capabilities": [
+      "pose_pkl"
+    ],
+    "load": {
+      "model_load_ms_runtime": 17588.621,
+      "dtype": "bfloat16",
+      "num_beams": 4,
+      "max_new_tokens": 100,
+      "max_frames": 256,
+      "parameter_count": 587747368,
+      "cold_first_forward_ms": 2125.98
+    },
+    "runtime": {
+      "backend": "pytorch_uni_sign",
+      "providers": [
+        "PyTorch CUDA"
+      ],
+      "device": "cuda",
+      "dtype": "bfloat16",
+      "load_ms": 17588.621100003365,
+      "parameter_count": 587747368,
+      "gpu_allocated_mb": 1148.85009765625,
+      "gpu_reserved_mb": 2688.0,
+      "gpu_peak_allocated_mb": 1202.423828125,
+      "gpu_peak_reserved_mb": 2738.0
+    }
+  },
+  "device_sampling": {
+    "interval_seconds": 1.0,
+    "scope": "whole_device_including_other_processes",
+    "peak": {
+      "samples": 111,
+      "peak_memory_used_mb": 5644.0,
+      "mean_memory_used_mb": 5626.0,
+      "mean_utilization_gpu_pct": 37.0,
+      "max_utilization_gpu_pct": 42.0
+    }
+  },
+  "gpu_guard": {
+    "phase": "load",
+    "gpu_baseline": {
+      "sampled_at": "2026-10-26T14:08:15+00:00",
+      "devices": [
+        {
+          "index": 0,
+          "name": "NVIDIA GeForce RTX 5060 Ti",
+          "driver_version": "616.92",
+          "memory_total_mb": 16311.0,
+          "memory_used_mb": 2727.0,
+          "memory_free_mb": 13324.0,
+          "utilization_gpu_pct": 10.0
+        }
+      ]
+    },
+    "ram": {
+      "total_gb": 31.84,
+      "available_gb": 6.0,
+      "used_percent": 81.1
+    },
+    "shared_gpu_detected": false
+  },
+  "load_seconds": 17.66980750003131,
+  "requested_load_minutes": 2.0,
+  "actual_load_seconds": 120.04,
+  "samples": [
+    "S000502_P0000_T00",
+    "S003181_P0001_T00",
+    "S002951_P0002_T00",
+    "S004204_P0003_T00",
+    "S000414_P0004_T00"
+  ]
+}

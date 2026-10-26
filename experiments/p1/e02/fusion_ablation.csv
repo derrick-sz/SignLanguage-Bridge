@@ -1,0 +1,12 @@
+﻿branch,description,status,n,bleu4_13a,chrf,mean_char_edit_similarity,exact_match_count,evidence
+A,Uni-Sign RGB/video -> sentence (frozen 1086 snapshot),IMPORTED_MEASURED,1086,24.8157,21.7974,0.4157,15,artifacts/.../unisign-video-1086-paperrefs
+A2,Uni-Sign released pose -> sentence (frozen 1086 snapshot),IMPORTED_MEASURED,1086,25.5846,22.4284,0.4212,18,artifacts/cslnews-eval/csldaily-test-1086-pose-20261026
+B0,"SLRT Gloss -> deterministic token join (fallback baseline, not a translator)",DERIVED_BASELINE,1086,12.2183,13.8087,0.3484,0,experiments/p1/e02/b_gloss_join_predictions.jsonl
+SLRT_gloss,SLRT Gloss (CSLR) on frozen 1086 snapshot,IMPORTED_MEASURED,,,,,,see translation_metrics.json SLRT_gloss
+ORACLE_A_A2,"offline GT oracle over A/A2 (upper bound, not deployable)",OFFLINE_ORACLE,,,,,,translation_metrics.json
+B1,SLRT Gloss -> mBART full-vocab fallback G2T,BLOCKED,,,,,,author-pruned mBART_zh and CSL-Daily G2T (Gloss2Text) weights are absent; full-vocab fallback assets exist but are unvalidated and need 1086 GPU generations -> not in this round
+C,SLRT TwoStream-SLT -> sentence,BLOCKED,,,,,,no CSL-Daily SLT/G2T checkpoint; only Phoenix-2014T slt_best.ckpt (different language) exists
+D,SLRT Gloss -> LLM -> sentence,BLOCKED,,,,,,no LLM endpoint/API key configured for experiments; fixed prompt/model version cannot be recorded
+E,Uni-Sign RGB -> LLM (polish control),BLOCKED,,,,,,same LLM blocker
+F,Uni-Sign + SLRT gloss -> LLM,BLOCKED,,,,,,same LLM blocker
+G,dual model + evidence-constrained LLM,BLOCKED,,,,,,same LLM blocker

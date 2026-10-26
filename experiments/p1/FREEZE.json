@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "frozen_at": "2026-10-26T23:10:00+08:00",
+  "git_head_at_freeze": "cf291c2a81558faf6de0dc5a7243e730531e4367",
+  "branch": "codex/model-contract-auto-captions",
+  "purpose": "阶段 1 资产保护：固定 P-1 代码、配置、报告与 GT-free 证据；原始 GT 与媒体不入 git，可由本地脚本确定性重建",
+  "commit_boundary": {
+    "commit_1_existing_integration": "会话前已存在的 132 项变更（slbridge/slrt、scripts、docs/reports R1–R18、requirements 等）",
+    "commit_2_p1_execution": "P-1 执行包：experiments/p1（含代码与 GT-free 证据）、docs/experiments/P-1、SignLanguageBridge_P-1_实验计划包、AGENTS.md/README/.gitignore 修改"
+  },
+  "excluded_from_git": [
+    {
+      "path": "Paper-algorithm/",
+      "reason": "vendored 上游源码 1.48 GB；SLRT 上游 LICENSE 未在包内（许可 UNKNOWN）；含指向 F:\\model_weigth\\data 的数据 Junction，误 add 会把 F 盘数据集拖进 git"
+    },
+    {
+      "path": "outputs/",
+      "reason": "运行产物（历史 Excel/PNG 输出）；artifacts/ 同类已 ignore"
+    },
+    {
+      "pattern": "experiments/p1/runs/*/artifact/",
+      "reason": "E01 bootstrap 的 trimmed mp4 / pose NPZ / alignment 媒体与输入副本（~108 MB）；上游 artifacts/ 下有同源只读副本"
+    },
+    {
+      "pattern": "experiments/p1/runs/*/predictions-raw/",
+      "reason": "冻结评测脚本原始输出，内嵌 reference GT 文本；eval 侧证据保留在本地，GT-free 版本为 model_outputs.jsonl"
+    },
+    {
+      "pattern": "experiments/p1/runs/*/inputs/",
+      "reason": "run 输入（selection-pilot50.json / refs-pilot50.txt / pres-pilot50.txt）内嵌 GT 参考句"
+    },
+    {
+      "pattern": "experiments/p1/runs/*/eval_records.jsonl",
+      "reason": "EvaluationWorker 输出，含 reference/hypothesis 与逐样本 GT 指标"
+    },
+    {
+      "path": "experiments/p1/references/gt_1086.csv",
+      "reason": "1086 条原始 GT 句/Gloss；由 experiments/p1/references/build_references.py 从冻结快照确定性重建（源哈希见 references/source_meta.json）"
+    },
+    {
+      "path": "experiments/p1/references/pilot_50_diagnostic_EVAL_ONLY.csv",
+      "reason": "GT 派生诊断分层；同样可由计划包 data/ 复制重建"
+    }
+  ],
+  "derived_metrics_in_git_rationale": "WER/BLEU/编辑相似度等聚合数值与逐样本标签按 docs/reports 既有报告惯例入库（如 R17/R18 表格）；它们是离线评价产物，不会作为模型/LLM 输入（gt_guard 拦截）",
+  "gt_audit": {
+    "method": "experiments.p1.gt_guard.find_gt_keys 全量扫描 experiments/p1 下所有 jsonl/json（排除上述 raw-GT 文件）；CSV 逐一查表头",
+    "raw_gt_files_kept_local": [
+      "experiments/p1/references/gt_1086.csv",
+      "experiments/p1/references/pilot_50_diagnostic_EVAL_ONLY.csv",
+      "experiments/p1/runs/*/predictions-raw/*",
+      "experiments/p1/runs/*/inputs/*",
+      "experiments/p1/runs/*/eval_records.jsonl"
+    ],
+    "derived_metric_keys_in_payloads": "mean_char_edit_similarity / rouge_l_f1_char / reference_tokens 等为聚合指标键（数值），非原始 GT 文本；与报告表格同级，入库",
+    "xlsx_template_note": "SignLanguageBridge_P-1_实验计划包/templates/P1_1086_实验指标采集模板.xlsx sheet01 含完整 GT 列（GT 中文句/GT Gloss，标注仅评估）；仓库当前 private，可入库；若未来转 public 必须先移除该 xlsx 与报告中 GT 例句"
+  },
+  "rebuild_commands": {
+    "references": "$env:PYTHONPATH='E:\\githubproject\\SignLanguage-Bridge'; .\\.conda-env\\python.exe -m experiments.p1.references.build_references",
+    "datasets_manifest": ".\\.conda-env\\python.exe -m experiments.p1.datasets.build_manifest",
+    "collect_summary": ".\\.conda-env\\python.exe -m experiments.p1.collect_summary",
+    "note": "重建依赖本地只读快照 artifacts/csldaily-video-test-627-20261026 与 models/external/uni_sign_source/out/eval_csl_daily_pose_only（均在 .gitignore 内，不入库）"
+  },
+  "not_pushed": true,
+  "push_note": "提交仅在本地；是否 push 到 origin（private repo betterway614/SignLanguage-Bridge）由用户决定"
+}

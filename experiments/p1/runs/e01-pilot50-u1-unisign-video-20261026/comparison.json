@@ -1,0 +1,93 @@
+{
+  "kind": "video",
+  "run_id": "e01-pilot50-u1-unisign-video-20261026",
+  "history_label": "unisign-video-1086-paperrefs (imported_1086_video)",
+  "n_samples": 50,
+  "n_history_available": 50,
+  "history_missing": [],
+  "rerun_successful": 50,
+  "rerun_failed": 0,
+  "rerun_empty": 0,
+  "match_rates": {
+    "raw_exact": 50,
+    "nfkc_normalized": 50,
+    "denominator": 50,
+    "raw_rate": 1.0,
+    "nfkc_rate": 1.0
+  },
+  "divergence_counts": {
+    "identical": 50
+  },
+  "canonical_metrics_rerun_vs_gt1086": {
+    "n": 50,
+    "bleu4_13a": 31.2308,
+    "chrf": 27.1849,
+    "rouge_l_f1_char": null,
+    "mean_char_edit_similarity": 0.4831,
+    "exact_match_count": 2
+  },
+  "canonical_metrics_history_vs_gt1086": {
+    "n": 50,
+    "bleu4_13a": 31.2308,
+    "chrf": 27.1849,
+    "rouge_l_f1_char": null,
+    "mean_char_edit_similarity": 0.4831,
+    "exact_match_count": 2
+  },
+  "latency_rerun": {
+    "e2e_seconds": {
+      "n": 50,
+      "mean": 3.776,
+      "p50": 3.625,
+      "p95": 5.336
+    },
+    "pose_ms": {
+      "n": 50,
+      "mean": 3311.128,
+      "p50": 3226.141,
+      "p95": 4769.489
+    },
+    "model_total_ms": {
+      "n": 50,
+      "mean": 444.786,
+      "p50": 387.656,
+      "p95": 797.874
+    }
+  },
+  "evaluation_scope": "Pilot-50 subset of the 1,086 local CSL-Daily test clips, retrospective diagnostic; canonical evaluator, upstream reference text (gt_1086.ref_sentence_upstream)",
+  "metric_reference_variants": {
+    "canonical_primary": {
+      "reference": "experiments/p1/references/gt_1086.csv :: ref_sentence_upstream",
+      "style": "upstream test_tmp_refs.txt: character-separated, half-width punctuation",
+      "role": "cross-run comparison + historical 1086 metric comparability"
+    },
+    "frozen_script_secondary": {
+      "reference": "selection-1086.json :: reference (official csl-daily.test text)",
+      "style": "official annotation text: no spaces, full-width punctuation",
+      "role": "the frozen script's own summary metric; NOT comparable to the historical 'paperrefs' numbers (known ~2.8 BLEU reference-variant gap)"
+    },
+    "note": "the two reference variants are reported separately on purpose; never mix them"
+  },
+  "script_metrics_secondary_reference": {
+    "n": 50,
+    "bleu4_13a": 28.101109491973773,
+    "bleu4_13a_definition": "SacreBLEU 13a on character-separated text after the upstream 'fix mt5 tokenizer bug' rewrite",
+    "bleu4_13a_raw_no_mt5_fix": 0.9860713466075962,
+    "bleu4_precisions": [
+      60.46,
+      37.95,
+      25.46,
+      18.05
+    ],
+    "bp": 0.8769,
+    "chrf": 24.22611740567663,
+    "rouge_l_f1_char": 0.5925148904433687,
+    "mean_char_edit_similarity": 0.48308312711129375,
+    "edit_similarity_p50": 0.3765182186234818,
+    "exact_match_count": 2,
+    "prediction_chars_total": 693,
+    "reference_chars_total": 784
+  },
+  "script_paired_comparison_vs_upstream": null,
+  "prediction_diff_samples": []
+}

@@ -1,0 +1,123 @@
+{
+  "run_id": "e01-pilot50-s1-slrt-gloss-20261026",
+  "experiment_id": "E01",
+  "run_status": "PASS",
+  "path": "slrt_gloss",
+  "purpose": "E01 S1 SLRT Gloss reproduction on Pilot-50",
+  "created_at": "2026-10-26T13:55:30+00:00",
+  "operator": "reproducer",
+  "code": {
+    "repository": "SignLanguage-Bridge",
+    "git_sha": "cf291c2a81558faf6de0dc5a7243e730531e4367",
+    "branch": "codex/model-contract-auto-captions",
+    "dirty_tree": true,
+    "dirty_path_count": 132
+  },
+  "host": {
+    "host_alias": "PC-HPVYVOTACGSS",
+    "python": "3.10.22",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "machine": "AMD64",
+    "processor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+    "cpu_count": 20,
+    "torch": "2.9.1+cu128",
+    "torch_cuda_available": true,
+    "cuda_version": "12.8",
+    "gpu_name": "NVIDIA GeForce RTX 5060 Ti",
+    "gpu_total_vram_mb": 16283
+  },
+  "model": {
+    "model_id": "slrt-emnlp24-csldaily-twostream-slr",
+    "task": "CSLR (CSL-Daily TwoStream-SLR, 2001 classes)",
+    "checkpoint": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\EMNLP24_Online\\CSL-Daily\\ckpts\\cslr_best.ckpt",
+    "checkpoint_bytes": 499554423,
+    "checkpoint_sha256": "e9fdd3a66d9667e7685c2b1437c67b8cbc9e45d2562730f04c0226717b7cbd4d",
+    "config": "E:\\githubproject\\SignLanguage-Bridge\\configs\\slrt-csl.example.json",
+    "config_sha256": "7a8778666dfaa4aaa0eccf3d99a7e6cbba07992f113b55409e9c2de1eeaa8715",
+    "protocol": {
+      "window_size": 16,
+      "stride": 1,
+      "vote_size": 7,
+      "pose_backend": "hrnet-npz",
+      "device": "cuda",
+      "note": "CLI defaults as used by scripts/align_slrt_csl_daily_subset.py stage_infer"
+    }
+  },
+  "input_protocol": {
+    "kind": "slrt_gloss",
+    "description": "trimmed mp4 + released-HRNet aligned NPZ -> official 16-frame sliding windows, stride 1, 7-window majority vote -> Gloss",
+    "align_stage_rerun": false,
+    "align_stage_reuse": "trimmed/pose/alignment copied from artifacts/csldaily-video-test-627-20261026 (verified by NPZ metadata video_sha256)"
+  },
+  "dataset_snapshot": {
+    "pilot_50_csv": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\datasets\\pilot_50.csv",
+    "pilot_50_csv_sha256": "f0f46125a6acf9768e696d1053450652ddca1146bb6ac2962be2b4efe4c99c4b",
+    "pilot_ids_sha256": "30c6b086a18c27e3721e60f7227787e16192006025422515c9a5e3d48cddac7c",
+    "sample_count": 50,
+    "signers": [
+      "P0000",
+      "P0001",
+      "P0002",
+      "P0003",
+      "P0004",
+      "P0005",
+      "P0006",
+      "P0007",
+      "P0008",
+      "P0009"
+    ],
+    "filtered_selection": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\runs\\e01-pilot50-s1-slrt-gloss-20261026\\inputs\\selection-pilot50.json",
+    "filtered_selection_sha256": "156a75c199ffa414974fec24c164949d8ff295ff6aeed1c55a391b3338e98e81",
+    "trimmed_clip_sha256_aggregate": "9a4282d3c0c8ec939bd59ded8929c1ec3a6198f634c7cbfba6951fab2df95120",
+    "pose_npz_sha256_aggregate": "ea538d0e88a75a130fbf9854139215def788c8e3a01cd8792ab93fff892a2f0f",
+    "annotation_pickle": "F:\\model_weigth\\data\\csl-daily\\csl-daily.test",
+    "official_keypoints_pickle": "F:\\model_weigth\\data\\csl-daily\\csl-daily-keypoints.pkl",
+    "reference_table": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\references\\gt_1086.csv",
+    "reference_table_sha256": "feb1b42daa74ed3efa992b50746c29f145550d381a80460669060ca00c087bb7",
+    "reference_table_role": "EVAL ONLY (WER join, never fed to the model)"
+  },
+  "history_reference": {
+    "label": "artifacts/csldaily-video-test-627-20261026/slrt/<sample>.json",
+    "path": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\slrt",
+    "samples_available": 50,
+    "role": "historical SLRT Gloss outputs imported for comparison, not re-inferred"
+  },
+  "command": ".conda-env\\python.exe -X utf8 scripts\\align_slrt_csl_daily_subset.py --stage infer --selection experiments\\p1\\runs\\e01-pilot50-s1-slrt-gloss-20261026\\inputs\\selection-pilot50.json --annotation F:\\model_weigth\\data\\csl-daily\\csl-daily.test --artifact-dir experiments\\p1\\runs\\e01-pilot50-s1-slrt-gloss-20261026\\artifact --only <50 pilot ids> --force",
+  "cwd": "E:\\githubproject\\SignLanguage-Bridge",
+  "outputs": {
+    "model_outputs": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\runs\\e01-pilot50-s1-slrt-gloss-20261026\\model_outputs.jsonl",
+    "runtime_metrics": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\runs\\e01-pilot50-s1-slrt-gloss-20261026\\runtime_metrics.jsonl",
+    "metrics": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\runs\\e01-pilot50-s1-slrt-gloss-20261026\\metrics.json",
+    "eval_records": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\runs\\e01-pilot50-s1-slrt-gloss-20261026\\eval_records.jsonl",
+    "artifact_dir": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\runs\\e01-pilot50-s1-slrt-gloss-20261026\\artifact",
+    "comparison_csv": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\e01\\compare_slrt.csv",
+    "comparison": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\runs\\e01-pilot50-s1-slrt-gloss-20261026\\comparison.json"
+  },
+  "sample_counts": {
+    "planned": 50,
+    "successful": 50,
+    "failed": 0,
+    "empty_outputs": 0,
+    "corpus_wer_scope": "all 50 samples"
+  },
+  "failure_samples": [],
+  "empty_output_samples": [],
+  "gt_policy": {
+    "model_outputs_gt_free": true,
+    "gt_used_only_in": [
+      "metrics.json",
+      "eval_records.jsonl"
+    ],
+    "guarded_writer": "experiments.p1.common.write_jsonl(assert_gt_clean)"
+  },
+  "privacy_and_licensing": {
+    "rights_checked": false,
+    "no_raw_media_export": true,
+    "no_credentials_in_logs": true
+  },
+  "notes": [
+    "single process, exclusive GPU; SLRT CLI per sample is a short-lived subprocess",
+    "historical artifacts were only read; nothing under artifacts/ was modified",
+    "align stage NOT rerun: input clips/pose/alignment are the reviewed historical ones"
+  ]
+}

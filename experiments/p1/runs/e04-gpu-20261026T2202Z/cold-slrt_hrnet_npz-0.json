@@ -1,0 +1,106 @@
+{
+  "status": "ok",
+  "error": null,
+  "load_seconds": 3.0640914000105113,
+  "runtime_info": {
+    "backend": "SLRTBackend.recognize_video",
+    "load": {
+      "backend": "pytorch_slrt",
+      "device": "cuda:0",
+      "dtype": "float32",
+      "torch_version": "2.9.1+cu128",
+      "state_keys": 938,
+      "strict_load": true,
+      "classes": 2001,
+      "blank_id": 0,
+      "load_ms": 3064.0914000105113,
+      "checkpoint_sha256": "e9fdd3a66d9667e7685c2b1437c67b8cbc9e45d2562730f04c0226717b7cbd4d",
+      "vocabulary_sha256": "0c4984f0dd3e7897b8c8d9e6e99a848b60814a5d9cf7a49baf7cc9b9cd124c76",
+      "gpu_name": "NVIDIA GeForce RTX 5060 Ti",
+      "gpu_peak_allocated_mb": 160.38671875,
+      "gpu_peak_reserved_mb": 180.0,
+      "window_size": 16,
+      "stride": 1,
+      "vote_size": 7
+    },
+    "runtime": {
+      "backend": "pytorch_slrt",
+      "device": "cuda:0",
+      "dtype": "float32",
+      "torch_version": "2.9.1+cu128",
+      "state_keys": 938,
+      "strict_load": true,
+      "classes": 2001,
+      "blank_id": 0,
+      "load_ms": 3064.0914000105113,
+      "checkpoint_sha256": "e9fdd3a66d9667e7685c2b1437c67b8cbc9e45d2562730f04c0226717b7cbd4d",
+      "vocabulary_sha256": "0c4984f0dd3e7897b8c8d9e6e99a848b60814a5d9cf7a49baf7cc9b9cd124c76",
+      "gpu_name": "NVIDIA GeForce RTX 5060 Ti",
+      "gpu_peak_allocated_mb": 160.38671875,
+      "gpu_peak_reserved_mb": 180.0
+    }
+  },
+  "vram_after_load": {
+    "torch_resident_allocated_mb": 160.4,
+    "scope": "process_torch_allocator_peak, no other process",
+    "torch_peak_allocated_mb": 160.4,
+    "torch_peak_reserved_mb": 180.0,
+    "device_free_mb_at_read": 14992.0,
+    "device_total_mb": 16283.4
+  },
+  "timings": {
+    "video_decode_ms": 438.1036002887413,
+    "pose_ms": 5.615900096017867,
+    "forward_ms": 3213.080599787645,
+    "text_decode_ms": null,
+    "queue_ms": 0.0,
+    "e2e_ms": 9558.800400001928,
+    "raw": {
+      "frame_preprocess_ms": 2317.579,
+      "preprocess_ms": 3304.906,
+      "window_total_ms": 6528.345,
+      "wall_seconds_backend": 9.558,
+      "processing_fps": 11.3,
+      "first_stable_wall_latency_ms": null,
+      "windows_processed": 108,
+      "frames_received": 108,
+      "dropped_frames": 0,
+      "quality_rejected_frames": 0
+    },
+    "input": {
+      "frames_received": 108,
+      "windows_processed": 108,
+      "pose_backend": "hrnet-npz",
+      "video_sha256": "d60a918e199e13ce3b7ab4eac1d34785222bbe9d5e77304a15613f32be16f5e3"
+    },
+    "vram": {
+      "torch_resident_allocated_mb": 169.5,
+      "scope": "process_torch_allocator_peak, no other process",
+      "torch_peak_allocated_mb": 519.8,
+      "torch_peak_reserved_mb": 600.0,
+      "device_free_mb_at_read": 14532.0,
+      "device_total_mb": 16283.4
+    },
+    "gloss": [
+      "学校",
+      "大",
+      "累"
+    ],
+    "status": "final"
+  },
+  "text": null,
+  "gloss": [
+    "学校",
+    "大",
+    "累"
+  ],
+  "vram_after_inference": {
+    "torch_resident_allocated_mb": 169.5,
+    "scope": "process_torch_allocator_peak, no other process",
+    "torch_peak_allocated_mb": 519.8,
+    "torch_peak_reserved_mb": 600.0,
+    "device_free_mb_at_read": 14532.0,
+    "device_total_mb": 16283.4
+  },
+  "process_seconds": 12.698
+}

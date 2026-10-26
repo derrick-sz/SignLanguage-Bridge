@@ -1,0 +1,79 @@
+# E06 · policy candidate (offline evaluated only; not production-ready)
+policy_id: rule_cascade_a2_v1
+status: candidate_offline_only
+experiment: E06
+run_id: 20261026_e06_rule_judge_cascade
+scope: CSL-Daily 1086 retrospective_seen subset; measured imported candidates; routing simulated offline
+
+candidates:
+  A:
+    source: unisign_rgb (video) sentence, measured imported
+    role: default primary output
+  A2:
+    source: unisign_pose_released sentence, measured imported
+    role: cascade second path (invoked only when rules trigger)
+  B:
+    source: slrt-emnlp24-csl-daily gloss deterministic join
+    role: evidence/conflict detector ONLY - must never be surfaced as final text
+
+judge:
+  implementation: deterministic state machine, pure Python
+  slots:
+    numbers: arabic digits + chinese numerals (unit-constrained); conflicts when value sets differ
+    negation: 不/没/未/别/无/否/勿 presence differs
+    person: pronoun set differs and both sides non-empty
+    question: question marker presence differs
+    empty: normalized empty output
+  severity:
+    severe: [numbers, negation, person]
+    medium: [question]
+
+state_machine:
+  ACCEPT: A non-empty and no slot conflicts vs B -> accept A, do not run A2
+  RETRY: conflict or empty A -> run A2; take A2 if it has zero conflicts vs B, or fewer severe conflicts than A
+  FUSE: A has only numeric conflict and B∩A2 agree on one number -> patch A's numeric slot with that number, keep A wording
+  UNCERTAIN: otherwise -> fall back to A, flag for shadow/full-run audit
+
+cost_model:
+  second_path_invocation_cost: not measured in E06 (E04 owns latency); savings counted as invocation counts only
+  measured_offline:
+    second_path_call_rate: 0.3812
+    invocation_savings_vs_full_run: 0.6188
+
+shadow:
+  frac_full_run_replay: 0.05-0.10  # to be fixed on a dev split before any test-time use
+  rationale: audit missed-winner / premature stop when the router decides to skip A2
+  note: in E06 all samples have historical A2 texts, so the counterfactual is complete offline
+
+offline_metrics_eval_only:
+  bleu4_13a: 24.9861
+  chrf: 21.9575
+  mean_char_edit_sim: 0.4179
+  error_accept_rate_among_accept_decisions: 0.5952
+  missed_upgrade_rate: 0.5568
+  missed_winner_rate: 0.0521
+  correction_rate_when_a_bad: 0.0071
+  miscorrection_rate_when_a_ok: 0.0052
+
+score_augmented_variant:
+  policy_id: rule_cascade_a2_score_augmented_v1
+  extra_trigger: slrt_oof_p_bad_logistic_token >= 0.5 (E03; NOT selected by signer-grouped CV -> exploratory only)
+  status: exploratory; requires OOF threshold selection on a dev split before deployment
+
+blocked_branches:
+  - id: D_E_F_G_llm
+    status: BLOCKED
+    reason: no LLM endpoint/credentials in this environment; no provider config in repo
+    needed: [reachable LLM endpoint + secret injection, fixed provider/model version, prompt version + decoding params, call budget]
+  - id: jev
+    status: BLOCKED
+    reason: no Jev client/protocol implementation in repo; no endpoint
+  - id: unisign_self_confidence
+    status: BLOCKED
+    reason: Uni-Sign runtime/historical outputs expose no score/logprob (score=None)
+    needed: rerun with generate(output_scores=True) for the same inputs
+
+next_actions:
+  - obtain a dev split (signer-grouped) and re-select trigger thresholds there
+  - add Uni-Sign score export before evaluating score-augmented routing
+  - measure real cascade latency on GPU (E04) instead of invocation-count savings

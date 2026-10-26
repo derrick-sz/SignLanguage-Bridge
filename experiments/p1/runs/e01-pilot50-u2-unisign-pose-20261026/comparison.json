@@ -1,0 +1,109 @@
+{
+  "kind": "pose",
+  "run_id": "e01-pilot50-u2-unisign-pose-20261026",
+  "history_label": "csldaily-test-1086-pose-20261026 (imported_1086_pose)",
+  "n_samples": 50,
+  "n_history_available": 50,
+  "history_missing": [],
+  "rerun_successful": 50,
+  "rerun_failed": 0,
+  "rerun_empty": 0,
+  "match_rates": {
+    "raw_exact": 50,
+    "nfkc_normalized": 50,
+    "denominator": 50,
+    "raw_rate": 1.0,
+    "nfkc_rate": 1.0
+  },
+  "divergence_counts": {
+    "identical": 50
+  },
+  "canonical_metrics_rerun_vs_gt1086": {
+    "n": 50,
+    "bleu4_13a": 31.7823,
+    "chrf": 27.9108,
+    "rouge_l_f1_char": null,
+    "mean_char_edit_similarity": 0.4885,
+    "exact_match_count": 3
+  },
+  "canonical_metrics_history_vs_gt1086": {
+    "n": 50,
+    "bleu4_13a": 31.7823,
+    "chrf": 27.9108,
+    "rouge_l_f1_char": null,
+    "mean_char_edit_similarity": 0.4885,
+    "exact_match_count": 3
+  },
+  "latency_rerun": {
+    "e2e_seconds": {
+      "n": 50,
+      "mean": 0.663,
+      "p50": 0.351,
+      "p95": 0.476
+    },
+    "model_total_ms": {
+      "n": 50,
+      "mean": 660.319,
+      "p50": 348.792,
+      "p95": 473.391
+    },
+    "model_forward_ms": {
+      "n": 50,
+      "mean": 355.539,
+      "p50": 61.933,
+      "p95": 96.045
+    },
+    "generation_ms": {
+      "n": 50,
+      "mean": 304.376,
+      "p50": 283.823,
+      "p95": 403.295
+    }
+  },
+  "evaluation_scope": "Pilot-50 subset of the 1,086 local CSL-Daily test clips, retrospective diagnostic; canonical evaluator, upstream reference text (gt_1086.ref_sentence_upstream)",
+  "metric_reference_variants": {
+    "canonical_primary": {
+      "reference": "experiments/p1/references/gt_1086.csv :: ref_sentence_upstream",
+      "style": "upstream test_tmp_refs.txt: character-separated, half-width punctuation",
+      "role": "cross-run comparison + historical 1086 metric comparability"
+    },
+    "frozen_script_secondary": {
+      "reference": "selection-1086.json :: reference (official csl-daily.test text)",
+      "style": "official annotation text: no spaces, full-width punctuation",
+      "role": "the frozen script's own summary metric; NOT comparable to the historical 'paperrefs' numbers (known ~2.8 BLEU reference-variant gap)"
+    },
+    "note": "the two reference variants are reported separately on purpose; never mix them"
+  },
+  "script_metrics_secondary_reference": {
+    "n": 50,
+    "bleu4_13a": 31.78227936200339,
+    "bleu4_13a_definition": "sacrebleu tokenize=13a after the upstream 'fix mt5 tokenizer bug' rewrite",
+    "bleu4_13a_raw_no_mt5_fix": 0.0028586466542001574,
+    "bleu4_13a_raw_brevity_penalty": 0.00107,
+    "protocol_trap_note": "bleu4_13a_raw_no_mt5_fix is only for demonstrating the format trap; never quote it as accuracy",
+    "bleu4_precisions": [
+      65.73,
+      42.47,
+      30.66,
+      22.9
+    ],
+    "bp": 0.8494,
+    "chrf": 27.91075123870001,
+    "rouge_l_f1_char": 0.604174898995278,
+    "mean_char_edit_similarity": 0.4884602529953856,
+    "edit_similarity_p50": 0.4494949494949495,
+    "exact_match_count": 3,
+    "prediction_chars_total": 674,
+    "reference_chars_total": 784
+  },
+  "script_paired_comparison_vs_upstream": {
+    "paired_n": 50,
+    "this_bleu4": 31.78227936200339,
+    "upstream_bleu4": 32.0631095196952,
+    "identical_prediction_count_raw_format": 0,
+    "identical_prediction_count_after_mt5_fix": 48,
+    "mean_edit_delta_this_minus_upstream": -0.004000000000000001,
+    "note": "Upstream uses random frame sampling; agreement is not bit-exact."
+  },
+  "prediction_diff_samples": []
+}

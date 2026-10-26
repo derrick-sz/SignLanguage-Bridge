@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "run_id": "e05-prefix-20261026T2226Z",
+  "experiment": "E05",
+  "run_status": "PASS",
+  "created_at": "2026-10-26T14:24:46+00:00",
+  "purpose": "frozen observed-prefix stress test (12.5/25/50/75/100%) on Uni-Sign pose and video paths; first-stable prefix, rewrite rate, future-frame audit",
+  "code": {
+    "repository": "SignLanguage-Bridge",
+    "git_sha": "cf291c2a81558faf6de0dc5a7243e730531e4367",
+    "branch": "codex/model-contract-auto-captions",
+    "dirty_tree": true,
+    "dirty_path_count": 133
+  },
+  "host": {
+    "host_alias": "PC-HPVYVOTACGSS",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "cpu": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+    "cpu_count": 20,
+    "memory_total_gb": 31.84
+  },
+  "gpu_baseline": {
+    "sampled_at": "2026-10-26T14:24:46+00:00",
+    "devices": [
+      {
+        "index": 0,
+        "name": "NVIDIA GeForce RTX 5060 Ti",
+        "driver_version": "616.92",
+        "memory_total_mb": 16311.0,
+        "memory_used_mb": 2445.0,
+        "memory_free_mb": 13606.0,
+        "utilization_gpu_pct": 6.0
+      }
+    ]
+  },
+  "privacy": {
+    "no_gt_in_perf_artifacts": true,
+    "no_raw_media_export": true,
+    "no_credentials_in_logs": true
+  },
+  "model_assets": {
+    "unisign": {
+      "bundle": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\model_bundle",
+      "bundle_manifest_sha256": "462ea712c73ba0b0c7a91a4c6d5e596e8ff5bd58854dca53f8c73e03b8cdba7e",
+      "checkpoint": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\csl_daily_pose_only_slt.pth",
+      "checkpoint_bytes": 1186925112,
+      "checkpoint_sha256_declared": "73bea87a9603f719b4f4a481a3a1a5ed24e7e5f7b81afd14ef498c40469c1a6c",
+      "source_commit": "eed438bcb49e30405cd6ccdfcccca330c134e830",
+      "model_revision": "182913ca7a8b7dd9837d7d6f10717353f4408f80",
+      "max_frames": 256,
+      "num_beams": 4,
+      "license": "CC-BY-NC-4.0"
+    },
+    "slrt": {
+      "config": "E:\\githubproject\\SignLanguage-Bridge\\configs\\slrt-csl-hrnet-npz.example.json",
+      "config_sha256": "a9600cc3e5c44931623c0ad9e87818ca5111d976e83d219861c23ddd3b16deb9",
+      "checkpoint": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\EMNLP24_Online\\CSL-Daily\\ckpts\\cslr_best.ckpt",
+      "checkpoint_bytes": 499554423,
+      "checkpoint_sha256_declared": "e9fdd3a66d9667e7685c2b1437c67b8cbc9e45d2562730f04c0226717b7cbd4d",
+      "vocabulary": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\EMNLP24_Online\\CSL-Daily\\meta\\csl_iso_with_blank.vocab",
+      "window_size": 16,
+      "stride": 1,
+      "vote_size": 7
+    }
+  },
+  "environment": {
+    "python": "3.10.22",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "host_alias": "PC-HPVYVOTACGSS",
+    "cpu_count": 20,
+    "torch": "2.9.1+cu128",
+    "cuda_available": true,
+    "cuda_version": "12.8",
+    "gpu_name": "NVIDIA GeForce RTX 5060 Ti",
+    "gpu_total_vram_mb": 16283.4,
+    "gpu_capability": "12.0"
+  },
+  "planned": {
+    "fractions": [
+      0.125,
+      0.25,
+      0.375,
+      0.5,
+      0.625,
+      0.75,
+      0.875,
+      1.0
+    ],
+    "video_fractions": [
+      0.25,
+      0.5,
+      0.75,
+      1.0
+    ],
+    "pose_samples": 10,
+    "video_samples": 10,
+    "phases": [
+      "pose"
+    ],
+    "num_beams": 4,
+    "max_new_tokens": 100,
+    "seed": 0,
+    "video_mode": "clip"
+  },
+  "gpu_guard": {
+    "gpu_baseline": {
+      "sampled_at": "2026-10-26T14:24:46+00:00",
+      "devices": [
+        {
+          "index": 0,
+          "name": "NVIDIA GeForce RTX 5060 Ti",
+          "driver_version": "616.92",
+          "memory_total_mb": 16311.0,
+          "memory_used_mb": 2446.0,
+          "memory_free_mb": 13605.0,
+          "utilization_gpu_pct": 6.0
+        }
+      ]
+    },
+    "ram": {
+      "total_gb": 31.84,
+      "available_gb": 12.13,
+      "used_percent": 61.9
+    },
+    "shared_gpu_detected": false
+  },
+  "finished_at": "2026-10-26T14:27:20+00:00",
+  "output_files": [
+    "manifest.json",
+    "prefix_probe.jsonl",
+    "prefix_summary.json",
+    "prefix_summary.md",
+    "stdout-pose.log"
+  ],
+  "deliverables": {
+    "jsonl": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\e05\\prefix_probe.jsonl",
+    "summary": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\e05\\prefix_probe_summary.md"
+  }
+}

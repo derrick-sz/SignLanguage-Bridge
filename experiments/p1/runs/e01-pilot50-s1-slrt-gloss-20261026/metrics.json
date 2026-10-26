@@ -1,0 +1,26 @@
+{
+  "metric_definition_version": "p1-v1",
+  "task": "CSLR",
+  "created_at": "2026-10-26T13:55:30+00:00",
+  "predictions_path": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\runs\\e01-pilot50-s1-slrt-gloss-20261026\\model_outputs.jsonl",
+  "predictions_sha256": "72bcc860f7538c76d1ac3993c3ad9f46e68a9b45654a9953656ffd2d67746544",
+  "references_path": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\references\\gt_1086.csv",
+  "references_sha256": "feb1b42daa74ed3efa992b50746c29f145550d381a80460669060ca00c087bb7",
+  "attempted": 50,
+  "unique_samples": 50,
+  "successful": 50,
+  "failed": 0,
+  "failure_rate": 0.0,
+  "missing_reference": 0,
+  "failures": [],
+  "metric_scope": "successful_subset_all_succeeded_corpus_metrics",
+  "metrics": {
+    "metric_definition_version": "p1-v1",
+    "n": 50,
+    "reference_tokens": 347,
+    "substitutions": 72,
+    "deletions": 21,
+    "insertions": 17,
+    "corpus_wer": 0.317
+  }
+}

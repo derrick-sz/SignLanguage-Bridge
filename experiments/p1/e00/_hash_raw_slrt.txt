@@ -1,0 +1,7 @@
+4e83f36695bfe63db5413d00e04b9fbfd7a84dced12b88f11c7c9c90b0f2f7b3|1748231929|F:\model_weigth\ckpts\TwoStreamSLT\TwoStream\csl-daily_joint\ckpts\best.ckpt
+fe884f416dfd1e11bc8fd7f51680f762cbd9b5c34c8e4cc9dfe1fd6c288ffe0c|1748231929|F:\model_weigth\ckpts\TwoStreamSLT\TwoStream\csl-daily_keypoint\ckpts\best.ckpt
+02812b445b114f9b696fc720ccaeb9f9394a7abb7ebf231e01b779a831daedec|1748231929|F:\model_weigth\ckpts\TwoStreamSLT\TwoStream\csl-daily_video\ckpts\best.ckpt
+54d2cb65c7d47085e1868326abbbb3a6e21774c383f57cd29f999d2009609739|504360673|F:\model_weigth\ckpts\TwoStreamSLT\TwoStream\csl-daily_s2g\ckpts\best.ckpt
+b6bdf7c2d8babe4d8ced724783f966f101d27468fd0494be864e73e03e8bd66c|1503041809|F:\model_weigth\ckpts\TwoStreamSLT\SingleStream\csl-daily_s2t\ckpts\best.ckpt
+55bb1cd5710779d4647905b1415729fd8e4f77be55baacbddf1145f3c711e477|60404865|F:\model_weigth\ckpts\TwoStreamSLT\SingleStream\csl-daily_s2g\ckpts\best.ckpt
+54d2cb65c7d47085e1868326abbbb3a6e21774c383f57cd29f999d2009609739|504360673|E:\githubproject\SignLanguage-Bridge\Paper-algorithm\SLRT-main\Online\CTC_fusion\results\csl-daily_s2g\ckpts\best.ckpt

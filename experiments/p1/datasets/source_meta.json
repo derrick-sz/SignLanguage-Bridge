@@ -1,0 +1,25 @@
+{
+  "created_at": "2026-10-26T13:29:14+00:00",
+  "created_by": "experiments/p1/datasets/build_manifest.py",
+  "gt_free": true,
+  "sources": {
+    "comparison_csv": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\combined-1086-paperrefs\\comparison-both.csv",
+    "comparison_sha256": "24c2322b8b9081e0fc05cee73ef3e198ed7faf8dc64d147ff771e0049d7f8b5b",
+    "upstream_refs": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign_source\\out\\eval_csl_daily_pose_only\\test_tmp_refs.txt",
+    "upstream_refs_sha256": "042cd94c44f9652f9fa127134565877a7a1cd1c58d2a12776c6698bb65150aab",
+    "delta_samples_459": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\delta-samples-459.txt",
+    "delta_sha256": "5b3108bc5896abaeb1337217262592ebea453c63127e6c9488c5f9fde0f5a441",
+    "pilot_csv": "E:\\githubproject\\SignLanguage-Bridge\\docs\\experiments\\P-1\\data\\pilot_50_exploratory.csv",
+    "pilot_sha256": "3b1a254e2d348539af551eac8afeb456a6b7d6780e0479aca51b83100e01a3a7"
+  },
+  "counts": {
+    "manifest_1086": 1086,
+    "unique_samples": 1086,
+    "raw_videos_present": 1086,
+    "raw_videos_missing": 0,
+    "trimmed_clips_present": 1086,
+    "pose_npz_present": 1086,
+    "pilot_50": 50,
+    "pilot_50_videos_present": 50
+  }
+}

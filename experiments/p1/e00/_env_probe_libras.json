@@ -1,0 +1,92 @@
+{
+  "python_executable": "E:\\githubproject\\SignLanguage-Bridge\\.venv-libras\\Scripts\\python.exe",
+  "python_version": "3.12.7",
+  "python_bits": "64bit",
+  "platform": "Windows-10-10.0.19045-SP0",
+  "machine": "AMD64",
+  "processor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+  "modules": {
+    "torch": {
+      "import": "FAIL",
+      "error": "ModuleNotFoundError: No module named 'torch'"
+    },
+    "torchvision": {
+      "import": "FAIL",
+      "error": "ModuleNotFoundError: No module named 'torchvision'"
+    },
+    "numpy": {
+      "import": "OK",
+      "version": "1.26.3",
+      "file": "E:\\githubproject\\SignLanguage-Bridge\\.venv-libras\\Lib\\site-packages\\numpy\\__init__.py"
+    },
+    "cv2": {
+      "import": "OK",
+      "version": "4.10.0",
+      "file": "E:\\githubproject\\SignLanguage-Bridge\\.venv-libras\\Lib\\site-packages\\cv2\\__init__.py"
+    },
+    "onnxruntime": {
+      "import": "OK",
+      "version": "1.23.2",
+      "file": "E:\\githubproject\\SignLanguage-Bridge\\.venv-libras\\Lib\\site-packages\\onnxruntime\\__init__.py"
+    },
+    "transformers": {
+      "import": "FAIL",
+      "error": "ModuleNotFoundError: No module named 'transformers'"
+    },
+    "rtmlib": {
+      "import": "FAIL",
+      "error": "ModuleNotFoundError: No module named 'rtmlib'"
+    },
+    "slbridge": {
+      "import": "FAIL",
+      "error": "ModuleNotFoundError: No module named 'slbridge'"
+    },
+    "slbridge.slrt": {
+      "import": "FAIL",
+      "error": "ModuleNotFoundError: No module named 'slbridge'"
+    },
+    "PIL": {
+      "import": "OK",
+      "version": "12.3.0",
+      "file": "E:\\githubproject\\SignLanguage-Bridge\\.venv-libras\\Lib\\site-packages\\PIL\\__init__.py"
+    },
+    "scipy": {
+      "import": "OK",
+      "version": "1.16.3",
+      "file": "E:\\githubproject\\SignLanguage-Bridge\\.venv-libras\\Lib\\site-packages\\scipy\\__init__.py"
+    },
+    "sklearn": {
+      "import": "OK",
+      "version": "1.4.0",
+      "file": "E:\\githubproject\\SignLanguage-Bridge\\.venv-libras\\Lib\\site-packages\\sklearn\\__init__.py"
+    },
+    "PySide6": {
+      "import": "OK",
+      "version": "6.8.3",
+      "file": "E:\\githubproject\\SignLanguage-Bridge\\.venv-libras\\Lib\\site-packages\\PySide6\\__init__.py"
+    },
+    "mmpose": {
+      "import": "FAIL",
+      "error": "ModuleNotFoundError: No module named 'mmpose'"
+    },
+    "mmdet": {
+      "import": "FAIL",
+      "error": "ModuleNotFoundError: No module named 'mmdet'"
+    },
+    "mmcv": {
+      "import": "FAIL",
+      "error": "ModuleNotFoundError: No module named 'mmcv'"
+    }
+  },
+  "torch": {
+    "error": "ModuleNotFoundError: No module named 'torch'"
+  },
+  "ffmpeg": {
+    "which": "E:\\ffmpeg\\ffmpeg-2026-04-16-git-5abc240a27-full_build\\bin\\ffmpeg.EXE",
+    "version_line": "ffmpeg version 2026-04-16-git-5abc240a27-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers"
+  },
+  "ffprobe": {
+    "which": "E:\\ffmpeg\\ffmpeg-2026-04-16-git-5abc240a27-full_build\\bin\\ffprobe.EXE",
+    "version_line": "ffprobe version 2026-04-16-git-5abc240a27-full_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers"
+  }
+}
