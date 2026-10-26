@@ -25,9 +25,10 @@ contract field names only:
     utterance_id          <- sample_id (P0-A whole-file utterance)
     window_id             <- window_id
     time_span_ms          <- window.start_pts_ms/end_pts_ms (already int ms;
-                              unknown (null) maps to {0, 0} because the
-                              contract TimeSpan requires integers -- the
-                              distinction stays visible in window_id's data)
+                              unknown (null) REFUSES by default -- the contract
+                              TimeSpan cannot express "unknown"; pass
+                              allow_unknown_time_span=True for an auditable
+                              {0, 0} placeholder, never a fabricated time)
     model.id/revision     <- model_id / model_revision
     model.preprocess_version <- preprocess_version
     model.task            <- task ("CSLT"/"CSLR"; "ISLR" cannot appear in the
@@ -480,13 +481,22 @@ def error_response(code: str, message: str, *, trace_id: str | None = None) -> E
 
 
 def contract_evidence_payload(candidate: EvidenceCandidate, *,
-                              session_id: str = "offline") -> dict[str, Any]:
+                              session_id: str = "offline",
+                              allow_unknown_time_span: bool = False) -> dict[str, Any]:
     """Map an ``EvidenceCandidate`` into contract field names (frozen table).
 
     See the module docstring for the full mapping; this function only renames
     fields and adapts the two spots where the contract is narrower than the
     P-1 schema (task enum without ISLR; quality.status enum ok|partial|failed;
     integer TimeSpan).
+
+    Unknown time spans (``window.start_pts_ms``/``end_pts_ms`` is null): the
+    contract ``TimeSpan`` requires nonnegative integers -- it cannot express
+    "unknown".  By default this function therefore **refuses** to fabricate a
+    span (``ContractError``; skip the payload or annotate it elsewhere).  With
+    ``allow_unknown_time_span=True`` the span becomes ``{start: 0, end: 0}``,
+    which is an explicit **placeholder, not a real time** -- the placeholder
+    decision must stay auditable at the call site.
     """
 
     if not isinstance(candidate, EvidenceCandidate):
@@ -495,8 +505,12 @@ def contract_evidence_payload(candidate: EvidenceCandidate, *,
         raise ContractError(
             f"contract task enum has no value for {candidate.task!r} (ISLR is not a V1 model task)")
     if candidate.window.start_pts_ms is None or candidate.window.end_pts_ms is None:
-        # Contract TimeSpan requires integers; unknown stays visible via the
-        # null-annotated window data, the span itself degrades to 0..0.
+        if not allow_unknown_time_span:
+            raise ContractError(
+                "unknown time span cannot be expressed as a V1 TimeSpan (integers only); "
+                "skip the payload or pass allow_unknown_time_span=True to emit an auditable "
+                "{0, 0} placeholder -- never a fabricated real time")
+        # Explicit opt-in: placeholder, not a real time.
         start_ms = end_ms = 0
     else:
         start_ms, end_ms = int(candidate.window.start_pts_ms), int(candidate.window.end_pts_ms)

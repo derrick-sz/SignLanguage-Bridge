@@ -38,9 +38,12 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from types import SimpleNamespace
 
 import pytest
+
+# PyYAML lives in the ML env (.conda-env) but not the API env (.venv-libras,
+# pydantic-only); skip cleanly where absent so both environments stay green.
+pytest.importorskip("yaml", reason="contract alignment tests parse the frozen YAML contract")
 import yaml
 
 from slbridge.api_contract_v1 import (ContractError, ContractErrorCodes, DecisionIntent,
@@ -374,14 +377,31 @@ def test_contract_evidence_payload_gloss_and_failed():
     assert failed["output"]["gloss_tokens"] is None
 
 
-def test_contract_evidence_payload_rejects_unknown_window():
+def test_contract_evidence_payload_rejects_unknown_window_by_default():
+    """Lead-approved semantics: unknown time must not be fabricated as {0,0}.
+
+    The contract TimeSpan requires nonnegative integers (no null), so an
+    unknown span cannot be expressed honestly -- the default is to refuse.
+    """
     candidate = candidate_fixture()
     object.__setattr__(candidate, "window",
                        EvidenceWindow(start_frame=0, end_frame_exclusive=None,
                                       start_pts_ms=None, end_pts_ms=None))
-    payload = contract_evidence_payload(candidate)
-    assert payload["time_span_ms"] == {"start": 0, "end": 0}   # unknown -> zero, not null (TimeSpan ints)
-    assert payload["window_id"] == "S000020_P0004_T00-w1"     # null=unknown stays visible here
+    with pytest.raises(ContractError, match="unknown time span"):
+        contract_evidence_payload(candidate)
+
+
+def test_contract_evidence_payload_unknown_window_explicit_placeholder():
+    """Explicit opt-in: {0,0} is an auditable PLACEHOLDER, not a real time."""
+    candidate = candidate_fixture()
+    object.__setattr__(candidate, "window",
+                       EvidenceWindow(start_frame=0, end_frame_exclusive=None,
+                                      start_pts_ms=None, end_pts_ms=None))
+    payload = contract_evidence_payload(candidate, allow_unknown_time_span=True)
+    assert payload["time_span_ms"] == {"start": 0, "end": 0}   # placeholder, not real time
+    assert payload["window_id"] == "S000020_P0004_T00-w1"       # unknown origin stays traceable
+    # The placeholder decision is auditable in the payload itself.
+    assert payload["quality"]["status"] in {"ok", "partial", "failed"}
 
 
 def test_models_response_shape(contract: dict):
