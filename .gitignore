@@ -34,3 +34,7 @@ experiments/p1/runs/*/inputs/
 experiments/p1/runs/*/eval_records.jsonl
 experiments/p1/references/gt_1086.csv
 experiments/p1/references/pilot_50_diagnostic_EVAL_ONLY.csv
+
+# ---- G2 stage: EVAL-ONLY artifacts stay local (see experiments/p1/FREEZE.json) ----
+experiments/p1/e02/llm_fusion/runs/*/eval_records.jsonl
+experiments/p1/e06/human_review/

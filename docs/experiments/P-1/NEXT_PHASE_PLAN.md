@@ -51,11 +51,16 @@
 - 输入纪律：参考答案/GT/GT 派生分数**不得进入 LLM 输入**（gt_guard 强制）；prompt 版本、温度、模型版本全部固定并记录 sha256。
 - 探索可用既有 1086（retrospective_seen）；**最终结论需新的独立测试集 + 人工评审**。
 
-### 2.3 LLM 端点前置条件（当前唯一卡点）
+### 2.3 LLM 端点（已选定，2026-10-26 用户拍板）
 
-- 本机可用：**Codex CLI（已登录 ChatGPT）**——可用 `codex exec -m <model>` 非交互调用，模型版本可固定、时延/token 可记录；grok/kimi/hermes 未安装。
-- 备选：用户提供 OpenAI 兼容端点（base_url + key，环境变量注入，不入库）。
-- 未选定端点前：harness 以 stub 后端验证管线（标 `IMPLEMENTED_UNTESTED`），不产生真实 LLM 数字。
+- **选定：wb-proxy 的 DeepSeek v4.1 flash**（本地 OpenAI 兼容代理，即 DSH harness 自用通道）。
+- 实测参数（2026-10-26 smoke 验证，1.22 s / usage 正常）：
+  - `base_url = http://127.0.0.1:8788/v1`（`POST /chat/completions`，`api: openai-completions`）
+  - `model = deepseek-v4.1-flash`
+  - 认证：Bearer，密钥读自 `C:\Users\ADMIN\.dsh\.credentials.yaml` 的 `refs.WB_PROXY_API_KEY`（**密钥只允许运行时内存读取：不打印、不落盘、不入库、不进任何 JSONL/日志**）；备选同名环境变量。
+- 记录纪律：每次 run 的 manifest 必须写 `provider=wb-proxy`、`model=deepseek-v4.1-flash`、`base_url`、`prompt_version + sha256`、`temperature/max_tokens`、逐调用 latency 与 usage tokens——满足 G2 验收三问的"成本"维度。
+- 本机其余候选（Codex CLI 已登录）保留为备选；grok/kimi/hermes 未安装。
+- 风险与边界：该代理同时服务 DSH 自身；实验调用需串行或 ≤2 并发、瞬时错误退避重试并记录；代理属用户自有基础设施，**不得**把密钥或代理日志写入仓库。
 
 ### 2.4 G2 验收三问（用户定义，逐条落实）
 
