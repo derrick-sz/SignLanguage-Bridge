@@ -1,0 +1,216 @@
+{
+  "experiment": "G2-2A-LLM-FUSION",
+  "run_id": "g2a-stub-selftest-15",
+  "status": "IMPLEMENTED_UNTESTED",
+  "data_status": "STUB_ONLY_NOT_LLM_RESULTS",
+  "backend": "stub",
+  "model_version": "stub-v1-deterministic",
+  "labels": {
+    "stub_backend": true,
+    "warning": "STUB_ONLY numbers validate the pipeline; they are NOT LLM model results"
+  },
+  "n_samples": 15,
+  "groups": {
+    "A": {
+      "group": "A",
+      "description": "Uni-Sign 原始译文（基准，不调 LLM）",
+      "n_rows": 15,
+      "n_ok": 15,
+      "metrics": {
+        "metric_definition_version": "p1-v1",
+        "n": 15,
+        "bleu4_13a": 23.6188,
+        "bleu4_13a_precisions": [
+          59.11,
+          31.38,
+          19.65,
+          12.66
+        ],
+        "bleu4_13a_bp": 0.9062,
+        "chrf": 20.7146,
+        "mean_char_edit_similarity": 0.4368,
+        "char_rogue_l_f1": 0.5416,
+        "exact_match_count": 0,
+        "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+      },
+      "delta_bleu_vs_A": {
+        "point": 0.0,
+        "lower": 0.0,
+        "upper": 0.0,
+        "iterations": 1000,
+        "groups": 10,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "delta_edit_vs_A": {
+        "point": 0.0,
+        "lower": 0.0,
+        "upper": 0.0,
+        "iterations": 1000,
+        "groups": 10,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "backend_latency_ms": {
+        "p50": 0.0,
+        "mean": 0.0,
+        "n": 15
+      },
+      "tokens_out_sum": null
+    },
+    "C": {
+      "group": "C",
+      "description": "Uni-Sign -> LLM（润色对照）",
+      "n_rows": 15,
+      "n_ok": 15,
+      "metrics": {
+        "metric_definition_version": "p1-v1",
+        "n": 15,
+        "bleu4_13a": 23.6188,
+        "bleu4_13a_precisions": [
+          59.11,
+          31.38,
+          19.65,
+          12.66
+        ],
+        "bleu4_13a_bp": 0.9062,
+        "chrf": 20.7146,
+        "mean_char_edit_similarity": 0.4368,
+        "char_rogue_l_f1": 0.5416,
+        "exact_match_count": 0,
+        "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+      },
+      "delta_bleu_vs_A": {
+        "point": 0.0,
+        "lower": 0.0,
+        "upper": 0.0,
+        "iterations": 1000,
+        "groups": 10,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "delta_edit_vs_A": {
+        "point": 0.0,
+        "lower": 0.0,
+        "upper": 0.0,
+        "iterations": 1000,
+        "groups": 10,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "backend_latency_ms": {
+        "p50": 0.001,
+        "mean": 0.002,
+        "n": 15
+      },
+      "tokens_out_sum": null
+    },
+    "D": {
+      "group": "D",
+      "description": "Uni-Sign + SLRT Gloss -> LLM",
+      "n_rows": 15,
+      "n_ok": 15,
+      "metrics": {
+        "metric_definition_version": "p1-v1",
+        "n": 15,
+        "bleu4_13a": 23.6228,
+        "bleu4_13a_precisions": [
+          59.41,
+          31.55,
+          19.77,
+          12.74
+        ],
+        "bleu4_13a_bp": 0.9013,
+        "chrf": 20.7356,
+        "mean_char_edit_similarity": 0.4432,
+        "char_rogue_l_f1": 0.545,
+        "exact_match_count": 0,
+        "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+      },
+      "delta_bleu_vs_A": {
+        "point": 0.003927306336553471,
+        "lower": -0.0047,
+        "upper": 0.0423,
+        "iterations": 1000,
+        "groups": 10,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "delta_edit_vs_A": {
+        "point": 0.006353333333333322,
+        "lower": 0.0,
+        "upper": 0.0179,
+        "iterations": 1000,
+        "groups": 10,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "backend_latency_ms": {
+        "p50": 0.014,
+        "mean": 0.165,
+        "n": 15
+      },
+      "tokens_out_sum": null
+    },
+    "E": {
+      "group": "E",
+      "description": "双模型 + 证据约束（槽位冲突提示 + 未校准 SLRT 分数）-> LLM",
+      "n_rows": 15,
+      "n_ok": 15,
+      "metrics": {
+        "metric_definition_version": "p1-v1",
+        "n": 15,
+        "bleu4_13a": 23.6228,
+        "bleu4_13a_precisions": [
+          59.41,
+          31.55,
+          19.77,
+          12.74
+        ],
+        "bleu4_13a_bp": 0.9013,
+        "chrf": 20.7356,
+        "mean_char_edit_similarity": 0.4543,
+        "char_rogue_l_f1": 0.5561,
+        "exact_match_count": 0,
+        "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+      },
+      "delta_bleu_vs_A": {
+        "point": 0.003927306336553471,
+        "lower": -0.0047,
+        "upper": 0.0423,
+        "iterations": 1000,
+        "groups": 10,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "delta_edit_vs_A": {
+        "point": 0.017459999999999976,
+        "lower": 0.0,
+        "upper": 0.0432,
+        "iterations": 1000,
+        "groups": 10,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "backend_latency_ms": {
+        "p50": 0.012,
+        "mean": 0.013,
+        "n": 15
+      },
+      "tokens_out_sum": null
+    }
+  },
+  "gt_join": {
+    "path": "experiments\\p1\\references\\gt_1086.csv",
+    "sha256": "feb1b42daa74ed3efa992b50746c29f145550d381a80460669060ca00c087bb7",
+    "eval_only": true,
+    "reference_field": "gt_1086.csv ref_sentence_upstream"
+  },
+  "bootstrap": {
+    "iterations": 1000,
+    "seed": 20261026,
+    "method": "cluster_bootstrap_by_signer (paired: group vs A on the same samples)",
+    "metric": "corpus BLEU-4 delta and mean char-edit-similarity delta"
+  },
+  "created_at": "2026-10-26T15:23:06+00:00"
+}

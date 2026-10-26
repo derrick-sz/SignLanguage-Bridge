@@ -1,0 +1,149 @@
+{
+  "run_id": "g2a-stub-dryrun-1086",
+  "experiment": "G2-2A-LLM-FUSION",
+  "status": "IMPLEMENTED_UNTESTED",
+  "data_status": "STUB_ONLY_PIPELINE_SCALE_CHECK",
+  "created_at": "2026-10-26T15:23:07+00:00",
+  "git": {
+    "repository": "SignLanguage-Bridge",
+    "git_sha": "b33b3b424147e231093e61b72603f88bd46245b6",
+    "branch": "codex/model-contract-auto-captions",
+    "dirty_tree": true,
+    "dirty_path_count": 4
+  },
+  "backend": {
+    "name": "stub",
+    "version": "stub-v1-deterministic",
+    "is_stub": true,
+    "is_real": false,
+    "available": true,
+    "rule_set": {
+      "C": "echo normalized Uni-Sign text",
+      "D": "C + single-number alignment to SLRT gloss when values conflict",
+      "E": "D + question-marker alignment to SLRT gloss"
+    },
+    "warning": "STUB ONLY: outputs are deterministic rules, not LLM results"
+  },
+  "backend_config_sha256": "9b866545ffa71ce2fabfb5cd37535d671809f7001e0ce493a55e310454d37125",
+  "params_sha256": "62931cbf92fb1009c00cb51627b56e31016c7be5f967d265ea62577da201bff5",
+  "model": {
+    "model_version": "stub-v1-deterministic",
+    "decoding": {
+      "temperature": 0,
+      "max_tokens": 256,
+      "top_p": 1.0,
+      "stop": null,
+      "reasoning": "temperature 0 + fixed max_tokens; the real backend must honor these params or record the effective ones"
+    }
+  },
+  "prompt": {
+    "version": "v1_zh",
+    "files": {
+      "json": "experiments\\p1\\e02\\llm_fusion\\prompts\\v1_zh.json",
+      "md": "experiments\\p1\\e02\\llm_fusion\\prompts\\v1_zh.md",
+      "json_sha256": "e7ee914220d9bd5e955ebd2c0c50b740a09beb2a1282c0272ece82d020f48670",
+      "md_sha256": "338d8d0bbb8996bb55c0975f3db53daa63d0d00cb6e8aff001468ec907502d68"
+    },
+    "system_prompt_sha256": "2b4cc04bd589e22329c2911e6467c87b2a4063079a69ce67564ac73244c1166a"
+  },
+  "groups": [
+    "A",
+    "C",
+    "D",
+    "E"
+  ],
+  "sampling": {
+    "strategy": "signer-stratified round-robin over sorted sample_id (deterministic)",
+    "seed_recorded": 20261026,
+    "limit": null,
+    "n_samples": 1086,
+    "signer_counts": {
+      "P0000": 374,
+      "P0001": 53,
+      "P0002": 102,
+      "P0003": 96,
+      "P0004": 77,
+      "P0005": 69,
+      "P0006": 55,
+      "P0007": 90,
+      "P0008": 102,
+      "P0009": 68
+    },
+    "sample_ids_sha256": "c61a80ccd1df6dd5c4534775299c19292f5b444bb671c5b8ad47ff34b38ea1f0"
+  },
+  "inputs": {
+    "candidate_outputs": "experiments\\p1\\e02\\candidate_outputs.jsonl",
+    "candidate_outputs_sha256": "9318cde5690f369a8cac25653cac6ef317a0501bc534820bc1d70eafd188f2ba",
+    "e03_scores": "experiments\\p1\\e03\\per_sample_scores.csv",
+    "e03_scores_sha256": "b43f88f8f20ecf6290b6aa49f9525bf8229375c78b2a4e34b0b4bd40bc5ea585",
+    "manifest_1086_sha256": "22cd0e4969557ce7e40f96e83f3ff0f466c1e3081a883c267fbabe8f1119851f",
+    "score_feature_whitelist": [
+      "token_score_mean",
+      "token_score_min",
+      "token_score_median",
+      "token_score_p10",
+      "token_score_max",
+      "window_top_prob_mean",
+      "window_top_prob_min",
+      "window_top_prob_p10",
+      "window_top_prob_max",
+      "low_prob_window_frac_05",
+      "low_prob_window_frac_03",
+      "blank_window_frac",
+      "n_tokens",
+      "n_windows"
+    ],
+    "forbidden_score_features_excluded": [
+      "bad",
+      "bad_03",
+      "error_any",
+      "oof_p_bad_logistic_combo",
+      "oof_p_bad_logistic_token",
+      "oof_p_bad_logistic_window",
+      "should_upgrade_proxy_EVAL_ONLY",
+      "uni_video_edit_sim_EVAL_ONLY",
+      "wer",
+      "wer_d",
+      "wer_i",
+      "wer_s"
+    ]
+  },
+  "outputs": {
+    "fusion_outputs": "experiments\\p1\\e02\\llm_fusion\\runs\\g2a-stub-dryrun-1086\\fusion_outputs.jsonl",
+    "fusion_outputs_sha256": "c04cf9b1cec9f30feb0703d7a9050f71e80f3db26e2b995aa2af8eb31a698290",
+    "n_rows": 4344,
+    "n_expected_rows": 4344,
+    "n_errors": 0
+  },
+  "gt_isolation": {
+    "harness_reads_gt": false,
+    "gt_reading_module": "llm_fusion/evaluate.py only (harness/backends/prompts never open a GT file)",
+    "gt_reference_opened_here": false,
+    "gt_guard_rows_checked": 4344,
+    "gt_guard_leaks": 0,
+    "leak_details": [],
+    "label_columns_dropped_from_e03_csv": [
+      "bad",
+      "bad_03",
+      "error_any",
+      "oof_p_bad_logistic_combo",
+      "oof_p_bad_logistic_token",
+      "oof_p_bad_logistic_window",
+      "should_upgrade_proxy_EVAL_ONLY",
+      "uni_video_edit_sim_EVAL_ONLY",
+      "wer",
+      "wer_d",
+      "wer_i",
+      "wer_s"
+    ]
+  },
+  "cost": {
+    "latency_ms_total": 496.4,
+    "note": "stub latency is rule-execution time, not LLM latency"
+  },
+  "notes": [
+    "real LLM backends are IMPLEMENTED_UNTESTED and disabled until endpoint/model approval",
+    "stub outputs are deterministic rules, not model results; metrics are pipeline validation only",
+    "GT join and canonical metrics are done by llm_fusion/evaluate.py (EVAL ONLY)"
+  ]
+}

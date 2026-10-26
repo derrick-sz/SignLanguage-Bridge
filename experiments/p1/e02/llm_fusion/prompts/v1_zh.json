@@ -1,0 +1,37 @@
+{
+  "version": "v1_zh",
+  "language": "zh",
+  "created_at": "2026-10-26T15:20:00+00:00",
+  "description": "G2 phase-2A LLM fusion prompts, fixed version v1. Do not edit in place after a run; bump to v2_zh.json instead.",
+  "system_prompt": "你是手语翻译助手。输入包含手语识别模型给出的中文译文，可能包含（可选的）Gloss 词汇证据与规则抽取的槽位提示。请基于给定证据输出一句自然、完整、流畅的简体中文译文。\n规则：\n1. 只输出最终译文一句话；不要解释、不要加引号、不要分行、不要输出任何标注。\n2. 不得虚构证据之外的内容：不得添加证据中没有的人物、数量、否定、时间、动作或对象。\n3. 证据冲突时，以 Gloss 词汇证据为事实依据；Uni-Sign 译文只用于语言组织。\n4. 证据不足时保持原意，不要猜测补全。\n5. 使用简体中文与中文标点，句末按语义使用。？！",
+  "group_prompts": {
+    "C": {
+      "description": "Uni-Sign translation -> LLM polish-only control (no additional evidence).",
+      "template": "【任务】润色下面这句手语识别译文，使其成为自然流畅的中文句子。\n【Uni-Sign 译文】{unisign_text}\n【约束】只调整表达，不新增或删除事实；不得引入证据外的人物/数量/否定/时间/动作/对象。\n【输出】仅输出一句中文译文。"
+    },
+    "D": {
+      "description": "Uni-Sign translation + SLRT gloss evidence -> LLM.",
+      "template": "【任务】根据 Uni-Sign 译文与 SLRT Gloss 词汇证据，输出一句自然流畅的中文译文。\n【Uni-Sign 译文】{unisign_text}\n【SLRT Gloss 词汇证据】{gloss_text}\n【约束】用 Gloss 证据核对人物、数量、否定、时间、动作、对象；语言组织参考 Uni-Sign 译文；证据冲突时以 Gloss 为准。\n【输出】仅输出一句中文译文。"
+    },
+    "E": {
+      "description": "Uni-Sign translation + SLRT gloss + rule-extracted slot conflict hints + uncalibrated SLRT score features -> LLM.",
+      "template": "【任务】根据 Uni-Sign 译文、SLRT Gloss 词汇证据与规则抽取的槽位提示，输出一句自然流畅的中文译文。\n【Uni-Sign 译文】{unisign_text}\n【SLRT Gloss 词汇证据】{gloss_text}\n【槽位证据提示（规则抽取，仅供参考，可能有误报）】\n{slot_evidence}\n【识别分数提示（未校准，仅代表识别置信度，不代表正确概率，禁止据此臆断）】{score_note}\n【约束】逐项核对槽位；证据冲突时以 Gloss 为准；不得引入证据外的槽位值；不得解释。\n【输出】仅输出一句中文译文。"
+    },
+    "A": {
+      "description": "No LLM. Direct Uni-Sign output, used as the paired baseline (never sent to a backend).",
+      "template": null
+    }
+  },
+  "decoding": {
+    "temperature": 0,
+    "max_tokens": 256,
+    "top_p": 1.0,
+    "stop": null,
+    "reasoning": "temperature 0 + fixed max_tokens; the real backend must honor these params or record the effective ones"
+  },
+  "discipline": [
+    "prompts must never contain reference sentences, GT gloss, WER/edit-similarity labels or any GT-derived score",
+    "only whitelisted SLRT score columns may enter a prompt (token/window raw confidence), never label columns",
+    "prompt text is built only from candidate_outputs.jsonl outputs (models' own predictions) and rule-extracted slots"
+  ]
+}

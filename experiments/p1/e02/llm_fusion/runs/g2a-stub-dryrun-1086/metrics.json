@@ -1,0 +1,200 @@
+{
+  "experiment": "G2-2A-LLM-FUSION",
+  "run_id": "g2a-stub-dryrun-1086",
+  "status": "IMPLEMENTED_UNTESTED",
+  "data_status": "STUB_ONLY_PIPELINE_SCALE_CHECK",
+  "backend": "stub",
+  "model_version": "stub-v1-deterministic",
+  "labels": {
+    "stub_backend": true,
+    "warning": "STUB_ONLY numbers validate the pipeline; they are NOT LLM model results"
+  },
+  "n_samples": 1086,
+  "groups": {
+    "A": {
+      "group": "A",
+      "description": "Uni-Sign 原始译文（基准，不调 LLM）",
+      "n_rows": 1086,
+      "n_ok": 1086,
+      "metrics": {
+        "metric_definition_version": "p1-v1",
+        "n": 1086,
+        "bleu4_13a": 24.8157,
+        "bleu4_13a_precisions": [
+          57.31,
+          32.82,
+          20.42,
+          13.72
+        ],
+        "bleu4_13a_bp": 0.9211,
+        "chrf": 21.7974,
+        "mean_char_edit_similarity": 0.4157,
+        "char_rogue_l_f1": 0.5273,
+        "exact_match_count": 15,
+        "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+      },
+      "delta_bleu_vs_A": {
+        "point": 0.0,
+        "lower": null,
+        "upper": null,
+        "iterations": 0,
+        "method": "point_only_no_bootstrap"
+      },
+      "delta_edit_vs_A": {
+        "point": 0.0,
+        "lower": null,
+        "upper": null,
+        "iterations": 0,
+        "method": "point_only_no_bootstrap"
+      },
+      "backend_latency_ms": {
+        "p50": 0.0,
+        "mean": 0.0,
+        "n": 1086
+      },
+      "tokens_out_sum": null
+    },
+    "C": {
+      "group": "C",
+      "description": "Uni-Sign -> LLM（润色对照）",
+      "n_rows": 1086,
+      "n_ok": 1086,
+      "metrics": {
+        "metric_definition_version": "p1-v1",
+        "n": 1086,
+        "bleu4_13a": 24.8157,
+        "bleu4_13a_precisions": [
+          57.31,
+          32.82,
+          20.42,
+          13.72
+        ],
+        "bleu4_13a_bp": 0.9211,
+        "chrf": 21.7974,
+        "mean_char_edit_similarity": 0.4157,
+        "char_rogue_l_f1": 0.5273,
+        "exact_match_count": 15,
+        "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+      },
+      "delta_bleu_vs_A": {
+        "point": 0.0,
+        "lower": null,
+        "upper": null,
+        "iterations": 0,
+        "method": "point_only_no_bootstrap"
+      },
+      "delta_edit_vs_A": {
+        "point": 0.0,
+        "lower": null,
+        "upper": null,
+        "iterations": 0,
+        "method": "point_only_no_bootstrap"
+      },
+      "backend_latency_ms": {
+        "p50": 0.001,
+        "mean": 0.002,
+        "n": 1086
+      },
+      "tokens_out_sum": null
+    },
+    "D": {
+      "group": "D",
+      "description": "Uni-Sign + SLRT Gloss -> LLM",
+      "n_rows": 1086,
+      "n_ok": 1086,
+      "metrics": {
+        "metric_definition_version": "p1-v1",
+        "n": 1086,
+        "bleu4_13a": 24.8097,
+        "bleu4_13a_precisions": [
+          57.29,
+          32.8,
+          20.42,
+          13.72
+        ],
+        "bleu4_13a_bp": 0.9211,
+        "chrf": 21.7923,
+        "mean_char_edit_similarity": 0.4155,
+        "char_rogue_l_f1": 0.5272,
+        "exact_match_count": 15,
+        "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+      },
+      "delta_bleu_vs_A": {
+        "point": -0.006,
+        "lower": null,
+        "upper": null,
+        "iterations": 0,
+        "method": "point_only_no_bootstrap"
+      },
+      "delta_edit_vs_A": {
+        "point": -0.0001,
+        "lower": null,
+        "upper": null,
+        "iterations": 0,
+        "method": "point_only_no_bootstrap"
+      },
+      "backend_latency_ms": {
+        "p50": 0.013,
+        "mean": 0.015,
+        "n": 1086
+      },
+      "tokens_out_sum": null
+    },
+    "E": {
+      "group": "E",
+      "description": "双模型 + 证据约束（槽位冲突提示 + 未校准 SLRT 分数）-> LLM",
+      "n_rows": 1086,
+      "n_ok": 1086,
+      "metrics": {
+        "metric_definition_version": "p1-v1",
+        "n": 1086,
+        "bleu4_13a": 24.729,
+        "bleu4_13a_precisions": [
+          57.05,
+          32.74,
+          20.35,
+          13.67
+        ],
+        "bleu4_13a_bp": 0.9211,
+        "chrf": 21.7119,
+        "mean_char_edit_similarity": 0.4141,
+        "char_rogue_l_f1": 0.5256,
+        "exact_match_count": 15,
+        "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+      },
+      "delta_bleu_vs_A": {
+        "point": -0.0867,
+        "lower": null,
+        "upper": null,
+        "iterations": 0,
+        "method": "point_only_no_bootstrap"
+      },
+      "delta_edit_vs_A": {
+        "point": -0.0016,
+        "lower": null,
+        "upper": null,
+        "iterations": 0,
+        "method": "point_only_no_bootstrap"
+      },
+      "backend_latency_ms": {
+        "p50": 0.012,
+        "mean": 0.013,
+        "n": 1086
+      },
+      "tokens_out_sum": null
+    }
+  },
+  "gt_join": {
+    "path": "experiments\\p1\\references\\gt_1086.csv",
+    "sha256": "feb1b42daa74ed3efa992b50746c29f145550d381a80460669060ca00c087bb7",
+    "eval_only": true,
+    "reference_field": "gt_1086.csv ref_sentence_upstream"
+  },
+  "bootstrap": {
+    "iterations": 0,
+    "seed": 20261026,
+    "method": "cluster_bootstrap_by_signer (paired: group vs A on the same samples)",
+    "metric": "corpus BLEU-4 delta and mean char-edit-similarity delta"
+  },
+  "created_at": "2026-10-26T15:23:10+00:00"
+}
