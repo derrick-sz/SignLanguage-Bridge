@@ -68,7 +68,20 @@
 2. **是否引入新的关键事实错误**：人物/否定/数字/时间/动作/对象六槽位盲评（0–4 分 + 是/否/不确定），统计纠对/改错；双评审 + 分歧仲裁。
 3. **成本是否值得**：LLM 调用数、tokens、P50/P95 时延，与单模型基线比较；质量小幅提升但延迟大增的方案不进实时链路。
 
-## 3. 阶段 3：P0-A 后端基础（与 G2 并行，不等其结论）
+### 2.5 G2 首轮真实结果（2026-10-26，探索性 50 条）
+
+- 端点/参数：wb-proxy `http://127.0.0.1:8788/v1/chat/completions`，`deepseek-v4.1-flash`，temperature=0，`max_tokens=2048`，严格串行；50 条 pilot（10 signer × 5）× C/D/E = 150 次调用，成功 147（3 次长推理截断）。
+- 结果（canonical p1-v1，GT 上游参考）：A **31.2308** / C **26.6838** / D **26.9450** / E **28.6302** BLEU-4；Δedit A→C −0.033（CI 不含 0）、E−D +0.011（n.s.）、**E 相对 C +0.040（CI +0.0019…+0.0821，显著）**；D−C（Gloss 价值）ΔBLEU −0.04、Δedit +0.026（边缘 n.s.）。
+- 成本：150 次调用 **113,653 tokens**；P50 **3.16 s** / P95 **8.89 s**（串行 HTTP）。
+- 判定（暂定）：**当前 prompt 下"每句都调 LLM"不可取**；无条件重写显著变差。D−C/E−D 未达显著，E 相对 C 的改善说明"证据约束"方向可能有效但需 prompt 改进。
+- 下一动作：① prompt v2（C 最小必要修正；D/E 冲突才改）50 条对照；② **选择性级联**（默认 A，E06 RuleJudge 触发才调 LLM）成本-质量表；③ 仍不扩到 1086；④ 最终 G2 结论需新独立集 + Round-1 人评（评审包已就绪，待用户回填）。
+- 产物：`experiments/p1/e02/llm_fusion/runs/g2a-wbproxy-50-v2-20261026/`、`report_real_50.md`、`fusion_ablation_g2.csv`；事故证据：`runs/g2a-wbproxy-50-20261026/incident_note.md`（max_tokens=256 截断，未进入对比表）。
+
+### 2.6 P0-A 进展（阶段 3，与 G2 并行）
+
+- 缺口分析完成：`P0A_BACKEND_GAP_ANALYSIS.md`（逐层 V3.0 对照；ModelAdapter ~90% 可复用，E04 单卡串行与现有单容量租约一致；真正新建 = EvidenceCandidate 证据层、异步 job API、作业化视频管理、SignSystemRouter 显式化）。
+- 实施任务卡完成：`P0A_IMPLEMENTATION_TASKS.md`（9 张，A0→A5；A0 第一张为 `slbridge/evidence.py` + `prediction_log.py` + 2 测试文件，零改动现有文件）。
+- 说明：模型在不同子智能体间已按任务分配（见 §7 执行记录）；`update_bot` 对 teammate 无效，模型随 spawn/workflow override 决定。
 
 - 接入**已真实复现**的 Uni-Sign 视频路径；统一模型调用协议、API、预测记录（JSONL）、视频管理、错误处理。
 - 现状：`slbridge` 已具备统一模型 API/适配器/会话/来源管理等大部分能力（见 `docs/experiments/P-1/P0A_BACKEND_GAP_ANALYSIS.md`）。

@@ -263,6 +263,38 @@ def build_messages(
 
 
 # --------------------------------------------------------------------------
+# output parsing (version-specific output formats, e.g. v2 group E reason line)
+# --------------------------------------------------------------------------
+def parse_group_output(group: str, text: str, spec: dict[str, Any]) -> tuple[str, dict[str, Any]]:
+    """Return (text_for_evaluation, extra_fields)."""
+
+    raw = str(text or "")
+    formats = spec.get("output_format") or {}
+    fmt = formats.get(group)
+    if not fmt:
+        return raw.strip(), {"output_text_parse": "identity"}
+    if fmt.get("mode") == "sentence_plus_reason":
+        lines = [line.strip() for line in raw.splitlines() if line.strip()]
+        if not lines:
+            return "", {"output_text_parse": "empty", "output_raw_text": raw}
+        translation = lines[0]
+        reason = None
+        prefix = fmt.get("reason_prefix", "理由：")
+        for line in lines[1:]:
+            if line.startswith(prefix):
+                reason = line[len(prefix):].strip()
+                break
+        if reason is None and len(lines) > 1:
+            reason = lines[1]
+        return translation, {
+            "output_text_parse": "sentence_plus_reason",
+            "output_raw_text": raw,
+            "output_reason": reason,
+        }
+    return raw.strip(), {"output_text_parse": "identity"}
+
+
+# --------------------------------------------------------------------------
 # run
 # --------------------------------------------------------------------------
 def _now() -> str:
@@ -395,10 +427,12 @@ def run(
                         top_p=decoding["top_p"],
                     )
                     result_extra = dict(result.extra or {})
+                    evaluation_text, parse_extra = parse_group_output(group, result.text, spec)
                     base_record.update(
                         {
                             "model_version": result.model_version,
-                            "output_text": result.text,
+                            "output_text": evaluation_text,
+                            "output_raw_text": result.text,
                             "status": result.status,
                             "error": result.error,
                             "latency_ms": round(result.latency_ms, 3),
@@ -413,6 +447,7 @@ def run(
                             "retries": result_extra.get("retries"),
                             "attempts": result_extra.get("attempts"),
                             "backend_extra": result_extra,
+                            **parse_extra,
                         }
                     )
                 except (BackendDisabled, BackendNotImplemented) as exc:
