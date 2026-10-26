@@ -1,8 +1,13 @@
 {
   "schema_version": 1,
-  "frozen_at": "2026-10-26T23:10:00+08:00",
-  "git_head_at_freeze": "cf291c2a81558faf6de0dc5a7243e730531e4367",
+  "frozen_at": "2026-10-27T00:00:00+08:00",
+  "git_head_at_freeze": "44955cf",
   "branch": "codex/model-contract-auto-captions",
+  "commits": {
+    "commit_1_integration": "561115b feat: integrate SLRT online gloss backend and Uni-Sign experimental paths (183 files)",
+    "commit_2_p1_execution": "44955cf feat: execute P-1 experiment plan (E00-E06) with auditable evidence (221 files)"
+  },
+  "repo_note": "cone sparse-checkout (only /configs/ was included) was disabled before freezing; it was the root cause of the historical '35 missing modules' pitfall and of blocked adds outside the cone",
   "purpose": "阶段 1 资产保护：固定 P-1 代码、配置、报告与 GT-free 证据；原始 GT 与媒体不入 git，可由本地脚本确定性重建",
   "commit_boundary": {
     "commit_1_existing_integration": "会话前已存在的 132 项变更（slbridge/slrt、scripts、docs/reports R1–R18、requirements 等）",
