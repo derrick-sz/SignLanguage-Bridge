@@ -522,10 +522,11 @@ def main() -> int:
     evaluation = evaluate_module.evaluate_run(RUN_ID, iterations=BOOTSTRAP_ITERATIONS,
                                                seed=evaluate_module.BOOTSTRAP_SEED, write=True)
     evaluate_module.write_ablation_csv(STUB_RUNS + [V1_RUN_ID, RUN_ID])
-    cascade = cascade_analysis(RUN_ID)
-    common.write_json(harness.FUSION_DIR / "cascade_analysis_v2.json", cascade)
-    report = write_report(RUN_ID, evaluation, cascade)
-    metrics = evaluation["metrics"]
+    # Canonical v2 analysis + report live in analyze_prompt_v2.py; this keeps a
+    # batch rerun reproducible end-to-end (no extra LLM calls in the analysis).
+    from experiments.p1.e02.llm_fusion import analyze_prompt_v2
+
+    return analyze_prompt_v2.main()
     print(json.dumps({
         "run_id": RUN_ID,
         "status": metrics.get("status"),

@@ -2,14 +2,18 @@
 
 `experiments/p1/e02/llm_fusion/` 实现 G2 核心对照实验的可审计管线。
 
-- **真实批（已执行，2026-10-26）**：`openai_compat` 后端已实现真实 HTTP 调用，端点 = **wb-proxy**
-  `http://127.0.0.1:8788/v1`、model = `deepseek-v4.1-flash`、密钥运行时只在内存解析（`WB_PROXY_API_KEY@dsh-credentials`）。
-  50 条探索批（pilot_50：10 signer × 5）× C/D/E = 150 次真实调用：
-  **`runs/g2a-wbproxy-50-v2-20261026/`**，报告见 [`report_real_50.md`](report_real_50.md)。
-  首轮 `max_tokens=256` 因模型内部推理截断 73/150 次（事故记录见
+- **真实批 v1（已执行，2026-10-26）**：50 条 pilot_50（10 signer × 5）× C/D/E = 150 次真实调用，
+  `runs/g2a-wbproxy-50-v2-20261026/`，报告 [`report_real_50.md`](report_real_50.md)（prompt `v1_zh`）。
+- **真实批 v2（已执行，2026-10-26/27）**：版本化 prompt **`v2_zh`**（C 最小必要修正 / D 以 A 为主仅冲突槽位修正 / E 一句译文+一行理由）
+  同 50 条 pilot_50 样本重跑：**`runs/g2a-wbproxy-50-v2prompt-20261026/`**；
+  报告 [`report_prompt_v2.md`](report_prompt_v2.md)，选择性级联离线分析 [`cascade_analysis_v2.json`](cascade_analysis_v2.json)。
+  v2 把 C/D 的 ΔBLEU 从 v1 的 -4.55/-4.65 收窄到 -2.28/-2.64（仍为负），D−C 与 E−D 在两版中均无显著增益；
+  级联（默认 A、RuleJudge 触发→E，触发率 28%）质量与 A 无显著差异、tokens 22,981（全调 E 61,393），但**质量不优于 A → 按当前证据不值得为质量付该成本**。
+  边界：A/A2/B0 为 E02 冻结历史预测；C/D/E 为真实 LLM 生成；50 条为 retrospective 子集，非最终 G2 结论。
+  首轮 v1 `max_tokens=256` 因模型内部推理截断 73/150 次（事故记录见
   [`runs/g2a-wbproxy-50-20261026/incident_note.md`](runs/g2a-wbproxy-50-20261026/incident_note.md)），
-  正式数据改用 `max_tokens=2048`（prompt 文本未变，仍 `v1_zh`）。
-- **stub 自检**：`selftest.py` 在 CPU 上验证管线（状态 `IMPLEMENTED_UNTESTED` 仅针对未接入的 codex_cli 路径）；
+  v1 正式数据用 `max_tokens=2048`；v2 版本内固定 2048，E 组仍有 5 次 2048 长推理截断（建议后续 E 单独给 4096 预算，本轮未重跑）。
+- **stub 自检**：`selftest.py` 在 CPU 上验证管线（`codex_cli` 路径仍 IMPLEMENTED_UNTESTED）；
   stub 数字只用于管线验证，见 [`report.md`](report.md) 与 `fusion_ablation_g2.csv` 的 STUB_ONLY 行。
 
 ## 1. 分组（用户 2026-10-26 批复字母）
@@ -36,17 +40,24 @@ experiments/p1/e02/llm_fusion/
   harness.py                # GT-free：候选 -> prompt -> backend -> runs/<run_id>/fusion_outputs.jsonl
   evaluate.py               # EVAL ONLY：GT join + canonical p1-v1 指标 + signer 聚类配对 bootstrap
   selftest.py               # stub 全链路自检 + 断言 + fusion_ablation_g2.csv + report.md
+  run_real_50.py            # v1_zh 真实 50 条批（wb-proxy/deepseek-v4.1-flash）
+  run_prompt_v2.py          # v2_zh 真实 50 条批（批跑）；分析委托 analyze_prompt_v2.py
+  analyze_prompt_v2.py      # 离线分析：v1 vs v2、选择性级联、report_prompt_v2.md
   backends/
     base.py                 # BackendResult / LLMBackend 接口 / BackendDisabled
     stub.py                 # 确定性 stub（仅自测，不是模型）
     codex_cli.py            # 本机 codex CLI 封装（已实现，默认不调用）
-    openai_compat.py        # OpenAI 兼容端点接口（仅接口，无 HTTP 调用）
+    openai_compat.py        # 真实 OpenAI 兼容 HTTP（urllib，wb-proxy；密钥仅内存）
   prompts/
-    v1_zh.json / v1_zh.md   # 版本化 prompt（sha256 写进 manifest）
+    v1_zh.json / v1_zh.md   # 版本化 prompt（真实 v1 批使用，勿改）
+    v2_zh.json / v2_zh.md   # 基于 v1 证据的最小修正版（C/D/E 指令）
   runs/<run_id>/            # fusion_outputs.jsonl / manifest.json / eval_records.jsonl / metrics.json
-  fusion_ablation_g2.csv    # 消融总表（stub 数字明确标注）
-  report.md                 # 自检与接入报告
-  selftest_result.json      # 断言明细
+  fusion_ablation_g2.csv    # 消融总表（STUB_ONLY / REAL v1 / REAL v2 分列，含 prompt_version）
+  report.md                 # stub 自检与接入报告
+  report_real_50.md         # v1 真实 50 条报告（含 max_tokens 事故）
+  report_prompt_v2.md       # v2 vs v1 + 选择性级联 + G2 建议
+  cascade_analysis_v2.json  # 级联离线分析明细
+  selftest_result.json      # stub 断言明细
 ```
 
 ## 3. 运行
@@ -55,30 +66,25 @@ experiments/p1/e02/llm_fusion/
 $env:PYTHONPATH='E:\githubproject\SignLanguage-Bridge'
 cd E:\githubproject\SignLanguage-Bridge
 
-# 15 条 signer 分层样本 stub 自检（含 bootstrap）+ 1086 全量 dry-run + 全部断言
+# stub 自检（15 条 + 1086 dry-run + 全部断言）
 .\.conda-env\python.exe -m experiments.p1.e02.llm_fusion.selftest
 
-# 单独跑某次构建（stub）
-.\.conda-env\python.exe -m experiments.p1.e02.llm_fusion.harness run `
-    --backend stub --limit 15 --run-id my-stub-run --overwrite
+# 真实 v2_zh 50 条批（需 P1_LLM_ENABLE_REAL=1；端点 wb-proxy、model deepseek-v4.1-flash）
+$env:P1_LLM_ENABLE_REAL='1'
+.\.conda-env\python.exe -m experiments.p1.e02.llm_fusion.run_prompt_v2
 
 # 单独评测某个 run（EVAL ONLY，GT join）
-.\.conda-env\python.exe -m experiments.p1.e02.llm_fusion.evaluate --run-id my-stub-run
+.\.conda-env\python.exe -m experiments.p1.e02.llm_fusion.evaluate --run-id <run_id>
 ```
 
-## 4. 切换真实 LLM（需用户/Lead 批准）
+## 4. 真实 LLM 端点（用户已选定并用于实验）
 
-候选端点：① 本机 Codex CLI（已登录，`codex exec`）；② 用户提供的 OpenAI 兼容端点。
-
-固定项：prompt 版本（当前 `v1_zh`）、temperature=0、max_tokens=256、模型 id/版本、调用预算。
-启用开关：`P1_LLM_ENABLE_REAL=1` + CLI `--allow-real`。
-
-- Codex：`P1_CODEX_MODEL=<model>`；调用形态
-  `codex exec --json --ephemeral --sandbox read-only -m <model> -o <tmpfile> -`（prompt 走 stdin）。
-- OpenAI 兼容：`P1_OPENAI_BASE_URL` / `P1_OPENAI_API_KEY` / `P1_OPENAI_MODEL`（密钥只在进程环境注入，不入库）；
-  **HTTP 客户端尚未实现**，需补齐后调用。
-
-真实跑批：先 `--limit 50` 探索批，再按需 1086；每次新 `run_id`；真实数字必须标 `real`，不得与 stub 数字混表。
+- **wb-proxy**：`POST http://127.0.0.1:8788/v1/chat/completions`，model=`deepseek-v4.1-flash`，Bearer 认证。
+- 密钥：运行时只在内存解析 `C:\Users\ADMIN\.dsh\.credentials.yaml` 的 `refs.WB_PROXY_API_KEY`
+  （或环境变量 `WB_PROXY_API_KEY` / `P1_OPENAI_API_KEY`）；**不打印/不落盘**；manifest 只写
+  `credentials_ref: WB_PROXY_API_KEY@dsh-credentials`。
+- 启用：`P1_LLM_ENABLE_REAL=1` + `--allow-real`；参数 temperature=0、max_tokens=2048、串行。
+- 备选：本机 Codex CLI 封装保留（`codex_cli`，默认不调用）。
 
 ## 5. GT 隔离（硬约束）
 
@@ -90,8 +96,12 @@ cd E:\githubproject\SignLanguage-Bridge
 
 ## 6. 当前状态与边界
 
-- 状态：`IMPLEMENTED_UNTESTED`（真实 LLM 未调用）；stub 自检 PASS（见 `selftest_result.json` / `report.md`）。
+- 真实 LLM 批已执行（v1_zh 与 v2_zh，各 50 条；端点 wb-proxy/deepseek-v4.1-flash）。
+- **G2 结论（探索性）**：v1/v2 两版中 D−C 与 E−D 均无显著字面增益；所有 LLM 组 BLEU 点估计均低于 A；
+  选择性级联（默认 A、触发→E）质量与 A 无显著差异，但质量不优于 A → **按当前证据不值得为质量付出 LLM 调用成本**；
+  融合暂不进主链路（最终仍需新独立集 + 人工评审）。
 - **stub 输出是确定性规则回显，不是 LLM 结果；stub 指标只用于验证管线。**
+- E 组若继续实验建议单独给 4096 max_tokens（本批 5/50 在 2048 处截断，未重跑）。
 - 1086 是 retrospective_seen 子集，候选为冻结历史预测；不是新盲测、不是本轮重跑。
 - A2（官方 pose）未进入本轮 LLM 输入：A 与 A2 同属 Uni-Sign，双模型指 Uni-Sign + SLRT；A2 作为备选路径
   留给后续消融（如需要可加组 F/A2）。

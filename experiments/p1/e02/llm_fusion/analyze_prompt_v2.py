@@ -252,6 +252,10 @@ def _variant(records: list[dict], *, use_key: str | None,
                 final = record["A_v2"]
                 sim = record["sim_A_v2"]
                 fallback_n += 1
+                # a failed attempt still costs tokens/latency -> include the row in cost
+                failed_row = run_rows[version].get(record["sample_id"], {}).get(group)
+                if failed_row is not None:
+                    used_rows.append(failed_row)
         final_records.append({
             "sample_id": record["sample_id"],
             "signer_id": record["signer_id"],
@@ -354,7 +358,7 @@ def cascade_variants(records: list[dict]) -> dict:
     choose = "E_v2" if (triggered_compare["E_v2_on_triggered"] or 0) >= (triggered_compare["E_v1_on_triggered"] or 0) else "E_v1"
     triggered_compare["chosen_for_cascade"] = choose
     triggered_compare["reason"] = (
-        "chosen by triggered-subset BLEU; both versions are reported so the choice is auditable"
+        "触发子集 BLEU 更高（两版均报告，选择可审计）"
         if choose else None
     )
     return {"n_samples": n, "variants": variants, "triggered_comparison_E_v1_vs_v2": triggered_compare}

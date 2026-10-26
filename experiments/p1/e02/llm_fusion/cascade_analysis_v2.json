@@ -1,165 +1,384 @@
 {
-  "n_samples": 50,
-  "trigger_rate_any": 0.28,
-  "trigger_rate_severe": 0.28,
-  "triggered_n_any": 14,
-  "triggered_n_severe": 14,
-  "fired_slots": {
-    "negation": 6,
-    "numbers": 3,
-    "person": 8,
-    "question": 1
-  },
-  "per_call_cost_E_measured": {
-    "n_calls": 45,
-    "mean_total_tokens": 1082.4,
-    "mean_latency_s": 5.069
-  },
-  "policies": {
-    "always_A": {
-      "n": 50,
-      "used_e_n": 0,
-      "policy_call_rate": 0.0,
-      "bleu4_13a": 31.2308,
-      "chrf": 27.1849,
-      "mean_char_edit_similarity": 0.4831,
-      "exact_match_count": 2,
-      "delta_bleu_vs_A": {
-        "point": 0.0,
-        "lower": 0.0,
-        "upper": 0.0,
-        "iterations": 1000,
-        "seed": 20261026,
-        "method": "cluster_bootstrap_by_signer (paired)"
-      },
-      "delta_edit_vs_A": {
-        "point": 0.0,
-        "lower": 0.0,
-        "upper": 0.0,
-        "iterations": 1000,
-        "seed": 20261026,
-        "method": "cluster_bootstrap_by_signer (paired)"
-      },
-      "delta_bleu_vs_all_E": {
-        "point": 6.564,
-        "lower": 2.8514,
-        "upper": 9.6964,
-        "iterations": 1000,
-        "seed": 20261026,
-        "method": "cluster_bootstrap_by_signer (paired)"
-      },
-      "estimated_tokens": 0.0,
-      "estimated_latency_s": 0.0,
-      "savings_vs_always_E_calls": 1.0
-    },
-    "always_E": {
-      "n": 50,
-      "used_e_n": 50,
-      "policy_call_rate": 1.0,
-      "bleu4_13a": 24.6668,
-      "chrf": 22.0165,
-      "mean_char_edit_similarity": 0.4437,
-      "exact_match_count": 1,
-      "delta_bleu_vs_A": {
-        "point": -6.564,
-        "lower": -9.6992,
-        "upper": -2.854,
-        "iterations": 1000,
-        "seed": 20261026,
-        "method": "cluster_bootstrap_by_signer (paired)"
-      },
-      "delta_edit_vs_A": {
-        "point": -0.0394,
-        "lower": -0.0729,
-        "upper": -0.0046,
-        "iterations": 1000,
-        "seed": 20261026,
-        "method": "cluster_bootstrap_by_signer (paired)"
-      },
-      "delta_bleu_vs_all_E": {
-        "point": 0.0,
-        "lower": 0.0,
-        "upper": 0.0,
-        "iterations": 1000,
-        "seed": 20261026,
-        "method": "cluster_bootstrap_by_signer (paired)"
-      },
-      "estimated_tokens": 54120.0,
-      "estimated_latency_s": 253.47,
-      "savings_vs_always_E_calls": 0.0
-    },
-    "A_unless_rule_any": {
-      "n": 50,
-      "used_e_n": 14,
-      "policy_call_rate": 0.28,
-      "bleu4_13a": 29.089,
-      "chrf": 25.4438,
-      "mean_char_edit_similarity": 0.4629,
-      "exact_match_count": 2,
-      "delta_bleu_vs_A": {
-        "point": -2.1418,
-        "lower": -5.272,
-        "upper": 0.4358,
-        "iterations": 1000,
-        "seed": 20261026,
-        "method": "cluster_bootstrap_by_signer (paired)"
-      },
-      "delta_edit_vs_A": {
-        "point": -0.0201,
-        "lower": -0.0505,
-        "upper": 0.0066,
-        "iterations": 1000,
-        "seed": 20261026,
-        "method": "cluster_bootstrap_by_signer (paired)"
-      },
-      "delta_bleu_vs_all_E": {
-        "point": 4.4222,
-        "lower": 1.5604,
-        "upper": 7.6648,
-        "iterations": 1000,
-        "seed": 20261026,
-        "method": "cluster_bootstrap_by_signer (paired)"
-      },
-      "estimated_tokens": 15153.6,
-      "estimated_latency_s": 70.97,
-      "savings_vs_always_E_calls": 0.72
-    },
-    "A_unless_rule_severe": {
-      "n": 50,
-      "used_e_n": 14,
-      "policy_call_rate": 0.28,
-      "bleu4_13a": 29.089,
-      "chrf": 25.4438,
-      "mean_char_edit_similarity": 0.4629,
-      "exact_match_count": 2,
-      "delta_bleu_vs_A": {
-        "point": -2.1418,
-        "lower": -5.272,
-        "upper": 0.4358,
-        "iterations": 1000,
-        "seed": 20261026,
-        "method": "cluster_bootstrap_by_signer (paired)"
-      },
-      "delta_edit_vs_A": {
-        "point": -0.0201,
-        "lower": -0.0505,
-        "upper": 0.0066,
-        "iterations": 1000,
-        "seed": 20261026,
-        "method": "cluster_bootstrap_by_signer (paired)"
-      },
-      "delta_bleu_vs_all_E": {
-        "point": 4.4222,
-        "lower": 1.5604,
-        "upper": 7.6648,
-        "iterations": 1000,
-        "seed": 20261026,
-        "method": "cluster_bootstrap_by_signer (paired)"
-      },
-      "estimated_tokens": 15153.6,
-      "estimated_latency_s": 70.97,
-      "savings_vs_always_E_calls": 0.72
+  "experiment": "G2-2A3-prompt-v2-cascade",
+  "created_at": "2026-10-26T16:11:25+00:00",
+  "v1_run_id": "g2a-wbproxy-50-v2-20261026",
+  "v2_run_id": "g2a-wbproxy-50-v2prompt-20261026",
+  "trigger": {
+    "n_samples": 50,
+    "trigger_rate_any": 0.28,
+    "trigger_rate_severe": 0.28,
+    "triggered_n_any": 14,
+    "triggered_n_severe": 14,
+    "fired_slots": {
+      "negation": 6,
+      "numbers": 3,
+      "person": 8,
+      "question": 1
     }
   },
-  "note": "cascade uses measured v2 E outputs for triggered samples and A otherwise; no new LLM calls; estimated tokens/latency = triggered_n x measured per-call mean (not a measured cascade batch)"
+  "variants": {
+    "pure_A_no_LLM": {
+      "n": 50,
+      "used_model_n": 0,
+      "fallback_to_A_n": 0,
+      "quality": {
+        "n": 50,
+        "bleu4_13a": 31.2308,
+        "chrf": 27.1849,
+        "mean_char_edit_similarity": 0.4831,
+        "exact_match_count": 2
+      },
+      "delta_bleu_vs_A": {
+        "point": 0.0,
+        "lower": 0.0,
+        "upper": 0.0,
+        "iterations": 1000,
+        "seed": 20261026,
+        "method": "paired_cluster_bootstrap_by_signer"
+      },
+      "delta_edit_vs_A": {
+        "point": 0.0,
+        "lower": 0.0,
+        "upper": 0.0,
+        "iterations": 1000,
+        "seed": 20261026,
+        "method": "paired_cluster_bootstrap_by_signer"
+      },
+      "cost": {
+        "llm_calls": 0,
+        "call_rate": 0.0,
+        "tokens_total": 0,
+        "tokens_prompt": 0,
+        "tokens_completion": 0,
+        "latency_p50_s": null,
+        "latency_p95_s": null,
+        "latency_mean_s": null,
+        "failed_calls": 0,
+        "retries": 0,
+        "n_samples": 50
+      }
+    },
+    "all_D_v2": {
+      "n": 50,
+      "used_model_n": 50,
+      "fallback_to_A_n": 0,
+      "quality": {
+        "n": 50,
+        "bleu4_13a": 28.5872,
+        "chrf": 24.2824,
+        "mean_char_edit_similarity": 0.4831,
+        "exact_match_count": 2
+      },
+      "delta_bleu_vs_A": {
+        "point": -2.6436,
+        "lower": -5.7527,
+        "upper": 0.6453,
+        "iterations": 1000,
+        "seed": 20261026,
+        "method": "paired_cluster_bootstrap_by_signer"
+      },
+      "delta_edit_vs_A": {
+        "point": 0.0,
+        "lower": -0.0343,
+        "upper": 0.0322,
+        "iterations": 1000,
+        "seed": 20261026,
+        "method": "paired_cluster_bootstrap_by_signer"
+      },
+      "cost": {
+        "llm_calls": 50,
+        "call_rate": 1.0,
+        "tokens_total": 38887,
+        "tokens_prompt": 16819,
+        "tokens_completion": 22068,
+        "latency_p50_s": 3.01,
+        "latency_p95_s": 9.1,
+        "latency_mean_s": 4.2,
+        "failed_calls": 0,
+        "retries": 0,
+        "n_samples": 50
+      }
+    },
+    "all_E_v1": {
+      "n": 50,
+      "used_model_n": 48,
+      "fallback_to_A_n": 2,
+      "quality": {
+        "n": 50,
+        "bleu4_13a": 29.1624,
+        "chrf": 25.315,
+        "mean_char_edit_similarity": 0.4906,
+        "exact_match_count": 1
+      },
+      "delta_bleu_vs_A": {
+        "point": -2.0684,
+        "lower": -5.433,
+        "upper": 1.2272,
+        "iterations": 1000,
+        "seed": 20261026,
+        "method": "paired_cluster_bootstrap_by_signer"
+      },
+      "delta_edit_vs_A": {
+        "point": 0.0075,
+        "lower": -0.0181,
+        "upper": 0.0325,
+        "iterations": 1000,
+        "seed": 20261026,
+        "method": "paired_cluster_bootstrap_by_signer"
+      },
+      "cost": {
+        "llm_calls": 50,
+        "call_rate": 1.0,
+        "tokens_total": 51784,
+        "tokens_prompt": 22381,
+        "tokens_completion": 29403,
+        "latency_p50_s": 4.14,
+        "latency_p95_s": 11.14,
+        "latency_mean_s": 5.0,
+        "failed_calls": 2,
+        "retries": 0,
+        "n_samples": 50
+      }
+    },
+    "all_E_v2": {
+      "n": 50,
+      "used_model_n": 45,
+      "fallback_to_A_n": 5,
+      "quality": {
+        "n": 50,
+        "bleu4_13a": 27.965,
+        "chrf": 23.8351,
+        "mean_char_edit_similarity": 0.4791,
+        "exact_match_count": 1
+      },
+      "delta_bleu_vs_A": {
+        "point": -3.2658,
+        "lower": -6.1151,
+        "upper": -0.4613,
+        "iterations": 1000,
+        "seed": 20261026,
+        "method": "paired_cluster_bootstrap_by_signer"
+      },
+      "delta_edit_vs_A": {
+        "point": -0.0039,
+        "lower": -0.0271,
+        "upper": 0.019,
+        "iterations": 1000,
+        "seed": 20261026,
+        "method": "paired_cluster_bootstrap_by_signer"
+      },
+      "cost": {
+        "llm_calls": 50,
+        "call_rate": 1.0,
+        "tokens_total": 61393,
+        "tokens_prompt": 24281,
+        "tokens_completion": 37112,
+        "latency_p50_s": 4.78,
+        "latency_p95_s": 14.23,
+        "latency_mean_s": 5.98,
+        "failed_calls": 5,
+        "retries": 0,
+        "n_samples": 50
+      }
+    },
+    "cascade_ruleE_v1": {
+      "n": 50,
+      "triggered_n": 14,
+      "used_model_n": 12,
+      "fallback_to_A_n": 2,
+      "quality": {
+        "n": 50,
+        "bleu4_13a": 30.5827,
+        "chrf": 26.4754,
+        "mean_char_edit_similarity": 0.4771,
+        "exact_match_count": 2
+      },
+      "delta_bleu_vs_A": {
+        "point": -0.6481,
+        "lower": -2.7583,
+        "upper": 1.3238,
+        "iterations": 1000,
+        "seed": 20261026,
+        "method": "paired_cluster_bootstrap_by_signer"
+      },
+      "delta_edit_vs_A": {
+        "point": -0.0059,
+        "lower": -0.0243,
+        "upper": 0.0116,
+        "iterations": 1000,
+        "seed": 20261026,
+        "method": "paired_cluster_bootstrap_by_signer"
+      },
+      "cost": {
+        "llm_calls": 14,
+        "call_rate": 0.28,
+        "tokens_total": 19464,
+        "tokens_prompt": 6283,
+        "tokens_completion": 13181,
+        "latency_p50_s": 7.05,
+        "latency_p95_s": 14.3,
+        "latency_mean_s": 7.2,
+        "failed_calls": 2,
+        "retries": 0,
+        "n_samples": 50
+      }
+    },
+    "cascade_ruleE_v2": {
+      "n": 50,
+      "triggered_n": 14,
+      "used_model_n": 11,
+      "fallback_to_A_n": 3,
+      "quality": {
+        "n": 50,
+        "bleu4_13a": 30.7487,
+        "chrf": 26.3023,
+        "mean_char_edit_similarity": 0.4837,
+        "exact_match_count": 2
+      },
+      "delta_bleu_vs_A": {
+        "point": -0.4821,
+        "lower": -2.5316,
+        "upper": 1.0609,
+        "iterations": 1000,
+        "seed": 20261026,
+        "method": "paired_cluster_bootstrap_by_signer"
+      },
+      "delta_edit_vs_A": {
+        "point": 0.0007,
+        "lower": -0.0141,
+        "upper": 0.0163,
+        "iterations": 1000,
+        "seed": 20261026,
+        "method": "paired_cluster_bootstrap_by_signer"
+      },
+      "cost": {
+        "llm_calls": 14,
+        "call_rate": 0.28,
+        "tokens_total": 22981,
+        "tokens_prompt": 6815,
+        "tokens_completion": 16166,
+        "latency_p50_s": 8.62,
+        "latency_p95_s": 14.77,
+        "latency_mean_s": 8.63,
+        "failed_calls": 3,
+        "retries": 0,
+        "n_samples": 50
+      }
+    },
+    "cascade_ruleD_v2": {
+      "n": 50,
+      "triggered_n": 14,
+      "used_model_n": 14,
+      "fallback_to_A_n": 0,
+      "quality": {
+        "n": 50,
+        "bleu4_13a": 30.2803,
+        "chrf": 26.0437,
+        "mean_char_edit_similarity": 0.4855,
+        "exact_match_count": 2
+      },
+      "delta_bleu_vs_A": {
+        "point": -0.9504,
+        "lower": -3.2001,
+        "upper": 0.8915,
+        "iterations": 1000,
+        "seed": 20261026,
+        "method": "paired_cluster_bootstrap_by_signer"
+      },
+      "delta_edit_vs_A": {
+        "point": 0.0024,
+        "lower": -0.0122,
+        "upper": 0.0175,
+        "iterations": 1000,
+        "seed": 20261026,
+        "method": "paired_cluster_bootstrap_by_signer"
+      },
+      "cost": {
+        "llm_calls": 14,
+        "call_rate": 0.28,
+        "tokens_total": 12164,
+        "tokens_prompt": 4721,
+        "tokens_completion": 7443,
+        "latency_p50_s": 3.87,
+        "latency_p95_s": 9.64,
+        "latency_mean_s": 4.81,
+        "failed_calls": 0,
+        "retries": 0,
+        "n_samples": 50
+      }
+    }
+  },
+  "triggered_comparison_E_v1_vs_v2": {
+    "triggered_n": 14,
+    "E_v1_ok_n": 12,
+    "E_v2_ok_n": 11,
+    "E_v1_on_triggered": 16.6333,
+    "E_v2_on_triggered": 21.9561,
+    "failure_rates": {
+      "E_v1": 0.1429,
+      "E_v2": 0.2143
+    },
+    "chosen_for_cascade": "E_v2",
+    "reason": "触发子集 BLEU 更高（两版均报告，选择可审计）"
+  },
+  "v1_vs_v2_paired_deltas": {
+    "C": {
+      "n_pairs": 50,
+      "delta_bleu_v2_minus_v1": {
+        "point": 2.268,
+        "lower": 0.1396,
+        "upper": 4.6422,
+        "iterations": 1000,
+        "seed": 20261026,
+        "method": "paired_cluster_bootstrap_by_signer"
+      },
+      "delta_edit_v2_minus_v1": {
+        "point": 0.0358,
+        "lower": 0.005,
+        "upper": 0.0687,
+        "iterations": 1000,
+        "seed": 20261026,
+        "method": "paired_cluster_bootstrap_by_signer"
+      }
+    },
+    "D": {
+      "n_pairs": 49,
+      "delta_bleu_v2_minus_v1": {
+        "point": 1.9709,
+        "lower": -2.7037,
+        "upper": 6.2341,
+        "iterations": 1000,
+        "seed": 20261026,
+        "method": "paired_cluster_bootstrap_by_signer"
+      },
+      "delta_edit_v2_minus_v1": {
+        "point": 0.0082,
+        "lower": -0.0342,
+        "upper": 0.0441,
+        "iterations": 1000,
+        "seed": 20261026,
+        "method": "paired_cluster_bootstrap_by_signer"
+      }
+    },
+    "E": {
+      "n_pairs": 43,
+      "delta_bleu_v2_minus_v1": {
+        "point": -0.4218,
+        "lower": -3.8214,
+        "upper": 2.2826,
+        "iterations": 1000,
+        "seed": 20261026,
+        "method": "paired_cluster_bootstrap_by_signer"
+      },
+      "delta_edit_v2_minus_v1": {
+        "point": -0.0082,
+        "lower": -0.0326,
+        "upper": 0.0176,
+        "iterations": 1000,
+        "seed": 20261026,
+        "method": "paired_cluster_bootstrap_by_signer"
+      }
+    }
+  },
+  "note": "offline analysis over already-produced real runs; no LLM calls; cost computed from recorded per-call rows"
 }
