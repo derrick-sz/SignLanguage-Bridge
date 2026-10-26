@@ -367,11 +367,12 @@ T-A5-1 (Fusion 接口) ── 全程可并行（零实现零接线）
 | T-A2-2 异步 job 状态机与执行器 | **DONE** | `1855dc5` | 14 tests（7 态矩阵/幂等/持久化/超时/取消/重试/串行/E2E）；`.conda-env` 930/10、`.venv-libras` 950/13 |
 | T-A2-3 `POST /v1/videos/infer` + `GET /v1/jobs/{job_id}` | **DONE** | `01cca8f` | 11 tests；api 子集 63（52+11）全绿；api.py 纯新增 159 行；双环境 930/11、961/13 |
 | T-A3-1 视频媒体元数据与 job 生命周期 | **DONE** | `47ad84b` | 10 tests；真实片段元数据实测；探针失败如实 null；证据文件永不删；媒体零入库 |
-| T-A4-1 `sign_system` 路由显式化 | IN PROGRESS（task-19，与 A4-2 合并） | — | LIBRAS→503 / UNKNOWN→422 + 负例 |
-| T-A4-2 健康端点 + 错误码对齐 | IN PROGRESS（task-19） | — | /v1/health/* + error.code 契约码统一 |
-| T-A5-1 FusionController 接口占位 | PENDING（等 G2 重启条件） | — | G2=FAIL，仅接口 |
+| T-A4-1 `sign_system` 路由显式化 | **DONE** | `a6db08c` | 路由矩阵 + ADR-P1-007 负例（ModelRouter 拒绝 libras→CSL）；全端点统一 |
+| T-A4-2 健康端点 + 错误码对齐 | **DONE** | `a6db08c` | /v1/health/live+ready；V1 端点 {code, legacy_code}；v3 形状探针零改动 |
+| T-A5-1 FusionController 接口占位 | IN PROGRESS（task-20，等 G2 重启条件） | — | DecisionIntent + Protocol + 零接线断言 |
 
-回归基线：`.conda-env` repo root `pytest -q` = **930 passed / 12 skipped**；`.venv-libras` = **971 passed / 13 skipped**（两环境互补：前者无 pydantic/FastAPI，后者无 torch；v3 端点 API 测试在 .venv-libras 完整覆盖 52/52）。
+回归基线：`.conda-env` repo root `pytest -q` = **930 passed / 13 skipped**；`.venv-libras` = **981 passed / 13 skipped**（两环境互补：前者无 pydantic/FastAPI，后者无 torch；v3 端点 API 测试在 .venv-libras 完整覆盖 52/52）。
+
 
 
 
