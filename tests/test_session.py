@@ -344,3 +344,39 @@ def test_close_during_capture_does_not_release_on_ui_thread():
     assert not source.closed
     release.set()
     wait_for(lambda: source.closed and not session._capture_thread.is_alive())
+
+
+def test_camera_ready_event_waits_for_actual_first_frame():
+    from slbridge.sources import CameraSource
+    entered, release = threading.Event(), threading.Event()
+    class Capture:
+        released = False
+        reads = 0
+        def isOpened(self):
+            return True
+        def read(self):
+            self.reads += 1
+            if self.reads == 1:
+                entered.set()
+                assert release.wait(3)
+            time.sleep(.005)
+            return True, np.zeros((8, 12, 3), np.uint8)
+        def release(self):
+            self.released = True
+    capture = Capture()
+    source = CameraSource(capture_factory=lambda index: capture)
+    session = RecognitionSession()
+    try:
+        session.open_source(source, kind='camera')
+        assert entered.wait(2)
+        assert not session.source_active
+        assert not any(event.kind == 'opened' for event in session.poll())
+        release.set()
+        wait_for(lambda: session.source_active)
+        assert any(event.kind == 'opened' for event in session.poll())
+        wait_for(lambda: session.latest_frame is not None)
+    finally:
+        release.set()
+        session.close()
+    wait_for(lambda: not session._capture_thread.is_alive())
+    assert capture.released

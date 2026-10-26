@@ -1,0 +1,330 @@
+openapi: 3.1.0
+info:
+  title: SignLanguage-Bridge Backend API
+  version: 1.0.0-draft
+  description: >-
+    Development contract (not an assertion of an implemented service).
+    Video inference and streaming events for CSL/Libras model routing.
+    Streaming WebSocket frames are documented separately in x-websocket-protocol.
+servers:
+  - url: http://localhost:8788
+    description: Example development endpoint; configurable.
+security:
+  - bearerAuth: []
+paths:
+  /health/live:
+    get:
+      summary: Process liveness
+      security: []
+      operationId: healthLive
+      responses:
+        '200':
+          description: API process is alive
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [status]
+                properties:
+                  status: {type: string, const: alive}
+  /health/ready:
+    get:
+      summary: API and dependencies readiness
+      operationId: healthReady
+      responses:
+        '200':
+          description: Dependencies are ready
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+        '503':
+          description: One or more required dependencies are unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+  /v1/models:
+    get:
+      summary: Available model workers and supported sign systems
+      operationId: listModels
+      responses:
+        '200':
+          description: Model registry snapshot
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [models]
+                properties:
+                  models:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ModelInfo'
+  /v1/videos/infer:
+    post:
+      summary: Submit a video inference job
+      description: Input video is not persisted beyond the configured job lifecycle unless explicitly permitted.
+      operationId: submitVideo
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [video, sign_system, mode]
+              properties:
+                video:
+                  type: string
+                  format: binary
+                sign_system:
+                  $ref: '#/components/schemas/SignSystem'
+                mode:
+                  $ref: '#/components/schemas/InferenceMode'
+                output_zh:
+                  type: boolean
+                  default: true
+                output_pt_br:
+                  type: boolean
+                  default: true
+            encoding:
+              video:
+                contentType: video/mp4,video/webm
+      responses:
+        '202':
+          description: Job accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [job_id, status]
+                properties:
+                  job_id: {type: string}
+                  status: {type: string, const: QUEUED}
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '413':
+          description: Video exceeds configured upload limit
+  /v1/jobs/{job_id}:
+    get:
+      summary: Retrieve job status and results
+      operationId: getJob
+      parameters:
+        - in: path
+          name: job_id
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: Job progress or result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobStatus'
+        '404':
+          description: Job not found
+  /v1/experiments/replay:
+    post:
+      summary: Run an authorized offline evidence replay
+      description: >-
+        Only model predictions are sent to judges and LLMs.
+        References and ground truth remain private to the evaluation process.
+      operationId: replayExperiment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [dataset_ref, experiment_id]
+              properties:
+                dataset_ref: {type: string}
+                experiment_id: {type: string}
+                judge_profile: {type: string, default: rules}
+                fusion_profile: {type: string, default: constrained}
+      responses:
+        '202':
+          description: Replay accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [job_id]
+                properties:
+                  job_id: {type: string}
+        '403':
+          description: Experiment privileges required
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  responses:
+    BadRequest:
+      description: Validation error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  schemas:
+    SignSystem:
+      type: string
+      enum: [CSL, LIBRAS, UNKNOWN]
+    InferenceMode:
+      type: string
+      enum: [parallel_fusion, adaptive_cascade, single_model]
+    ModelTask:
+      type: string
+      enum: [CSLR, CSLT]
+    TimeSpan:
+      type: object
+      required: [start, end]
+      properties:
+        start: {type: integer, minimum: 0, description: Media timeline in milliseconds}
+        end: {type: integer, minimum: 0, description: Media timeline in milliseconds}
+    ModelInfo:
+      type: object
+      required: [id, revision, task, sign_systems, status, preprocess_version]
+      properties:
+        id: {type: string}
+        revision: {type: string}
+        task:
+          $ref: '#/components/schemas/ModelTask'
+        sign_systems:
+          type: array
+          items: {$ref: '#/components/schemas/SignSystem'}
+        status:
+          type: string
+          enum: [ready, loading, unavailable, failed]
+        preprocess_version: {type: string}
+    HealthResponse:
+      type: object
+      required: [status]
+      properties:
+        status:
+          type: string
+          enum: [ready, not_ready]
+        workers:
+          type: object
+          additionalProperties: {type: string}
+    EvidenceCandidate:
+      type: object
+      required: [schema_version, candidate_id, session_id, utterance_id, window_id, time_span_ms, sign_system, model, output]
+      properties:
+        schema_version: {type: string}
+        candidate_id: {type: string}
+        session_id: {type: string}
+        utterance_id: {type: string}
+        window_id: {type: string}
+        time_span_ms:
+          $ref: '#/components/schemas/TimeSpan'
+        sign_system:
+          $ref: '#/components/schemas/SignSystem'
+        model:
+          type: object
+          required: [id, revision, task, preprocess_version]
+          properties:
+            id: {type: string}
+            revision: {type: string}
+            task: {$ref: '#/components/schemas/ModelTask'}
+            preprocess_version: {type: string}
+        output:
+          oneOf:
+            - type: object
+              required: [kind, text]
+              properties:
+                kind: {type: string, const: TEXT}
+                text: {type: string}
+            - type: object
+              required: [kind, gloss_tokens]
+              properties:
+                kind: {type: string, const: GLOSS}
+                gloss_tokens:
+                  type: array
+                  items: {type: string}
+        quality:
+          type: object
+          properties:
+            calibrated_confidence:
+              type: [number, 'null']
+              minimum: 0
+              maximum: 1
+            status: {type: string, enum: [ok, partial, failed]}
+        timing_ms:
+          type: object
+          properties:
+            preprocess: {type: [number, 'null'], minimum: 0}
+            inference: {type: [number, 'null'], minimum: 0}
+    DecisionIntent:
+      type: object
+      required: [action, origin, policy_version]
+      properties:
+        action:
+          type: string
+          enum: [ACCEPT, FUSE, RETRY, UNCERTAIN]
+        origin:
+          type: string
+          enum: [rules, jev, timeout_fallback]
+        reason_codes:
+          type: array
+          items: {type: string}
+        policy_version: {type: string}
+    SubtitleEvent:
+      type: object
+      required: [event, schema_version, session_id, utterance_id, revision, time_span_ms, sign_system, status]
+      properties:
+        event:
+          type: string
+          enum: [subtitle.partial, subtitle.final, subtitle.uncertain, subtitle.correction]
+        schema_version: {type: string}
+        session_id: {type: string}
+        utterance_id: {type: string}
+        revision: {type: integer, minimum: 1}
+        time_span_ms: {$ref: '#/components/schemas/TimeSpan'}
+        sign_system: {$ref: '#/components/schemas/SignSystem'}
+        status:
+          type: string
+          enum: [PARTIAL, FINAL, UNCERTAIN]
+        text:
+          type: object
+          properties:
+            zh-CN: {type: string}
+            pt-BR: {type: string}
+        evidence_ids:
+          type: array
+          items: {type: string}
+        reason_codes:
+          type: array
+          items: {type: string}
+    JobStatus:
+      type: object
+      required: [job_id, status]
+      properties:
+        job_id: {type: string}
+        status:
+          type: string
+          enum: [QUEUED, PREPROCESSING, RUNNING, SUCCEEDED, FAILED, TIMED_OUT, CANCELLED]
+        sign_system: {$ref: '#/components/schemas/SignSystem'}
+        final_event: {$ref: '#/components/schemas/SubtitleEvent'}
+        error: {$ref: '#/components/schemas/ErrorResponse'}
+        metrics:
+          type: object
+          additionalProperties: {type: number}
+    ErrorResponse:
+      type: object
+      required: [code, message]
+      properties:
+        code:
+          type: string
+          enum: [INVALID_INPUT, MODEL_UNAVAILABLE, INVALID_POSE_SCHEMA, OUT_OF_VRAM, INFERENCE_TIMEOUT, JUDGE_UNAVAILABLE, LOW_EVIDENCE, INTERNAL_ERROR]
+        message: {type: string}
+        trace_id: {type: string}
+x-websocket-protocol:
+  endpoint: /v1/stream/{session_id}
+  note: >-
+    WebSocket is not modeled as a standard OpenAPI operation. Client sends a
+    JSON session initialization message, followed by binary frame messages
+    carrying monotonic frame IDs and timestamps. Server emits SubtitleEvent
+    messages. The exact binary frame envelope requires a separate transport
+    contract and performance test.
+  server_events_schema: '#/components/schemas/SubtitleEvent'

@@ -1,0 +1,15 @@
+# Install in an isolated environment. CUDA Torch wheels are chosen explicitly.
+# Existing .conda-env already has the tested Torch/CUDA/Qt/RTMLib stack.
+# Official HRNet/Faster-RCNN extraction needs a separate Python 3.8 legacy
+# environment: see requirements-slrt-legacy.txt (mmpose 0.29 + mmdet 2.25 +
+# mmcv-full 1.7). Do not install that stack into this Torch 2.9 environment.
+torch==2.9.1
+torchvision==0.24.1
+numpy>=1.24,<3
+Pillow>=10,<13
+opencv-python>=4.10,<5
+psutil>=5.9,<8
+# Optional UI: PySide6-Essentials==6.8.3
+# Optional experimental pose: reuse the pinned RTMLib tree/cache documented in
+# docs/slrt-integration.md. Official HRNet needs an isolated legacy OpenMMLab
+# runtime; its full dependencies are intentionally not forced onto this project.

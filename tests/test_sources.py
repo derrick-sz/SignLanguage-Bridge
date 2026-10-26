@@ -100,6 +100,34 @@ def test_camera_monotonic_time_disconnect_and_release():
     assert cap.releases == 1
 
 
+def test_camera_open_requires_a_valid_first_frame_and_releases_failed_handle():
+    cap = FakeCapture([])
+    source = CameraSource(capture_factory=lambda index: cap)
+    with pytest.raises(SourceError, match='first frame'):
+        source.open()
+    assert cap.releases == 1
+    source.close()
+    assert cap.releases == 1
+
+
+def test_camera_open_primes_first_frame_without_dropping_or_ret_timestamping_it():
+    cap = FakeCapture([picture(), picture()])
+    ticks = iter([30., 30.125])
+    with CameraSource(capture_factory=lambda index: cap, clock=lambda: next(ticks)) as source:
+        assert cap.position == 1, 'Camera readiness must require a decoded frame'
+        assert source.read().timestamp == 30.
+        assert cap.position == 1, 'The primed frame must reach the consumer'
+        second = source.read()
+        assert second.frame_index == 1 and second.timestamp == 30.125
+
+
+def test_camera_open_rejects_invalid_first_image_before_reporting_ready():
+    cap = FakeCapture([np.zeros((3, 3), dtype=np.uint8)])
+    with pytest.raises(SourceError, match='invalid frame'):
+        CameraSource(capture_factory=lambda index: cap).open()
+    assert cap.releases == 1
+
+
 def test_default_camera_clock_uses_high_resolution_perf_counter(monkeypatch):
     cap = FakeCapture([picture()] * 2)
     ticks = iter([30.0, 30.000001])

@@ -1,3 +1,7 @@
+try:
+    import tomllib
+except ModuleNotFoundError:  # Python 3.10 compatibility
+    import tomli as tomllib
 import json
 import os
 from pathlib import Path
@@ -69,7 +73,6 @@ def test_help_does_not_import_qt_or_gui():
 
 
 def test_installable_console_target_is_callable():
-    import tomllib
     config = tomllib.loads((Path(__file__).resolve().parents[1] / 'pyproject.toml').read_text(encoding='utf-8'))
     target = config['project']['scripts']['slbridge-desktop']
     module_name, function_name = target.split(':')
@@ -402,7 +405,6 @@ def test_packaged_catalog_exists_and_loads_outside_checkout(monkeypatch, tmp_pat
     assert len(catalog.labels) == 12
     assert catalog.labels['item:105'].display_text['zh-CN'] == '树'
     assert default_model() is None
-    import tomllib
     config = tomllib.loads((Path(__file__).resolve().parents[1] / 'pyproject.toml').read_text(encoding='utf-8'))
     assert 'resources/*.json' in config['tool']['setuptools']['package-data']['slbridge']
 

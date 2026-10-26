@@ -1,0 +1,30 @@
+[
+  {
+    "Path": "E:\\githubproject\\SignLanguage-Bridge\\Paper-algorithm\\SLRT-main\\Online\\CSLR\\prediction_slide.py",
+    "Hash": "C64C7D96227C086A5DE0F14A6A4527320250A0C071E1E3123D8110F948532FB5"
+  },
+  {
+    "Path": "E:\\githubproject\\SignLanguage-Bridge\\Paper-algorithm\\SLRT-main\\Online\\CSLR\\gen_segment.py",
+    "Hash": "B2DADF787AA72C9F5CB6F17454135B9D95C7E70EBA9BE19CDCF0F42936D0030A"
+  },
+  {
+    "Path": "E:\\githubproject\\SignLanguage-Bridge\\Paper-algorithm\\SLRT-main\\Online\\CSLR\\sign_augment.py",
+    "Hash": "B1AF80D38660A3775B823A627B384F8883EE239A66B1F303F55062ED1CE0236D"
+  },
+  {
+    "Path": "E:\\githubproject\\SignLanguage-Bridge\\Paper-algorithm\\SLRT-main\\Online\\SLT\\configs\\g2t_wait2.yaml",
+    "Hash": "772F4C6245D7E0131180B697878CE1F0BF54CD0BC4C8C3B7BF62C4B823E12BDE"
+  },
+  {
+    "Path": "E:\\githubproject\\SignLanguage-Bridge\\slbridge\\continuous.py",
+    "Hash": "549ADBD2D7E59550EB857DE35262867B8EE76EF57D7C46B8376D936246A467B8"
+  },
+  {
+    "Path": "E:\\githubproject\\SignLanguage-Bridge\\slbridge\\candidate_context.py",
+    "Hash": "EBBA200A183001AAA8AFFA33E9353B4C678E7FDCD63519FF5B56B5A6ECAF3C5F"
+  },
+  {
+    "Path": "E:\\githubproject\\SignLanguage-Bridge\\slbridge\\session.py",
+    "Hash": "955A4F2708A2359BC5D25DCB8008227235DC9EEEE7897D0D299840DED78C63F3"
+  }
+]

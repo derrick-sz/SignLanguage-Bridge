@@ -1,0 +1,15 @@
+{
+  "backend": "slrt_online_csl",
+  "resource_dir": "../models/external/EMNLP24_Online/CSL-Daily",
+  "rtmpose_cache_dir": "../models/external/uni_sign/rtmlib-cache",
+  "model_id": "slrt-emnlp24-csl-daily",
+  "sign_language": "csl",
+  "device": "auto",
+  "pose_backend": "hrnet",
+  "pose_device": "auto",
+  "window_size": 16,
+  "stride": 1,
+  "vote_size": 7,
+  "queue_size": 32,
+  "max_gloss_history": 512
+}

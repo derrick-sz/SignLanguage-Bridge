@@ -1,0 +1,39 @@
+# Legacy OpenMMLab environment for official SLRT HRNet/Faster-RCNN extraction.
+#
+# This is NOT the project's .conda-env (Python 3.10 + Torch 2.9). Old mmpose 0.x
+# and mmdet 2.x need mmcv-full 1.x, which does not build against Torch 2.x.
+# Create a separate Python 3.8 environment, for example:
+#
+#   conda create -y -p F:\DSH-envs\slrt-legacy python=3.8 pip
+#   python -m pip install torch==1.13.1+cpu torchvision==0.14.1+cpu \
+#       --index-url https://download.pytorch.org/whl/cpu
+#   python -m pip install https://download.openmmlab.com/mmcv/dist/cpu/torch1.13.0/mmcv_full-1.7.0-cp38-cp38-win_amd64.whl
+#   python -m pip install -r requirements-slrt-legacy.txt
+#
+# On Windows the tested versions are Python 3.8.20, Torch 1.13.1+cpu,
+# torchvision 0.14.1+cpu, mmcv-full 1.7.0, mmdet 2.25.3, mmpose 0.29.0.
+# CPU inference is slow (~3-6 s/frame for 512x512); use CUDA wheels only if the
+# GPU/driver is compatible with the legacy CUDA build. The project consumes the
+# resulting .npz through --pose-backend hrnet-npz, so this environment stays
+# isolated from the Torch 2.9 runtime.
+
+torch==1.13.1+cpu
+torchvision==0.14.1+cpu
+numpy==1.23.5
+mmcv-full==1.7.0
+mmdet==2.25.3
+mmpose==0.29.0
+pycocotools-windows==2.0.0.2
+xtcocotools==1.14.3
+chumpy==0.70
+opencv-python==5.0.0.93
+Pillow==10.4.0
+matplotlib==3.7.5
+scipy==1.10.1
+terminaltables==3.1.10
+json_tricks==3.17.3
+munkres==1.1.4
+addict==2.4.0
+yapf==0.43.0
+PyYAML==6.0.3
+packaging==26.2

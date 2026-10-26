@@ -1,0 +1,36 @@
+# Optional Uni-Sign + desktop environment (verified on Python 3.10.22/Windows).
+# Install PyTorch FIRST from the CUDA 12.8 index so RTX 50-series GPUs use
+# sm_120 kernels; the official CUDA 12.1 / PyTorch 2.1 pins do not.
+#
+# .\.conda-env\python.exe -m pip install --index-url https://download.pytorch.org/whl/cu128 `
+#   torch==2.9.1 torchvision==0.24.1
+#
+# Install the upstream RTMPose demo package editable with --no-deps after
+# models/external/uni_sign_source exists:
+# .\.conda-env\python.exe -m pip install --no-deps -e `
+#   models/external/uni_sign_source/demo/rtmlib-main
+numpy==1.26.3
+scikit-learn==1.4.0
+joblib==1.4.2
+scipy==1.15.3
+transformers==4.40.0
+tokenizers==0.19.1
+sentencepiece==0.1.97
+einops==0.6.1
+accelerate==0.29.2
+safetensors==0.4.5
+onnxruntime-gpu[cuda,cudnn]==1.23.2
+onnx==1.19.1
+ml_dtypes==0.5.4
+protobuf==4.25.8
+opencv-contrib-python==4.10.0.84
+Pillow==12.3.0
+PySide6-Essentials==6.8.3
+mediapipe==0.10.14
+matplotlib==3.9.4
+jax==0.6.2
+jaxlib==0.6.2
+tqdm==4.65.0
+sacrebleu==2.2.0
+rouge-score==0.1.2
+pytest>=8

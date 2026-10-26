@@ -382,6 +382,20 @@ def _load_ctc(path: Path, options: RuntimeOptions) -> ModelAdapter:
         raise
 
 
+def _load_uni_sign(path: Path, options: RuntimeOptions) -> ModelAdapter:
+    from .uni_sign import load_uni_sign_adapter
+    return load_uni_sign_adapter(path, options=options)
+
+
 register_model_adapter(AdapterDefinition("random_forest_v1", _load_classifier, RecognizerAdapter))
 register_model_adapter(AdapterDefinition("onnx_classifier_v1", _load_classifier, RecognizerAdapter))
 register_model_adapter(AdapterDefinition("onnx_ctc", _load_ctc, RecognizerAdapter))
+register_model_adapter(AdapterDefinition("uni_sign_pose_slt", _load_uni_sign))
+
+
+def _load_slrt(path: Path, options: RuntimeOptions) -> ModelAdapter:
+    from .slrt.adapter import load_slrt_adapter
+    return load_slrt_adapter(path, options)
+
+
+register_model_adapter(AdapterDefinition("slrt_online_csl", _load_slrt))

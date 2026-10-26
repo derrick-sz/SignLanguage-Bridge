@@ -227,12 +227,30 @@ class CameraSource(_CaptureSource):
         # clock tick; perf_counter provides actual high-resolution monotonic time.
         self.index = index
         self._clock = time.perf_counter if clock is None else clock
+        self._first_packet = None
         super().__init__(index, f"camera:{index}", capture_factory)
+
+    def _opened(self) -> None:
+        # A Windows camera handle may open while its USB stream cannot deliver
+        # any image. Do not report source readiness until one valid frame exists.
+        self._first_packet = super().read()
+
+    def read(self) -> FramePacket | None:
+        if self._first_packet is not None:
+            packet, self._first_packet = self._first_packet, None
+            return packet
+        return super().read()
+
+    def close(self) -> None:
+        self._first_packet = None
+        super().close()
 
     def _timestamp(self) -> float:
         return self._clock()
 
     def _read_failed(self):
+        if self._index == 0:
+            raise SourceError("camera opened but could not read the first frame; check the USB connection and camera access")
         raise SourceError("camera disconnected or frame capture failed")
 
 

@@ -452,6 +452,8 @@ class PreviewWidget(QWidget):
     def __init__(self, parent: QWidget | None = None) -> None:
         super().__init__(parent)
         self._image: QImage | None = None
+        self.landmarks = None
+        self._landmarks_mirrored = False
         self._placeholder_title = "在这里预览手语动作"
         self._placeholder_hint = "选择视频或打开摄像头开始"
         self._overlay = ""
@@ -463,13 +465,16 @@ class PreviewWidget(QWidget):
     def image(self) -> QImage | None:
         return self._image
 
-    def set_image(self, image: QImage) -> None:
+    def set_image(self, image: QImage, *, landmarks=None, mirrored=False) -> None:
         """Own the frame bytes even when the caller used a temporary buffer."""
         self._image = None if image.isNull() else image.copy()
+        self.landmarks = landmarks if self._image is not None else None
+        self._landmarks_mirrored = bool(mirrored)
         self.update()
 
     def set_placeholder(self, title: str, hint: str) -> None:
         self._image = None
+        self.landmarks = None
         self._overlay = ""
         self._placeholder_title = title
         self._placeholder_hint = hint
@@ -517,6 +522,9 @@ class PreviewWidget(QWidget):
             height,
         )
         painter.drawImage(target, image)
+        if self.landmarks is not None:
+            from .preview_landmarks import paint_landmarks
+            paint_landmarks(painter,target,self.landmarks,mirrored=self._landmarks_mirrored)
 
     def _paint_placeholder(self, painter: QPainter, bounds: QRectF) -> None:
         center_x = bounds.center().x()

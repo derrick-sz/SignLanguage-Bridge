@@ -18,6 +18,31 @@ onnx-export = ["onnx==1.19.1", "skl2onnx==1.19.1"]
 api-test = ["httpx==0.28.1"]
 rgb-sequence = ["opencv-python-headless==4.12.0.88"]
 tfnet = ["torch==2.9.1", "torchvision==0.24.1", "einops==0.8.1", "opencv-python-headless==4.12.0.88"]
+slrt = ["torch==2.9.1", "torchvision==0.24.1", "Pillow>=10,<13", "opencv-python>=4.10,<5", "psutil>=5.9,<8"]
+unisign = [
+  "numpy==1.26.3",
+  "scikit-learn==1.4.0",
+  "joblib==1.4.2",
+  "scipy==1.15.3",
+  "transformers==4.40.0",
+  "tokenizers==0.19.1",
+  "sentencepiece==0.1.97",
+  "einops==0.6.1",
+  "accelerate==0.29.2",
+  "safetensors==0.4.5",
+  "onnxruntime-gpu[cuda,cudnn]==1.23.2",
+  "onnx==1.19.1",
+  "ml_dtypes==0.5.4",
+  "protobuf==4.25.8",
+  "opencv-contrib-python==4.10.0.84",
+  "Pillow==12.3.0",
+  "PySide6-Essentials==6.8.3",
+  "mediapipe==0.10.14",
+  "matplotlib==3.9.4",
+  "jax==0.6.2",
+  "jaxlib==0.6.2",
+  "pytest>=8",
+]
 
 [project.scripts]
 slbridge = "slbridge.cli:main"
@@ -25,12 +50,14 @@ slbridge-desktop = "slbridge.desktop_cli:main"
 slbridge-keypoints = "slbridge.keypoint_cli:main"
 slbridge-api = "slbridge.api_cli:main"
 slbridge-cecsl = "slbridge.cecsl_cli:main"
+slbridge-slrt = "slbridge.slrt.cli:main"
 
 [tool.setuptools.packages.find]
 include = ["slbridge*"]
 
 [tool.setuptools.package-data]
 slbridge = ["resources/*.json"]
+"slbridge.slrt" = ["NOTICE.md"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

@@ -99,7 +99,14 @@ def caption_from_result(result: RecognitionResult, catalog: CaptionCatalog | Non
         pt = prediction.text if language in {"pt", "pt-BR"} else "葡语表达待审核"
         if language not in {"zh", "zh-CN", "pt", "pt-BR"}:
             zh = prediction.text
-        return Caption("recognized", zh, pt, f"模型原始文本（{language}）；未执行跨语言翻译",
+        notice = f"模型原始文本（{language}）；未执行跨语言翻译"
+        if result.quality.get("continuous_candidate"):
+            state = result.quality.get("stability_state")
+            if state == "confirmed":
+                notice += "；多个连续窗口结果一致，但尚未人工确认"
+            elif state == "temporary":
+                notice += "；临时候选，可能随新窗口修正"
+        return Caption("recognized", zh, pt, notice,
                        score=prediction.score, request_id=request_id, epoch=epoch)
     if result.task_type == "gloss_sequence":
         return Caption("recognized", " / ".join(prediction.glosses), "葡语表达待审核",

@@ -16,9 +16,13 @@ from PySide6.QtWidgets import (
 
 from .captions import CaptionCatalog, caption_from_result
 from .desktop_presenter import describe_model, describe_result, describe_runtime_model
+from .desktop_models import default_language_models, default_unisign_model
 from .desktop_widgets import APP_STYLE, BrandMark, PreviewWidget, icon
 from .session import RecognitionSession
 from .sources import CameraSource, VideoSource
+
+
+_LANGUAGES = {"csl": "中国手语", "libras": "巴西手语"}
 
 
 def _label(text="", name="", *, wrap=True):
@@ -51,13 +55,27 @@ def _panel():
 
 class SignLanguageApp(QMainWindow):
     def __init__(self, *, session=None, catalog=None, model=None, video=None, camera=None, runtime_options=None,
-                 segment_config=None):
+                 segment_config=None, language_models=None, unisign_model=None, continuous=False, continuous_config=None,
+                 defer_startup_input=False):
         super().__init__()
         self.session = session if session is not None else RecognitionSession(options=runtime_options)
         self.catalog = catalog if catalog is not None else CaptionCatalog()
         self.session.caption_catalog = self.catalog
         self.segment_config = segment_config
+        self.continuous_config = continuous_config
+        self._continuous_requested = bool(continuous)
+        self._continuous_update = None
+        self._pending_startup_input = ((video, camera) if (continuous or defer_startup_input) and model
+                                     and (video or camera is not None) else None)
+        self.language_models = {key: Path(path).resolve() for key, path in
+                                (default_language_models() if language_models is None else language_models).items()}
+        self.unisign_model = (Path(unisign_model).resolve() if unisign_model is not None
+                              else default_unisign_model().resolve())
+        self._pending_model_path = None
+        self._pending_model_name = None
+        self._pending_language = None
         self._history_signature = None
+        self._candidate_revision = None
         self.caption = None
         self._last_result = None
         self._metadata_model = None
@@ -66,6 +84,9 @@ class SignLanguageApp(QMainWindow):
         self._model_path = None
         self._source_path = None
         self._photo = None
+        self._latest_raw_packet = None
+        self._preview_packet = None
+        self._preview_landmarks = None
         self._closed = False
         self._keypoint_workbench = None
         self._task_kind = None
@@ -81,11 +102,15 @@ class SignLanguageApp(QMainWindow):
         self.setStyleSheet(APP_STYLE)
         self._build_ui()
         self._render_history(self.session.captions.snapshot())
+        self._render_candidates(self.session.candidate_context())
         self._build_settings()
+        self._sync_language_selector()
         self._timer = QTimer(self)
         self._timer.timeout.connect(self._poll)
         self._timer.start(30)
-        if video:
+        if self._pending_startup_input is not None:
+            pass  # Keep short startup videos intact while the model warms up.
+        elif video:
             self.open_video(video)
         elif camera is not None:
             self.open_camera(camera)
@@ -132,6 +157,16 @@ class SignLanguageApp(QMainWindow):
             button.setAutoExclusive(False)
             inputs.addWidget(button)
         inputs.addStretch()
+        self.language_selector_label = _label("识别手语", "muted", wrap=False)
+        inputs.addWidget(self.language_selector_label)
+        self.language_combo = QComboBox()
+        self.language_combo.setObjectName("recognitionLanguage")
+        self.language_combo.setAccessibleName("识别手语")
+        self.language_combo.addItem("请选择手语", None)
+        for language, title in _LANGUAGES.items():
+            self.language_combo.addItem(title, language)
+        self.language_combo.currentIndexChanged.connect(self._select_language)
+        inputs.addWidget(self.language_combo)
         left.addLayout(inputs)
         source_line = QHBoxLayout()
         self.source_label = _label("预览画面", "sourceTitle")
@@ -159,6 +194,16 @@ class SignLanguageApp(QMainWindow):
         camera_options.addStretch()
         camera_options.addWidget(self.mirror_check)
         left.addWidget(self.camera_options)
+        display_options = QHBoxLayout()
+        self.keypoints_check = QCheckBox("显示关键点")
+        self.keypoints_check.setObjectName("showRecognitionKeypoints")
+        self.keypoints_check.setToolTip("在当前画面叠加身体与双手骨架；不改变录制或识别输入。")
+        self.keypoints_check.toggled.connect(self.toggle_keypoints)
+        self.mirror_check.toggled.connect(self._redraw_preview)
+        self.keypoints_label = _label("", "muted")
+        display_options.addWidget(self.keypoints_check)
+        display_options.addWidget(self.keypoints_label,1)
+        left.addLayout(display_options)
 
         self.record_progress = QProgressBar()
         self.record_progress.setRange(0, 150)
@@ -181,7 +226,11 @@ class SignLanguageApp(QMainWindow):
         left.addLayout(actions)
         self.input_hint = _label("每次识别一个完整动作。", "muted")
         left.addWidget(self.input_hint)
-        self.auto_check = QCheckBox("自动追加字幕（完成动作后稍作停顿）")
+        self.continuous_check = QCheckBox("连续识别视频流（无需停顿）")
+        self.continuous_check.setObjectName("continuousRecognition")
+        self.continuous_check.toggled.connect(self.toggle_continuous)
+        left.addWidget(self.continuous_check)
+        self.auto_check = QCheckBox("停顿确认后追加字幕记录")
         self.auto_check.setObjectName("automaticCaptions")
         self.auto_check.toggled.connect(self.toggle_automatic)
         left.addWidget(self.auto_check)
@@ -239,6 +288,40 @@ class SignLanguageApp(QMainWindow):
         history_actions.addWidget(self.clear_history_button)
         history_layout.addLayout(history_actions)
 
+        candidates_panel, candidates_layout = _panel()
+        candidates_layout.setContentsMargins(10, 10, 10, 10)
+        candidates_layout.setSpacing(6)
+        candidates_header = QHBoxLayout()
+        candidates_header.addWidget(_label("保留", "muted", wrap=False))
+        self.candidate_limit = QSpinBox()
+        self.candidate_limit.setRange(1, 1000)
+        self.candidate_limit.setValue(200)
+        self.candidate_limit.setSuffix(" 条")
+        self.candidate_limit.setAccessibleName("候选保留条数")
+        self.candidate_limit.setStyleSheet("QSpinBox { padding: 4px 8px; }")
+        self.candidate_limit.valueChanged.connect(self.set_candidate_limit)
+        candidates_header.addWidget(self.candidate_limit)
+        self.candidate_status = _label("", "muted", wrap=False)
+        self.candidate_status.setSizePolicy(QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Preferred)
+        candidates_header.addWidget(self.candidate_status, 1)
+        candidates_layout.addLayout(candidates_header)
+        candidates_layout.addWidget(_label("未确认 · 重叠窗口可能重复", "muted"))
+        self.candidate_history = QListWidget()
+        self.candidate_history.setObjectName("candidateHistory")
+        self.candidate_history.setMinimumHeight(96)
+        self.candidate_history.setWordWrap(False)
+        self.candidate_history.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.candidate_history.setVerticalScrollMode(QListWidget.ScrollMode.ScrollPerPixel)
+        candidates_layout.addWidget(self.candidate_history, 1)
+        candidates_actions = QHBoxLayout()
+        self.clear_candidates_button = _button("清空候选", self.clear_candidate_history)
+        self.export_candidates_button = _button("导出上下文", self.export_candidate_history)
+        for action in (self.clear_candidates_button, self.export_candidates_button):
+            action.setProperty("size", "small")
+        candidates_actions.addWidget(self.clear_candidates_button)
+        candidates_actions.addWidget(self.export_candidates_button)
+        candidates_layout.addLayout(candidates_actions)
+
         vocabulary_panel, words = _panel()
         word_header = QHBoxLayout()
         word_header.addWidget(_label("支持的手语词", "sectionTitle"))
@@ -253,6 +336,7 @@ class SignLanguageApp(QMainWindow):
         self.vocabulary_list.setMinimumHeight(64)
         words.addWidget(self.vocabulary_list, 1)
         self.output_tabs = QTabWidget()
+        self.output_tabs.addTab(candidates_panel, "候选序列")
         self.output_tabs.addTab(history_panel, "字幕记录")
         self.output_tabs.addTab(vocabulary_panel, "支持的手语词")
         right.addWidget(self.output_tabs, 1)
@@ -284,6 +368,12 @@ class SignLanguageApp(QMainWindow):
         form.addWidget(self.settings_model_label)
         self.model_button = _button("选择识别模型", self._choose_model, "folder")
         form.addWidget(self.model_button, 0, Qt.AlignmentFlag.AlignLeft)
+        self.unisign_button = _button("加载 Uni-Sign（实验）", self.load_unisign_model, "reload")
+        self.unisign_button.setObjectName("loadUniSign")
+        self.unisign_button.setToolTip("CSL-Daily Pose-only 翻译权重，CC BY-NC 4.0；仅用于非商业研究。")
+        form.addWidget(self.unisign_button, 0, Qt.AlignmentFlag.AlignLeft)
+        self.unisign_label = _label("", "muted")
+        form.addWidget(self.unisign_label)
         self.rollback_model_button = _button("恢复上个模型", self.rollback_model, "reload")
         form.addWidget(self.rollback_model_button, 0, Qt.AlignmentFlag.AlignLeft)
         form.addWidget(_label("字幕释义", "sectionTitle"))
@@ -339,6 +429,7 @@ class SignLanguageApp(QMainWindow):
         self.camera_combo.setCurrentIndex(item)
 
     def _clear_caption(self):
+        self._continuous_update = None
         self.caption = None
         self._last_result = None
         self._result_details = {}
@@ -426,18 +517,86 @@ class SignLanguageApp(QMainWindow):
 
     def _reset_preview(self, title, hint):
         self._photo = None
+        self._latest_raw_packet = self._preview_packet = self._preview_landmarks = None
         self.preview.set_placeholder(title, hint)
+        self.keypoints_label.setText("等待画面…" if self.session.show_keypoints else "")
 
     def _choose_model(self):
         path = QFileDialog.getExistingDirectory(self, "选择识别模型文件夹")
         if path:
             self.load_model(path)
 
-    def load_model(self, path):
+    def _sync_language_selector(self):
+        """The selector describes the committed model, never the pending target."""
+        capabilities = self.session.model_manager.capabilities()
+        bundle = getattr(self.session.recognizer, "bundle", None)
+        language = (capabilities["sign_language"] if capabilities is not None else
+                    getattr(getattr(bundle, "manifest", None), "sign_language", None))
+        path = getattr(bundle, "path", None)
+        is_unisign = bool(capabilities and capabilities.get("model_id", "").startswith("uni-sign-"))
+        if language in _LANGUAGES and path is not None and not is_unisign:
+            self.language_models[language] = Path(path).resolve()
+        self.language_combo.blockSignals(True)
+        try:
+            self.language_combo.setItemText(0, "其他手语模型" if self.session.recognizer is not None else "请选择手语")
+            self.language_combo.model().item(0).setEnabled(False)
+            for key, title in _LANGUAGES.items():
+                index = self.language_combo.findData(key)
+                model_path = self.language_models.get(key)
+                available = model_path is not None and (model_path / "manifest.json").is_file()
+                if key == language and is_unisign:
+                    label = f"{title} · Uni-Sign（实验）"
+                else:
+                    label = title if available or key == language else f"{title}（未配置）"
+                self.language_combo.setItemText(index, label)
+                self.language_combo.model().item(index).setEnabled(available or key == language)
+                if key == language and is_unisign:
+                    tooltip = "当前为 Uni-Sign Pose-only 实验模型；不会自动设为默认模型。"
+                elif available:
+                    tooltip = "切换识别模型；完成一段动作后识别。"
+                else:
+                    tooltip = "模型未配置，可在设置中选择识别模型文件夹。"
+                self.language_combo.setItemData(index, tooltip, Qt.ItemDataRole.ToolTipRole)
+            index = self.language_combo.findData(language) if language in _LANGUAGES else 0
+            self.language_combo.setCurrentIndex(index)
+        finally:
+            self.language_combo.blockSignals(False)
+
+    def _select_language(self, index):
+        language = self.language_combo.itemData(index)
+        self._sync_language_selector()
+        if (language not in _LANGUAGES or language == self.language_combo.currentData()
+                or self.session.busy or self._pending_model_path is not None or self.session.state == "RECORDING"):
+            return
+        path = self.language_models.get(language)
+        if path is None or not (path / "manifest.json").is_file():
+            self.status_label.setText("该手语模型未配置，请在设置中选择识别模型。")
+            return
+        self.load_model(path)
+
+    def load_unisign_model(self):
+        path = self.unisign_model
+        if not (path / "manifest.json").is_file():
+            self._error(FileNotFoundError(f"Uni-Sign 实验模型未安装：{path}"), "无法加载 Uni-Sign")
+            return
+        self.load_model(path, display_name="Uni-Sign Pose-only")
+
+    def load_model(self, path, display_name=None):
         self._task_kind = "model"
-        if self._call(lambda: self.session.load_model(path), context="无法加载识别模型"):
-            self.status_label.setText("正在准备识别模型…")
-            self.result_title.setText("正在准备识别模型")
+        self._pending_model_name = display_name
+        if not self._call(lambda: self.session.load_model(path), context="无法加载识别模型"):
+            self._pending_model_name = None
+            self._pending_language = None
+            self._update_controls()
+            return
+        self._pending_model_path = Path(path).resolve()
+        self._pending_language = None if display_name else next(
+            (key for key, value in self.language_models.items()
+             if value == self._pending_model_path and key in _LANGUAGES), None)
+        title = display_name or _LANGUAGES.get(self._pending_language, "识别模型")
+        self.status_label.setText(f"正在准备{title}，预览保持开启…")
+        self.result_title.setText("正在准备识别模型")
+        self._update_controls()
 
     def rollback_model(self):
         if self._call(self.session.rollback_model, context="无法恢复上个模型"):
@@ -459,7 +618,10 @@ class SignLanguageApp(QMainWindow):
             self._metadata_catalog = None
             self._sync_model_metadata()
             if self._last_result is not None:
-                self._display_result(self._last_result, self.session.request_id, self.session.epoch)
+                if self._continuous_update is not None:
+                    self._display_continuous(self._continuous_update, self.session.request_id, self.session.epoch)
+                else:
+                    self._display_result(self._last_result, self.session.request_id, self.session.epoch)
             self._update_controls()
         except Exception as error:
             self._error(error, "无法加载字幕释义")
@@ -487,16 +649,39 @@ class SignLanguageApp(QMainWindow):
             self.status_label.setText("录制已完成，正在识别动作…")
 
     def cancel(self):
+        self._continuous_requested = False
         self._record_started = None
         kind = "录制" if self.session.state == "RECORDING" else "识别"
         self._call(self.session.cancel)
         self._cancel_pending = self.session.busy
         self.status_label.setText("已取消识别，正在等待当前任务结束…" if self._cancel_pending else f"已清空结果，可以开始新的{kind}。")
 
+    def toggle_continuous(self, enabled):
+        self._continuous_requested = False
+        operation = (lambda: self.session.enable_continuous(self.continuous_config)) if enabled else self.session.disable_continuous
+        if self._call(operation, context="连续识别未能启动"):
+            if enabled:
+                self.output_tabs.setCurrentWidget(self.candidate_history.parentWidget())
+            self.status_label.setText("正在积累画面，结果会随动作更新。" if enabled else "连续识别已停止。")
+        self._update_controls()
+
+    def toggle_keypoints(self, enabled):
+        self.session.set_show_keypoints(enabled)
+        self._preview_landmarks = None
+        self.keypoints_label.setText("正在检测身体与双手…" if enabled else "")
+        if self._latest_raw_packet is not None:
+            self._render_preview(self._latest_raw_packet)
+        self._update_controls()
+
+    def _redraw_preview(self, *_):
+        if self._preview_packet is not None:
+            self._render_preview(self._preview_packet,self._preview_landmarks)
+
     def toggle_automatic(self, enabled):
         try:
             if enabled:
                 self.session.enable_automatic(self.segment_config)
+                self.output_tabs.setCurrentWidget(self.caption_history.parentWidget())
                 self.status_label.setText("自动字幕已启动，完成一个动作后稍作停顿。")
             else:
                 self.session.disable_automatic()
@@ -533,13 +718,79 @@ class SignLanguageApp(QMainWindow):
         self.undo_caption_button.setEnabled(has_events)
         self.clear_history_button.setEnabled(has_events or bool(snapshot["candidates"]))
 
+    def set_candidate_limit(self, limit):
+        self.session.set_candidate_limit(limit)
+        self._render_candidates(self.session.candidate_context())
+
+    def clear_candidate_history(self):
+        self.session.clear_candidates()
+        self._render_candidates(self.session.candidate_context())
+
+    def export_candidate_history(self):
+        path, _ = QFileDialog.getSaveFileName(self, "导出候选上下文", "recognition-context.json", "JSON (*.json)")
+        if not path:
+            return
+        try:
+            snapshot = self.session.export_candidate_context(path)
+            self.candidate_status.setText(f"已导出 {len(snapshot['candidates'])} 条")
+            self.candidate_status.setToolTip("JSON 上下文已导出；LLM 尚未接入。")
+        except Exception as error:
+            self.candidate_status.setText("导出失败")
+            self.candidate_status.setToolTip("候选已保留，可重新选择位置。\n"+str(error))
+
+    def _render_candidates(self, snapshot):
+        self._candidate_revision = snapshot['revision']
+        blocked = self.candidate_limit.blockSignals(True)
+        self.candidate_limit.setValue(snapshot['max_history'])
+        self.candidate_limit.blockSignals(blocked)
+        scroll = self.candidate_history.verticalScrollBar()
+        at_bottom, position = scroll.value() >= scroll.maximum()-2, scroll.value()
+        selected = self.candidate_history.currentItem()
+        selected_id = selected.data(Qt.ItemDataRole.UserRole)['candidate_id'] if selected else None
+        self.candidate_history.clear()
+        for row in snapshot['candidates']:
+            language = _LANGUAGES.get(row['sign_language'], row['sign_language'] or '未知手语')
+            overlap = ' · 与前窗重叠' if row['overlaps_candidate_id'] else ''
+            caption = row['caption']
+            text = (f"#{row['sequence']} {caption['zh']} / {caption['pt']}\n"
+                    f"{language} · {row['start_time']:.2f}–{row['end_time']:.2f}s · 未确认")
+            prediction = row['result']['prediction']
+            details = ''
+            if row['result']['task_type'] == 'classification':
+                scores = sorted(prediction['scores'].items(), key=lambda item: (-item[1], item[0]))[:3]
+                details = '\n模型备选：' + ' / '.join(f'{label} {score:.3f}' for label, score in scores)
+            elif row['result']['task_type'] == 'gloss_sequence':
+                details = '\n词序列：' + ' / '.join(token['gloss'] for token in prediction['tokens'])
+            item = QListWidgetItem(text)
+            item.setData(Qt.ItemDataRole.UserRole, row)
+            item.setToolTip(f"{caption['zh']} / {caption['pt']}{details}\n"
+                            f"来源 {row['source_epoch']}{overlap}\n"
+                            f"{row['model_id']} · {row['model_version']} · generation {row['model_generation']}\n"
+                            f"{row['source_id']} · window revision {row['window_revision']}\n"
+                            f"{row['request_id']}\n分数类型：{row['result']['score_type']}\n"
+                            f"词典：{row['catalog_id']} · {row['catalog_review_status']}\n"
+                            "导出包含完整原始分数/词级信息；候选不代表确认字幕。")
+            self.candidate_history.addItem(item)
+            if row['candidate_id'] == selected_id:
+                self.candidate_history.setCurrentItem(item)
+        if at_bottom:
+            self.candidate_history.scrollToBottom()
+        else:
+            scroll.setValue(position)
+        count = len(snapshot['candidates'])
+        self.candidate_status.setText(f"{count} 条 · 淘汰 {snapshot['dropped_count']}")
+        self.candidate_status.setToolTip(f"已保留 {count}/{snapshot['max_history']} 条，累计淘汰 {snapshot['dropped_count']} 条。\n"
+            "记录保存在当前会话内；退出前可导出 JSON，供后续 LLM 读取。")
+        self.clear_candidates_button.setEnabled(bool(count))
+        self.export_candidates_button.setEnabled(bool(count))
+
     def toggle_pause(self):
         if self.session.source_kind != "video":
             return
         if not self.session.source_active:
             self.open_video(self.session.video_path)
         else:
-            self.session.paused = not self.session.paused
+            self.session.pause_source(not self.session.paused)
             self.status_label.setText("视频预览已暂停，仍可识别完整视频。" if self.session.paused else "视频预览继续播放。")
         self._update_controls()
 
@@ -551,19 +802,27 @@ class SignLanguageApp(QMainWindow):
         loaded = self.session.recognizer is not None
         recording = state == "RECORDING"
         automatic = self.session.automatic
+        continuous = self.session.continuous
+        self.language_combo.setEnabled(not busy and not recording and not continuous and self._pending_model_path is None)
+        self.language_combo.setToolTip("停止连续识别后可切换手语。" if continuous else "录制或识别期间不能切换手语。" if busy or recording else
+                                      "选择要识别的手语；系统不会自动判断手语种类。")
         self.video_button.setChecked(self.session.source_kind == "video")
         self.camera_button.setChecked(camera_mode)
-        self.model_button.setEnabled(not busy and not recording)
-        self.rollback_model_button.setEnabled(not busy and not recording and
+        self.model_button.setEnabled(not busy and not recording and not continuous)
+        unisign_ready = (self.unisign_model / "manifest.json").is_file()
+        self.unisign_button.setEnabled(not busy and not recording and not continuous and unisign_ready)
+        self.unisign_label.setText(("实验模型已安装：" if unisign_ready else "未安装实验模型；先运行 scripts/download_uni_sign.py") + str(self.unisign_model))
+        self.unisign_label.setToolTip("Uni-Sign Pose-only 仅在独立 PyTorch 环境中运行；权重 CC BY-NC 4.0。")
+        self.rollback_model_button.setEnabled(not busy and not recording and not continuous and
                                               self.session.model_manager.status()["previous"] is not None)
         self.reload_catalog_button.setEnabled(self._catalog_path is not None and self._catalog_path.is_file())
         self.recognize_button.setVisible(not camera_mode)
-        self.recognize_button.setEnabled(video and loaded and not busy)
+        self.recognize_button.setEnabled(video and loaded and not busy and not continuous)
         self.pause_button.setVisible(video)
         self.pause_button.setEnabled(video and (self.session.source_active or not busy))
         self.pause_button.setText("重新播放" if video and not self.session.source_active else "继续预览" if self.session.paused else "暂停预览")
         self.record_button.setVisible(camera_mode and not recording)
-        self.record_button.setEnabled(camera_mode and self.session.source_active and loaded and not busy and not automatic)
+        self.record_button.setEnabled(camera_mode and self.session.source_active and loaded and not busy and not automatic and not continuous)
         self.finish_button.setVisible(camera_mode and recording)
         self.finish_button.setEnabled(recording and not busy)
         self.camera_options.setVisible(camera_mode)
@@ -571,26 +830,52 @@ class SignLanguageApp(QMainWindow):
         self.stop_button.setText("关闭摄像头" if camera_mode else "关闭视频" if video else "关闭")
         self.cancel_button.setText("取消录制" if recording else "取消识别" if busy else "清空结果")
         self.cancel_button.setEnabled(recording or busy or self.caption is not None or state == "ERROR")
-        self.busy_progress.setVisible(busy)
+        self.busy_progress.setVisible(busy and not continuous)
         self.record_progress.setVisible(recording)
         self.record_time_label.setVisible(recording)
         self.auto_check.blockSignals(True)
         self.auto_check.setChecked(automatic)
         self.auto_check.blockSignals(False)
         self.auto_check.setEnabled(automatic or (self.session.source_active and loaded and not busy and not recording))
+        self.continuous_check.blockSignals(True)
+        self.continuous_check.setChecked(continuous)
+        self.continuous_check.blockSignals(False)
+        self.continuous_check.setEnabled(continuous or (self.session.source_active and loaded and not busy and not recording))
+        self.keypoints_check.blockSignals(True)
+        self.keypoints_check.setChecked(self.session.show_keypoints)
+        self.keypoints_check.blockSignals(False)
         if recording and self._record_started is not None:
             elapsed = max(0, time.perf_counter() - self._record_started)
             self.record_time_label.setText(f"正在录制  {elapsed:.1f} 秒 / 15 秒")
             self.record_progress.setValue(min(150, int(elapsed * 10)))
-        sequence = getattr(getattr(getattr(self.session.recognizer, "bundle", None), "manifest", None),
-                           "task_type", None) == "gloss_sequence"
-        unit = "表达" if sequence else "动作"
-        self.input_hint.setText("完成一个词或固定表达后稍作停顿；端点未经真人质量验证。" if automatic else f"每次录制一个完整{unit}，最长 15 秒。" if camera_mode else "识别整段视频，播放位置不影响结果。" if video else f"每次识别一个完整{unit}。")
-        badge = "正在录制" if recording else "正在准备模型" if busy and self._task_kind == "model" else "正在识别" if busy else "请重试" if state == "ERROR" else "模型已就绪" if loaded else "请选择识别模型"
+        capabilities = self.session.model_manager.capabilities()
+        task_type = capabilities.get("task_type") if capabilities is not None else getattr(
+            getattr(getattr(self.session.recognizer, "bundle", None), "manifest", None), "task_type", None)
+        text_model = task_type == "text"
+        sequence = task_type == "gloss_sequence"
+        unit = "句子" if text_model else "表达" if sequence else "动作"
+        if continuous and text_model:
+            hint = "持续处理重叠窗口并更新中文句子候选；多窗口一致仍不等于人工确认。"
+        elif continuous:
+            hint = "持续处理最新画面，无需停顿；停止连续识别后可切换手语。"
+        elif automatic:
+            hint = "完成一个词或固定表达后稍作停顿；端点未经真人质量验证。"
+        elif camera_mode:
+            hint = f"每次录制一个完整{unit}，最长 15 秒。"
+        elif video:
+            hint = "识别整段视频，播放位置不影响结果。"
+        else:
+            hint = f"每次识别一个完整{unit}。"
+        self.input_hint.setText(hint)
+        loading = (f"正在准备{self._pending_model_name}" if self._pending_model_name else
+                   f"正在准备{_LANGUAGES[self._pending_language]}" if self._pending_language in _LANGUAGES
+                   else "正在准备模型")
+        badge = "连续识别中" if continuous else "正在录制" if recording else loading if busy and self._task_kind == "model" else "正在识别" if busy else "请重试" if state == "ERROR" else "模型已就绪" if loaded else "请选择识别模型"
         self.state_badge.setText(badge)
         self._refresh_details()
 
     def _display_result(self, result, request_id, epoch):
+        self._continuous_update = None
         self._last_result = result
         self.caption = caption_from_result(result, self.catalog, request_id=request_id, epoch=epoch)
         presentation = describe_result(result, self.caption)
@@ -607,33 +892,72 @@ class SignLanguageApp(QMainWindow):
         self._refresh_details()
         self._update_controls()
 
-    def _render_preview(self, packet):
+    def _display_continuous(self, update, request_id, epoch):
+        limit = self.session.continuous_status()['max_result_age_seconds']
+        age = update.age_seconds+time.perf_counter()-update.completed_at
+        if not self.session.continuous or limit is None or age > limit:
+            self._clear_caption()
+            self.status_label.setText("当前窗口结果已过期，等待最新画面。")
+            return
+        result = update.response.result
+        self._display_result(result, request_id, epoch)
+        self._continuous_update = update
+        stability = result.quality.get("stability_state")
+        if result.task_type == "text" and stability == "confirmed":
+            self.result_title.setText("连续识别 · 多窗口一致候选")
+            self.status_label.setText("连续窗口输出一致，但仍是机器候选，尚未人工确认。")
+        elif result.task_type == "text":
+            self.result_title.setText("连续识别 · 临时候选")
+            self.status_label.setText("中文句子随窗口更新；当前窗口不会写入已确认字幕记录。")
+        else:
+            self.result_title.setText("连续识别 · 当前窗口结果")
+            self.status_label.setText("结果随新画面修正；当前窗口不会重复写入字幕记录。")
+        self.candidate_label.setText(f"最近 {update.end_time-update.start_time:.1f} 秒画面 · 持续更新")
+        self._result_details['窗口结束至推理返回'] = f'{update.age_seconds*1000:.0f} ms'
+        if result.quality.get("pose_cache_hit_frames") is not None:
+            self._result_details['姿态缓存命中'] = (f"{result.quality['pose_cache_hit_frames']} 帧 / "
+                                                f"新提取 {result.quality.get('pose_new_frames', 0)} 帧")
+
+    def _render_preview(self, packet, landmarks=None):
+        self._preview_packet = packet
+        self._preview_landmarks = landmarks
         rgb = packet.image[:, :, ::-1]
-        if self.session.source_kind == "camera" and self.mirror_check.isChecked():
+        mirrored = self.session.source_kind == "camera" and self.mirror_check.isChecked()
+        if mirrored:
             rgb = rgb[:, ::-1]
         pixels = np.ascontiguousarray(rgb)
         height, width = pixels.shape[:2]
         self._photo = QImage(pixels.data, width, height, pixels.strides[0], QImage.Format.Format_RGB888).copy()
-        self.preview.set_image(self._photo)
+        self.preview.set_image(self._photo,landmarks=landmarks,mirrored=mirrored)
         self.preview.set_overlay("正在录制" if self.session.state == "RECORDING" else "摄像头预览" if self.session.source_kind == "camera" else "视频预览")
 
     def _sync_model_metadata(self):
         model = self.session.recognizer
         if model is self._metadata_model and self.catalog is self._metadata_catalog:
             return
+        self._sync_language_selector()
+        capabilities = self.session.model_manager.capabilities()
         if self.session.model_manager.supports_typed_inference:
             presentation = describe_runtime_model(self.session.model_manager.describe(),
-                                                   self.session.model_manager.capabilities(), self.catalog)
+                                                   capabilities, self.catalog)
         else:
             presentation = describe_model(model, self.catalog)
+        runtime_metadata = getattr(model, "runtime_info", {})
+        if runtime_metadata.get("license"):
+            presentation.details["许可"] = str(runtime_metadata["license"]) + "；仅非商业研究"
+        if runtime_metadata.get("pose_fallback_reason"):
+            presentation.details["RTMPose 设备说明"] = str(runtime_metadata["pose_fallback_reason"])
+        if runtime_metadata.get("source_commit"):
+            presentation.details["上游源码提交"] = str(runtime_metadata["source_commit"])
         self.language_label.setText(presentation.title)
         bundle_path = getattr(getattr(model, "bundle", None), "path", None)
         self._model_path = str(bundle_path) if bundle_path is not None else None
         self.model_presentation = presentation
         self.model_label.setText(presentation.summary)
         self.settings_model_label.setText(presentation.summary)
-        task = getattr(getattr(getattr(model, "bundle", None), "manifest", None), "task_type", None)
-        unit = "词表项" if task == "gloss_sequence" else "词"
+        task = capabilities.get("task_type") if capabilities is not None else getattr(
+            getattr(getattr(model, "bundle", None), "manifest", None), "task_type", None)
+        unit = "句子" if task == "text" else "词表项" if task == "gloss_sequence" else "词"
         self.word_count_label.setText(f"{len(presentation.words)} 个{unit}" if presentation.words else "")
         self.vocabulary_list.clear()
         for word in presentation.words:
@@ -641,7 +965,7 @@ class SignLanguageApp(QMainWindow):
             item.setToolTip("中文释义待核验" if word.draft else "")
             self.vocabulary_list.addItem(item)
         if not presentation.words:
-            item = QListWidgetItem("加载模型后显示词汇")
+            item = QListWidgetItem("Uni-Sign 直接输出中文句子" if task == "text" else "加载模型后显示词汇")
             item.setFlags(Qt.ItemFlag.NoItemFlags)
             self.vocabulary_list.addItem(item)
         self._metadata_model = model
@@ -684,9 +1008,21 @@ class SignLanguageApp(QMainWindow):
                     if self.session.busy:
                         self.result_title.setText("正在准备识别模型" if self._task_kind == "model" else "正在识别动作")
                 elif event.kind == "error":
-                    self._error(event.value, "录制已中止，请重新录制" if self._record_started is not None else "识别或输入未能完成")
+                    model_error = event.task_kind == "model"
+                    continuous_error = event.task_kind == "continuous"
+                    self._error(event.value, "连续识别已停止" if continuous_error else "模型切换失败" if model_error else
+                                "录制已中止，请重新录制" if self._record_started is not None else "识别或输入未能完成")
                     self._record_started = None
-                    self._reset_preview("输入未能完成", "重新打开视频或摄像头后再试")
+                    if model_error:
+                        self._pending_model_path = None
+                        self._pending_language = None
+                        self._pending_model_name = None
+                        self._task_kind = None
+                        self._sync_language_selector()
+                        if self.session.recognizer is not None:
+                            self.status_label.setText("切换失败，已保留原模型；可重试或在设置中选择模型。")
+                    elif not continuous_error:
+                        self._reset_preview("输入未能完成", "重新打开视频或摄像头后再试")
                 elif event.kind == "opened":
                     self.status_label.setText("摄像头已就绪，让双手和上半身保持在画面内。" if self.session.source_kind == "camera" else "视频已就绪，点击识别视频获取释义。")
                 elif event.kind == "eof":
@@ -696,6 +1032,18 @@ class SignLanguageApp(QMainWindow):
                     self._display_result(event.value, event.request_id, event.epoch)
                 elif event.kind == "auto_result":
                     self._display_result(event.value.result, event.request_id, event.epoch)
+                elif event.kind == "continuous_clear":
+                    self._clear_caption()
+                elif event.kind == "keypoints_error":
+                    self._preview_landmarks = None
+                    self.keypoints_label.setText(event.value)
+                    if self._latest_raw_packet is not None:
+                        self._render_preview(self._latest_raw_packet)
+                elif event.kind == "continuous_status":
+                    self.status_label.setText(event.value)
+                    self.candidate_label.setText(event.value)
+                elif event.kind == "continuous_result":
+                    self._display_continuous(event.value, event.request_id, event.epoch)
                 elif event.kind == "captions":
                     self._render_history(event.value)
                 elif event.kind == "candidate":
@@ -709,6 +1057,10 @@ class SignLanguageApp(QMainWindow):
                 elif event.kind == "automatic":
                     self.status_label.setText(event.value)
                 elif event.kind == "model":
+                    self._pending_model_path = None
+                    self._pending_language = None
+                    self._pending_model_name = None
+                    self._task_kind = None
                     self._clear_caption()
                     self._sync_model_metadata()
                     self.status_label.setText("识别模型已就绪，导入视频或录制一个动作即可开始。")
@@ -720,15 +1072,61 @@ class SignLanguageApp(QMainWindow):
                      len(snapshot["candidates"]))
         if signature != self._history_signature:
             self._render_history(snapshot)
+        candidate_snapshot = self.session.candidate_context(after_revision=self._candidate_revision)
+        if candidate_snapshot is not None:
+            self._render_candidates(candidate_snapshot)
         packet = self.session.take_preview()
         if packet is not None:
+            self._latest_raw_packet = packet
+        pair = self.session.take_landmark_preview() if self.session.show_keypoints else None
+        if self.session.show_keypoints:
+            from .preview_landmarks import MAX_PREVIEW_AGE
+            if pair is not None:
+                packet,landmarks = pair
+            elif self._preview_landmarks is not None and (not self.session.source_active or self.session.paused
+                    or self._preview_landmarks.source_epoch!=self.session.epoch
+                    or time.perf_counter()-self._preview_landmarks.completed_at>MAX_PREVIEW_AGE):
+                self._preview_landmarks = None
+                packet,landmarks = self._latest_raw_packet,None
+            elif self._preview_landmarks is None:
+                landmarks = None
+            else:
+                packet = None
+        else:
+            landmarks = None
+        if packet is not None:
             try:
-                self._render_preview(packet)
+                self._render_preview(packet,landmarks)
+                if self.session.show_keypoints:
+                    self.keypoints_label.setText("身体与双手关键点" if landmarks is not None and any(landmarks.point_observed)
+                        else "等待检测到身体或双手…")
             except Exception as error:
                 self._error(error, "预览未能显示")
         if self._cancel_pending and not self.session.busy:
             self._cancel_pending = False
             self.status_label.setText("已取消识别，可以开始新的动作。")
+        if self._pending_model_path is not None and not self.session.busy:
+            # Reconcile cancelled/source-invalidated loads after terminal events,
+            # including a loader that failed before the first Qt poll.
+            self._pending_model_path = None
+            self._pending_language = None
+            self._pending_model_name = None
+            self._task_kind = None
+            self._sync_language_selector()
+        if self._continuous_update is not None:
+            update = self._continuous_update
+            limit = self.session.continuous_status()['max_result_age_seconds']
+            if limit is None or update.age_seconds+time.perf_counter()-update.completed_at > limit:
+                self._clear_caption()
+                self.status_label.setText("当前窗口结果已过期，等待最新画面。")
+        if (self._pending_startup_input is not None and not self.session.busy
+                and self.session.recognizer is not None):
+            video, camera = self._pending_startup_input
+            self._pending_startup_input = None
+            self.open_video(video) if video else self.open_camera(camera)
+        if (self._continuous_requested and not self.session.busy and self.session.recognizer is not None
+                and self.session.source_active and self.session.state != "RECORDING"):
+            self.toggle_continuous(True)
         self._update_controls()
 
     def closeEvent(self, event):

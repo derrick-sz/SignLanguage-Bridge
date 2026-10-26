@@ -39,7 +39,7 @@ class ResultPresentation:
 
 _LANGUAGES = {"libras": "巴西手语", "csl": "中国手语"}
 _BACKENDS = {"random_forest_v1": "随机森林", "onnx_classifier_v1": "ONNX 动作分类模型",
-             "onnx_ctc": "ONNX 连续词序列模型"}
+             "onnx_ctc": "ONNX 连续词序列模型", "uni_sign_pose_slt": "Uni-Sign Pose-only（实验）"}
 _CAPABILITIES = {"clip": "单个动作识别"}
 _MISSING_ZH = "中文释义待补充"
 _MISSING_PT = "葡语释义待补充"
@@ -123,10 +123,10 @@ def describe_result(result: RecognitionResult, caption: Caption) -> ResultPresen
 
     prediction = result.prediction
     if result.task_type == "text":
-        details["识别任务"] = "文本输出"
+        details["识别任务"] = "中文句子翻译"
         details["文本语言"] = prediction.language
         details["分数类型"] = result.score_type
-        return ResultPresentation("文本输出完成", caption.zh, caption.pt, caption.notice, details)
+        return ResultPresentation("中文句子候选完成", caption.zh, caption.pt, caption.notice, details)
     if result.task_type == "gloss_sequence":
         details["识别任务"] = "中文手语词序列"
         details["解码方式"] = prediction.decoder
@@ -179,7 +179,7 @@ def describe_runtime_model(info: dict | None, capabilities: dict | None,
                 text.update(entry.display_text)
             zh, pt = _display_text(text, label)
             words.append(VocabularyWord(label, zh, pt, bool(entry and entry.review_status == "draft")))
-    task_text = {"classification": "完整动作分类", "gloss_sequence": "完整表达词序列识别", "text": "文本输出"}[task]
+    task_text = {"classification": "完整动作分类", "gloss_sequence": "完整表达词序列识别", "text": "中文句子翻译"}[task]
     details = {"模型版本": info["model_id"], "模型generation": str(info["generation"]),
                "识别任务": task, "输入特征": "、".join(c["representation_id"] for c in capabilities["inputs"]),
                "识别能力": "、".join(capabilities["modes"]), "分数类型": capabilities["score_type"]}

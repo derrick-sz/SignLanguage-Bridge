@@ -17,3 +17,20 @@ Libras-EQT-UECE (RGB)/
 .env.*
 *.log
 docs/reports/**/sample_contact_sheet.jpg
+.conda-env/
+.cache/
+models/
+.tmp-unisign/
+.slrt-env/
+.tmp-slrt/
+EMNLP24_Online.zip
+
+# ---- P-1 freeze boundary (see experiments/p1/FREEZE.json) ----
+Paper-algorithm/
+outputs/
+experiments/p1/runs/*/artifact/
+experiments/p1/runs/*/predictions-raw/
+experiments/p1/runs/*/inputs/
+experiments/p1/runs/*/eval_records.jsonl
+experiments/p1/references/gt_1086.csv
+experiments/p1/references/pilot_50_diagnostic_EVAL_ONLY.csv

@@ -340,7 +340,7 @@ class GlossToken:
 
 @dataclass(frozen=True)
 class GlossSequencePrediction:
-    """A CTC gloss transcription; no natural-language translation is implied."""
+    """A gloss transcription; no natural-language translation is implied."""
 
     tokens: tuple[GlossToken, ...]
     decoder: str
@@ -348,8 +348,8 @@ class GlossSequencePrediction:
     def __post_init__(self) -> None:
         if not isinstance(self.tokens, tuple) or any(not isinstance(token, GlossToken) for token in self.tokens):
             raise ValueError("Sequence tokens must be a tuple of GlossToken objects")
-        if self.decoder not in {"greedy", "prefix_beam"}:
-            raise ValueError("Unsupported CTC decoder")
+        if self.decoder not in {"greedy", "prefix_beam", "slrt_window_majority"}:
+            raise ValueError("Unsupported Gloss decoder")
 
     @property
     def glosses(self) -> tuple[str, ...]:
