@@ -354,3 +354,21 @@ T-A5-1 (Fusion 接口) ── 全程可并行（零实现零接线）
 - **第二优先（CPU-only 全链路）**：T-A1-1 → T-A2-2 → T-A2-3 → T-A3-1。
 - **第三优先（契约收口）**：T-A4-1、T-A4-2。
 - 所有卡均不依赖 G2 结论；G2 结论只影响 T-A5-1 的后续实现与接线，以及 A2 的 `parallel_fusion/adaptive_cascade` 是否在后续启用（P0-A 内明确「未启用」）。
+
+---
+
+## 实施进度（Lead 维护，2026-10-27）
+
+| 任务卡 | 状态 | 提交 | 验收 |
+|---|---|---|---|
+| T-A0-1 证据契约与预测记录 | **DONE** | `d8df2c6` | 48 tests；GT 键集 24/24 与实验侧一致；全量 873 |
+| T-A1-1 ReplayAdapter（`replay_jsonl_v1`） | **DONE** | `98bc6e4` | 16 tests；Pilot-50 A 候选 50/50 逐字一致；全量 889 |
+| T-A2-1 V1 契约 schema 对齐 | **DONE** | `90f1239` | 26 tests（直读契约 YAML）；枚举逐值一致；全量 915 |
+| T-A2-2 异步 job 状态机与执行器 | IN PROGRESS（task-16） | — | 7 态转移矩阵 + replay 驱动端到端 |
+| T-A2-3 `POST /v1/videos/infer` + `GET /v1/jobs/{job_id}` | PENDING | — | 依赖 A2-2 |
+| T-A3-1 视频媒体元数据与 job 生命周期 | PENDING | — | 依赖 A2-2 |
+| T-A4-1 `sign_system` 路由显式化 | PENDING | — | LIBRAS→503 MODEL_UNAVAILABLE |
+| T-A4-2 健康端点 + 错误码对齐 | PENDING | — | 依赖 A2-1（已具备） |
+| T-A5-1 FusionController 接口占位 | PENDING（等 G2 重启条件） | — | G2=FAIL，仅接口 |
+
+回归基线：repo root `pytest -q` = **915 passed / 10 skipped**（10 个 skip 为 pydantic-only 既有 API 测试；pydantic 缺失是环境事实，已记录）。
