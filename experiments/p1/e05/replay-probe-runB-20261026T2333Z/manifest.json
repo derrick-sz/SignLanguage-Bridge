@@ -1,0 +1,184 @@
+{
+  "schema_version": 1,
+  "run_id": "replay-probe-20261026T233037Z",
+  "experiment": "E05-task8-replay",
+  "run_status": "PASS",
+  "created_at": "2026-10-26T15:30:37+00:00",
+  "purpose": "SLRT replay (original timeline) wall-clock first-stable probe: real wall delivery of native partials, rewrite/retraction rates, queue-to-delivery latency and replay RTF",
+  "code": {
+    "repository": "SignLanguage-Bridge",
+    "git_sha": "8ed5a06416776715a63370114f178afca96deda7",
+    "branch": "codex/model-contract-auto-captions",
+    "dirty_tree": true,
+    "dirty_path_count": 3
+  },
+  "host": {
+    "host_alias": "PC-HPVYVOTACGSS",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "cpu": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+    "cpu_count": 20,
+    "memory_total_gb": 31.84
+  },
+  "gpu_baseline": {
+    "sampled_at": "2026-10-26T15:30:38+00:00",
+    "devices": [
+      {
+        "index": 0,
+        "name": "NVIDIA GeForce RTX 5060 Ti",
+        "driver_version": "616.92",
+        "memory_total_mb": 16311.0,
+        "memory_used_mb": 2196.0,
+        "memory_free_mb": 13855.0,
+        "utilization_gpu_pct": 12.0
+      }
+    ]
+  },
+  "privacy": {
+    "no_gt_in_perf_artifacts": true,
+    "no_raw_media_export": true,
+    "no_credentials_in_logs": true
+  },
+  "model_assets": {
+    "slrt": {
+      "config": "E:\\githubproject\\SignLanguage-Bridge\\configs\\slrt-csl-hrnet-npz.example.json",
+      "config_sha256": "a9600cc3e5c44931623c0ad9e87818ca5111d976e83d219861c23ddd3b16deb9",
+      "checkpoint": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\EMNLP24_Online\\CSL-Daily\\ckpts\\cslr_best.ckpt",
+      "checkpoint_bytes": 499554423,
+      "checkpoint_sha256_declared": "e9fdd3a66d9667e7685c2b1437c67b8cbc9e45d2562730f04c0226717b7cbd4d",
+      "vocabulary": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\EMNLP24_Online\\CSL-Daily\\meta\\csl_iso_with_blank.vocab",
+      "window_size": 16,
+      "stride": 1,
+      "vote_size": 7
+    }
+  },
+  "environment": {
+    "python": "3.10.22",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "host_alias": "PC-HPVYVOTACGSS",
+    "cpu_count": 20,
+    "torch": "2.9.1+cu128",
+    "cuda_available": true,
+    "cuda_version": "12.8",
+    "gpu_name": "NVIDIA GeForce RTX 5060 Ti",
+    "gpu_total_vram_mb": 16283.4,
+    "gpu_capability": "12.0"
+  },
+  "planned": {
+    "samples": [
+      "S000502_P0000_T00",
+      "S003181_P0001_T00",
+      "S002951_P0002_T00",
+      "S004204_P0003_T00",
+      "S000414_P0004_T00",
+      "S001656_P0005_T00",
+      "S005040_P0006_T00",
+      "S002092_P0007_T00",
+      "S000230_P0008_T00",
+      "S005276_P0009_T00"
+    ],
+    "negatives_requested": 2,
+    "concat": true,
+    "backend_positive": "hrnet-npz",
+    "backend_negative": "rtmpose-experimental",
+    "gpu_baseline": {
+      "sampled_at": "2026-10-26T15:30:37+00:00",
+      "devices": [
+        {
+          "index": 0,
+          "name": "NVIDIA GeForce RTX 5060 Ti",
+          "driver_version": "616.92",
+          "memory_total_mb": 16311.0,
+          "memory_used_mb": 2199.0,
+          "memory_free_mb": 13852.0,
+          "utilization_gpu_pct": 11.0
+        }
+      ]
+    },
+    "ram": {
+      "total_gb": 31.84,
+      "available_gb": 10.08,
+      "used_percent": 68.3
+    },
+    "exclusive_check": "no other CUDA compute app is expected; desktop baseline recorded"
+  },
+  "evidence_scope": "replay at original timeline (video_packets paced by source timestamps) -- semi-real, NOT live camera acceptance",
+  "no_source_modification": "slbridge/ untouched; wall times recorded by wrapper in this script",
+  "commands": [
+    "E:\\githubproject\\SignLanguage-Bridge\\.conda-env\\python.exe experiments\\p1\\e05\\replay_probe.py run --run-dir experiments/p1/e05/replay-probe-runB-20261026T2333Z --samples 10 --negatives 2 --concat --max-foreign-vram-mb 4500"
+  ],
+  "negative_clips": [
+    {
+      "kind": "black",
+      "source": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\trimmed\\S000502_P0000_T00.mp4",
+      "path": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\e05\\replay-probe-runB-20261026T2333Z\\negatives\\black.mp4",
+      "frames": 108,
+      "fps": 30.0,
+      "size": [
+        1280,
+        1280
+      ],
+      "video_id": "negative-black",
+      "video_path": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\e05\\replay-probe-runB-20261026T2333Z\\negatives\\black.mp4",
+      "pose_npz": null,
+      "frontend": "rtmpose-experimental"
+    },
+    {
+      "kind": "mirror",
+      "source": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\trimmed\\S000502_P0000_T00.mp4",
+      "path": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\e05\\replay-probe-runB-20261026T2333Z\\negatives\\mirror.mp4",
+      "frames": 108,
+      "fps": 30.0,
+      "size": [
+        1280,
+        1280
+      ],
+      "note": "pixels mirrored consistently; RTMPose frontend extracts pose from the mirrored pixels",
+      "video_id": "negative-mirror",
+      "video_path": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\e05\\replay-probe-runB-20261026T2333Z\\negatives\\mirror.mp4",
+      "pose_npz": null,
+      "frontend": "rtmpose-experimental"
+    },
+    {
+      "kind": "concat",
+      "sources": [
+        "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\trimmed\\S000502_P0000_T00.mp4",
+        "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\trimmed\\S003181_P0001_T00.mp4"
+      ],
+      "path": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\e05\\replay-probe-runB-20261026T2333Z\\negatives\\concat.mp4",
+      "frames": 202,
+      "fps": 30.0,
+      "note": "two sentence clips glued with no pause; used to observe cross-sentence behaviour",
+      "video_id": "stress-concat",
+      "video_path": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\e05\\replay-probe-runB-20261026T2333Z\\negatives\\concat.mp4",
+      "pose_npz": null,
+      "frontend": "rtmpose-experimental"
+    }
+  ],
+  "finished_at": "2026-10-26T15:33:03+00:00",
+  "videos_run": [
+    "warmup-S000502_P0000_T00",
+    "S000502_P0000_T00",
+    "S003181_P0001_T00",
+    "S002951_P0002_T00",
+    "S004204_P0003_T00",
+    "S000414_P0004_T00",
+    "S001656_P0005_T00",
+    "S005040_P0006_T00",
+    "S002092_P0007_T00",
+    "S000230_P0008_T00",
+    "S005276_P0009_T00",
+    "negative-black",
+    "negative-mirror",
+    "stress-concat"
+  ],
+  "errors": [],
+  "output_files": [
+    "manifest.json",
+    "stream_events.jsonl",
+    "summary.json",
+    "window_events.jsonl"
+  ],
+  "report": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\e05\\replay_streaming_report.md",
+  "sibling_run": "replay-probe-20261027T0002Z",
+  "takeaway": "RTF P50 2.2-2.6 on replay pacing; first final token appears around video end (P50 3.7-3.9 s after playback start); black frame gating works (108/108 rejected, 0 windows); mirror not gated; no sentence boundary invented on concatenated clips"
+}

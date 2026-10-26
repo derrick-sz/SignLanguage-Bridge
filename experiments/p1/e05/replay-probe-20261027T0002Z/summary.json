@@ -1,0 +1,1784 @@
+{
+  "schema_version": 1,
+  "run_id": "replay-probe-20261026T232802Z",
+  "created_at": "2026-10-26T15:30:23+00:00",
+  "scope": "SLRT replay at original timeline; semi-real wall-clock evidence, NOT live camera acceptance",
+  "gpu_baseline": {
+    "sampled_at": "2026-10-26T15:28:02+00:00",
+    "devices": [
+      {
+        "index": 0,
+        "name": "NVIDIA GeForce RTX 5060 Ti",
+        "driver_version": "616.92",
+        "memory_total_mb": 16311.0,
+        "memory_used_mb": 2591.0,
+        "memory_free_mb": 13460.0,
+        "utilization_gpu_pct": 8.0
+      }
+    ]
+  },
+  "environment": {
+    "python": "3.10.22",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "host_alias": "PC-HPVYVOTACGSS",
+    "cpu_count": 20,
+    "torch": "2.9.1+cu128",
+    "cuda_available": true,
+    "cuda_version": "12.8",
+    "gpu_name": "NVIDIA GeForce RTX 5060 Ti",
+    "gpu_total_vram_mb": 16283.4,
+    "gpu_capability": "12.0"
+  },
+  "model": {
+    "slrt_checkpoint_sha256": "e9fdd3a66d9667e7685c2b1437c67b8cbc9e45d2562730f04c0226717b7cbd4d",
+    "vocabulary_sha256": "0c4984f0dd3e7897b8c8d9e6e99a848b60814a5d9cf7a49baf7cc9b9cd124c76",
+    "window_size": 16,
+    "stride": 1,
+    "vote_size": 7,
+    "lookahead_derivation": "window right context 8 frames + (vote_size//2)*stride 3 frames = 11 frames of observed lookahead before the centre vote is available"
+  },
+  "samples": [
+    "S000502_P0000_T00",
+    "S003181_P0001_T00",
+    "S002951_P0002_T00",
+    "S004204_P0003_T00",
+    "S000414_P0004_T00",
+    "S001656_P0005_T00",
+    "S005040_P0006_T00",
+    "S002092_P0007_T00",
+    "S000230_P0008_T00",
+    "S005276_P0009_T00"
+  ],
+  "videos": [
+    {
+      "video_id": "warmup-S000502_P0000_T00",
+      "mode": "warmup",
+      "kind": "warmup",
+      "video_path": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\trimmed\\S000502_P0000_T00.mp4",
+      "pose_npz": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\pose\\S000502_P0000_T00.npz",
+      "frontend": "hrnet-npz",
+      "source_frames": 49,
+      "video_duration_seconds": 3.5667,
+      "replay_wall_seconds": 6.7212,
+      "rtf_wall_over_video": 1.8844,
+      "status": "final",
+      "error": null,
+      "gloss_sequence": [
+        "累"
+      ],
+      "windows_processed": 41,
+      "windows_per_second": 6.1001,
+      "frames_received": 49,
+      "frames_captured": 108,
+      "quality_rejected_frames": 0,
+      "dropped_frames_stream": 59,
+      "queue_dropped": 59,
+      "max_queue_depth": 32,
+      "first_partial_wall_ms": 5192.439,
+      "first_final_wall_ms": 6352.814,
+      "first_stable_final_wall_ms": 6352.814,
+      "first_stable_result_field_ms": 6352.80990001047,
+      "first_frame_arrival_wall_ms": 92.053,
+      "first_partial_after_playback_start_ms": 5100.386,
+      "first_stable_after_playback_start_ms": 6260.761,
+      "playback_start_to_session_start_ms": 92.053,
+      "partial_event_count": 19,
+      "final_event_count": 1,
+      "retraction_count": 0,
+      "retraction_reasons": [],
+      "partial_caption_states": 19,
+      "partial_caption_changes": 0,
+      "partial_caption_dead_ends": 0,
+      "partial_rewrite_rate": 0.0,
+      "caption_change_rate": 0.0,
+      "window_inference_ms": {
+        "p50": 48.795,
+        "p95": 87.675,
+        "count": 41
+      },
+      "head_to_delivery_ms": {
+        "p50": 49.114,
+        "p95": 51.112,
+        "count": 20
+      },
+      "frame_arrival_to_worker_ms": {
+        "p50": 1322.961,
+        "p95": 1637.936,
+        "count": 49
+      },
+      "ready_to_inference_start_ms": {
+        "p50": 4380.947,
+        "p95": 4703.879,
+        "count": 41
+      },
+      "enabling_frame_to_delivery_ms": {
+        "p50": 4482.871,
+        "p95": 4638.615,
+        "count": 20
+      },
+      "model_blocks": {
+        "pose_ms": {
+          "total_ms": 1.159,
+          "count": 49,
+          "p50_ms": 0.02,
+          "p95_ms": 0.041
+        },
+        "preprocess_ms": {
+          "total_ms": 3865.436,
+          "count": 41,
+          "p50_ms": 15.24,
+          "p95_ms": 23.443
+        },
+        "inference_ms": {
+          "total_ms": 1972.459,
+          "count": 41,
+          "p50_ms": 33.344,
+          "p95_ms": 66.689
+        },
+        "window_total_ms": {
+          "total_ms": 5851.194,
+          "count": 41,
+          "p50_ms": 48.726,
+          "p95_ms": 87.609
+        }
+      },
+      "vram": {
+        "gpu_peak_allocated_mb_after": 453.222,
+        "gpu_peak_allocated_mb_before": 160.387,
+        "scope": "process torch allocator peak"
+      },
+      "session_error": null,
+      "capture_source_opened": true,
+      "source_release_confirmed": true,
+      "result_source": {}
+    },
+    {
+      "video_id": "S000502_P0000_T00",
+      "mode": "positive",
+      "kind": "positive",
+      "video_path": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\trimmed\\S000502_P0000_T00.mp4",
+      "pose_npz": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\pose\\S000502_P0000_T00.npz",
+      "frontend": "hrnet-npz",
+      "source_frames": 105,
+      "video_duration_seconds": 3.5667,
+      "replay_wall_seconds": 10.9266,
+      "rtf_wall_over_video": 3.0635,
+      "status": "final",
+      "error": null,
+      "gloss_sequence": [
+        "学校",
+        "累"
+      ],
+      "windows_processed": 81,
+      "windows_per_second": 7.4131,
+      "frames_received": 105,
+      "frames_captured": 108,
+      "quality_rejected_frames": 0,
+      "dropped_frames_stream": 3,
+      "queue_dropped": 3,
+      "max_queue_depth": 32,
+      "first_partial_wall_ms": 2577.686,
+      "first_final_wall_ms": 4826.932,
+      "first_stable_final_wall_ms": 10545.775,
+      "first_stable_result_field_ms": 4826.927299960516,
+      "first_frame_arrival_wall_ms": 122.617,
+      "first_partial_after_playback_start_ms": 2455.069,
+      "first_stable_after_playback_start_ms": 10423.158,
+      "playback_start_to_session_start_ms": 122.617,
+      "partial_event_count": 35,
+      "final_event_count": 2,
+      "retraction_count": 1,
+      "retraction_reasons": [
+        "input_discontinuity"
+      ],
+      "partial_caption_states": 35,
+      "partial_caption_changes": 2,
+      "partial_caption_dead_ends": 3,
+      "partial_rewrite_rate": 0.0857,
+      "caption_change_rate": 0.0571,
+      "window_inference_ms": {
+        "p50": 52.426,
+        "p95": 160.229,
+        "count": 81
+      },
+      "head_to_delivery_ms": {
+        "p50": 50.872,
+        "p95": 157.9,
+        "count": 35
+      },
+      "frame_arrival_to_worker_ms": {
+        "p50": 2107.135,
+        "p95": 2434.63,
+        "count": 105
+      },
+      "ready_to_inference_start_ms": {
+        "p50": 6752.223,
+        "p95": 7267.147,
+        "count": 81
+      },
+      "enabling_frame_to_delivery_ms": {
+        "p50": 6856.967,
+        "p95": 7110.395,
+        "count": 35
+      },
+      "model_blocks": {
+        "pose_ms": {
+          "total_ms": 2.997,
+          "count": 105,
+          "p50_ms": 0.026,
+          "p95_ms": 0.052
+        },
+        "preprocess_ms": {
+          "total_ms": 2218.765,
+          "count": 81,
+          "p50_ms": 16.584,
+          "p95_ms": 46.75
+        },
+        "inference_ms": {
+          "total_ms": 5930.437,
+          "count": 81,
+          "p50_ms": 35.48,
+          "p95_ms": 118.609
+        },
+        "window_total_ms": {
+          "total_ms": 8158.461,
+          "count": 81,
+          "p50_ms": 52.336,
+          "p95_ms": 160.152
+        }
+      },
+      "vram": {
+        "gpu_peak_allocated_mb_after": 453.222,
+        "gpu_peak_allocated_mb_before": 453.222,
+        "scope": "process torch allocator peak"
+      },
+      "session_error": null,
+      "capture_source_opened": true,
+      "source_release_confirmed": true,
+      "result_source": {},
+      "video_seconds_from_pilot": 3.6
+    },
+    {
+      "video_id": "S003181_P0001_T00",
+      "mode": "positive",
+      "kind": "positive",
+      "video_path": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\trimmed\\S003181_P0001_T00.mp4",
+      "pose_npz": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\pose\\S003181_P0001_T00.npz",
+      "frontend": "hrnet-npz",
+      "source_frames": 91,
+      "video_duration_seconds": 3.1031,
+      "replay_wall_seconds": 7.8251,
+      "rtf_wall_over_video": 2.5217,
+      "status": "final",
+      "error": null,
+      "gloss_sequence": [
+        "爸爸",
+        "我",
+        "惭愧"
+      ],
+      "windows_processed": 67,
+      "windows_per_second": 8.5622,
+      "frames_received": 91,
+      "frames_captured": 94,
+      "quality_rejected_frames": 0,
+      "dropped_frames_stream": 3,
+      "queue_dropped": 3,
+      "max_queue_depth": 32,
+      "first_partial_wall_ms": 1387.626,
+      "first_final_wall_ms": 3154.055,
+      "first_stable_final_wall_ms": 6250.056,
+      "first_stable_result_field_ms": 3154.050399956759,
+      "first_frame_arrival_wall_ms": 89.249,
+      "first_partial_after_playback_start_ms": 1298.377,
+      "first_stable_after_playback_start_ms": 6160.807,
+      "playback_start_to_session_start_ms": 89.249,
+      "partial_event_count": 33,
+      "final_event_count": 3,
+      "retraction_count": 1,
+      "retraction_reasons": [
+        "input_discontinuity"
+      ],
+      "partial_caption_states": 33,
+      "partial_caption_changes": 3,
+      "partial_caption_dead_ends": 1,
+      "partial_rewrite_rate": 0.0303,
+      "caption_change_rate": 0.0909,
+      "window_inference_ms": {
+        "p50": 51.106,
+        "p95": 153.42,
+        "count": 67
+      },
+      "head_to_delivery_ms": {
+        "p50": 51.642,
+        "p95": 148.841,
+        "count": 36
+      },
+      "frame_arrival_to_worker_ms": {
+        "p50": 1692.27,
+        "p95": 1838.098,
+        "count": 91
+      },
+      "ready_to_inference_start_ms": {
+        "p50": 4709.817,
+        "p95": 4830.197,
+        "count": 67
+      },
+      "enabling_frame_to_delivery_ms": {
+        "p50": 4752.949,
+        "p95": 4807.546,
+        "count": 36
+      },
+      "model_blocks": {
+        "pose_ms": {
+          "total_ms": 2.62,
+          "count": 91,
+          "p50_ms": 0.025,
+          "p95_ms": 0.053
+        },
+        "preprocess_ms": {
+          "total_ms": 1500.304,
+          "count": 67,
+          "p50_ms": 16.285,
+          "p95_ms": 37.708
+        },
+        "inference_ms": {
+          "total_ms": 4290.299,
+          "count": 67,
+          "p50_ms": 34.657,
+          "p95_ms": 109.889
+        },
+        "window_total_ms": {
+          "total_ms": 5797.228,
+          "count": 67,
+          "p50_ms": 51.033,
+          "p95_ms": 143.989
+        }
+      },
+      "vram": {
+        "gpu_peak_allocated_mb_after": 453.222,
+        "gpu_peak_allocated_mb_before": 453.222,
+        "scope": "process torch allocator peak"
+      },
+      "session_error": null,
+      "capture_source_opened": true,
+      "source_release_confirmed": true,
+      "result_source": {},
+      "video_seconds_from_pilot": 3.1365
+    },
+    {
+      "video_id": "S002951_P0002_T00",
+      "mode": "positive",
+      "kind": "positive",
+      "video_path": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\trimmed\\S002951_P0002_T00.mp4",
+      "pose_npz": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\pose\\S002951_P0002_T00.npz",
+      "frontend": "hrnet-npz",
+      "source_frames": 127,
+      "video_duration_seconds": 4.5,
+      "replay_wall_seconds": 10.1882,
+      "rtf_wall_over_video": 2.264,
+      "status": "final",
+      "error": null,
+      "gloss_sequence": [
+        "沉迷",
+        "发"
+      ],
+      "windows_processed": 79,
+      "windows_per_second": 7.7541,
+      "frames_received": 127,
+      "frames_captured": 136,
+      "quality_rejected_frames": 0,
+      "dropped_frames_stream": 9,
+      "queue_dropped": 9,
+      "max_queue_depth": 32,
+      "first_partial_wall_ms": 2249.202,
+      "first_final_wall_ms": 8700.391,
+      "first_stable_final_wall_ms": 8700.391,
+      "first_stable_result_field_ms": 8700.386499986053,
+      "first_frame_arrival_wall_ms": 91.3,
+      "first_partial_after_playback_start_ms": 2157.902,
+      "first_stable_after_playback_start_ms": 8609.091,
+      "playback_start_to_session_start_ms": 91.3,
+      "partial_event_count": 26,
+      "final_event_count": 2,
+      "retraction_count": 3,
+      "retraction_reasons": [
+        "input_discontinuity"
+      ],
+      "partial_caption_states": 26,
+      "partial_caption_changes": 3,
+      "partial_caption_dead_ends": 10,
+      "partial_rewrite_rate": 0.3846,
+      "caption_change_rate": 0.1154,
+      "window_inference_ms": {
+        "p50": 106.991,
+        "p95": 154.05,
+        "count": 79
+      },
+      "head_to_delivery_ms": {
+        "p50": 50.797,
+        "p95": 146.201,
+        "count": 28
+      },
+      "frame_arrival_to_worker_ms": {
+        "p50": 1679.095,
+        "p95": 1810.506,
+        "count": 127
+      },
+      "ready_to_inference_start_ms": {
+        "p50": 7112.866,
+        "p95": 7239.569,
+        "count": 79
+      },
+      "enabling_frame_to_delivery_ms": {
+        "p50": 7240.461,
+        "p95": 7299.926,
+        "count": 28
+      },
+      "model_blocks": {
+        "pose_ms": {
+          "total_ms": 3.56,
+          "count": 127,
+          "p50_ms": 0.025,
+          "p95_ms": 0.056
+        },
+        "preprocess_ms": {
+          "total_ms": 1944.889,
+          "count": 79,
+          "p50_ms": 26.39,
+          "p95_ms": 43.143
+        },
+        "inference_ms": {
+          "total_ms": 5571.41,
+          "count": 79,
+          "p50_ms": 74.186,
+          "p95_ms": 116.463
+        },
+        "window_total_ms": {
+          "total_ms": 7539.323,
+          "count": 79,
+          "p50_ms": 106.916,
+          "p95_ms": 153.906
+        }
+      },
+      "vram": {
+        "gpu_peak_allocated_mb_after": 453.222,
+        "gpu_peak_allocated_mb_before": 453.222,
+        "scope": "process torch allocator peak"
+      },
+      "session_error": null,
+      "capture_source_opened": true,
+      "source_release_confirmed": true,
+      "result_source": {},
+      "video_seconds_from_pilot": 4.5333
+    },
+    {
+      "video_id": "S004204_P0003_T00",
+      "mode": "positive",
+      "kind": "positive",
+      "video_path": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\trimmed\\S004204_P0003_T00.mp4",
+      "pose_npz": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\pose\\S004204_P0003_T00.npz",
+      "frontend": "hrnet-npz",
+      "source_frames": 100,
+      "video_duration_seconds": 3.5,
+      "replay_wall_seconds": 9.226,
+      "rtf_wall_over_video": 2.636,
+      "status": "final",
+      "error": null,
+      "gloss_sequence": [
+        "注意",
+        "驾驶"
+      ],
+      "windows_processed": 68,
+      "windows_per_second": 7.3704,
+      "frames_received": 100,
+      "frames_captured": 106,
+      "quality_rejected_frames": 0,
+      "dropped_frames_stream": 6,
+      "queue_dropped": 6,
+      "max_queue_depth": 32,
+      "first_partial_wall_ms": 2248.51,
+      "first_final_wall_ms": 7231.384,
+      "first_stable_final_wall_ms": 7231.384,
+      "first_stable_result_field_ms": 7231.379699951503,
+      "first_frame_arrival_wall_ms": 87.474,
+      "first_partial_after_playback_start_ms": 2161.036,
+      "first_stable_after_playback_start_ms": 7143.91,
+      "playback_start_to_session_start_ms": 87.474,
+      "partial_event_count": 26,
+      "final_event_count": 2,
+      "retraction_count": 4,
+      "retraction_reasons": [
+        "input_discontinuity"
+      ],
+      "partial_caption_states": 26,
+      "partial_caption_changes": 5,
+      "partial_caption_dead_ends": 12,
+      "partial_rewrite_rate": 0.4615,
+      "caption_change_rate": 0.1923,
+      "window_inference_ms": {
+        "p50": 67.981,
+        "p95": 174.609,
+        "count": 68
+      },
+      "head_to_delivery_ms": {
+        "p50": 63.154,
+        "p95": 160.045,
+        "count": 26
+      },
+      "frame_arrival_to_worker_ms": {
+        "p50": 1772.842,
+        "p95": 2014.665,
+        "count": 100
+      },
+      "ready_to_inference_start_ms": {
+        "p50": 5980.363,
+        "p95": 6213.54,
+        "count": 68
+      },
+      "enabling_frame_to_delivery_ms": {
+        "p50": 6029.975,
+        "p95": 6198.808,
+        "count": 26
+      },
+      "model_blocks": {
+        "pose_ms": {
+          "total_ms": 3.352,
+          "count": 100,
+          "p50_ms": 0.028,
+          "p95_ms": 0.064
+        },
+        "preprocess_ms": {
+          "total_ms": 1931.47,
+          "count": 68,
+          "p50_ms": 23.412,
+          "p95_ms": 55.529
+        },
+        "inference_ms": {
+          "total_ms": 5025.814,
+          "count": 68,
+          "p50_ms": 44.273,
+          "p95_ms": 135.81
+        },
+        "window_total_ms": {
+          "total_ms": 6965.543,
+          "count": 68,
+          "p50_ms": 67.894,
+          "p95_ms": 174.486
+        }
+      },
+      "vram": {
+        "gpu_peak_allocated_mb_after": 453.222,
+        "gpu_peak_allocated_mb_before": 453.222,
+        "scope": "process torch allocator peak"
+      },
+      "session_error": null,
+      "capture_source_opened": true,
+      "source_release_confirmed": true,
+      "result_source": {},
+      "video_seconds_from_pilot": 3.5333
+    },
+    {
+      "video_id": "S000414_P0004_T00",
+      "mode": "positive",
+      "kind": "positive",
+      "video_path": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\trimmed\\S000414_P0004_T00.mp4",
+      "pose_npz": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\pose\\S000414_P0004_T00.npz",
+      "frontend": "hrnet-npz",
+      "source_frames": 110,
+      "video_duration_seconds": 3.7704,
+      "replay_wall_seconds": 11.574,
+      "rtf_wall_over_video": 3.0697,
+      "status": "final",
+      "error": null,
+      "gloss_sequence": [
+        "时间",
+        "准备",
+        "到"
+      ],
+      "windows_processed": 78,
+      "windows_per_second": 6.7393,
+      "frames_received": 110,
+      "frames_captured": 114,
+      "quality_rejected_frames": 0,
+      "dropped_frames_stream": 4,
+      "queue_dropped": 4,
+      "max_queue_depth": 32,
+      "first_partial_wall_ms": 2412.956,
+      "first_final_wall_ms": 4124.34,
+      "first_stable_final_wall_ms": 10405.779,
+      "first_stable_result_field_ms": 4124.335600004997,
+      "first_frame_arrival_wall_ms": 120.813,
+      "first_partial_after_playback_start_ms": 2292.143,
+      "first_stable_after_playback_start_ms": 10284.966,
+      "playback_start_to_session_start_ms": 120.813,
+      "partial_event_count": 36,
+      "final_event_count": 3,
+      "retraction_count": 3,
+      "retraction_reasons": [
+        "input_discontinuity"
+      ],
+      "partial_caption_states": 36,
+      "partial_caption_changes": 5,
+      "partial_caption_dead_ends": 9,
+      "partial_rewrite_rate": 0.25,
+      "caption_change_rate": 0.1389,
+      "window_inference_ms": {
+        "p50": 125.977,
+        "p95": 184.733,
+        "count": 78
+      },
+      "head_to_delivery_ms": {
+        "p50": 54.375,
+        "p95": 165.34,
+        "count": 36
+      },
+      "frame_arrival_to_worker_ms": {
+        "p50": 2080.675,
+        "p95": 2604.304,
+        "count": 110
+      },
+      "ready_to_inference_start_ms": {
+        "p50": 7356.104,
+        "p95": 8777.636,
+        "count": 78
+      },
+      "enabling_frame_to_delivery_ms": {
+        "p50": 8246.787,
+        "p95": 8817.191,
+        "count": 36
+      },
+      "model_blocks": {
+        "pose_ms": {
+          "total_ms": 3.557,
+          "count": 110,
+          "p50_ms": 0.027,
+          "p95_ms": 0.06
+        },
+        "preprocess_ms": {
+          "total_ms": 2307.313,
+          "count": 78,
+          "p50_ms": 33.924,
+          "p95_ms": 45.406
+        },
+        "inference_ms": {
+          "total_ms": 6466.477,
+          "count": 78,
+          "p50_ms": 88.727,
+          "p95_ms": 142.753
+        },
+        "window_total_ms": {
+          "total_ms": 8781.872,
+          "count": 78,
+          "p50_ms": 125.897,
+          "p95_ms": 184.646
+        }
+      },
+      "vram": {
+        "gpu_peak_allocated_mb_after": 453.222,
+        "gpu_peak_allocated_mb_before": 453.222,
+        "scope": "process torch allocator peak"
+      },
+      "session_error": null,
+      "capture_source_opened": true,
+      "source_release_confirmed": true,
+      "result_source": {},
+      "video_seconds_from_pilot": 3.8038
+    },
+    {
+      "video_id": "S001656_P0005_T00",
+      "mode": "positive",
+      "kind": "positive",
+      "video_path": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\trimmed\\S001656_P0005_T00.mp4",
+      "pose_npz": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\pose\\S001656_P0005_T00.npz",
+      "frontend": "hrnet-npz",
+      "source_frames": 122,
+      "video_duration_seconds": 4.2,
+      "replay_wall_seconds": 11.9746,
+      "rtf_wall_over_video": 2.8511,
+      "status": "final",
+      "error": null,
+      "gloss_sequence": [
+        "治疗",
+        "手术"
+      ],
+      "windows_processed": 82,
+      "windows_per_second": 6.8478,
+      "frames_received": 122,
+      "frames_captured": 127,
+      "quality_rejected_frames": 0,
+      "dropped_frames_stream": 5,
+      "queue_dropped": 5,
+      "max_queue_depth": 32,
+      "first_partial_wall_ms": 2210.349,
+      "first_final_wall_ms": 3835.85,
+      "first_stable_final_wall_ms": 11375.397,
+      "first_stable_result_field_ms": 3835.8449999941513,
+      "first_frame_arrival_wall_ms": 117.237,
+      "first_partial_after_playback_start_ms": 2093.112,
+      "first_stable_after_playback_start_ms": 11258.16,
+      "playback_start_to_session_start_ms": 117.237,
+      "partial_event_count": 34,
+      "final_event_count": 2,
+      "retraction_count": 2,
+      "retraction_reasons": [
+        "input_discontinuity"
+      ],
+      "partial_caption_states": 34,
+      "partial_caption_changes": 3,
+      "partial_caption_dead_ends": 8,
+      "partial_rewrite_rate": 0.2353,
+      "caption_change_rate": 0.0882,
+      "window_inference_ms": {
+        "p50": 135.878,
+        "p95": 158.18,
+        "count": 82
+      },
+      "head_to_delivery_ms": {
+        "p50": 53.122,
+        "p95": 153.254,
+        "count": 33
+      },
+      "frame_arrival_to_worker_ms": {
+        "p50": 2040.919,
+        "p95": 2467.277,
+        "count": 122
+      },
+      "ready_to_inference_start_ms": {
+        "p50": 7270.471,
+        "p95": 9241.186,
+        "count": 82
+      },
+      "enabling_frame_to_delivery_ms": {
+        "p50": 8986.892,
+        "p95": 9243.497,
+        "count": 33
+      },
+      "model_blocks": {
+        "pose_ms": {
+          "total_ms": 3.456,
+          "count": 122,
+          "p50_ms": 0.025,
+          "p95_ms": 0.053
+        },
+        "preprocess_ms": {
+          "total_ms": 2334.593,
+          "count": 82,
+          "p50_ms": 34.434,
+          "p95_ms": 42.521
+        },
+        "inference_ms": {
+          "total_ms": 6626.401,
+          "count": 82,
+          "p50_ms": 99.906,
+          "p95_ms": 125.972
+        },
+        "window_total_ms": {
+          "total_ms": 8969.053,
+          "count": 82,
+          "p50_ms": 135.749,
+          "p95_ms": 158.087
+        }
+      },
+      "vram": {
+        "gpu_peak_allocated_mb_after": 453.222,
+        "gpu_peak_allocated_mb_before": 453.222,
+        "scope": "process torch allocator peak"
+      },
+      "session_error": null,
+      "capture_source_opened": true,
+      "source_release_confirmed": true,
+      "result_source": {},
+      "video_seconds_from_pilot": 4.2333
+    },
+    {
+      "video_id": "S005040_P0006_T00",
+      "mode": "positive",
+      "kind": "positive",
+      "video_path": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\trimmed\\S005040_P0006_T00.mp4",
+      "pose_npz": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\pose\\S005040_P0006_T00.npz",
+      "frontend": "hrnet-npz",
+      "source_frames": 132,
+      "video_duration_seconds": 4.6046,
+      "replay_wall_seconds": 13.0658,
+      "rtf_wall_over_video": 2.8376,
+      "status": "final",
+      "error": null,
+      "gloss_sequence": [
+        "人",
+        "工作",
+        "反"
+      ],
+      "windows_processed": 92,
+      "windows_per_second": 7.0413,
+      "frames_received": 132,
+      "frames_captured": 139,
+      "quality_rejected_frames": 0,
+      "dropped_frames_stream": 7,
+      "queue_dropped": 7,
+      "max_queue_depth": 32,
+      "first_partial_wall_ms": 2324.727,
+      "first_final_wall_ms": 4000.279,
+      "first_stable_final_wall_ms": 11809.649,
+      "first_stable_result_field_ms": 4000.2730999840423,
+      "first_frame_arrival_wall_ms": 127.241,
+      "first_partial_after_playback_start_ms": 2197.486,
+      "first_stable_after_playback_start_ms": 11682.408,
+      "playback_start_to_session_start_ms": 127.241,
+      "partial_event_count": 33,
+      "final_event_count": 3,
+      "retraction_count": 2,
+      "retraction_reasons": [
+        "input_discontinuity"
+      ],
+      "partial_caption_states": 33,
+      "partial_caption_changes": 4,
+      "partial_caption_dead_ends": 9,
+      "partial_rewrite_rate": 0.2727,
+      "caption_change_rate": 0.1212,
+      "window_inference_ms": {
+        "p50": 136.167,
+        "p95": 156.459,
+        "count": 92
+      },
+      "head_to_delivery_ms": {
+        "p50": 85.036,
+        "p95": 149.605,
+        "count": 32
+      },
+      "frame_arrival_to_worker_ms": {
+        "p50": 2063.83,
+        "p95": 2387.051,
+        "count": 132
+      },
+      "ready_to_inference_start_ms": {
+        "p50": 8387.833,
+        "p95": 9814.789,
+        "count": 92
+      },
+      "enabling_frame_to_delivery_ms": {
+        "p50": 7917.335,
+        "p95": 9824.097,
+        "count": 32
+      },
+      "model_blocks": {
+        "pose_ms": {
+          "total_ms": 3.637,
+          "count": 132,
+          "p50_ms": 0.025,
+          "p95_ms": 0.052
+        },
+        "preprocess_ms": {
+          "total_ms": 2629.581,
+          "count": 92,
+          "p50_ms": 33.18,
+          "p95_ms": 46.94
+        },
+        "inference_ms": {
+          "total_ms": 7169.309,
+          "count": 92,
+          "p50_ms": 86.914,
+          "p95_ms": 120.94
+        },
+        "window_total_ms": {
+          "total_ms": 9807.946,
+          "count": 92,
+          "p50_ms": 126.324,
+          "p95_ms": 156.347
+        }
+      },
+      "vram": {
+        "gpu_peak_allocated_mb_after": 453.222,
+        "gpu_peak_allocated_mb_before": 453.222,
+        "scope": "process torch allocator peak"
+      },
+      "session_error": null,
+      "capture_source_opened": true,
+      "source_release_confirmed": true,
+      "result_source": {},
+      "video_seconds_from_pilot": 4.638
+    },
+    {
+      "video_id": "S002092_P0007_T00",
+      "mode": "positive",
+      "kind": "positive",
+      "video_path": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\trimmed\\S002092_P0007_T00.mp4",
+      "pose_npz": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\pose\\S002092_P0007_T00.npz",
+      "frontend": "hrnet-npz",
+      "source_frames": 112,
+      "video_duration_seconds": 3.9667,
+      "replay_wall_seconds": 9.146,
+      "rtf_wall_over_video": 2.3057,
+      "status": "final",
+      "error": null,
+      "gloss_sequence": [
+        "不",
+        "兴奋",
+        "高兴",
+        "高兴"
+      ],
+      "windows_processed": 72,
+      "windows_per_second": 7.8723,
+      "frames_received": 112,
+      "frames_captured": 120,
+      "quality_rejected_frames": 0,
+      "dropped_frames_stream": 8,
+      "queue_dropped": 8,
+      "max_queue_depth": 32,
+      "first_partial_wall_ms": 2510.217,
+      "first_final_wall_ms": 2990.542,
+      "first_stable_final_wall_ms": 7652.45,
+      "first_stable_result_field_ms": 2990.5375000089407,
+      "first_frame_arrival_wall_ms": 92.09,
+      "first_partial_after_playback_start_ms": 2418.127,
+      "first_stable_after_playback_start_ms": 7560.36,
+      "playback_start_to_session_start_ms": 92.09,
+      "partial_event_count": 23,
+      "final_event_count": 4,
+      "retraction_count": 2,
+      "retraction_reasons": [
+        "input_discontinuity"
+      ],
+      "partial_caption_states": 23,
+      "partial_caption_changes": 5,
+      "partial_caption_dead_ends": 4,
+      "partial_rewrite_rate": 0.1739,
+      "caption_change_rate": 0.2174,
+      "window_inference_ms": {
+        "p50": 60.131,
+        "p95": 155.753,
+        "count": 72
+      },
+      "head_to_delivery_ms": {
+        "p50": 49.768,
+        "p95": 151.469,
+        "count": 24
+      },
+      "frame_arrival_to_worker_ms": {
+        "p50": 1633.291,
+        "p95": 1828.773,
+        "count": 112
+      },
+      "ready_to_inference_start_ms": {
+        "p50": 6344.865,
+        "p95": 6481.745,
+        "count": 72
+      },
+      "enabling_frame_to_delivery_ms": {
+        "p50": 6452.805,
+        "p95": 6502.682,
+        "count": 24
+      },
+      "model_blocks": {
+        "pose_ms": {
+          "total_ms": 3.194,
+          "count": 112,
+          "p50_ms": 0.026,
+          "p95_ms": 0.056
+        },
+        "preprocess_ms": {
+          "total_ms": 1797.421,
+          "count": 72,
+          "p50_ms": 17.355,
+          "p95_ms": 45.511
+        },
+        "inference_ms": {
+          "total_ms": 5001.358,
+          "count": 72,
+          "p50_ms": 35.09,
+          "p95_ms": 117.27
+        },
+        "window_total_ms": {
+          "total_ms": 6821.228,
+          "count": 72,
+          "p50_ms": 60.055,
+          "p95_ms": 155.675
+        }
+      },
+      "vram": {
+        "gpu_peak_allocated_mb_after": 453.222,
+        "gpu_peak_allocated_mb_before": 453.222,
+        "scope": "process torch allocator peak"
+      },
+      "session_error": null,
+      "capture_source_opened": true,
+      "source_release_confirmed": true,
+      "result_source": {},
+      "video_seconds_from_pilot": 4.0
+    },
+    {
+      "video_id": "S000230_P0008_T00",
+      "mode": "positive",
+      "kind": "positive",
+      "video_path": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\trimmed\\S000230_P0008_T00.mp4",
+      "pose_npz": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\pose\\S000230_P0008_T00.npz",
+      "frontend": "hrnet-npz",
+      "source_frames": 144,
+      "video_duration_seconds": 5.2333,
+      "replay_wall_seconds": 11.6265,
+      "rtf_wall_over_video": 2.2216,
+      "status": "final",
+      "error": null,
+      "gloss_sequence": [
+        "左",
+        "房子",
+        "大"
+      ],
+      "windows_processed": 88,
+      "windows_per_second": 7.5689,
+      "frames_received": 144,
+      "frames_captured": 158,
+      "quality_rejected_frames": 0,
+      "dropped_frames_stream": 14,
+      "queue_dropped": 14,
+      "max_queue_depth": 32,
+      "first_partial_wall_ms": 2119.691,
+      "first_final_wall_ms": 3349.952,
+      "first_stable_final_wall_ms": 9762.44,
+      "first_stable_result_field_ms": 3349.9467999790795,
+      "first_frame_arrival_wall_ms": 88.669,
+      "first_partial_after_playback_start_ms": 2031.022,
+      "first_stable_after_playback_start_ms": 9673.771,
+      "playback_start_to_session_start_ms": 88.669,
+      "partial_event_count": 28,
+      "final_event_count": 3,
+      "retraction_count": 5,
+      "retraction_reasons": [
+        "input_discontinuity"
+      ],
+      "partial_caption_states": 28,
+      "partial_caption_changes": 6,
+      "partial_caption_dead_ends": 6,
+      "partial_rewrite_rate": 0.2143,
+      "caption_change_rate": 0.2143,
+      "window_inference_ms": {
+        "p50": 118.278,
+        "p95": 151.844,
+        "count": 88
+      },
+      "head_to_delivery_ms": {
+        "p50": 115.613,
+        "p95": 149.404,
+        "count": 31
+      },
+      "frame_arrival_to_worker_ms": {
+        "p50": 1691.584,
+        "p95": 1885.13,
+        "count": 144
+      },
+      "ready_to_inference_start_ms": {
+        "p50": 7859.669,
+        "p95": 8603.78,
+        "count": 88
+      },
+      "enabling_frame_to_delivery_ms": {
+        "p50": 7751.39,
+        "p95": 8570.145,
+        "count": 31
+      },
+      "model_blocks": {
+        "pose_ms": {
+          "total_ms": 4.212,
+          "count": 144,
+          "p50_ms": 0.025,
+          "p95_ms": 0.057
+        },
+        "preprocess_ms": {
+          "total_ms": 2209.344,
+          "count": 88,
+          "p50_ms": 27.423,
+          "p95_ms": 45.296
+        },
+        "inference_ms": {
+          "total_ms": 6405.783,
+          "count": 88,
+          "p50_ms": 88.363,
+          "p95_ms": 113.62
+        },
+        "window_total_ms": {
+          "total_ms": 8624.684,
+          "count": 88,
+          "p50_ms": 118.198,
+          "p95_ms": 147.636
+        }
+      },
+      "vram": {
+        "gpu_peak_allocated_mb_after": 453.222,
+        "gpu_peak_allocated_mb_before": 453.222,
+        "scope": "process torch allocator peak"
+      },
+      "session_error": null,
+      "capture_source_opened": true,
+      "source_release_confirmed": true,
+      "result_source": {},
+      "video_seconds_from_pilot": 5.2667
+    },
+    {
+      "video_id": "S005276_P0009_T00",
+      "mode": "positive",
+      "kind": "positive",
+      "video_path": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\trimmed\\S005276_P0009_T00.mp4",
+      "pose_npz": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\pose\\S005276_P0009_T00.npz",
+      "frontend": "hrnet-npz",
+      "source_frames": 80,
+      "video_duration_seconds": 2.7,
+      "replay_wall_seconds": 6.1108,
+      "rtf_wall_over_video": 2.2633,
+      "status": "final",
+      "error": null,
+      "gloss_sequence": [
+        "好处",
+        "降",
+        "花钱"
+      ],
+      "windows_processed": 72,
+      "windows_per_second": 11.7824,
+      "frames_received": 80,
+      "frames_captured": 82,
+      "quality_rejected_frames": 0,
+      "dropped_frames_stream": 2,
+      "queue_dropped": 2,
+      "max_queue_depth": 32,
+      "first_partial_wall_ms": 2156.286,
+      "first_final_wall_ms": 2794.503,
+      "first_stable_final_wall_ms": 5009.017,
+      "first_stable_result_field_ms": 2794.5001000189222,
+      "first_frame_arrival_wall_ms": 110.811,
+      "first_partial_after_playback_start_ms": 2045.475,
+      "first_stable_after_playback_start_ms": 4898.206,
+      "playback_start_to_session_start_ms": 110.811,
+      "partial_event_count": 33,
+      "final_event_count": 3,
+      "retraction_count": 1,
+      "retraction_reasons": [
+        "input_discontinuity"
+      ],
+      "partial_caption_states": 33,
+      "partial_caption_changes": 3,
+      "partial_caption_dead_ends": 7,
+      "partial_rewrite_rate": 0.2121,
+      "caption_change_rate": 0.0909,
+      "window_inference_ms": {
+        "p50": 41.346,
+        "p95": 135.027,
+        "count": 72
+      },
+      "head_to_delivery_ms": {
+        "p50": 39.477,
+        "p95": 87.08,
+        "count": 36
+      },
+      "frame_arrival_to_worker_ms": {
+        "p50": 1245.017,
+        "p95": 1380.358,
+        "count": 80
+      },
+      "ready_to_inference_start_ms": {
+        "p50": 2887.179,
+        "p95": 3119.809,
+        "count": 72
+      },
+      "enabling_frame_to_delivery_ms": {
+        "p50": 2909.19,
+        "p95": 2947.761,
+        "count": 36
+      },
+      "model_blocks": {
+        "pose_ms": {
+          "total_ms": 1.924,
+          "count": 80,
+          "p50_ms": 0.016,
+          "p95_ms": 0.055
+        },
+        "preprocess_ms": {
+          "total_ms": 1475.376,
+          "count": 72,
+          "p50_ms": 15.131,
+          "p95_ms": 38.666
+        },
+        "inference_ms": {
+          "total_ms": 3073.038,
+          "count": 72,
+          "p50_ms": 26.085,
+          "p95_ms": 89.099
+        },
+        "window_total_ms": {
+          "total_ms": 4557.481,
+          "count": 72,
+          "p50_ms": 41.272,
+          "p95_ms": 134.946
+        }
+      },
+      "vram": {
+        "gpu_peak_allocated_mb_after": 453.222,
+        "gpu_peak_allocated_mb_before": 453.222,
+        "scope": "process torch allocator peak"
+      },
+      "session_error": null,
+      "capture_source_opened": true,
+      "source_release_confirmed": true,
+      "result_source": {},
+      "video_seconds_from_pilot": 2.7333
+    },
+    {
+      "video_id": "negative-black",
+      "mode": "negative",
+      "kind": "black",
+      "video_path": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\e05\\replay-probe-20261027T0002Z\\negatives\\black.mp4",
+      "pose_npz": null,
+      "frontend": "rtmpose-experimental",
+      "source_frames": 108,
+      "video_duration_seconds": 3.5667,
+      "replay_wall_seconds": 5.3489,
+      "rtf_wall_over_video": 1.4997,
+      "status": "final",
+      "error": null,
+      "gloss_sequence": [],
+      "windows_processed": 0,
+      "windows_per_second": 0.0,
+      "frames_received": 108,
+      "frames_captured": 108,
+      "quality_rejected_frames": 108,
+      "dropped_frames_stream": 0,
+      "queue_dropped": 0,
+      "max_queue_depth": 13,
+      "first_partial_wall_ms": null,
+      "first_final_wall_ms": null,
+      "first_stable_final_wall_ms": null,
+      "first_stable_result_field_ms": null,
+      "first_frame_arrival_wall_ms": 543.574,
+      "first_partial_after_playback_start_ms": null,
+      "first_stable_after_playback_start_ms": null,
+      "playback_start_to_session_start_ms": 543.574,
+      "partial_event_count": 0,
+      "final_event_count": 0,
+      "retraction_count": 0,
+      "retraction_reasons": [],
+      "partial_caption_states": 0,
+      "partial_caption_changes": 0,
+      "partial_caption_dead_ends": 0,
+      "partial_rewrite_rate": null,
+      "caption_change_rate": null,
+      "window_inference_ms": {
+        "p50": null,
+        "p95": null,
+        "count": 0
+      },
+      "head_to_delivery_ms": {
+        "p50": null,
+        "p95": null,
+        "count": 0
+      },
+      "frame_arrival_to_worker_ms": {
+        "p50": 484.696,
+        "p95": 538.19,
+        "count": 108
+      },
+      "ready_to_inference_start_ms": {
+        "p50": null,
+        "p95": null,
+        "count": 0
+      },
+      "enabling_frame_to_delivery_ms": {
+        "p50": null,
+        "p95": null,
+        "count": 0
+      },
+      "model_blocks": {
+        "pose_ms": {
+          "total_ms": 4645.386,
+          "count": 108,
+          "p50_ms": 39.038,
+          "p95_ms": 50.548
+        },
+        "preprocess_ms": {
+          "total_ms": 0.0,
+          "count": 0,
+          "p50_ms": null,
+          "p95_ms": null
+        },
+        "inference_ms": {
+          "total_ms": 0.0,
+          "count": 0,
+          "p50_ms": null,
+          "p95_ms": null
+        },
+        "window_total_ms": {
+          "total_ms": 0.0,
+          "count": 0,
+          "p50_ms": null,
+          "p95_ms": null
+        }
+      },
+      "vram": {
+        "gpu_peak_allocated_mb_after": 453.222,
+        "gpu_peak_allocated_mb_before": 453.222,
+        "scope": "process torch allocator peak"
+      },
+      "session_error": null,
+      "capture_source_opened": true,
+      "source_release_confirmed": true,
+      "result_source": {},
+      "clip": {
+        "kind": "black",
+        "frames": 108,
+        "fps": 30.0,
+        "source": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\trimmed\\S000502_P0000_T00.mp4",
+        "size": [
+          1280,
+          1280
+        ]
+      }
+    },
+    {
+      "video_id": "negative-mirror",
+      "mode": "negative",
+      "kind": "mirror",
+      "video_path": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\e05\\replay-probe-20261027T0002Z\\negatives\\mirror.mp4",
+      "pose_npz": null,
+      "frontend": "rtmpose-experimental",
+      "source_frames": 98,
+      "video_duration_seconds": 3.5667,
+      "replay_wall_seconds": 7.1306,
+      "rtf_wall_over_video": 1.9992,
+      "status": "final",
+      "error": null,
+      "gloss_sequence": [],
+      "windows_processed": 50,
+      "windows_per_second": 7.012,
+      "frames_received": 98,
+      "frames_captured": 108,
+      "quality_rejected_frames": 0,
+      "dropped_frames_stream": 10,
+      "queue_dropped": 10,
+      "max_queue_depth": 32,
+      "first_partial_wall_ms": 2189.037,
+      "first_final_wall_ms": null,
+      "first_stable_final_wall_ms": null,
+      "first_stable_result_field_ms": null,
+      "first_frame_arrival_wall_ms": 400.857,
+      "first_partial_after_playback_start_ms": 1788.18,
+      "first_stable_after_playback_start_ms": null,
+      "playback_start_to_session_start_ms": 400.857,
+      "partial_event_count": 5,
+      "final_event_count": 0,
+      "retraction_count": 1,
+      "retraction_reasons": [
+        "input_discontinuity"
+      ],
+      "partial_caption_states": 5,
+      "partial_caption_changes": 0,
+      "partial_caption_dead_ends": 0,
+      "partial_rewrite_rate": 0.0,
+      "caption_change_rate": 0.0,
+      "window_inference_ms": {
+        "p50": 36.353,
+        "p95": 84.499,
+        "count": 50
+      },
+      "head_to_delivery_ms": {
+        "p50": 68.267,
+        "p95": 85.019,
+        "count": 5
+      },
+      "frame_arrival_to_worker_ms": {
+        "p50": 1348.743,
+        "p95": 1625.575,
+        "count": 98
+      },
+      "ready_to_inference_start_ms": {
+        "p50": 4624.024,
+        "p95": 5046.103,
+        "count": 50
+      },
+      "enabling_frame_to_delivery_ms": {
+        "p50": 1287.165,
+        "p95": 1421.004,
+        "count": 5
+      },
+      "model_blocks": {
+        "pose_ms": {
+          "total_ms": 3500.064,
+          "count": 98,
+          "p50_ms": 34.239,
+          "p95_ms": 55.578
+        },
+        "preprocess_ms": {
+          "total_ms": 794.34,
+          "count": 50,
+          "p50_ms": 13.813,
+          "p95_ms": 22.517
+        },
+        "inference_ms": {
+          "total_ms": 1712.567,
+          "count": 50,
+          "p50_ms": 22.583,
+          "p95_ms": 63.455
+        },
+        "window_total_ms": {
+          "total_ms": 2512.215,
+          "count": 50,
+          "p50_ms": 36.289,
+          "p95_ms": 84.416
+        }
+      },
+      "vram": {
+        "gpu_peak_allocated_mb_after": 453.222,
+        "gpu_peak_allocated_mb_before": 453.222,
+        "scope": "process torch allocator peak"
+      },
+      "session_error": null,
+      "capture_source_opened": true,
+      "source_release_confirmed": true,
+      "result_source": {},
+      "clip": {
+        "kind": "mirror",
+        "frames": 108,
+        "fps": 30.0,
+        "source": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\trimmed\\S000502_P0000_T00.mp4",
+        "note": "pixels mirrored consistently; RTMPose frontend extracts pose from the mirrored pixels",
+        "size": [
+          1280,
+          1280
+        ]
+      }
+    },
+    {
+      "video_id": "stress-concat",
+      "mode": "negative",
+      "kind": "concat",
+      "video_path": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\e05\\replay-probe-20261027T0002Z\\negatives\\concat.mp4",
+      "pose_npz": null,
+      "frontend": "rtmpose-experimental",
+      "source_frames": 177,
+      "video_duration_seconds": 6.7,
+      "replay_wall_seconds": 11.8267,
+      "rtf_wall_over_video": 1.7652,
+      "status": "final",
+      "error": null,
+      "gloss_sequence": [
+        "我",
+        "惭愧"
+      ],
+      "windows_processed": 63,
+      "windows_per_second": 5.3269,
+      "frames_received": 177,
+      "frames_captured": 202,
+      "quality_rejected_frames": 0,
+      "dropped_frames_stream": 25,
+      "queue_dropped": 25,
+      "max_queue_depth": 32,
+      "first_partial_wall_ms": 2363.833,
+      "first_final_wall_ms": 10088.992,
+      "first_stable_final_wall_ms": 10088.992,
+      "first_stable_result_field_ms": 10088.988600007724,
+      "first_frame_arrival_wall_ms": 412.324,
+      "first_partial_after_playback_start_ms": 1951.509,
+      "first_stable_after_playback_start_ms": 9676.668,
+      "playback_start_to_session_start_ms": 412.324,
+      "partial_event_count": 21,
+      "final_event_count": 2,
+      "retraction_count": 1,
+      "retraction_reasons": [
+        "input_discontinuity"
+      ],
+      "partial_caption_states": 21,
+      "partial_caption_changes": 2,
+      "partial_caption_dead_ends": 5,
+      "partial_rewrite_rate": 0.2381,
+      "caption_change_rate": 0.0952,
+      "window_inference_ms": {
+        "p50": 39.794,
+        "p95": 106.525,
+        "count": 63
+      },
+      "head_to_delivery_ms": {
+        "p50": 38.065,
+        "p95": 76.196,
+        "count": 23
+      },
+      "frame_arrival_to_worker_ms": {
+        "p50": 1376.449,
+        "p95": 1898.854,
+        "count": 177
+      },
+      "ready_to_inference_start_ms": {
+        "p50": 8713.287,
+        "p95": 9298.945,
+        "count": 63
+      },
+      "enabling_frame_to_delivery_ms": {
+        "p50": 8830.469,
+        "p95": 9189.475,
+        "count": 23
+      },
+      "model_blocks": {
+        "pose_ms": {
+          "total_ms": 6616.113,
+          "count": 177,
+          "p50_ms": 36.128,
+          "p95_ms": 54.96
+        },
+        "preprocess_ms": {
+          "total_ms": 1134.763,
+          "count": 63,
+          "p50_ms": 14.743,
+          "p95_ms": 33.408
+        },
+        "inference_ms": {
+          "total_ms": 2319.89,
+          "count": 63,
+          "p50_ms": 24.991,
+          "p95_ms": 71.069
+        },
+        "window_total_ms": {
+          "total_ms": 3470.621,
+          "count": 63,
+          "p50_ms": 39.727,
+          "p95_ms": 106.452
+        }
+      },
+      "vram": {
+        "gpu_peak_allocated_mb_after": 453.222,
+        "gpu_peak_allocated_mb_before": 453.222,
+        "scope": "process torch allocator peak"
+      },
+      "session_error": null,
+      "capture_source_opened": true,
+      "source_release_confirmed": true,
+      "result_source": {},
+      "clip": {
+        "kind": "concat",
+        "frames": 202,
+        "fps": 30.0,
+        "sources": [
+          "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\trimmed\\S000502_P0000_T00.mp4",
+          "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\trimmed\\S003181_P0001_T00.mp4"
+        ],
+        "note": "two sentence clips glued with no pause; used to observe cross-sentence behaviour"
+      }
+    }
+  ],
+  "aggregate": {
+    "warmup": {
+      "n": 1,
+      "successful": 1,
+      "failed": 0,
+      "empty_output": 0,
+      "rtf": {
+        "p50": 1.884,
+        "p95": 1.884,
+        "count": 1
+      },
+      "replay_wall_seconds": {
+        "p50": 6.721,
+        "p95": 6.721,
+        "count": 1
+      },
+      "video_duration_seconds": {
+        "p50": 3.567,
+        "p95": 3.567,
+        "count": 1
+      },
+      "first_partial_wall_ms": {
+        "p50": 5192.439,
+        "p95": 5192.439,
+        "count": 1
+      },
+      "first_final_wall_ms": {
+        "p50": 6352.814,
+        "p95": 6352.814,
+        "count": 1
+      },
+      "first_stable_final_wall_ms": {
+        "p50": 6352.814,
+        "p95": 6352.814,
+        "count": 1
+      },
+      "first_stable_after_playback_start_ms": {
+        "p50": 6260.761,
+        "p95": 6260.761,
+        "count": 1
+      },
+      "windows_per_second": {
+        "p50": 6.1,
+        "p95": 6.1,
+        "count": 1
+      },
+      "window_inference_ms": {
+        "p50": 48.795,
+        "p95": 48.795,
+        "count": 1
+      },
+      "head_to_delivery_ms_p50": {
+        "p50": 49.114,
+        "p95": 49.114,
+        "count": 1
+      },
+      "frame_arrival_to_worker_ms_p50": {
+        "p50": 1322.961,
+        "p95": 1322.961,
+        "count": 1
+      },
+      "partial_rewrite_rate": {
+        "p50": 0.0,
+        "p95": 0.0,
+        "count": 1
+      },
+      "retraction_count_total": 0,
+      "dropped_frames_total": 59,
+      "queue_dropped_total": 59,
+      "quality_rejected_total": 0,
+      "partial_event_total": 19,
+      "final_event_total": 1
+    },
+    "positive": {
+      "n": 10,
+      "successful": 10,
+      "failed": 0,
+      "empty_output": 0,
+      "rtf": {
+        "p50": 2.579,
+        "p95": 3.067,
+        "count": 10
+      },
+      "replay_wall_seconds": {
+        "p50": 10.557,
+        "p95": 12.575,
+        "count": 10
+      },
+      "video_duration_seconds": {
+        "p50": 3.869,
+        "p95": 4.95,
+        "count": 10
+      },
+      "first_partial_wall_ms": {
+        "p50": 2248.856,
+        "p95": 2547.325,
+        "count": 10
+      },
+      "first_final_wall_ms": {
+        "p50": 3918.064,
+        "p95": 8039.338,
+        "count": 10
+      },
+      "first_stable_final_wall_ms": {
+        "p50": 9231.415,
+        "p95": 11614.236,
+        "count": 10
+      },
+      "first_stable_after_playback_start_ms": {
+        "p50": 9141.431,
+        "p95": 11491.496,
+        "count": 10
+      },
+      "windows_per_second": {
+        "p50": 7.491,
+        "p95": 10.333,
+        "count": 10
+      },
+      "window_inference_ms": {
+        "p50": 87.486,
+        "p95": 136.037,
+        "count": 10
+      },
+      "head_to_delivery_ms_p50": {
+        "p50": 52.382,
+        "p95": 101.853,
+        "count": 10
+      },
+      "frame_arrival_to_worker_ms_p50": {
+        "p50": 1732.556,
+        "p95": 2095.228,
+        "count": 10
+      },
+      "partial_rewrite_rate": {
+        "p50": 0.225,
+        "p95": 0.427,
+        "count": 10
+      },
+      "retraction_count_total": 24,
+      "dropped_frames_total": 61,
+      "queue_dropped_total": 61,
+      "quality_rejected_total": 0,
+      "partial_event_total": 307,
+      "final_event_total": 27
+    },
+    "negative": {
+      "n": 3,
+      "successful": 3,
+      "failed": 0,
+      "empty_output": 2,
+      "rtf": {
+        "p50": 1.765,
+        "p95": 1.976,
+        "count": 3
+      },
+      "replay_wall_seconds": {
+        "p50": 7.131,
+        "p95": 11.357,
+        "count": 3
+      },
+      "video_duration_seconds": {
+        "p50": 3.567,
+        "p95": 6.387,
+        "count": 3
+      },
+      "first_partial_wall_ms": {
+        "p50": 2276.435,
+        "p95": 2355.093,
+        "count": 2
+      },
+      "first_final_wall_ms": {
+        "p50": 10088.992,
+        "p95": 10088.992,
+        "count": 1
+      },
+      "first_stable_final_wall_ms": {
+        "p50": 10088.992,
+        "p95": 10088.992,
+        "count": 1
+      },
+      "first_stable_after_playback_start_ms": {
+        "p50": 9676.668,
+        "p95": 9676.668,
+        "count": 1
+      },
+      "windows_per_second": {
+        "p50": 5.327,
+        "p95": 6.843,
+        "count": 3
+      },
+      "window_inference_ms": {
+        "p50": 38.073,
+        "p95": 39.622,
+        "count": 2
+      },
+      "head_to_delivery_ms_p50": {
+        "p50": 53.166,
+        "p95": 66.757,
+        "count": 2
+      },
+      "frame_arrival_to_worker_ms_p50": {
+        "p50": 1348.743,
+        "p95": 1373.678,
+        "count": 3
+      },
+      "partial_rewrite_rate": {
+        "p50": 0.119,
+        "p95": 0.226,
+        "count": 2
+      },
+      "retraction_count_total": 2,
+      "dropped_frames_total": 35,
+      "queue_dropped_total": 35,
+      "quality_rejected_total": 108,
+      "partial_event_total": 26,
+      "final_event_total": 2
+    }
+  },
+  "errors": [],
+  "artifacts": {
+    "window_events": "window_events.jsonl",
+    "stream_events": "stream_events.jsonl"
+  }
+}
