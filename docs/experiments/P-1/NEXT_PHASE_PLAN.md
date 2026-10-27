@@ -87,6 +87,8 @@
 - 当前 API 面：`POST /v1/videos/infer`、`GET /v1/jobs/{id}`、`/v1/health/live|ready`、鉴权/413/幂等/错误码统一；推理由 `replay_jsonl_v1` 驱动（无 GPU 全链路验证）。
 - 纪律：不迁移 UI、不做微服务化、不动已验证推理路径；FusionController 只留接口（等 G2 重启条件）。
 
+## 4. 阶段 4：性能优化对照（已完成，2026-10-27）
+
 - **Uni-Sign 前端（CSL-Daily test，同 checkpoint/解码/帧采样，配对 signer bootstrap）**
   - `pose_sample_only`：pilot-50 全部 ≤172 帧 → 0 跳帧、50/50 预测逐字相同（no-op）；全部 12 条 >256 帧片段上跳 13.2% 帧、**12/12 预测逐字相同**、e2e 7013→6271 ms（−10.6%）。→ **可安全开启**（零质量变化），但该域仅 1.1% 片段 >256 帧，不能宣称数据集级提速。
   - `pose_detect_stride=5`：e2e −36.4%、pose −40%，但 BLEU −1.69、**Δedit −0.0205（CI [−0.0563,+0.0153]）**、仅 32/50 相同 → **质量门槛 FAIL，不建议默认开启**；CSL-News/CE-CSL 的"无显著差异"不能外推。
