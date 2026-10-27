@@ -293,3 +293,53 @@ def test_example_models_resolve_to_real_bundles(defaults_module):
             assert adapter.capabilities.model_id == manifest["run_id"]
         finally:
             adapter.close()
+
+
+# --- 环境感知默认模型的接线（desktop entry point） -------------------------------
+
+def test_desktop_default_unisign_model_follows_environment(monkeypatch, tmp_path):
+    """dev/test -> stage2 bundle, prod/unset -> legacy stage1 bundle."""
+    from slbridge import desktop_models
+
+    monkeypatch.delenv("SLBRIDGE_ENV", raising=False)
+    unset = desktop_models.default_unisign_model(tmp_path)
+    assert unset.name == "model_bundle"          # legacy stage1 bundle
+    assert desktop_models.default_unisign_model(tmp_path, environment="dev").name == "unisign_stage2_pose"
+    assert desktop_models.default_unisign_model(tmp_path, environment="test").name == "unisign_stage2_pose"
+    assert desktop_models.default_unisign_model(tmp_path, environment="prod").name == "model_bundle"
+
+
+def test_desktop_default_unisign_model_override_wins(monkeypatch, tmp_path):
+    from slbridge import desktop_models
+
+    monkeypatch.delenv("SLBRIDGE_ENV", raising=False)
+    chosen = desktop_models.default_unisign_model(tmp_path, environment="prod", override="unisign_stage2_pose")
+    assert chosen.name == "unisign_stage2_pose"
+
+
+def test_desktop_default_unisign_model_env_var(monkeypatch, tmp_path):
+    from slbridge import desktop_models
+
+    monkeypatch.setenv("SLBRIDGE_ENV", "dev")
+    assert desktop_models.default_unisign_model(tmp_path).name == "unisign_stage2_pose"
+    monkeypatch.setenv("SLBRIDGE_ENV", "prod")
+    assert desktop_models.default_unisign_model(tmp_path).name == "model_bundle"
+
+
+def test_desktop_default_unisign_model_falls_back_when_config_missing(monkeypatch, tmp_path):
+    """A missing/invalid config must not break desktop entry points."""
+    from slbridge import desktop_models, model_defaults
+
+    def missing(path=None):
+        raise model_defaults.ModelDefaultsError("configs/model_defaults.json not found")
+
+    monkeypatch.setattr(model_defaults, "load_model_defaults", missing)
+    assert desktop_models.default_unisign_model(tmp_path) == tmp_path / desktop_models.LEGACY_UNISIGN_BUNDLE
+
+def test_desktop_default_unisign_model_unknown_environment_raises():
+    """Unknown environments must fail fast rather than silently pick a model."""
+    import pytest as _pytest
+    from slbridge import desktop_models
+
+    with _pytest.raises(Exception):
+        desktop_models.default_unisign_model(environment="staging")
