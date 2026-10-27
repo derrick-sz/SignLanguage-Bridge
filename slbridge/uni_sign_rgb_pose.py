@@ -25,12 +25,20 @@ Pose sources (lead constraint 2):
       the npz alignment metadata; **the only mode that reproduces the frozen
       predictions verbatim**.  Failures raise; fallback is forbidden.
     * ``rtmpose`` -- production mode: extracts 133 keypoints from the video
-      with ``slbridge.uni_sign.RtmposeExtractor`` (no official archive).  If
-      the RGB branch is unavailable (decode failure / empty hand crops /
-      OOM-after-retry) and ``fallback_to_pose_only=True`` (default), the
-      adapter falls back to the pose-only checkpoint and records
-      ``fallback_reason``/``fallback_model_id`` in the result metadata --
-      never silently: the metadata always says which model produced the text.
+      with ``slbridge.uni_sign.RtmposeExtractor`` (no official archive).  The
+      extractor is configured exactly like the A path: backend
+      ``onnxruntime``, the existing ``models/external/uni_sign/rtmlib-cache``
+      (never a fresh directory that would trigger network downloads), and the
+      same ``normalize_rtmpose_pixels`` normalization -- default
+      ``isotropic_short_side`` for A-path parity (``wh`` stays available as an
+      explicit compatibility mode); the effective mode is recorded in every
+      result's metadata as ``pose_normalization`` next to its implementation tag
+      ``pose_normalization_version``.  If the RGB branch is
+      unavailable (decode failure / empty hand crops / OOM-after-retry) and
+      ``fallback_to_pose_only=True`` (default), the adapter falls back to the
+      pose-only checkpoint and records ``fallback_reason``/
+      ``fallback_model_id`` in the result metadata -- never silently: the
+      metadata always says which model produced the text.
 
 Input contract reuses ``slbridge.uni_sign.REPRESENTATION_ID``
 ("uni_sign_rgb_v1", video frames T,H,W,C uint8): one ModelInputContract,
@@ -87,6 +95,11 @@ DTYPE_NAME = "bfloat16"
 SEED = 20261027
 FRAME_SAMPLING = "deterministic_linspace"
 HAND_SAMPLING = "low_confidence_weighted_fixed_seed"
+# Version tag recorded in every result. The A path (slbridge.uni_sign ->
+# _first_person_pose) and this adapter both normalize pixel keypoints with
+# slbridge.uni_sign_preprocess.normalize_rtmpose_pixels; changing that helper's
+# math must bump this tag so stored metadata stays interpretable.
+POSE_NORMALIZATION_VERSION = "normalize_rtmpose_pixels.v1"
 CHECKPOINT_SHA256 = "c2ba5d7ae32f3fa40f7c6807b5004042be81fca192abe7d8ed7182c0d13470f6"
 SOURCE_COMMIT = "eed438bcb49e30405cd6ccdfcccca330c134e830"
 POSE_ONLY_SHA256 = "73bea87a9603f719b4f4a481a3a1a5ed24e7e5f7b81afd14ef498c40469c1a6c"
@@ -676,6 +689,8 @@ class UniSignRGBPoseConfig:
     enable_rgb: bool = True
     fallback_to_pose_only: bool = True
     hand_conf_layout: str = "legacy"
+    pose_normalization: str = "isotropic_short_side"
+    rtmlib_cache_dir: Path = Path("rtmlib-cache")
     device: str = "cuda"
     dtype: str = "bfloat16"
     num_beams: int = NUM_BEAMS
@@ -687,6 +702,10 @@ class UniSignRGBPoseConfig:
         if self.hand_conf_layout not in {"legacy", "squeeze", "auto"}:
             raise ValueError(
                 f"hand_conf_layout must be 'legacy', 'squeeze' or 'auto', got {self.hand_conf_layout!r}")
+        if self.pose_normalization not in {"isotropic_short_side", "wh"}:
+            raise ValueError(
+                "pose_normalization must be 'isotropic_short_side' (A-path parity, default) "
+                "or 'wh' (explicit compatibility mode)")
         if self.pose_source == "official_archive":
             if self.pose_dir is None:
                 raise ValueError("pose_source='official_archive' requires pose_dir (regression mode)")
@@ -704,6 +723,7 @@ class UniSignRGBPoseConfig:
             value = getattr(self, name)
             if value is not None:
                 object.__setattr__(self, name, Path(value))
+        object.__setattr__(self, "rtmlib_cache_dir", Path(self.rtmlib_cache_dir))
         if self.enable_rgb is False and self.fallback_to_pose_only is False and self.pose_source == "rtmpose":
             # pose-only without fallback is just the existing adapter; refuse the
             # degenerate combination so callers pick uni_sign_pose_slt directly.
@@ -725,6 +745,7 @@ class UniSignRGBPoseConfig:
             "enable_rgb": self.enable_rgb,
             "fallback_to_pose_only": self.fallback_to_pose_only,
             "hand_conf_layout": self.hand_conf_layout,
+            "pose_normalization": self.pose_normalization,
         }
 
     def preprocess_parameters(self) -> dict:
@@ -737,6 +758,7 @@ class UniSignRGBPoseConfig:
             "seed": SEED,
             "pose_source": self.pose_source,
             "hand_conf_layout": self.hand_conf_layout,
+            "pose_normalization": self.pose_normalization,
             "pose_dir": (str(self.pose_dir) if self.pose_dir is not None else None),
             "alignment_dir": (str(self.alignment_dir) if self.alignment_dir is not None else None),
             "video_dir": str(self.video_dir),
@@ -784,6 +806,10 @@ class UniSignRGBPoseAdapter:
             "enable_rgb": self.config.enable_rgb,
             "fallback_to_pose_only": self.config.fallback_to_pose_only,
             "hand_conf_layout": self.config.hand_conf_layout,
+            "pose_normalization": self.config.pose_normalization,
+            "pose_normalization_version": POSE_NORMALIZATION_VERSION,
+            "pose_extractor": (self._extractor.runtime_info
+                               if self._extractor is not None else None),
             "device": self.config.device,
             "dtype": self.config.dtype,
             "model_loaded": self._runtime is not None,
@@ -896,6 +922,8 @@ class UniSignRGBPoseAdapter:
             "frame_sampling": FRAME_SAMPLING,
             "hand_sampling": HAND_SAMPLING,
             "hand_conf_layout": self.config.hand_conf_layout,
+            "pose_normalization": self.config.pose_normalization,
+            "pose_normalization_version": POSE_NORMALIZATION_VERSION,
             "preprocess_ms": round(preprocess_ms, 3),
             **{key: round(value, 3) for key, value in timings.items()},
             "fallback_reason": fallback_reason,
@@ -932,7 +960,16 @@ class UniSignRGBPoseAdapter:
 
     # -- rtmpose (production) input path ----------------------------------
     def _rtmpose_inputs(self, path: Path, sample: str):
-        """Extract 133 keypoints with RtmposeExtractor and reuse the frozen pipeline."""
+        """Extract 133 keypoints with RtmposeExtractor and reuse the frozen pipeline.
+
+        The extractor is configured exactly like the production pose-only path
+        (``slbridge.uni_sign``): backend ``onnxruntime``, the bundle-relative
+        ``rtmlib-cache``, and the same ``normalize_rtmpose_pixels`` isotropic
+        normalization so rtmpose-mode quality stays comparable to the A path.
+        The normalization mode is configurable (``pose_normalization``) and is
+        recorded in the result metadata as ``pose_normalization`` (plus the
+        implementation tag ``pose_normalization_version``).
+        """
         extractor = self._ensure_extractor()
         import cv2
 
@@ -940,26 +977,34 @@ class UniSignRGBPoseAdapter:
         if not capture.isOpened():
             raise RuntimeError(f"cannot open video: {path}")
         keypoints, scores = [], []
-        while True:
-            ok, frame = capture.read()
-            if not ok:
-                break
-            frame_keypoints, frame_scores = extractor.extract(frame)
-            if frame_keypoints is None or len(frame_keypoints) == 0:
-                raise _RGBUnavailable("rtmpose produced no keypoints")
-            keypoints.append(np.asarray(frame_keypoints[0], dtype=np.float64))
-            scores.append(np.asarray(frame_scores[0], dtype=np.float32))
-        capture.release()
-        if not keypoints:
+        frame_size: tuple[int, int] | None = None      # (height, width) of the 1st decoded frame
+        try:
+            while True:
+                ok, frame = capture.read()
+                if not ok:
+                    break
+                if frame_size is None:
+                    # cv2 returns (False, None) at EOF, so the frame size must be
+                    # captured here -- reading frame.shape after the loop crashes.
+                    frame_size = (int(frame.shape[0]), int(frame.shape[1]))
+                frame_keypoints, frame_scores = extractor.extract(frame)
+                if frame_keypoints is None or len(frame_keypoints) == 0:
+                    raise _RGBUnavailable("rtmpose produced no keypoints")
+                keypoints.append(np.asarray(frame_keypoints[0], dtype=np.float64))
+                scores.append(np.asarray(frame_scores[0], dtype=np.float32))
+        finally:
+            capture.release()
+        if frame_size is None or not keypoints:
             raise _RGBUnavailable(f"no decodable frames in {path}")
-        height = frame.shape[0]
-        width = frame.shape[1]
-        skeletons = [np.stack([kp], axis=0) for kp in keypoints]      # [T,1,133,3]
+        height, width = frame_size
         confs = [np.stack([sc], axis=0) for sc in scores]             # [T,1,133]
-        # The frozen pipeline expects normalized [T,1,133,2] + [T,1,133];
-        # rtmpose emits pixel coords, so normalize per axis like Uni-Sign does.
-        normalized = [np.stack([kp[:133, :2] / np.array([width, height],
-                                                        dtype=np.float64)], axis=0) for kp in keypoints]
+        # Same normalization as the A path (uni_sign.py _first_person_pose ->
+        # normalize_rtmpose_pixels): isotropic_short_side by default, wh kept
+        # as an explicit compatibility mode; per-axis x/W y/H is NOT used.
+        from .uni_sign_preprocess import normalize_rtmpose_pixels
+        normalized = [np.stack([normalize_rtmpose_pixels(kp[:133, :2], int(width), int(height),
+                                                       mode=self.config.pose_normalization)],
+                              axis=0) for kp in keypoints]
         parts = load_part_kp(normalized, confs)
         duration = len(normalized)
         frames = list(range(duration))
@@ -1011,11 +1056,24 @@ class UniSignRGBPoseAdapter:
     def _ensure_extractor(self):
         if self._extractor is None:
             from .uni_sign import RtmposeExtractor
+            # Exactly the production pose-only configuration (uni_sign.py):
+            # backend 'onnxruntime' (Rtmpose/UniSignBackend pin the same
+            # value; anything else fails Wholebody construction), and the
+            # bundle-relative rtmlib-cache so no network downloads happen.
             self._extractor = RtmposeExtractor(
-                mode=self.config.pose_source and "lightweight", backend="rtmpose",
-                device=self.config.device if self.config.device != "cuda" else "cuda",
-                cache_dir=Path(self.config.video_dir).parent / "rgb-pose-cache")
+                mode="lightweight", backend="onnxruntime",
+                device=self.config.device,
+                cache_dir=self._rtmlib_cache_dir())
         return self._extractor
+
+    def _rtmlib_cache_dir(self) -> Path:
+        # Default "rtmlib-cache" is relative to the checkpoint's directory
+        # (models/external/uni_sign/rtmlib-cache, the existing production cache
+        # shared with uni_sign_pose_slt); absolute paths pass through.
+        cache = Path(self.config.rtmlib_cache_dir)
+        if not cache.is_absolute():
+            cache = (Path(self.config.checkpoint).parent / cache).resolve()
+        return cache
 
     @staticmethod
     def _is_rgb_failure(error: RuntimeError) -> bool:

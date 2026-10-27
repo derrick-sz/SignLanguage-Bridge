@@ -142,12 +142,20 @@
 - **SLRT replay 真流探针（2026-10-26 两轮独立重复）：** 按原时间轴回放 10 条 pilot（hrnet-npz）的实测 **RTF 2.23–2.58**、吞吐 **7.5–7.9 窗/秒**（30 fps 需 ~30 窗/秒）→ 当前实现**不能实时**；首个 final token 墙钟 P50 **3.7–3.9 s**（P95 5.1–7.1 s），队首→交付仅 ~50 ms，瓶颈是帧到达→worker 取走 P50 1.7 s + 单窗推理 57–88 ms > 33 ms 帧间隔；capture 丢帧 52–61 引起 19–24 次 partial retraction。黑帧无人门控有效（108/108 拒绝），**水平镜像未被门控**（需应用层处理）。11 帧 lookahead 推导实测验证（最早投票窗口 anchor=3，enabling=11 帧）——0.37 s 是算法下限，实测首 partial 2.0–2.2 s 还含启动与队列积压。[R19]
 - **P-1 执行的最大风险仍是 Git 脏树：** 2026-10-26 执行时 HEAD `cf291c2a…` + 132 项脏工作区（`slbridge/slrt`、实验脚本、P-1 全部未提交）。所有 run manifest 记录 dirty tree；清理/提交前先复核。
 
-## 4. 阶段 4 预处理优化实测（2026-10-27）——两个域依赖结论
-
+## 12. 阶段 4 预处理优化实测（2026-10-27）——两个域依赖结论
 - **`pose_detect_stride=5` 在 CSL-Daily 上是质量退化，不是免费加速（2026-10-27 实测）：** CSL-Daily test pilot-50 上 e2e P50 3086→1964 ms（−36.4%）、pose −40%，但 BLEU 31.23→29.54（−1.69）、Δedit **−0.0205**（95% CI [−0.0563, +0.0153]）、仅 32/50 预测相同 → **质量门槛 FAIL，不建议在该域默认开启**。此前 CSL-News 300 条与 CE-CSL 500 条上 stride=5 与 stride=1 无显著差异（CI 含 0），**但两个数据域的结论不能外推**：每换一个域必须做配对质量门槛（建议 Δedit ≥ −0.005 且 CI 下界 > −0.01），并同步更新 pose protocol 身份与方向重校准。生产默认值未改。
 - **CSL-Daily test 只有 1.1% 片段 >256 帧（12/1086）：** 因此 `pose_sample_only` 在该域几乎无收益——pilot-50 全部 ≤172 帧、0 跳帧、50/50 预测完全相同（no-op）；在全部 12 条长片段上跳 13.2% 帧、12/12 预测逐字相同、e2e −10.6%。结论：可安全开启（零质量变化），但**不能宣称"CSL-Daily 提速 10%"**（域级平均约 0.1%）。
 - **SLRT 逐窗预处理瓶颈与优化（2026-10-27 修正 E04 旧措辞）：** 旧说"~5.6 s/条是 CPU 热力图预处理"不准确——热力图在 **GPU** 上算；实测拆分（20 条/2406 窗口）：canonical_frame（PIL 512→320，14.3 ms/帧）28.0%、prepare_inputs 有效 23.6%（约一半 GPU 异步、CPU 计时不可见）、S3D 前向 39.5%、解码 4.7%。**stride=1 时同一帧的 RGB+热力图被重复计算约 16 次**；用"逐帧调用原始未改函数 + 内容 hash 缓存 + cat 组装"（仅 benchmark 进程内替换）得到 RGB/heatmap **max abs diff 0.0 / 0.0、torch.equal True/True**（8 真实窗口 cuda:0）、Gloss **20/20 逐字相同**、corpus WER **0.27007 不变**，e2e P50 **5923→4836 ms（−18.4%）**、P95 −16.4%、prepare 有效总计 −70.3%。合入生产需落到 `SLRTRuntime`/`SLRTStream` 帧级缓存并更新 protocol；下一瓶颈是 canonical_frame 与 S3D。
 - **优化对照必须同协议逐位核验：** 任何"只改性能不改语义"的优化都要给出等价性证据（张量 max abs diff / `torch.equal` / 输出逐字一致 / WER 不变），否则只能算另一条算法分支，不能写进默认路径。
+
+## 13. Uni-Sign 1012 键权重 / RGB+pose / rtmpose 接入（2026-10-27）
+
+- **`csl_daily_rgb_pose_slt.pth` 的 RGB 分支数学上恒等消失，不要把它当 RGB+pose 用：** 该 checkpoint 的 `fusion_gate` 两个 Conv 是 zero-init 且权重全零（`fusion_gate.0.weight` 0/131072、`fusion_gate.2.weight` 0/256、bias 全零），上游公式 `fused_post = gate*fused + (1-gate)*gcn`（`models.py` L192-194）⇒ `gate≡0`，输出恒等于 pose 分支。实测：给真实手部 crop（squeeze，left 10.3/right 11.7 帧/样本）与全零支持**逐条完全一致（1086/1086, Δ=0）**。它的 +0.66 BLEU（1086，26.3026 vs A2 25.5846）来自 **stage2 的 pose/mT5 权重**（与 pose-only checkpoint 相比 41.6% 参数超 1e-6 容差），与 RGB 无关；"复现论文 26.36"是巧合。**结论：按"更优 pose-only 模型"使用（627 键子集 + pose-only 架构），不做手部裁剪；真实 RGB+pose 需作者非零 gate 权重。**
+- **官方 pose pkl 的 `scores` 是 `(T,1,133)`，手部采样索引要带中间维：** `confs[:, 91:112]` 在 3 维输入上取到空 → 手部帧 `None` → RGB 支持全零。正确写法 `confs[:, 0, 91:112]`（或先 squeeze）。任何"手部可用性"断言都应检查 `hand_frames_left/right > 0`，而不是只看"没报错"。
+- **pose-only adapter 的 checkpoint 校验曾是硬编码常量，导致替代 checkpoint 无法加载：** `verify_checkpoint()` 用模块级 `UNISIGN_CHECKPOINT_BYTES/SHA256`；必须改为按 bundle manifest 声明的 `checkpoint_bytes`/`checkpoint_sha256` 走 `verify_file()`（2026-10-27 已修，`slbridge/uni_sign.py`）。否则 stage2 子集（1.95 GB）必然 `size_mismatch`。
+- **rtmpose 生产路径接入三个硬要求（2026-10-27 实测）：** ①`RtmposeExtractor(backend=...)` 必须是 `"onnxruntime"`（值原样传给 `rtmlib.Wholebody`）；②`cache_dir` 必须复用 `models/external/uni_sign/rtmlib-cache`——rtmlib 走 `TORCH_HOME/hub/checkpoints`，换空目录会触发**联网下载**；③cv2 读到 EOF 返回 `(False, None)`，帧尺寸要在解码循环内取，否则 `frame.shape` 抛 AttributeError（rtmpose 路径曾因此任何真实视频都跑不通）。
+- **归一化口径要跟 A 路径对齐：** rtmpose 分支用逐轴 `x/W, y/H` 与 A 路径 `isotropic_short_side` 数值不同（CSL-Daily 是 1280×1280 正方形所以看不出来，**非方形/摄像头输入才会暴露**）；必须复用 `normalize_rtmpose_pixels(mode="isotropic_short_side")` 并在 metadata 记 `pose_normalization` + 版本。
+- **"同一权重不同输入协议"的等价性要靠逐字比对证明：** stage2 子集在 pose-only 架构上与 legacy RGB+pose 1086/1086 逐字一致，才允许说"RGB 分支可去掉"；单样本一致不算（采样/窗口可能不同）。
 
 ## 截至核验日期的证据锚点
 

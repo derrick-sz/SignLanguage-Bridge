@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import pickle
 from pathlib import Path
 
@@ -244,6 +245,217 @@ def test_hand_conf_layout_config_validation(module):
         module.UniSignRGBPoseConfig(pose_source="rtmpose", hand_conf_layout="sideways")
 
 
+def test_pose_normalization_config_validation(module):
+    with pytest.raises(ValueError, match="pose_normalization"):
+        module.UniSignRGBPoseConfig(pose_source="rtmpose", pose_normalization="per_axis")
+    config = module.UniSignRGBPoseConfig(pose_source="rtmpose")
+    assert config.pose_normalization == "isotropic_short_side"   # A-path parity default
+
+
+def test_rtmpose_extractor_configuration(module, tmp_path: Path):
+    """The rtmpose path must mirror the production pose-only configuration."""
+    checkpoint = tmp_path / "models" / "uni_sign" / "csl_daily_rgb_pose_slt.pth"
+    checkpoint.parent.mkdir(parents=True)
+    checkpoint.write_bytes(b"stub")
+    config = module.UniSignRGBPoseConfig(pose_source="rtmpose", checkpoint=checkpoint)
+    adapter = module.UniSignRGBPoseAdapter(config)
+    # _ensure_extractor itself loads rtmlib; assert the resolved knobs instead.
+    assert adapter.config.pose_normalization == "isotropic_short_side"
+    cache = adapter._rtmlib_cache_dir()
+    assert cache == checkpoint.parent / "rtmlib-cache"          # shares the production cache
+    adapter.close()
+
+
+def test_rtmpose_normalization_uses_shared_helper(module):
+    """rtmpose mode routes through normalize_rtmpose_pixels (not per-axis)."""
+    from slbridge.uni_sign_preprocess import normalize_rtmpose_pixels
+    points = np.array([[100.0, 200.0]], dtype=np.float32)
+    # isotropic: one common scale (short side), preserving aspect ratio.
+    isotropic = normalize_rtmpose_pixels(points, 1280, 720, mode="isotropic_short_side")
+    assert np.allclose(isotropic, [[100.0 / 720, 200.0 / 720]])
+    # wh: per-axis compatibility mode.
+    wh = normalize_rtmpose_pixels(points, 1280, 720, mode="wh")
+    assert np.allclose(wh, [[100.0 / 1280, 200.0 / 720]])
+    with pytest.raises(ValueError, match="mode"):
+        normalize_rtmpose_pixels(points, 1280, 720, mode="per_axis")
+
+
+# ---------------------------------------------------------------------------
+# rtmpose production path: A-path parity (defects 1-3, 2026-10-27)
+# ---------------------------------------------------------------------------
+RTMLIB_CACHE = REPO / "models" / "external" / "uni_sign" / "rtmlib-cache"
+
+
+def test_default_pose_normalization_matches_a_path_manifest(module):
+    """A path reads pose_normalization from the bundle manifest; ours must agree."""
+    from slbridge.uni_sign_assets import build_bundle_manifest
+    runtime = build_bundle_manifest(REPO / "models" / "external" / "uni_sign")["runtime"]
+    config = module.UniSignRGBPoseConfig(pose_source="rtmpose")
+    assert config.pose_normalization == runtime["pose_normalization"] == "isotropic_short_side"
+    assert runtime["pose_backend"] == "onnxruntime"          # defect 1 target value
+
+
+def test_ensure_extractor_mirrors_a_path_knobs(module, monkeypatch, tmp_path: Path):
+    """Defects 1+2: extractor gets backend='onnxruntime' and the shared rtmlib cache."""
+    import slbridge.uni_sign as a_path
+
+    captured: dict = {}
+
+    class _RecordingExtractor:
+        def __init__(self, **kwargs):
+            captured.update(kwargs)
+
+        def close(self):
+            captured["closed"] = True
+
+    monkeypatch.setattr(a_path, "RtmposeExtractor", _RecordingExtractor)
+    checkpoint = tmp_path / "models" / "external" / "uni_sign" / "csl_daily_rgb_pose_slt.pth"
+    config = module.UniSignRGBPoseConfig(pose_source="rtmpose", checkpoint=checkpoint,
+                                         device="cuda")
+    adapter = module.UniSignRGBPoseAdapter(config)
+    adapter._ensure_extractor()
+    assert captured["backend"] == "onnxruntime"              # not "rtmpose"
+    assert captured["mode"] == "lightweight"                 # A path pose_mode
+    assert captured["device"] == "cuda"
+    cache = Path(captured["cache_dir"])
+    assert cache == checkpoint.parent / "rtmlib-cache"       # sibling of the checkpoint
+    adapter.close()
+
+
+def test_rtmlib_cache_reuses_the_existing_production_cache(module):
+    """Defect 2: reuse the A path's ONNX cache; never a fresh empty directory."""
+    bundle_dir = REPO / "models" / "external" / "uni_sign" / "model_bundle"
+    a_path_cache = (bundle_dir / Path("../rtmlib-cache")).resolve()
+    adapter = _make_adapter(module)
+    try:
+        assert adapter._rtmlib_cache_dir() == a_path_cache == RTMLIB_CACHE.resolve()
+    finally:
+        adapter.close()
+    if not RTMLIB_CACHE.is_dir():
+        pytest.skip("rtmlib cache artifact not present in this checkout")
+    onnx_models = sorted(p.name for p in (RTMLIB_CACHE / "hub" / "checkpoints").glob("*.onnx"))
+    assert onnx_models, "cache exists but holds no ONNX weights"
+
+
+def _synthetic_video(tmp_path: Path, *, width: int, height: int, frames: int = 6) -> Path:
+    cv2 = pytest.importorskip("cv2")
+    path = tmp_path / f"clip_{width}x{height}.avi"
+    writer = cv2.VideoWriter(str(path), cv2.VideoWriter_fourcc(*"MJPG"), 10.0, (width, height))
+    assert writer.isOpened(), "cv2 could not create the synthetic clip"
+    for index in range(frames):
+        writer.write(np.full((height, width, 3), 16 + index * 8, dtype=np.uint8))
+    writer.release()
+    return path
+
+
+class _StubExtractor:
+    """Fixed 133-keypoint output; counts the decoded frames it was asked about."""
+
+    def __init__(self, keypoints: np.ndarray, scores: np.ndarray):
+        self.keypoints = keypoints
+        self.scores = scores
+        self.frames_seen = 0
+
+    def extract(self, frame):
+        self.frames_seen += 1
+        return self.keypoints[None, ...].copy(), self.scores[None, ...].copy()
+
+    def close(self):
+        self.closed = True
+
+
+def _fixed_keypoints() -> tuple[np.ndarray, np.ndarray]:
+    rng = np.random.default_rng(20261027)
+    keypoints = np.stack([rng.uniform(40, 280, 133), rng.uniform(30, 150, 133),
+                          np.full(133, 0.9)], axis=1).astype(np.float64)
+    return keypoints, np.full(133, 0.9, dtype=np.float32)
+
+
+def _capture_normalization(module, monkeypatch, tmp_path: Path, *, mode: str | None = None):
+    pytest.importorskip("torch", reason="load_part_kp builds torch tensors")
+    from slbridge import uni_sign_preprocess
+
+    video = _synthetic_video(tmp_path, width=320, height=180)
+    keypoints, scores = _fixed_keypoints()
+    calls: list[dict] = []
+    real = uni_sign_preprocess.normalize_rtmpose_pixels
+
+    def _recording(points, width, height, *, mode="isotropic_short_side"):
+        result = real(points, width, height, mode=mode)
+        calls.append({"points": np.asarray(points, dtype=np.float64).copy(),
+                      "width": width, "height": height, "mode": mode,
+                      "out": np.asarray(result, dtype=np.float64).copy()})
+        return result
+
+    monkeypatch.setattr(uni_sign_preprocess, "normalize_rtmpose_pixels", _recording)
+    overrides: dict = {"device": "cpu", "dtype": "float32"}
+    if mode is not None:
+        overrides["pose_normalization"] = mode
+    adapter = _make_adapter(module, **overrides)
+    stub = _StubExtractor(keypoints, scores)
+    monkeypatch.setattr(adapter, "_ensure_extractor", lambda: stub)
+    inputs, _source, _ms = adapter._rtmpose_inputs(video, "synthetic-clip")
+    return calls, inputs, stub, adapter, keypoints
+
+
+def test_rtmpose_inputs_normalize_isotropic_like_a_path(module, monkeypatch, tmp_path: Path):
+    """Defect 3: one isotropic short-side scale (A path), never per-axis x/W y/H."""
+    calls, inputs, stub, adapter, keypoints = _capture_normalization(module, monkeypatch, tmp_path)
+    try:
+        assert stub.frames_seen == 6                         # every decoded frame normalized
+        assert len(calls) == 6
+        for call in calls:
+            assert (call["width"], call["height"]) == (320, 180)
+            assert call["mode"] == "isotropic_short_side"
+            assert np.array_equal(call["points"], keypoints[:133, :2])
+            assert np.allclose(call["out"], keypoints[:133, :2] / 180)      # short side
+            assert not np.allclose(call["out"], keypoints[:133, :2] / np.array([320, 180]))
+        assert inputs["w_h"] == [320, 180]
+    finally:
+        adapter.close()
+
+
+def test_rtmpose_inputs_honors_explicit_wh_compatibility_mode(module, monkeypatch, tmp_path: Path):
+    calls, _inputs, _stub, adapter, _keypoints = _capture_normalization(
+        module, monkeypatch, tmp_path, mode="wh")
+    try:
+        assert [call["mode"] for call in calls] == ["wh"] * 6
+        assert np.allclose(calls[0]["out"], calls[0]["points"] / np.array([320, 180]))
+    finally:
+        adapter.close()
+
+
+def test_rtmpose_result_metadata_records_pose_normalization(module):
+    """Every result carries the normalization mode plus its version tag."""
+    adapter = _make_adapter(module)
+    try:
+        result = adapter._make_result(_request(), "她今年50岁。", {"model_total_ms": 1.0},
+                                      0.0, fallback_reason=None, fallback_model_id=None)
+        assert result.quality["pose_normalization"] == "isotropic_short_side"
+        assert result.quality["pose_normalization_version"] == module.POSE_NORMALIZATION_VERSION
+        assert adapter.runtime_info["pose_normalization"] == "isotropic_short_side"
+    finally:
+        adapter.close()
+
+
+def test_runtime_info_surfaces_pose_extractor_state(module):
+    """A silent CPU fallback of the ONNX pose extractor must stay visible (A path too)."""
+    adapter = _make_adapter(module)
+    try:
+        assert adapter.runtime_info["pose_extractor"] is None      # lazy: not created yet
+        stub = _StubExtractor(*_fixed_keypoints())
+        stub.runtime_info = {"pose_device": "cpu", "pose_backend": "onnxruntime",
+                             "pose_fallback_reason": "requested CUDA, got a CPU session",
+                             "pose_cache_dir": str(RTMLIB_CACHE)}
+        adapter._extractor = stub
+        info = adapter.runtime_info
+        assert info["pose_extractor"]["pose_device"] == "cpu"
+        assert "CPU session" in info["pose_extractor"]["pose_fallback_reason"]
+    finally:
+        adapter._extractor = None
+        adapter.close()
+
+
 @pytest.mark.skipif(not REAL_VIDEO.exists(), reason="trimmed artifact not present")
 def test_build_support_rgb_layouts_same_output_shape(module):
     """legacy vs squeeze: identical tensor shapes (112x112x3xL), zero vs real frames."""
@@ -449,6 +661,46 @@ def test_gpu_one_sample_verbatim_vs_frozen(module, frozen):
         assert result.prediction.text == frozen_text            # verbatim
         assert result.quality["checkpoint_sha256"] == module.CHECKPOINT_SHA256
         assert result.quality["fallback_reason"] is None
+    finally:
+        adapter.close()
+
+
+@pytest.mark.skipif(not REAL_VIDEO.exists(), reason="trimmed artifact not present")
+def test_gpu_rtmpose_mode_one_video_end_to_end(module):
+    """Defects 1-3 in production shape: rtmpose mode, one video, GPU, end to end."""
+    if os.environ.get("SLBRIDGE_RGB_POSE_GPU") != "1":
+        pytest.skip("opt-in GPU test; set SLBRIDGE_RGB_POSE_GPU=1")
+    torch = pytest.importorskip("torch", reason="rtmpose mode needs torch")
+    pytest.importorskip("rtmlib", reason="rtmpose mode needs the pinned rtmlib")
+    if not torch.cuda.is_available():
+        pytest.skip("CUDA unavailable")
+    config = module.UniSignRGBPoseConfig(pose_source="rtmpose", device="cuda", dtype="bfloat16")
+    adapter = module.UniSignRGBPoseAdapter(config)
+    try:
+        assert adapter._rtmlib_cache_dir() == RTMLIB_CACHE.resolve()
+        adapter.warmup()
+        result = adapter.recognize_file(REAL_VIDEO, _request_with_sample(REAL_VIDEO.stem))
+        assert result.status == "recognized", result.reason
+        assert result.prediction is not None and result.prediction.text.strip()
+        assert result.quality["pose_source"] == "rtmpose"
+        assert result.quality["pose_normalization"] == "isotropic_short_side"
+        assert result.quality["pose_normalization_version"] == module.POSE_NORMALIZATION_VERSION
+        assert result.quality["fallback_reason"] is None         # the RGB branch really ran
+        assert adapter._extractor.backend == "onnxruntime"       # defect 1
+        assert Path(adapter._extractor.cache_dir) == RTMLIB_CACHE.resolve()   # defect 2
+        print(json.dumps({
+            "sample": REAL_VIDEO.stem,
+            "text": result.prediction.text,
+            "pose_normalization": result.quality["pose_normalization"],
+            "pose_normalization_version": result.quality["pose_normalization_version"],
+            "pose_device": adapter.runtime_info["pose_extractor"]["pose_device"],
+            "pose_backend": adapter.runtime_info["pose_extractor"]["pose_backend"],
+            "pose_cache_dir": adapter.runtime_info["pose_extractor"]["pose_cache_dir"],
+            "pose_fallback_reason": adapter.runtime_info["pose_extractor"]["pose_fallback_reason"],
+            "hand_frames_left": result.quality["hand_frames_left"],
+            "hand_frames_right": result.quality["hand_frames_right"],
+            "e2e_ms": result.quality.get("total_ms"),
+        }, ensure_ascii=False), flush=True)
     finally:
         adapter.close()
 
