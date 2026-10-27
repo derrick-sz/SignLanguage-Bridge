@@ -157,6 +157,11 @@
 - **归一化口径要跟 A 路径对齐：** rtmpose 分支用逐轴 `x/W, y/H` 与 A 路径 `isotropic_short_side` 数值不同（CSL-Daily 是 1280×1280 正方形所以看不出来，**非方形/摄像头输入才会暴露**）；必须复用 `normalize_rtmpose_pixels(mode="isotropic_short_side")` 并在 metadata 记 `pose_normalization` + 版本。
 - **"同一权重不同输入协议"的等价性要靠逐字比对证明：** stage2 子集在 pose-only 架构上与 legacy RGB+pose 1086/1086 逐字一致，才允许说"RGB 分支可去掉"；单样本一致不算（采样/窗口可能不同）。
 
+## 14. Round-3 双评审仲裁清单的协议差异（2026-10-27）
+
+- **状态：已修复（2026-10-27 修正 `arbitration_rows` 为协议口径，并同时输出 `material_disagreement_rows`；Round-3 双评已实跑：协议口径 36/90=40%、实质分歧 8/90=8.9%）。** 触发条件：Round-3 的 A/B 两位评审评分仅差 1 分，且严重语义错误判断相同。[Round-3 README](../../experiments/p1/e06/human_review/round3/README.md) 和模板填写说明要求对评分或严重错误的任意分歧仲裁，但 [`make_round3_package.py`](../../experiments/p1/e06/human_review/round3/make_round3_package.py) 的 `agreement.arbitration_rows` 仅筛选 `abs(score_A-score_B) >= 2` 或严重错误不同，因而会漏掉该类 1 分分歧。本次只完成 AI 评审人 A，未读取 B 评审意见，不能据此声称一致性或仲裁已通过。
+- 避免办法：B 到齐后，按协议额外以“评分不同或严重错误不同”逐行扫描，并由第三人或用户裁定；不能把现有 `arbitration_rows` 当成全部协议分歧。独立记录 AI/人工身份、量表版本与已读历史文本，不能将同一 AI 的两次输出计为两名独立人工评审。当前单 A 结果与边界见 [Round-3 AI A 评审摘要](../../outputs/01a17b59-e3b8-7590-b21b-250b3f41ca6f/round3/round3_reviewer_A_ai_summary.md)。
+
 ## 截至核验日期的证据锚点
 
 以下是历史运行记录，不是后续任务可直接复用的“当前通过”声明。

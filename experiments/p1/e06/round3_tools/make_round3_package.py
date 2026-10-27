@@ -502,11 +502,20 @@ def stats(reviewer_a: Path, reviewer_b: Path | None) -> int:
                 "severe_kappa": _kappa(severe_pairs),
                 "reliable_agreement": sum(1 for x, y in reliable_pairs if x == y) / len(common),
                 "reliable_kappa": _kappa(reliable_pairs),
+                # 协议口径：任意评分差异或严重错误不同都必须仲裁（与 README/填写说明一致）
                 "arbitration_rows": [k for k in common
-                                     if abs(float(a[k]["评分0-4"]) - float(b[k]["评分0-4"])) >= 2
+                                     if a[k]["评分0-4"] != b[k]["评分0-4"]
                                      or a[k]["严重语义错误"] != b[k]["严重语义错误"]],
+                # 实质性分歧（便于阅读：评分差≥2 或严重错误不同）
+                "material_disagreement_rows": [k for k in common
+                                               if abs(float(a[k]["评分0-4"]) - float(b[k]["评分0-4"])) >= 2
+                                               or a[k]["严重语义错误"] != b[k]["严重语义错误"]],
+                "score_diff_rows": [k for k in common if a[k]["评分0-4"] != b[k]["评分0-4"]],
+                "severe_diff_rows": [k for k in common if a[k]["严重语义错误"] != b[k]["严重语义错误"]],
             }
             summary["agreement"]["arbitration_share"] = len(summary["agreement"]["arbitration_rows"]) / len(common)
+            summary["agreement"]["material_disagreement_share"] = (
+                len(summary["agreement"]["material_disagreement_rows"]) / len(common))
 
     summary["blinded_map_used"] = "blind_map_EVAL_ONLY.csv (offline join; no GT text read)"
     out_path = HERE / "round3_stats.json"
