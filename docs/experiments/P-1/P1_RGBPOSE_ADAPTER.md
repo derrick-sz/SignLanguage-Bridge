@@ -56,12 +56,14 @@ slbridge/model_adapters.py: unisign_rgb_pose_slt ┘     ├─ UniSignRGBPoseRu
 
 ## 5. 已知偏差（必须在报告中保留）
 
-0. **【重大·2026-10-27 发现】冻结基线的 RGB 分支实际为零输入**：
-   - 官方 pose pkl 的 `scores` 形状是 `(T, 1, 133)`（多一个 singleton 维）
-   - 冻结脚本的 `sample_hand_indices` 用 `confs[:, 91:112]` 索引（无中间维）→ 返回空 → 左右手均 `None` → `build_support_rgb` 产出**全零占位张量**
-   - 实证：squeeze 成 `(T,133)` 后 left=13 / right=15 帧可采到
-   - **因此冻结基线 BLEU 26.3026 是"融合模型 + 零 RGB 支持"的结果，不是论文 RGB+pose 协议；26.30≈26.36 属巧合，不能作为"复现论文"的证据**
-   - 处理：adapter 提供 `hand_conf_layout: legacy（默认，复现冻结）/ squeeze（真实手部）/ auto`；corrected 数字单独测量与报告
+0. **【重大·2026-10-27 发现】该 checkpoint 的 RGB 分支数学上恒等消失，"+0.66 来自 stage2 pose 权重"**：
+   - 官方 pose pkl 的 `scores` 形状是 `(T, 1, 133)`（多一个 singleton 维）；冻结脚本 `sample_hand_indices` 用 `confs[:, 91:112]` 索引 → 空 → 手部帧 `None` → RGB 支持为**全零占位**（`hand_frames_left/right = 0`，50/50 样本）
+   - squeeze 修正后（`hand_conf_layout="squeeze"`）手部帧真实可用（left mean 10.3 / right mean 11.7），但 **输出与 legacy 逐条完全一致（50/50，Δ=0）**
+   - 根因：`fusion_gate` 两个 Conv **zero-init** 且权重全零（`fusion_gate.0.weight` 0/131072、`fusion_gate.2.weight` 0/256、bias 全零），公式
+     `fused_post = gate*fused + (1-gate)*gcn`，`gate ≡ 0` ⇒ **输出恒等于 pose 分支**（`models.py` L127-137/L192-194）
+   - 因此 `csl_daily_rgb_pose_slt.pth` 实质是"**更好的 pose-only 模型**"：与 `csl_daily_pose_only_slt.pth` 的 627 个 pose/mT5 键 **41.6% 参数超 1e-6 容差**（gcn mean_rel 0.29 / fusion_gcn 0.36 / mt5 0.16）→ +0.66（1086）/ +1.39（pilot）来自 **stage2 的 pose 权重**，与 RGB 无关
+   - **撤销"复现论文 26.36"的表述**：26.30≈26.36 是巧合，真实 RGB+pose 需作者提供**非零 fusion gate** 权重（或按正确协议重训/校准 gate）
+   - 产品含义：生产形态应为 **零 RGB 支持 + 不做手部裁剪**（`hand_conf_layout="legacy"`），延迟接近 pose-only，同时拿到 stage2 权重收益；待 stage2-pose-subset 验证（用 pose-only 架构加载 627 键）后可彻底去掉 RGB 分支
 1. 官方 Uni-Sign `sentence-crop` 视频（`sentence_frames-512x512.zip`）本地缺失 → RGB 用本地近似句段 trimmed 视频
 2. 帧映射偏移实测 min −170 / median −1 / max +14（个别样本手部 crop 与 pose 帧对不齐）
 3. 手部/帧采样改为固定种子（上游随机），保证可复现
