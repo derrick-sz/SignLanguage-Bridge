@@ -1,12 +1,13 @@
 # RGB+pose adapter 回归报告（task-33）
 
-- 状态：**legacy Pilot-50 PASS（50/50 逐字）；corrected Pilot-50 已跑（真实手部帧可用），但 released checkpoint 的 fusion gate 全零 → corrected 与 legacy 输出完全一致；1086 待排期。**
+- 状态：**legacy Pilot-50 PASS（50/50 逐字）；corrected Pilot-50 已跑（真实手部帧可用，但 gate 全零 → 与 legacy 完全一致）；stage2 pose-subset 等价性验证 PASS（50/50 逐字，可去掉 RGB 分支）；1086 待排期。**
 - 生成日期：2026-10-27
 - 唯一基线：`experiments/p1/e01/runs/unisign-rgb-pose-pilot50-20261027/`（pilot）与 `.../unisign-rgb-pose-1086-20261027/`（1086）；冻结清单：`experiments/p1/e01/frozen_baseline_manifest.json`
-- 三条硬结论（先读）：
+- 四条硬结论（先读）：
   1. legacy 50/50 逐字一致只证明 **adapter 忠实复现冻结脚本**，不证明 RGB+pose 效果。
   2. **冻结基线的 RGB 分支实际是零输入**（官方 pose confs 形状 `(T,1,133)` 导致手部采样为空，见 §2）；26.3026 不是论文协议。
   3. **released `csl_daily_rgb_pose_slt.pth` 的 `fusion_gate` 全部为零**（上游代码 zero-init 后未训练），gate=0 → `fused_post = 0*fused + 1*pose`，**即使 corrected 提供真实手部 crop，RGB 分支对输出也完全没有影响**；corrected 与 legacy 逐条一致（§3/§4）。真实 RGB+pose 评测需作者提供非零 gate 权重或重新训练/校准 gate。
+  4. **stage2 pose 子集（627 键）+ 纯 pose 架构与 legacy RGB+pose 逐字 50/50 完全一致**（§5）：RGB 分支可以完全去掉，保留 stage2 的 pose/mT5 收益（pilot +1.39 / 1086 +0.66 vs A2/pose-only）并把延迟拉回 pose-only 量级（~278 ms 级，而非 RGB+pose ~370 ms）。
 
 ## 1. legacy 回归（adapter 忠实复现冻结基线）
 
@@ -79,7 +80,20 @@
 - adapter 集成、corrected 预处理（真实手部帧）均已验证可用；**缺的是 checkpoint 的 fusion gate 权重**（或重新训练）。
 - 若要真实评测 RGB+pose：需作者提供 fusion gate 非零的权重，或按正确协议重新训练/校准 gate（训练时 gate 不能冻结在零）。在此之前不应对外声称复现论文 26.36，也不应把 corrected 当作 RGB+pose 数字。
 
-## 5. 1086 全量（待排期）
+## 5. stage2 pose-subset 等价性验证（第三段）
+
+领决定：既然 fusion gate 恒零，stage2 RGB+pose checkpoint 等价于“更好的 pose-only 模型”。验证方法：取 `csl_daily_rgb_pose_slt.pth` 中与 `csl_daily_pose_only_slt.pth` 完全一致的 **627 个 pose 键**（键名/形状 100% 匹配，0 缺失/0 形状不匹配），保存为 `models/external/uni_sign/csl_daily_stage2_pose_subset.pth`（`{"model": ...}` 包装；627 键，1,947,137,670 B，sha256 `951601a39fbbe19f…`），再用现有 **`uni_sign_pose_slt` adapter 的 pose-only 架构/runtime**（`TorchUniSignRuntime`，同一 bundle 配置；通过正常 `load_model_adapter` registry 校验）在官方 pose archive 输入上跑 Pilot-50。
+
+| 项 | 值 |
+|---|---|
+| run 目录 | `experiments/p1/e01/runs/stage2-pose-subset-pilot50-20261027/`（`predictions_stage2_pose_subset.jsonl`、`stage2_pose_subset.json`、`pose_bundle/manifest.json`） |
+| 报告 | `experiments/p1/e01/stage2_pose_subset_report.md` |
+| 与 legacy RGB+pose 逐字一致 | **50/50（100.0%）**，差异 0 条 |
+| 三系统指标（pilot，EVAL ONLY） | stage2-subset-pose **33.1731 / 28.1884 / 0.5020**；legacy RGB+pose **33.1731 / 28.1884 / 0.5020**；A2 31.7823 / 27.9108 / 0.4885；pose 控制 31.7795 / 27.9274 / 0.4885 |
+| GPU / 耗时 | 用前基线 `16311 MiB total / 2002 MiB used / 4%`；load 11.9 s（50 条模型侧 ~20 s 量级） |
+| 结论 | **可以完全去掉 RGB 分支**：stage2 pose 权重 + pose-only 架构 = legacy RGB+pose 输出，pilot 上保留 +1.39 BLEU（vs A2/pose-only），延迟按 pose-only 路径（~278 ms 级）而非 RGB+pose（~370 ms）。这不是论文 RGB+pose 复现（gate 仍为零），但作为产品路径可去掉无效的 RGB 分支、减少显存/预处理开销。 |
+
+## 6. 1086 全量（待排期）
 
 - **legacy 1086**：仍建议跑（验证 adapter 忠实复现冻结 1086），预期 1086/1086 逐字、指标 Δ≤0.01；命令：
   ```powershell
@@ -90,7 +104,7 @@
 - **corrected 1086**：在 fusion gate 仍全零的前提下**没有独立信息**（会与 legacy 完全一致）；建议 gate 修复后再跑，否则不消耗 GPU 排期。
 - 若后续获得非零 gate 权重：再跑 corrected 1086，并与 legacy/A2/pose 控制做配对与覆盖率对照。
 
-## 6. 产物 / GT / 安全 / 边界
+## 7. 产物 / GT / 安全 / 边界
 
 | 产物 | 路径 |
 |---|---|
@@ -100,6 +114,7 @@
 | 冻结清单 | `experiments/p1/e01/frozen_baseline_manifest.json` |
 | legacy run | `experiments/p1/e01/runs/adapter-regression-pilot50-20261027/` |
 | corrected run | `experiments/p1/e01/runs/adapter-regression-pilot50-corrected-20261027/` |
+| stage2 subset run | `experiments/p1/e01/runs/stage2-pose-subset-pilot50-20261027/`；报告 `stage2_pose_subset_report.md`；子集 checkpoint `models/external/uni_sign/csl_daily_stage2_pose_subset.pth` |
 
 - GT 只在评测侧 join（EVAL ONLY）；两份 predictions 均 GT-free（0 GT-key leaks）。
 - 未改 `slbridge/` 生产代码（adapter 由 p0a 实现）；未改参考答案/评测协议；GPU 单进程串行、用前记基线；不 commit。
