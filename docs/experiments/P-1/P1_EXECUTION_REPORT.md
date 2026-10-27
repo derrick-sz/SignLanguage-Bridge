@@ -335,3 +335,9 @@
 - 证据链：`G2_ROUND2_REVIEW.md`（人评 + 口径审计）、`LOSO_SENSITIVITY_ANALYSIS.md`（敏感性）、`S2_VS_RGBPOSE_RELATIONSHIP.md`（与完整 RGB+Pose 1086/1086 逐字一致）、`experiments/p1/e04/rgbpose_perf_report.md`（零延迟代价）。
 - **生产切换的门（未满足）**：①独立双人盲评（Rubric v2）确认关键事实错误风险；②新 signer 数据上的泛化验证；③P0006 类退化样本的监控。三者任一未满足都不得改 prod 默认。
 - 影响：不触碰冻结评测基线（`experiments/p1/**` 产物不动）；解析层为纯新增，未接线到 CLI/API/桌面入口（调用方需显式使用）。
+
+**ADR-P1-013 更新（2026-10-27，Round-3 双评完成后）**：
+- Round-3（Rubric v2，双人独立盲评，30 样本，inter-reviewer 二次加权 kappa **0.871**）显示：S2 相对 A2 的平均分 **+0.183（CI [−0.217,+0.583] 含 0）**、严重事实错误逐例 **gained 1 / lost 2**、可靠沟通 **+3.3pp（gained 3 / lost 2）**、可理解 **gained 0 / lost 1**。
+- 即：**v2 下 S2 无显著质量优势**；Round-2（v1）的 +0.30 主要来自"可理解/通顺"口径。
+- **决策维持**：prod 保持 A2；dev/test 保留 S2 仅供对比实验（文档注明无显著优势）；放行条件（纠对>改错 且 严重错误不增）**未满足**。
+- 产物：`G2_ROUND2_REVIEW.md`（v1）、`ROUND3_RUBRIC_V2_PROTOCOL.md`（协议）、`ROUND3_PREFILL_PRELIMINARY.md`（预填）、`ROUND3_REVIEW_RESULTS.md`（最终）、`experiments/p1/e06/round3_tools/`（工具 + 冻结聚合统计）。
