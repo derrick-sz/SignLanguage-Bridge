@@ -1,5 +1,5 @@
 {
-  "_comment": "Template for the unisign_rgb_pose_slt model bundle manifest. Copy to <bundle-dir>/manifest.json and adjust the relative paths. All path fields resolve relative to the bundle directory (absolute paths also work). models/ is gitignored, so live bundles never enter the repository; this template is the committed reconstruction recipe. alignment_dir MUST be the npz directory (artifacts/.../pose) whose metadata_json carries alignment.best_start -- the JSON alignment directory is NOT supported and is rejected at load time.",
+  "_comment": "Template for the unisign_rgb_pose_slt model bundle manifest. Copy to <bundle-dir>/manifest.json and adjust the relative paths. All path fields resolve relative to the bundle directory (absolute paths also work). models/ is gitignored, so live bundles never enter the repository; this template is the committed reconstruction recipe. alignment_dir MUST be the npz directory (artifacts/.../pose) whose metadata_json carries alignment.best_start -- the JSON alignment directory is NOT supported and is rejected at load time. hand_conf_layout: 'legacy' (default) reproduces the frozen baseline verbatim -- the official pose pkl stores scores as (T,1,133) while upstream hand sampling indexes confs[:, 91:112], which yields empty selections, so the frozen 26.3026 BLEU ran with ZERO RGB support (a coincidence-level match to the paper's 26.36, not the paper protocol); 'squeeze' reshapes (T,1,133)->(T,133) so hand crops carry real frames (the corrected variant); 'auto' picks by shape. Keep 'legacy' for regression runs, 'squeeze' for corrected runs.",
   "backend": "unisign_rgb_pose_slt",
   "pose_source": "official_archive",
   "pose_dir": "../../artifacts/cslnews-eval/csl-daily-pose/pose-format",
@@ -11,6 +11,7 @@
   "mt5_dir": "../../models/external/uni_sign/mt5-base",
   "enable_rgb": true,
   "fallback_to_pose_only": false,
+  "hand_conf_layout": "legacy",
   "device": "cuda",
   "dtype": "bfloat16",
   "num_beams": 4,

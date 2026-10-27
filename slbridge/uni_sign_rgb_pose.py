@@ -35,6 +35,26 @@ Pose sources (lead constraint 2):
 Input contract reuses ``slbridge.uni_sign.REPRESENTATION_ID``
 ("uni_sign_rgb_v1", video frames T,H,W,C uint8): one ModelInputContract,
 file input kind; the pose source is configuration, not a contract input.
+
+Frozen-protocol defect -- hand confidence layout (verified 2026-10-27): the
+official pose pkl stores ``scores`` as ``(T, 1, 133)`` while upstream
+``sample_hand_indices`` indexes ``confs[:, 91:112]``, which on that shape
+selects nothing, so both hands sample to None and the RGB support tensors are
+all-zero.  The frozen 26.3026 BLEU baseline therefore ran the fusion model
+with **zero RGB input** -- a coincidence-level match to the paper's 26.36, not
+the paper protocol.  ``UniSignRGBPoseConfig.hand_conf_layout`` controls it:
+
+* ``legacy`` (default): pass the array through unchanged; reproduces the
+  frozen behaviour exactly (zero support; regression runs must use this);
+* ``squeeze``: reshape ``(T, 1, 133)`` -> ``(T, 133)`` before sampling so hand
+  crops carry real frames (the corrected variant);
+* ``auto``: squeeze iff ``ndim == 3 and shape[1] == 1`` (shape-based dispatch;
+  not the regression default to avoid surprises).
+
+Every result records ``hand_conf_layout``, ``hand_conf_layout_effective`` and
+per-sample ``hand_frames_left``/``hand_frames_right`` in its quality metadata
+(legacy: 0/0; squeeze: ~10-15 real frames), and ``runtime_info`` accumulates
+the totals so reports can cite them directly.
 """
 
 from __future__ import annotations
@@ -737,6 +757,7 @@ class UniSignRGBPoseAdapter:
         self._pose_only_runtime: UniSignRGBPoseRuntime | None = None
         self._extractor = None                       # rtmpose mode, lazy
         self._rgb_failures: list[str] = []
+        self._hand_frames_totals: dict[str, int] = {"left": 0, "right": 0, "samples": 0}
         from .uni_sign import REPRESENTATION_ID, _register_representation
         _register_representation()
         self._representation_id = REPRESENTATION_ID
@@ -762,11 +783,13 @@ class UniSignRGBPoseAdapter:
             "pose_source": self.config.pose_source,
             "enable_rgb": self.config.enable_rgb,
             "fallback_to_pose_only": self.config.fallback_to_pose_only,
+            "hand_conf_layout": self.config.hand_conf_layout,
             "device": self.config.device,
             "dtype": self.config.dtype,
             "model_loaded": self._runtime is not None,
             "pose_only_loaded": self._pose_only_runtime is not None,
             "rgb_failures": list(self._rgb_failures),
+            "hand_frames_totals": dict(self._hand_frames_totals),
         }
 
     def warmup(self) -> None:
@@ -844,7 +867,8 @@ class UniSignRGBPoseAdapter:
         text, timings = runtime.infer(source, num_beams=self.config.num_beams,
                                       max_new_tokens=self.config.max_new_tokens)
         return self._make_result(request, text, timings, preprocess_ms,
-                                 fallback_reason=None, fallback_model_id=None)
+                                 fallback_reason=None, fallback_model_id=None,
+                                 inputs=inputs)
 
     def _pose_only_result(self, request: InferenceRequest, rgb_error: Exception,
                           preprocess_ms: float) -> RecognitionResult:
@@ -861,7 +885,8 @@ class UniSignRGBPoseAdapter:
     def _make_result(self, request: InferenceRequest, text: str, timings: dict,
                      preprocess_ms: float, *, fallback_reason: str | None,
                      fallback_model_id: str | None,
-                     rgb_failure: str | None = None) -> RecognitionResult:
+                     rgb_failure: str | None = None,
+                     inputs: dict | None = None) -> RecognitionResult:
         quality = {
             "protocol_id": PROTOCOL_ID,
             "checkpoint_sha256": CHECKPOINT_SHA256,
@@ -870,11 +895,26 @@ class UniSignRGBPoseAdapter:
             "enable_rgb": self.config.enable_rgb,
             "frame_sampling": FRAME_SAMPLING,
             "hand_sampling": HAND_SAMPLING,
+            "hand_conf_layout": self.config.hand_conf_layout,
             "preprocess_ms": round(preprocess_ms, 3),
             **{key: round(value, 3) for key, value in timings.items()},
             "fallback_reason": fallback_reason,
             "fallback_model_id": fallback_model_id,
         }
+        if inputs is not None:
+            # Per-sample hand-crop audit fields (legacy: 0/0 zero-support;
+            # squeeze: real left/right frame counts).
+            quality["hand_conf_layout_effective"] = inputs.get("hand_conf_layout_effective")
+            quality["hand_frames_left"] = inputs.get("hand_frames_left", 0)
+            quality["hand_frames_right"] = inputs.get("hand_frames_right", 0)
+            totals = self._hand_frames_totals
+            totals["left"] += int(inputs.get("hand_frames_left", 0) or 0)
+            totals["right"] += int(inputs.get("hand_frames_right", 0) or 0)
+            totals["samples"] += 1
+        else:
+            quality["hand_conf_layout_effective"] = None
+            quality["hand_frames_left"] = None
+            quality["hand_frames_right"] = None
         if rgb_failure is not None:
             quality["rgb_failure"] = rgb_failure
         model_id = MODEL_ID if fallback_model_id is None else FALLBACK_MODEL_ID
@@ -929,10 +969,15 @@ class UniSignRGBPoseAdapter:
         rng = np.random.default_rng(SEED + int(hashlib.sha256(sample.encode("utf-8")).hexdigest()[:8], 16) % 100000)
         skeletons_array = np.asarray(normalized)
         confs_array = np.asarray([confs[index] for index in frames])
-        rgb = build_support_rgb(skeletons_array, confs_array, frame_map, path, rng)
+        rgb = build_support_rgb(skeletons_array, confs_array, frame_map, path, rng,
+                                hand_conf_layout=self.config.hand_conf_layout)
         inputs = {"sample": sample, "frames_total": duration, "frames": frames,
                   "parts": parts, "rgb": rgb, "offset": 0,
-                  "video_frames": duration, "w_h": [width, height]}
+                  "video_frames": duration, "w_h": [width, height],
+                  "hand_conf_layout": self.config.hand_conf_layout,
+                  "hand_conf_layout_effective": rgb.get("hand_conf_layout_effective"),
+                  "hand_frames_left": rgb.get("hand_frames_left", 0),
+                  "hand_frames_right": rgb.get("hand_frames_right", 0)}
         source = source_from_sample(inputs, with_rgb=self.config.enable_rgb)
         return inputs, source, 0.0
 

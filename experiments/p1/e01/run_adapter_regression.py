@@ -47,6 +47,7 @@ if str(ROOT) not in sys.path:
 from experiments.p1 import common
 from experiments.p1.gt_guard import assert_gt_clean, find_gt_keys
 from slbridge.model_adapters import load_model_adapter
+from slbridge.uni_sign_rgb_pose import build_sample_inputs as build_rgb_pose_inputs
 from slbridge.runtime_contracts import InferenceRequest
 from slbridge.runtime_options import RuntimeOptions
 from slbridge.contracts import RecognitionResult
@@ -121,7 +122,7 @@ def regression_bundle(base_bundle: Path, run_dir: Path, hand_conf_layout: str = 
     return target
 
 
-def validate_adapter_config(adapter: Any) -> dict:
+def validate_adapter_config(adapter: Any, expected_layout: str | None = None) -> dict:
     config = getattr(adapter, "config", None)
     if config is None:
         raise SystemExit("adapter has no config; cannot verify regression configuration")
@@ -133,6 +134,7 @@ def validate_adapter_config(adapter: Any) -> dict:
         "dtype": "bfloat16",
         "num_beams": 4,
         "max_new_tokens": 100,
+        "hand_conf_layout": expected_layout or "legacy",
         "pose_dir": POSE_DIR.resolve(),
         "alignment_dir": ALIGNMENT_DIR.resolve(),
         "video_dir": VIDEO_DIR.resolve(),
@@ -174,7 +176,7 @@ def run(mode: str, bundle: Path, run_dir: Path, limit: int | None, hand_conf_lay
     # Explicit device: load_model_adapter applies options.device to the bundle config;
     # RuntimeOptions() defaults to "auto", which the frozen config validator rejects.
     adapter = load_model_adapter(bundle, options=RuntimeOptions(device="cuda"))
-    config_actual = validate_adapter_config(adapter)
+    config_actual = validate_adapter_config(adapter, expected_layout=hand_conf_layout)
     adapter.warmup()
     runtime_info = dict(getattr(adapter, "runtime_info", {}) or {})
     capabilities = getattr(adapter, "capabilities", None)
@@ -207,6 +209,25 @@ def run(mode: str, bundle: Path, run_dir: Path, limit: int | None, hand_conf_lay
             raise SystemExit(
                 f"regression path fell back for {sample}: fallback_reason={quality.get('fallback_reason')!r}; "
                 "this means the adapter is not running the frozen RGB+pose path")
+        hand_frames = None
+        if hand_conf_layout != "legacy":
+            effective = quality.get("hand_conf_layout_effective")
+            left_frames = quality.get("hand_frames_left")
+            right_frames = quality.get("hand_frames_right")
+            if effective is None or left_frames is None or right_frames is None:
+                # adapter metadata may lag; recompute the same frozen preprocessing for the audit
+                audit_inputs = build_rgb_pose_inputs(adapter.config, sample)
+                effective = audit_inputs.get("hand_conf_layout_effective")
+                left_frames = audit_inputs.get("hand_frames_left")
+                right_frames = audit_inputs.get("hand_frames_right")
+                quality["hand_conf_layout_effective"] = effective
+                quality["hand_frames_left"] = left_frames
+                quality["hand_frames_right"] = right_frames
+            if effective != "squeeze":
+                raise SystemExit(f"corrected run has hand_conf_layout_effective={effective!r} for {sample}, expected 'squeeze'")
+            if not left_frames or not right_frames:
+                raise SystemExit(f"corrected run has zero hand frames for {sample}: left={left_frames}, right={right_frames}")
+            hand_frames = {"left": int(left_frames), "right": int(right_frames)}
         text = result.prediction.text if result.prediction is not None else ""
         row = {
             "run_id": run_dir.name,
@@ -217,6 +238,8 @@ def run(mode: str, bundle: Path, run_dir: Path, limit: int | None, hand_conf_lay
             "model_id": result.model_id,
             "task_type": result.task_type,
             "quality": quality,
+            "hand_conf_layout_effective": quality.get("hand_conf_layout_effective"),
+            "hand_frames": hand_frames,
             "timing_adapter": {key: round(float(value), 3) for key, value in timing.items()},
             "sample_total_ms": round((time.perf_counter() - sample_started) * 1000.0, 3),
         }
@@ -237,6 +260,22 @@ def run(mode: str, bundle: Path, run_dir: Path, limit: int | None, hand_conf_lay
     except Exception:  # noqa: BLE001
         pass
     common.write_jsonl(run_dir / "predictions_rgb_pose_adapter.jsonl", predictions, guard=True)
+    hand_summary = None
+    if hand_conf_layout != "legacy":
+        left_values = [row["hand_frames"]["left"] for row in predictions if row.get("hand_frames")]
+        right_values = [row["hand_frames"]["right"] for row in predictions if row.get("hand_frames")]
+        hand_summary = {
+            "layout": hand_conf_layout,
+            "n": len(left_values),
+            "left_frames_mean": round(sum(left_values) / len(left_values), 2) if left_values else None,
+            "left_frames_min": min(left_values) if left_values else None,
+            "left_frames_max": max(left_values) if left_values else None,
+            "right_frames_mean": round(sum(right_values) / len(right_values), 2) if right_values else None,
+            "right_frames_min": min(right_values) if right_values else None,
+            "right_frames_max": max(right_values) if right_values else None,
+            "samples_with_zero_left": sum(1 for value in left_values if value == 0),
+            "samples_with_zero_right": sum(1 for value in right_values if value == 0),
+        }
     manifest = {
         "schema_version": 1,
         "kind": "adapter-regression-run",
@@ -258,6 +297,7 @@ def run(mode: str, bundle: Path, run_dir: Path, limit: int | None, hand_conf_lay
         "n_predictions": len(predictions),
         "n_failures": len(failures),
         "failures": failures,
+        "hand_frame_summary": hand_summary,
         "gpu_before": gpu_before,
         "gpu_after_load": gpu_after_load,
         "gpu_after_inference": nvidia_smi(),

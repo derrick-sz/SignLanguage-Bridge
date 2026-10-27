@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "kind": "adapter-regression-run",
+  "run_id": "adapter-regression-pilot50-corrected-20261027",
+  "mode": "pilot",
+  "hand_conf_layout": "squeeze",
+  "created_at": "2026-10-27T07:26:21+00:00",
+  "bundle": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\e01\\runs\\adapter-regression-pilot50-corrected-20261027\\regression_bundle",
+  "bundle_manifest_sha256": "5c4f5c4db1d6b243f84c90e924f7f230b11adbddca43183c49e746aaa1d30232",
+  "bundle_manifest": {
+    "backend": "unisign_rgb_pose_slt",
+    "pose_source": "official_archive",
+    "pose_dir": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\cslnews-eval\\csl-daily-pose\\pose-format",
+    "alignment_dir": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\pose",
+    "video_dir": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\trimmed",
+    "checkpoint": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\csl_daily_rgb_pose_slt.pth",
+    "pose_only_checkpoint": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\csl_daily_pose_only_slt.pth",
+    "enable_rgb": true,
+    "fallback_to_pose_only": false,
+    "device": "cuda",
+    "dtype": "bfloat16",
+    "num_beams": 4,
+    "max_new_tokens": 100,
+    "hand_conf_layout": "squeeze"
+  },
+  "adapter_config": {
+    "pose_source": "official_archive",
+    "pose_dir": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\cslnews-eval\\csl-daily-pose\\pose-format",
+    "alignment_dir": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\pose",
+    "video_dir": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\trimmed",
+    "enable_rgb": true,
+    "fallback_to_pose_only": false,
+    "device": "cuda",
+    "dtype": "bfloat16",
+    "num_beams": 4,
+    "max_new_tokens": 100
+  },
+  "runtime_info": {
+    "backend": "pytorch_unisign_rgb_pose",
+    "protocol_id": "unisign-rgb-pose-v1",
+    "checkpoint_sha256": "c2ba5d7ae32f3fa40f7c6807b5004042be81fca192abe7d8ed7182c0d13470f6",
+    "source_commit": "eed438bcb49e30405cd6ccdfcccca330c134e830",
+    "pose_source": "official_archive",
+    "enable_rgb": true,
+    "fallback_to_pose_only": false,
+    "device": "cuda",
+    "dtype": "bfloat16",
+    "model_loaded": true,
+    "pose_only_loaded": false,
+    "rgb_failures": []
+  },
+  "capabilities": {
+    "model_id": "unisign_rgb_pose",
+    "model_version": "7065ab8ff294c3d376d9d539d8dc01600f9f281538782c506e49cfbf4ad41fd9",
+    "sign_language": "csl",
+    "task_type": "text",
+    "inputs": [
+      {
+        "representation_id": "uni_sign_rgb_v1",
+        "shape": [
+          null,
+          null,
+          null,
+          3
+        ],
+        "dtype": "uint8",
+        "preprocessing_version": "e8fd2311b0d017ebd4f6d64337e4025bf728ee44ed154606c7f58221032225ee",
+        "input_kinds": [
+          "file"
+        ]
+      }
+    ],
+    "vocabulary": [],
+    "runtime": "pytorch_unisign_rgb_pose",
+    "devices": [
+      "cpu",
+      "cuda"
+    ],
+    "modes": [
+      "clip"
+    ],
+    "score_type": "uncalibrated_text"
+  },
+  "frozen_baseline": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\e01\\runs\\unisign-rgb-pose-pilot50-20261027\\predictions_rgb_pose.jsonl",
+  "frozen_baseline_sha256": "d64bc2aac46e39943a25470b2f81ac6423fb09e75b8febdd1612f0b683121ab4",
+  "n_expected": 50,
+  "n_predictions": 50,
+  "n_failures": 0,
+  "failures": [],
+  "hand_frame_summary": {
+    "layout": "squeeze",
+    "n": 50,
+    "left_frames_mean": 10.32,
+    "left_frames_min": 1,
+    "left_frames_max": 18,
+    "right_frames_mean": 11.66,
+    "right_frames_min": 5,
+    "right_frames_max": 17,
+    "samples_with_zero_left": 0,
+    "samples_with_zero_right": 0
+  },
+  "gpu_before": "16311 MiB, 2064 MiB, 6 %",
+  "gpu_after_load": "16311 MiB, 4849 MiB, 22 %",
+  "gpu_after_inference": "16311 MiB, 2246 MiB, 5 %",
+  "elapsed_seconds": 68.1,
+  "predictions": "predictions_rgb_pose_adapter.jsonl",
+  "gt_free": true
+}

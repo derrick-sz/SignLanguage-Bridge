@@ -201,6 +201,83 @@ def test_sample_hand_indices_deterministic_and_weighted(module):
     assert module.sample_hand_indices(dead, "left", np.random.default_rng(0)) is None
 
 
+# ---------------------------------------------------------------------------
+# hand_conf_layout: legacy / squeeze / auto (frozen-protocol defect handling)
+# ---------------------------------------------------------------------------
+
+def _official_shape_confs(frames: int = 40) -> np.ndarray:
+    """Real official pkl shape: scores are (T, 1, 133)."""
+    confs = np.full((frames, 1, 133), 0.9, dtype=np.float32)
+    return confs
+
+
+def test_hand_conf_layout_legacy_reproduces_frozen_defect(module):
+    confs = _official_shape_confs()
+    resolved, effective = module.resolve_hand_confs(confs, "legacy")
+    assert effective == "legacy"
+    assert resolved is confs                                  # untouched passthrough
+    chosen = module.sample_hand_indices(resolved, "left", np.random.default_rng(1))
+    assert chosen is None                                     # frozen defect: empty selection
+
+
+def test_hand_conf_layout_squeeze_enables_real_hands(module):
+    confs = _official_shape_confs()
+    resolved, effective = module.resolve_hand_confs(confs, "squeeze")
+    assert effective == "squeeze"
+    assert resolved.shape == (40, 133)
+    chosen = module.sample_hand_indices(resolved, "left", np.random.default_rng(1))
+    assert chosen is not None and len(chosen) == 4           # ceil(0.1 * 40)
+    with pytest.raises(ValueError, match="squeeze"):
+        module.resolve_hand_confs(np.full((40, 133), 0.9), "squeeze")   # wrong shape refuses
+
+
+def test_hand_conf_layout_auto_dispatches_by_shape(module):
+    squeezed, effective_s = module.resolve_hand_confs(_official_shape_confs(), "auto")
+    assert effective_s == "squeeze" and squeezed.shape == (40, 133)
+    flat = np.full((40, 133), 0.9, dtype=np.float32)
+    same, effective_f = module.resolve_hand_confs(flat, "auto")
+    assert effective_f == "legacy" and same is flat
+
+
+def test_hand_conf_layout_config_validation(module):
+    with pytest.raises(ValueError, match="hand_conf_layout"):
+        module.UniSignRGBPoseConfig(pose_source="rtmpose", hand_conf_layout="sideways")
+
+
+@pytest.mark.skipif(not REAL_VIDEO.exists(), reason="trimmed artifact not present")
+def test_build_support_rgb_layouts_same_output_shape(module):
+    """legacy vs squeeze: identical tensor shapes (112x112x3xL), zero vs real frames."""
+    pytest.importorskip("torch")
+    import torch
+
+    pose_dir = REPO / "artifacts" / "cslnews-eval" / "csl-daily-pose" / "pose-format"
+    npz_dir = REPO / "artifacts" / "csldaily-video-test-627-20261026" / "pose"
+    sample = "S000020_P0004_T00"
+    results = {}
+    for layout in ("legacy", "squeeze"):
+        config = module.UniSignRGBPoseConfig(
+            pose_source="official_archive", pose_dir=pose_dir, alignment_dir=npz_dir,
+            fallback_to_pose_only=False, hand_conf_layout=layout)
+        inputs = module.build_sample_inputs(config, sample)
+        rgb = inputs["rgb"]
+        for side in ("left", "right"):
+            hands = rgb[f"{side}_hands"]
+            assert hands.ndim == 4 and hands.shape[1:] == (3, 112, 112)
+            assert hands.shape[0] == rgb[f"{side}_sampled_indices"].numel() \
+                or rgb[f"{side}_sampled_indices"].numel() == 1
+        results[layout] = inputs
+    # legacy: the frozen defect -- zero hand frames, zero tensors.
+    assert results["legacy"]["hand_conf_layout_effective"] == "legacy"
+    assert results["legacy"]["hand_frames_left"] == 0
+    assert results["legacy"]["hand_frames_right"] == 0
+    assert bool(torch.all(results["legacy"]["rgb"]["left_hands"] == 0))
+    # squeeze: real hand crops (verified ~13/15 frames on this sample).
+    assert results["squeeze"]["hand_conf_layout_effective"] == "squeeze"
+    assert results["squeeze"]["hand_frames_left"] > 0
+    assert results["squeeze"]["hand_frames_right"] > 0
+    assert not bool(torch.all(results["squeeze"]["rgb"]["left_hands"] == 0))
+
+
 def test_crop_scale_matches_upstream_semantics(module):
     motion = np.zeros((5, 21, 3))
     motion[..., :2] = 0.5

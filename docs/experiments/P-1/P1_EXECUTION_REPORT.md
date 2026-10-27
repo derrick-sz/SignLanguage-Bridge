@@ -282,25 +282,32 @@
 5. P1：固定 LLM 端点/版本/prompt 后做 D–G 融合消融；在此之前不启用自动融合。
 6. P2：在线模型单独验证（窗口/右上下文/首稳），不改造 Uni-Sign 为假流式。
 
-### ADR-P1-011 Uni-Sign RGB+pose：视频可用时的首选单模型（2026-10-27）
-- 状态：**ACCEPTED（分层默认：视频→RGB+pose；仅 pose→A2）**；对应 E01、G2 改进、RQ2/RQ3。
-- 背景：7 种文本级融合全部负结果后，转向模型内部融合——Uni-Sign 自带的 RGB+pose 权重（1012 键，含 `rgb_support_backbone`/`fusion_gate`）此前未接入。
+### ADR-P1-011 Uni-Sign 1012 键权重（原称"RGB+pose"）：实测为更优的 pose-only 模型（2026-10-27，已修正）
+- 状态：**CORRECTED**（原判"视频→RGB+pose 首选"基于错误归因，已撤销；adapter 见 ADR-P1-012）；对应 E01、G2 改进、RQ2/RQ3。
+- 背景：7 种文本级融合全部负结果后，转向模型内部融合——Uni-Sign 自带的 1012 键权重（含 `rgb_support_backbone`/`fusion_gate`）此前未接入。
 - 证据（1086 test，canonical p1-v1，`experiments/p1/e01/rgb_pose_report_1086.md`）：
   | 系统 | BLEU-4 | chrF | char edit |
   |---|---:|---:|---:|
   | A（视频） | 24.8157 | 21.7974 | 0.4157 |
   | A2（官方 pose） | 25.5846 | 22.4284 | 0.4212 |
   | pose 控制（同实现） | 25.6395 | 22.4766 | 0.4223 |
-  | **RGB+pose** | **26.3026** | **23.0005** | **0.4358** |
-  - **论文复现**：pose 25.64 vs 25.61、RGB+pose 26.30 vs 26.36、Δ +0.66 vs +0.75 → 输入协议与实现可信
+  | **1012 键权重（原"RGB+pose"）** | **26.3026** | **23.0005** | **0.4358** |
   - 配对 signer bootstrap：ΔBLEU +0.66 [−0.35,+1.32]（**含 0**）、Δedit +0.0135 [+0.0045,+0.0192]（**显著**）
   - 补充检验（Lead）：逐样本 edit 配对 t=3.03（p≈0.0025）、符号检验 468 胜/363 负（p≈3e-4）、样本级 BLEU bootstrap [−0.115,+1.429]
   - 覆盖率：A2 36.5% @0.5 → 三模型并集 **46.6%（+10.1pp）**；@0.75 12.2% → 17.3%
   - 成本：+26 ms P50（pilot 同序）、+8 MB 显存；1086/1086 成功、0 空输出
-- 决策：
-  1. **有视频输入时首选 RGB+pose**（BLEU 26.30 / edit 0.436，均优于 A/A2；延迟与 A 同量级，约 2.7 s）
-  2. **只有官方 pose 归档（无视频）时用 A2**（25.58，0.28 s）
-  3. **批处理/离线**可用三模型并集提升覆盖率（46.6% @0.5），但需人工复核兜底
-- 保留条件：BLEU 的 signer 聚类 CI 含 0（10 个 signer 的保守 CI）；RGB 输入用本地近似 trimmed 视频（官方 `sentence-crop` 帧缺失）。**在 Round-2 人评 + 官方帧协议复核完成前，不把 RGB+pose 写死为唯一默认**。
-- 回退：A2（pose）/ A（视频，若手部 crop 不可用）。
-- 影响：主链路模型选择从"单模型 A/A2"变为"按输入可用性分层"；`slbridge` 现有 adapter 支持 pose-only，RGB+pose 需新增 adapter（P1 任务）。
+- **归因修正（2026-10-27 实测）**：`fusion_gate` 两个 Conv **zero-init 且权重全零**（`fusion_gate.0.weight` 0/131072、`fusion_gate.2.weight` 0/256、bias 全零），公式 `fused_post = gate*fused + (1-gate)*gcn` ⇒ **gate≡0，输出恒等于 pose 分支**。squeeze 出真实手部帧（left 10.3 / right 11.7）后输出与零输入**逐条完全一致（50/50, Δ=0）**。与 pose-only checkpoint 相比，627 个 pose/mT5 键 **41.6% 参数超 1e-6 容差**（gcn 0.29 / fusion_gcn 0.36 / mt5 0.16）⇒ **+0.66 来自 stage2 的 pose 权重，与 RGB 无关；"复现论文 26.36"的表述撤销**（26.30≈26.36 为巧合）。
+- 决策（修正后）：
+  1. **该 1012 键权重按"更优 pose-only 模型"使用**（零 RGB 支持、不做手部裁剪），延迟接近 pose-only；能否用 pose-only 架构直接加载其 627 键由 stage2-subset 验证决定
+  2. 只有官方 pose 归档时用 A2（25.58，0.28 s）
+  3. 批处理/离线可用多模型并集提升覆盖率（46.6% @0.5），但需人工复核兜底
+- 保留条件：ΔBLEU 的 signer 聚类 CI 含 0（10 signer 的保守 CI）；真实 RGB+pose 需作者提供**非零 fusion gate** 权重（或按正确协议重训 gate）。
+- 回退：A2 / A。
+- 影响：`slbridge` 新增 `unisign_rgb_pose_slt` adapter（ADR-P1-012），**候选状态、不默认启用**。
+
+### ADR-P1-012 `unisign_rgb_pose_slt` adapter 接入（候选，2026-10-27）
+- 状态：**ACCEPTED as CANDIDATE**（工程化接入完成；**不启用为生产默认**）；对应 P1-RGBPOSE-ADAPTER 立项。
+- 实现：`slbridge/uni_sign_rgb_pose.py`（推理核心与冻结脚本共用单一真源）+ `model_adapters.py` 懒注册；`hand_conf_layout: legacy（默认）/squeeze/auto`；metadata 记 `PROTOCOL_ID`/`checkpoint_sha256`/`source_commit`/`hand_conf_layout_effective`/`hand_frames_left|right`；`fallback_to_pose_only` 仅 rtmpose 模式生效，回归模式禁用。
+- 验收：legacy Pilot-50 与冻结基线 **50/50 逐字一致、指标 Δ=0**；单测 23 passed + 1 opt-in；双环境 967/15 与 1011/17 零退化；性能与 1086 回归见 task-33/task-34 报告。
+- 门：**Round-2 独立人评 + 部署泛化验收通过前保持候选**；生产默认仍为 A（视频）/A2（官方 pose）。
+- 边界：真实 RGB+pose 不可用（gate 恒零，见 ADR-P1-011 修正）；该 adapter 的实际价值是承载 1012 键的 pose 权重。

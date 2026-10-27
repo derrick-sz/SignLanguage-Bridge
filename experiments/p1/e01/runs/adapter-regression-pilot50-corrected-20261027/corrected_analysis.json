@@ -1,0 +1,3072 @@
+{
+  "mode": "pilot",
+  "created_at": "2026-10-27T07:30:41+00:00",
+  "legacy_run": "experiments\\p1\\e01\\runs\\adapter-regression-pilot50-20261027",
+  "corrected_run": "experiments\\p1\\e01\\runs\\adapter-regression-pilot50-corrected-20261027",
+  "n_samples": 50,
+  "metrics": {
+    "legacy": {
+      "metric_definition_version": "p1-v1",
+      "n": 50,
+      "bleu4_13a": 33.1731,
+      "bleu4_13a_precisions": [
+        65.13,
+        42.58,
+        29.98,
+        21.16
+      ],
+      "bleu4_13a_bp": 0.9108,
+      "chrf": 28.1884,
+      "mean_char_edit_similarity": 0.502,
+      "char_rogue_l_f1": 0.6104,
+      "exact_match_count": 4,
+      "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+    },
+    "corrected": {
+      "metric_definition_version": "p1-v1",
+      "n": 50,
+      "bleu4_13a": 33.1731,
+      "bleu4_13a_precisions": [
+        65.13,
+        42.58,
+        29.98,
+        21.16
+      ],
+      "bleu4_13a_bp": 0.9108,
+      "chrf": 28.1884,
+      "mean_char_edit_similarity": 0.502,
+      "char_rogue_l_f1": 0.6104,
+      "exact_match_count": 4,
+      "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+    },
+    "A2": {
+      "metric_definition_version": "p1-v1",
+      "n": 50,
+      "bleu4_13a": 31.7823,
+      "bleu4_13a_precisions": [
+        65.73,
+        42.47,
+        30.66,
+        22.9
+      ],
+      "bleu4_13a_bp": 0.8494,
+      "chrf": 27.9108,
+      "mean_char_edit_similarity": 0.4885,
+      "char_rogue_l_f1": 0.6042,
+      "exact_match_count": 3,
+      "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+    },
+    "pose_control": {
+      "metric_definition_version": "p1-v1",
+      "n": 50,
+      "bleu4_13a": 31.7795,
+      "bleu4_13a_precisions": [
+        65.92,
+        42.6,
+        30.77,
+        22.99
+      ],
+      "bleu4_13a_bp": 0.8465,
+      "chrf": 27.9274,
+      "mean_char_edit_similarity": 0.4885,
+      "char_rogue_l_f1": 0.6043,
+      "exact_match_count": 3,
+      "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+    },
+    "A": {
+      "metric_definition_version": "p1-v1",
+      "n": 50,
+      "bleu4_13a": 31.2308,
+      "bleu4_13a_precisions": [
+        63.78,
+        40.59,
+        28.84,
+        21.55
+      ],
+      "bleu4_13a_bp": 0.8769,
+      "chrf": 27.1849,
+      "mean_char_edit_similarity": 0.4831,
+      "char_rogue_l_f1": 0.5925,
+      "exact_match_count": 2,
+      "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+    }
+  },
+  "comparisons": {
+    "corrected_vs_legacy": {
+      "label": "corrected minus legacy",
+      "n_pairs": 50,
+      "delta_bleu": {
+        "point": 0.0,
+        "lower": 0.0,
+        "upper": 0.0,
+        "iterations": 1000,
+        "groups": 10,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "delta_edit": {
+        "point": 0.0,
+        "lower": 0.0,
+        "upper": 0.0,
+        "iterations": 1000,
+        "groups": 10,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "improved": 0,
+      "equal": 50,
+      "harmed": 0,
+      "records": [
+        {
+          "sample_id": "S000230_P0008_T00",
+          "signer_id": "P0008",
+          "reference_char": "左 边 的 房 间 是 我 爸 爸 妈 妈 的 , 他 们 的 房 间 很 大 。",
+          "first_char": "旁 边 的 房 间 是 爸 爸 妈 妈 的 , 这 个 房 间 很 大 。",
+          "second_char": "旁 边 的 房 间 是 爸 爸 妈 妈 的 , 这 个 房 间 很 大 。",
+          "sim_first": 0.7619,
+          "sim_second": 0.7619
+        },
+        {
+          "sample_id": "S000414_P0004_T00",
+          "signer_id": "P0004",
+          "reference_char": "时 间 过 得 真 快 , 新 年 快 要 到 了 。",
+          "first_char": "时 间 过 得 可 真 快 , 新 的 一 年 就 要 准 备 好 了 。",
+          "second_char": "时 间 过 得 可 真 快 , 新 的 一 年 就 要 准 备 好 了 。",
+          "sim_first": 0.6316,
+          "sim_second": 0.6316
+        },
+        {
+          "sample_id": "S000440_P0004_T00",
+          "signer_id": "P0004",
+          "reference_char": "这 些 我 昨 天 下 午 就 准 备 好 了 。",
+          "first_char": "我 昨 天 下 午 就 准 备 好 了 。",
+          "second_char": "我 昨 天 下 午 就 准 备 好 了 。",
+          "sim_first": 0.8462,
+          "sim_second": 0.8462
+        },
+        {
+          "sample_id": "S000502_P0000_T00",
+          "signer_id": "P0000",
+          "reference_char": "学 校 太 大 , 多 累 啊 。",
+          "first_char": "现 在 学 校 很 大 , 很 累 。",
+          "second_char": "现 在 学 校 很 大 , 很 累 。",
+          "sim_first": 0.5,
+          "sim_second": 0.5
+        },
+        {
+          "sample_id": "S000695_P0004_T00",
+          "signer_id": "P0004",
+          "reference_char": "上 海 的 夏 天 太 热 了 , 需 要 买 空 调 。",
+          "first_char": "上 海 太 热 了 , 多 买 空 调 。",
+          "second_char": "上 海 太 热 了 , 多 买 空 调 。",
+          "sim_first": 0.6667,
+          "sim_second": 0.6667
+        },
+        {
+          "sample_id": "S000849_P0004_T00",
+          "signer_id": "P0004",
+          "reference_char": "手 机 选 不 到 靠 近 窗 户 的 位 置 。",
+          "first_char": "手 机 的 挡 风 玻 璃 被 拆 掉 了 。",
+          "second_char": "手 机 的 挡 风 玻 璃 被 拆 掉 了 。",
+          "sim_first": 0.2308,
+          "sim_second": 0.2308
+        },
+        {
+          "sample_id": "S001064_P0008_T00",
+          "signer_id": "P0008",
+          "reference_char": "爷 爷 年 龄 大 , 喜 欢 爬 山 。",
+          "first_char": "爷 爷 年 龄 大 , 喜 欢 爬 山 。",
+          "second_char": "爷 爷 年 龄 大 , 喜 欢 爬 山 。",
+          "sim_first": 1.0,
+          "sim_second": 1.0
+        },
+        {
+          "sample_id": "S001090_P0000_T00",
+          "signer_id": "P0000",
+          "reference_char": "蛋 糕 太 甜 , 吃 多 了 对 身 体 不 好 。",
+          "first_char": "蛋 糕 太 甜 , 对 身 体 不 好 。",
+          "second_char": "蛋 糕 太 甜 , 对 身 体 不 好 。",
+          "sim_first": 0.7857,
+          "sim_second": 0.7857
+        },
+        {
+          "sample_id": "S001414_P0008_T00",
+          "signer_id": "P0008",
+          "reference_char": "明 天 是 春 节 , 要 穿 新 衣 服 。",
+          "first_char": "明 天 是 春 节 , 我 要 新 衣 服 。",
+          "second_char": "明 天 是 春 节 , 我 要 新 衣 服 。",
+          "sim_first": 0.8333,
+          "sim_second": 0.8333
+        },
+        {
+          "sample_id": "S001610_P0004_T00",
+          "signer_id": "P0004",
+          "reference_char": "服 务 员 说 黑 色 的 帽 子 很 适 合 我 。",
+          "first_char": "他 是 个 聪 明 人 , 适 合 我 的 奶 奶 说 。",
+          "second_char": "他 是 个 聪 明 人 , 适 合 我 的 奶 奶 说 。",
+          "sim_first": 0.0667,
+          "sim_second": 0.0667
+        },
+        {
+          "sample_id": "S001656_P0005_T00",
+          "signer_id": "P0005",
+          "reference_char": "手 术 治 疗 是 目 前 治 疗 白 内 障 比 较 有 效 的 手 段 。",
+          "first_char": "白 内 障 的 治 疗 效 果 主 要 是 手 术 切 除 白 内 障 。",
+          "second_char": "白 内 障 的 治 疗 效 果 主 要 是 手 术 切 除 白 内 障 。",
+          "sim_first": 0.05,
+          "sim_second": 0.05
+        },
+        {
+          "sample_id": "S002086_P0005_T00",
+          "signer_id": "P0005",
+          "reference_char": "为 读 者 的 家 居 生 活 带 来 不 同 凡 响 的 流 行 资 讯 。",
+          "first_char": "为 了 校 园 的 校 园 , 人 们 都 把 非 主 流 的 信 息 都 掌 握 了 。",
+          "second_char": "为 了 校 园 的 校 园 , 人 们 都 把 非 主 流 的 信 息 都 掌 握 了 。",
+          "sim_first": 0.1739,
+          "sim_second": 0.1739
+        },
+        {
+          "sample_id": "S002092_P0007_T00",
+          "signer_id": "P0007",
+          "reference_char": "他 一 听 到 自 己 被 录 取 的 消 息 , 情 绪 一 下 子 兴 奋 起 来 了 。",
+          "first_char": "当 他 成 功 竞 选 时 , 心 里 终 于 踏 实 了 。",
+          "second_char": "当 他 成 功 竞 选 时 , 心 里 终 于 踏 实 了 。",
+          "sim_first": 0.125,
+          "sim_second": 0.125
+        },
+        {
+          "sample_id": "S002128_P0005_T00",
+          "signer_id": "P0005",
+          "reference_char": "妈 妈 一 回 到 家 就 干 这 干 那 , 没 有 休 息 时 间 。",
+          "first_char": "妈 妈 回 家 工 作 , 你 没 时 间 休 息 。",
+          "second_char": "妈 妈 回 家 工 作 , 你 没 时 间 休 息 。",
+          "sim_first": 0.3684,
+          "sim_second": 0.3684
+        },
+        {
+          "sample_id": "S002143_P0007_T00",
+          "signer_id": "P0007",
+          "reference_char": "不 努 力 学 习 , 在 竞 争 中 就 会 处 于 劣 势 。",
+          "first_char": "自 己 不 努 力 学 习 , 不 应 该 比 赛 。",
+          "second_char": "自 己 不 努 力 学 习 , 不 应 该 比 赛 。",
+          "sim_first": 0.2941,
+          "sim_second": 0.2941
+        },
+        {
+          "sample_id": "S002199_P0005_T00",
+          "signer_id": "P0005",
+          "reference_char": "他 把 试 卷 拿 回 家 , 让 爸 爸 在 上 面 签 字 。",
+          "first_char": "他 把 这 份 文 件 带 到 了 学 校 , 给 爸 爸 签 字 。",
+          "second_char": "他 把 这 份 文 件 带 到 了 学 校 , 给 爸 爸 签 字 。",
+          "sim_first": 0.2778,
+          "sim_second": 0.2778
+        },
+        {
+          "sample_id": "S002199_P0007_T00",
+          "signer_id": "P0007",
+          "reference_char": "他 把 试 卷 拿 回 家 , 让 爸 爸 在 上 面 签 字 。",
+          "first_char": "他 把 作 文 带 回 家 , 让 他 在 上 面 签 字 。",
+          "second_char": "他 把 作 文 带 回 家 , 让 他 在 上 面 签 字 。",
+          "sim_first": 0.7059,
+          "sim_second": 0.7059
+        },
+        {
+          "sample_id": "S002240_P0005_T00",
+          "signer_id": "P0005",
+          "reference_char": "人 生 最 困 难 的 事 情 是 认 识 自 己 。",
+          "first_char": "在 人 生 的 巅 峰 时 期 , 最 困 难 的 是 如 何 认 识 自 己 。",
+          "second_char": "在 人 生 的 巅 峰 时 期 , 最 困 难 的 是 如 何 认 识 自 己 。",
+          "sim_first": 0.5238,
+          "sim_second": 0.5238
+        },
+        {
+          "sample_id": "S002951_P0002_T00",
+          "signer_id": "P0002",
+          "reference_char": "自 从 他 沉 迷 于 游 戏 后 , 学 习 成 绩 一 落 千 丈 。",
+          "first_char": "他 沉 迷 在 自 己 的 电 脑 里 , 变 得 非 常 孤 单 。",
+          "second_char": "他 沉 迷 在 自 己 的 电 脑 里 , 变 得 非 常 孤 单 。",
+          "sim_first": 0.1579,
+          "sim_second": 0.1579
+        },
+        {
+          "sample_id": "S003002_P0000_T00",
+          "signer_id": "P0000",
+          "reference_char": "你 迟 到 了 三 分 钟 , 所 以 要 罚 酒 三 杯 。",
+          "first_char": "你 迟 到 三 分 钟 就 会 喝 酒 , 被 罚 款 了 。",
+          "second_char": "你 迟 到 三 分 钟 就 会 喝 酒 , 被 罚 款 了 。",
+          "sim_first": 0.375,
+          "sim_second": 0.375
+        },
+        {
+          "sample_id": "S003181_P0001_T00",
+          "signer_id": "P0001",
+          "reference_char": "看 见 妈 妈 期 待 的 眼 神 , 我 感 到 惭 愧 。",
+          "first_char": "我 爸 爸 也 希 望 能 看 见 我 , 感 到 很 惭 愧 。",
+          "second_char": "我 爸 爸 也 希 望 能 看 见 我 , 感 到 很 惭 愧 。",
+          "sim_first": 0.2941,
+          "sim_second": 0.2941
+        },
+        {
+          "sample_id": "S003256_P0002_T00",
+          "signer_id": "P0002",
+          "reference_char": "你 必 须 严 格 按 照 生 产 程 序 进 行 工 作 。",
+          "first_char": "你 必 须 依 据 产 品 的 生 产 程 序 来 做 。",
+          "second_char": "你 必 须 依 据 产 品 的 生 产 程 序 来 做 。",
+          "sim_first": 0.4375,
+          "sim_second": 0.4375
+        },
+        {
+          "sample_id": "S003518_P0002_T00",
+          "signer_id": "P0002",
+          "reference_char": "我 们 不 想 毕 业 。",
+          "first_char": "我 们 不 想 毕 业 。",
+          "second_char": "我 们 不 想 毕 业 。",
+          "sim_first": 1.0,
+          "sim_second": 1.0
+        },
+        {
+          "sample_id": "S003572_P0002_T00",
+          "signer_id": "P0002",
+          "reference_char": "面 对 竞 争 , 我 们 不 能 躲 避 。",
+          "first_char": "竞 争 是 不 可 避 免 的 。",
+          "second_char": "竞 争 是 不 可 避 免 的 。",
+          "sim_first": 0.25,
+          "sim_second": 0.25
+        },
+        {
+          "sample_id": "S003605_P0001_T00",
+          "signer_id": "P0001",
+          "reference_char": "这 孩 子 一 天 到 晚 , 游 手 好 闲 , 真 令 人 操 心 。",
+          "first_char": "这 孩 子 一 天 很 快 乐 , 真 让 人 提 心 吊 胆 。",
+          "second_char": "这 孩 子 一 天 很 快 乐 , 真 让 人 提 心 吊 胆 。",
+          "sim_first": 0.4211,
+          "sim_second": 0.4211
+        },
+        {
+          "sample_id": "S003747_P0001_T00",
+          "signer_id": "P0001",
+          "reference_char": "垃 圾 处 理 问 题 有 关 我 们 每 个 人 的 生 活 。",
+          "first_char": "处 理 垃 圾 问 题 和 我 们 每 个 人 的 生 活 息 息 相 关 。",
+          "second_char": "处 理 垃 圾 问 题 和 我 们 每 个 人 的 生 活 息 息 相 关 。",
+          "sim_first": 0.5,
+          "sim_second": 0.5
+        },
+        {
+          "sample_id": "S003758_P0000_T00",
+          "signer_id": "P0000",
+          "reference_char": "我 在 考 虑 到 底 是 辞 职 还 是 继 续 工 作 。",
+          "first_char": "你 辞 职 之 后 还 要 上 班 吗 ?",
+          "second_char": "你 辞 职 之 后 还 要 上 班 吗 ?",
+          "sim_first": 0.0625,
+          "sim_second": 0.0625
+        },
+        {
+          "sample_id": "S003961_P0002_T00",
+          "signer_id": "P0002",
+          "reference_char": "希 望 你 以 后 不 要 再 犯 一 样 的 错 误 。",
+          "first_char": "我 希 望 你 未 来 不 要 再 犯 错 误 。",
+          "second_char": "我 希 望 你 未 来 不 要 再 犯 错 误 。",
+          "sim_first": 0.6,
+          "sim_second": 0.6
+        },
+        {
+          "sample_id": "S003987_P0001_T00",
+          "signer_id": "P0001",
+          "reference_char": "明 天 是 他 的 生 日 , 你 打 算 送 什 么 礼 物 ?",
+          "first_char": "明 天 是 生 日 , 你 打 算 送 什 么 礼 物 ?",
+          "second_char": "明 天 是 生 日 , 你 打 算 送 什 么 礼 物 ?",
+          "sim_first": 0.8824,
+          "sim_second": 0.8824
+        },
+        {
+          "sample_id": "S004029_P0001_T00",
+          "signer_id": "P0001",
+          "reference_char": "青 春 期 是 身 体 成 熟 的 时 期 。",
+          "first_char": "青 春 期 是 身 体 成 熟 的 最 佳 时 期 。",
+          "second_char": "青 春 期 是 身 体 成 熟 的 最 佳 时 期 。",
+          "sim_first": 0.8571,
+          "sim_second": 0.8571
+        },
+        {
+          "sample_id": "S004204_P0003_T00",
+          "signer_id": "P0003",
+          "reference_char": "开 车 要 看 好 前 方 行 驶 , 小 心 驾 驶 。",
+          "first_char": "开 车 看 车 , 注 意 安 全 。",
+          "second_char": "开 车 看 车 , 注 意 安 全 。",
+          "sim_first": 0.3333,
+          "sim_second": 0.3333
+        },
+        {
+          "sample_id": "S004419_P0008_T00",
+          "signer_id": "P0008",
+          "reference_char": "要 尊 重 客 观 规 律 。",
+          "first_char": "要 尊 重 客 观 规 律 。",
+          "second_char": "要 尊 重 客 观 规 律 。",
+          "sim_first": 1.0,
+          "sim_second": 1.0
+        },
+        {
+          "sample_id": "S004459_P0003_T00",
+          "signer_id": "P0003",
+          "reference_char": "他 参 加 了 图 书 馆 的 暑 期 活 动 。",
+          "first_char": "他 参 加 图 书 馆 的 夏 季 活 动 。",
+          "second_char": "他 参 加 图 书 馆 的 夏 季 活 动 。",
+          "sim_first": 0.7692,
+          "sim_second": 0.7692
+        },
+        {
+          "sample_id": "S004571_P0000_T00",
+          "signer_id": "P0000",
+          "reference_char": "老 师 为 有 你 们 这 样 的 学 生 而 自 豪 。",
+          "first_char": "老 师 为 有 这 样 的 学 生 而 自 豪 。",
+          "second_char": "老 师 为 有 这 样 的 学 生 而 自 豪 。",
+          "sim_first": 0.8667,
+          "sim_second": 0.8667
+        },
+        {
+          "sample_id": "S004677_P0008_T00",
+          "signer_id": "P0008",
+          "reference_char": "世 界 上 没 有 后 悔 药 。",
+          "first_char": "世 界 上 没 有 后 悔 吃 药 。",
+          "second_char": "世 界 上 没 有 后 悔 吃 药 。",
+          "sim_first": 0.9,
+          "sim_second": 0.9
+        },
+        {
+          "sample_id": "S004752_P0003_T00",
+          "signer_id": "P0003",
+          "reference_char": "请 问 在 哪 里 可 以 买 到 城 市 地 图 ?",
+          "first_char": "请 问 城 市 地 图 在 哪 里 买 的 ?",
+          "second_char": "请 问 城 市 地 图 在 哪 里 买 的 ?",
+          "sim_first": 0.2143,
+          "sim_second": 0.2143
+        },
+        {
+          "sample_id": "S005011_P0003_T00",
+          "signer_id": "P0003",
+          "reference_char": "战 争 时 候 , 动 摇 军 心 的 人 必 然 要 受 到 处 罚 。",
+          "first_char": "战 时 , 学 习 纪 律 较 弱 , 要 严 肃 处 理 。",
+          "second_char": "战 时 , 学 习 纪 律 较 弱 , 要 严 肃 处 理 。",
+          "sim_first": 0.3158,
+          "sim_second": 0.3158
+        },
+        {
+          "sample_id": "S005040_P0006_T00",
+          "signer_id": "P0006",
+          "reference_char": "人 面 对 外 界 的 刺 激 , 精 神 会 做 出 反 应 。",
+          "first_char": "每 个 人 都 要 受 到 刺 激 , 精 神 上 的 人 总 是 会 做 出 反 应 。",
+          "second_char": "每 个 人 都 要 受 到 刺 激 , 精 神 上 的 人 总 是 会 做 出 反 应 。",
+          "sim_first": 0.4783,
+          "sim_second": 0.4783
+        },
+        {
+          "sample_id": "S005112_P0006_T00",
+          "signer_id": "P0006",
+          "reference_char": "心 情 不 好 , 没 有 一 顿 火 锅 是 解 决 不 了 的 , 如 果 还 是 不 行 , 那 就 再 一 顿 火 锅 。",
+          "first_char": "你 心 情 不 好 , 火 锅 吃 不 消 , 就 不 能 再 吃 火 锅 。",
+          "second_char": "你 心 情 不 好 , 火 锅 吃 不 消 , 就 不 能 再 吃 火 锅 。",
+          "sim_first": 0.3939,
+          "sim_second": 0.3939
+        },
+        {
+          "sample_id": "S005113_P0003_T00",
+          "signer_id": "P0003",
+          "reference_char": "找 女 朋 友 是 我 现 在 最 大 的 目 标 。",
+          "first_char": "找 女 朋 友 是 我 最 大 的 标 准 。",
+          "second_char": "找 女 朋 友 是 我 最 大 的 标 准 。",
+          "sim_first": 0.7143,
+          "sim_second": 0.7143
+        },
+        {
+          "sample_id": "S005276_P0009_T00",
+          "signer_id": "P0009",
+          "reference_char": "由 于 采 用 了 新 技 术 , 大 大 降 低 了 钱 财 开 销 。",
+          "first_char": "我 的 新 技 术 也 差 点 儿 脱 离 了 。",
+          "second_char": "我 的 新 技 术 也 差 点 儿 脱 离 了 。",
+          "sim_first": 0.2105,
+          "sim_second": 0.2105
+        },
+        {
+          "sample_id": "S005306_P0009_T00",
+          "signer_id": "P0009",
+          "reference_char": "兼 职 文 员 工 作 对 我 来 说 做 起 来 有 点 难 。",
+          "first_char": "我 做 兼 职 文 员 可 能 会 很 困 难 。",
+          "second_char": "我 做 兼 职 文 员 可 能 会 很 困 难 。",
+          "sim_first": 0.2353,
+          "sim_second": 0.2353
+        },
+        {
+          "sample_id": "S005354_P0006_T00",
+          "signer_id": "P0006",
+          "reference_char": "李 强 成 功 学 习 的 经 验 值 得 我 们 借 鉴 。",
+          "first_char": "我 们 借 鉴 老 师 的 成 功 学 习 经 验 。",
+          "second_char": "我 们 借 鉴 老 师 的 成 功 学 习 经 验 。",
+          "sim_first": 0.125,
+          "sim_second": 0.125
+        },
+        {
+          "sample_id": "S005540_P0006_T00",
+          "signer_id": "P0006",
+          "reference_char": "看 你 那 失 望 的 样 子 , 难 道 高 考 失 败 就 没 有 出 息 了 吗 ?",
+          "first_char": "他 很 惭 愧 , 觉 得 考 试 没 有 失 败 的 迹 象 。",
+          "second_char": "他 很 惭 愧 , 觉 得 考 试 没 有 失 败 的 迹 象 。",
+          "sim_first": 0.1304,
+          "sim_second": 0.1304
+        },
+        {
+          "sample_id": "S005607_P0009_T00",
+          "signer_id": "P0009",
+          "reference_char": "医 生 会 给 你 检 查 确 诊 阑 尾 炎 。",
+          "first_char": "医 生 为 我 们 诊 断 出 阑 尾 炎 。",
+          "second_char": "医 生 为 我 们 诊 断 出 阑 尾 炎 。",
+          "sim_first": 0.4615,
+          "sim_second": 0.4615
+        },
+        {
+          "sample_id": "S005664_P0009_T00",
+          "signer_id": "P0009",
+          "reference_char": "这 个 问 题 整 体 和 局 部 的 情 况 出 现 了 问 题 。",
+          "first_char": "这 个 问 题 全 是 存 折 , 暴 露 出 问 题 。",
+          "second_char": "这 个 问 题 全 是 存 折 , 暴 露 出 问 题 。",
+          "sim_first": 0.4444,
+          "sim_second": 0.4444
+        },
+        {
+          "sample_id": "S005694_P0009_T00",
+          "signer_id": "P0009",
+          "reference_char": "包 装 和 邮 费 在 内 , 价 格 五 元 。",
+          "first_char": "包 装 费 共 计 5 0 0 元 。",
+          "second_char": "包 装 费 共 计 5 0 0 元 。",
+          "sim_first": 0.3846,
+          "sim_second": 0.3846
+        },
+        {
+          "sample_id": "S006078_P0006_T00",
+          "signer_id": "P0006",
+          "reference_char": "定 位 导 航 系 统 为 我 们 的 生 活 带 来 了 便 利 。",
+          "first_char": "定 位 导 航 系 统 可 以 为 人 们 的 生 活 提 供 方 便 。",
+          "second_char": "定 位 导 航 系 统 可 以 为 人 们 的 生 活 提 供 方 便 。",
+          "sim_first": 0.6316,
+          "sim_second": 0.6316
+        },
+        {
+          "sample_id": "S007175_P0007_T00",
+          "signer_id": "P0007",
+          "reference_char": "你 女 儿 的 房 间 很 漂 亮 , 都 是 粉 色 的 。",
+          "first_char": "这 女 儿 的 房 子 很 漂 亮 , 全 是 粉 色 的 。",
+          "second_char": "这 女 儿 的 房 子 很 漂 亮 , 全 是 粉 色 的 。",
+          "sim_first": 0.8125,
+          "sim_second": 0.8125
+        },
+        {
+          "sample_id": "S007211_P0007_T00",
+          "signer_id": "P0007",
+          "reference_char": "天 黑 了 , 我 害 怕 。",
+          "first_char": "天 黑 了 , 我 害 怕 。",
+          "second_char": "天 黑 了 , 我 害 怕 。",
+          "sim_first": 1.0,
+          "sim_second": 1.0
+        }
+      ]
+    },
+    "corrected_vs_A2": {
+      "label": "corrected minus A2",
+      "n_pairs": 50,
+      "delta_bleu": {
+        "point": 1.3908266918609478,
+        "lower": -3.798,
+        "upper": 7.1415,
+        "iterations": 1000,
+        "groups": 10,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "delta_edit": {
+        "point": 0.013558000000000014,
+        "lower": -0.0406,
+        "upper": 0.0791,
+        "iterations": 1000,
+        "groups": 10,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "improved": 21,
+      "equal": 12,
+      "harmed": 17,
+      "records": [
+        {
+          "sample_id": "S000230_P0008_T00",
+          "signer_id": "P0008",
+          "reference_char": "左 边 的 房 间 是 我 爸 爸 妈 妈 的 , 他 们 的 房 间 很 大 。",
+          "first_char": "靠 近 窗 户 的 位 置 , 父 母 把 房 间 扩 大 了 。",
+          "second_char": "旁 边 的 房 间 是 爸 爸 妈 妈 的 , 这 个 房 间 很 大 。",
+          "sim_first": 0.1905,
+          "sim_second": 0.7619
+        },
+        {
+          "sample_id": "S000414_P0004_T00",
+          "signer_id": "P0004",
+          "reference_char": "时 间 过 得 真 快 , 新 年 快 要 到 了 。",
+          "first_char": "时 间 过 得 可 真 快 , 新 年 就 要 到 了 。",
+          "second_char": "时 间 过 得 可 真 快 , 新 的 一 年 就 要 准 备 好 了 。",
+          "sim_first": 0.8667,
+          "sim_second": 0.6316
+        },
+        {
+          "sample_id": "S000440_P0004_T00",
+          "signer_id": "P0004",
+          "reference_char": "这 些 我 昨 天 下 午 就 准 备 好 了 。",
+          "first_char": "我 昨 天 下 午 就 准 备 了 。",
+          "second_char": "我 昨 天 下 午 就 准 备 好 了 。",
+          "sim_first": 0.7692,
+          "sim_second": 0.8462
+        },
+        {
+          "sample_id": "S000502_P0000_T00",
+          "signer_id": "P0000",
+          "reference_char": "学 校 太 大 , 多 累 啊 。",
+          "first_char": "学 校 太 大 了 , 很 累 。",
+          "second_char": "现 在 学 校 很 大 , 很 累 。",
+          "sim_first": 0.6667,
+          "sim_second": 0.5
+        },
+        {
+          "sample_id": "S000695_P0004_T00",
+          "signer_id": "P0004",
+          "reference_char": "上 海 的 夏 天 太 热 了 , 需 要 买 空 调 。",
+          "first_char": "上 海 的 天 气 很 热 , 要 买 些 西 瓜 。",
+          "second_char": "上 海 太 热 了 , 多 买 空 调 。",
+          "sim_first": 0.4667,
+          "sim_second": 0.6667
+        },
+        {
+          "sample_id": "S000849_P0004_T00",
+          "signer_id": "P0004",
+          "reference_char": "手 机 选 不 到 靠 近 窗 户 的 位 置 。",
+          "first_char": "靠 近 窗 户 的 位 置 , 手 机 不 见 了 。",
+          "second_char": "手 机 的 挡 风 玻 璃 被 拆 掉 了 。",
+          "sim_first": 0.2143,
+          "sim_second": 0.2308
+        },
+        {
+          "sample_id": "S001064_P0008_T00",
+          "signer_id": "P0008",
+          "reference_char": "爷 爷 年 龄 大 , 喜 欢 爬 山 。",
+          "first_char": "爷 爷 年 龄 大 , 喜 欢 爬 山 。",
+          "second_char": "爷 爷 年 龄 大 , 喜 欢 爬 山 。",
+          "sim_first": 1.0,
+          "sim_second": 1.0
+        },
+        {
+          "sample_id": "S001090_P0000_T00",
+          "signer_id": "P0000",
+          "reference_char": "蛋 糕 太 甜 , 吃 多 了 对 身 体 不 好 。",
+          "first_char": "蛋 糕 太 甜 , 对 身 体 不 好 。",
+          "second_char": "蛋 糕 太 甜 , 对 身 体 不 好 。",
+          "sim_first": 0.7857,
+          "sim_second": 0.7857
+        },
+        {
+          "sample_id": "S001414_P0008_T00",
+          "signer_id": "P0008",
+          "reference_char": "明 天 是 春 节 , 要 穿 新 衣 服 。",
+          "first_char": "明 天 是 春 节 , 我 要 新 的 衣 服 穿 。",
+          "second_char": "明 天 是 春 节 , 我 要 新 衣 服 。",
+          "sim_first": 0.7143,
+          "sim_second": 0.8333
+        },
+        {
+          "sample_id": "S001610_P0004_T00",
+          "signer_id": "P0004",
+          "reference_char": "服 务 员 说 黑 色 的 帽 子 很 适 合 我 。",
+          "first_char": "我 忘 记 与 朋 友 打 招 呼 。",
+          "second_char": "他 是 个 聪 明 人 , 适 合 我 的 奶 奶 说 。",
+          "sim_first": 0.0714,
+          "sim_second": 0.0667
+        },
+        {
+          "sample_id": "S001656_P0005_T00",
+          "signer_id": "P0005",
+          "reference_char": "手 术 治 疗 是 目 前 治 疗 白 内 障 比 较 有 效 的 手 段 。",
+          "first_char": "治 疗 白 内 障 的 有 效 措 施 是 手 术 切 除 白 内 障 。",
+          "second_char": "白 内 障 的 治 疗 效 果 主 要 是 手 术 切 除 白 内 障 。",
+          "sim_first": 0.1,
+          "sim_second": 0.05
+        },
+        {
+          "sample_id": "S002086_P0005_T00",
+          "signer_id": "P0005",
+          "reference_char": "为 读 者 的 家 居 生 活 带 来 不 同 凡 响 的 流 行 资 讯 。",
+          "first_char": "为 了 校 园 安 全 , 学 校 不 应 该 将 信 息 泄 露 出 去 。",
+          "second_char": "为 了 校 园 的 校 园 , 人 们 都 把 非 主 流 的 信 息 都 掌 握 了 。",
+          "sim_first": 0.1,
+          "sim_second": 0.1739
+        },
+        {
+          "sample_id": "S002092_P0007_T00",
+          "signer_id": "P0007",
+          "reference_char": "他 一 听 到 自 己 被 录 取 的 消 息 , 情 绪 一 下 子 兴 奋 起 来 了 。",
+          "first_char": "当 他 成 功 时 , 他 激 动 了 留 下 了 泪 水 。",
+          "second_char": "当 他 成 功 竞 选 时 , 心 里 终 于 踏 实 了 。",
+          "sim_first": 0.0833,
+          "sim_second": 0.125
+        },
+        {
+          "sample_id": "S002128_P0005_T00",
+          "signer_id": "P0005",
+          "reference_char": "妈 妈 一 回 到 家 就 干 这 干 那 , 没 有 休 息 时 间 。",
+          "first_char": "妈 妈 回 房 间 工 作 , 你 没 时 间 休 息 。",
+          "second_char": "妈 妈 回 家 工 作 , 你 没 时 间 休 息 。",
+          "sim_first": 0.3158,
+          "sim_second": 0.3684
+        },
+        {
+          "sample_id": "S002143_P0007_T00",
+          "signer_id": "P0007",
+          "reference_char": "不 努 力 学 习 , 在 竞 争 中 就 会 处 于 劣 势 。",
+          "first_char": "不 要 太 努 力 了 , 要 比 赛 一 下 。",
+          "second_char": "自 己 不 努 力 学 习 , 不 应 该 比 赛 。",
+          "sim_first": 0.1765,
+          "sim_second": 0.2941
+        },
+        {
+          "sample_id": "S002199_P0005_T00",
+          "signer_id": "P0005",
+          "reference_char": "他 把 试 卷 拿 回 家 , 让 爸 爸 在 上 面 签 字 。",
+          "first_char": "他 把 这 份 文 件 带 到 学 校 给 爸 爸 签 字 。",
+          "second_char": "他 把 这 份 文 件 带 到 了 学 校 , 给 爸 爸 签 字 。",
+          "sim_first": 0.2941,
+          "sim_second": 0.2778
+        },
+        {
+          "sample_id": "S002199_P0007_T00",
+          "signer_id": "P0007",
+          "reference_char": "他 把 试 卷 拿 回 家 , 让 爸 爸 在 上 面 签 字 。",
+          "first_char": "他 把 作 文 带 回 家 , 送 给 爸 爸 签 字 。",
+          "second_char": "他 把 作 文 带 回 家 , 让 他 在 上 面 签 字 。",
+          "sim_first": 0.5294,
+          "sim_second": 0.7059
+        },
+        {
+          "sample_id": "S002240_P0005_T00",
+          "signer_id": "P0005",
+          "reference_char": "人 生 最 困 难 的 事 情 是 认 识 自 己 。",
+          "first_char": "人 生 最 困 难 的 是 认 识 你 自 己 。",
+          "second_char": "在 人 生 的 巅 峰 时 期 , 最 困 难 的 是 如 何 认 识 自 己 。",
+          "sim_first": 0.7857,
+          "sim_second": 0.5238
+        },
+        {
+          "sample_id": "S002951_P0002_T00",
+          "signer_id": "P0002",
+          "reference_char": "自 从 他 沉 迷 于 游 戏 后 , 学 习 成 绩 一 落 千 丈 。",
+          "first_char": "他 们 自 己 在 电 脑 面 前 沉 迷 赌 博 。",
+          "second_char": "他 沉 迷 在 自 己 的 电 脑 里 , 变 得 非 常 孤 单 。",
+          "sim_first": 0.1053,
+          "sim_second": 0.1579
+        },
+        {
+          "sample_id": "S003002_P0000_T00",
+          "signer_id": "P0000",
+          "reference_char": "你 迟 到 了 三 分 钟 , 所 以 要 罚 酒 三 杯 。",
+          "first_char": "他 迟 到 三 分 钟 就 被 酒 精 测 试 了 。",
+          "second_char": "你 迟 到 三 分 钟 就 会 喝 酒 , 被 罚 款 了 。",
+          "sim_first": 0.375,
+          "sim_second": 0.375
+        },
+        {
+          "sample_id": "S003181_P0001_T00",
+          "signer_id": "P0001",
+          "reference_char": "看 见 妈 妈 期 待 的 眼 神 , 我 感 到 惭 愧 。",
+          "first_char": "爸 爸 一 边 看 新 闻 , 一 边 哭 。",
+          "second_char": "我 爸 爸 也 希 望 能 看 见 我 , 感 到 很 惭 愧 。",
+          "sim_first": 0.125,
+          "sim_second": 0.2941
+        },
+        {
+          "sample_id": "S003256_P0002_T00",
+          "signer_id": "P0002",
+          "reference_char": "你 必 须 严 格 按 照 生 产 程 序 进 行 工 作 。",
+          "first_char": "你 必 须 按 照 生 产 程 序 来 做 。",
+          "second_char": "你 必 须 依 据 产 品 的 生 产 程 序 来 做 。",
+          "sim_first": 0.625,
+          "sim_second": 0.4375
+        },
+        {
+          "sample_id": "S003518_P0002_T00",
+          "signer_id": "P0002",
+          "reference_char": "我 们 不 想 毕 业 。",
+          "first_char": "我 们 不 想 毕 业 。",
+          "second_char": "我 们 不 想 毕 业 。",
+          "sim_first": 1.0,
+          "sim_second": 1.0
+        },
+        {
+          "sample_id": "S003572_P0002_T00",
+          "signer_id": "P0002",
+          "reference_char": "面 对 竞 争 , 我 们 不 能 躲 避 。",
+          "first_char": "这 种 竞 争 是 我 们 不 能 躲 避 的 。",
+          "second_char": "竞 争 是 不 可 避 免 的 。",
+          "sim_first": 0.6923,
+          "sim_second": 0.25
+        },
+        {
+          "sample_id": "S003605_P0001_T00",
+          "signer_id": "P0001",
+          "reference_char": "这 孩 子 一 天 到 晚 , 游 手 好 闲 , 真 令 人 操 心 。",
+          "first_char": "这 孩 子 天 赋 格 外 引 人 注 目 。",
+          "second_char": "这 孩 子 一 天 很 快 乐 , 真 让 人 提 心 吊 胆 。",
+          "sim_first": 0.3158,
+          "sim_second": 0.4211
+        },
+        {
+          "sample_id": "S003747_P0001_T00",
+          "signer_id": "P0001",
+          "reference_char": "垃 圾 处 理 问 题 有 关 我 们 每 个 人 的 生 活 。",
+          "first_char": "处 理 垃 圾 问 题 和 每 个 人 的 生 活 都 会 产 生 联 系 。",
+          "second_char": "处 理 垃 圾 问 题 和 我 们 每 个 人 的 生 活 息 息 相 关 。",
+          "sim_first": 0.3,
+          "sim_second": 0.5
+        },
+        {
+          "sample_id": "S003758_P0000_T00",
+          "signer_id": "P0000",
+          "reference_char": "我 在 考 虑 到 底 是 辞 职 还 是 继 续 工 作 。",
+          "first_char": "辞 职 还 是 工 作 的 想 法 。",
+          "second_char": "你 辞 职 之 后 还 要 上 班 吗 ?",
+          "sim_first": 0.25,
+          "sim_second": 0.0625
+        },
+        {
+          "sample_id": "S003961_P0002_T00",
+          "signer_id": "P0002",
+          "reference_char": "希 望 你 以 后 不 要 再 犯 一 样 的 错 误 。",
+          "first_char": "我 希 望 你 以 后 也 不 要 犯 错 误 。",
+          "second_char": "我 希 望 你 未 来 不 要 再 犯 错 误 。",
+          "sim_first": 0.6,
+          "sim_second": 0.6
+        },
+        {
+          "sample_id": "S003987_P0001_T00",
+          "signer_id": "P0001",
+          "reference_char": "明 天 是 他 的 生 日 , 你 打 算 送 什 么 礼 物 ?",
+          "first_char": "明 天 是 生 日 , 你 打 算 送 什 么 礼 物 ?",
+          "second_char": "明 天 是 生 日 , 你 打 算 送 什 么 礼 物 ?",
+          "sim_first": 0.8824,
+          "sim_second": 0.8824
+        },
+        {
+          "sample_id": "S004029_P0001_T00",
+          "signer_id": "P0001",
+          "reference_char": "青 春 期 是 身 体 成 熟 的 时 期 。",
+          "first_char": "青 春 期 是 身 体 成 熟 的 时 期 。",
+          "second_char": "青 春 期 是 身 体 成 熟 的 最 佳 时 期 。",
+          "sim_first": 1.0,
+          "sim_second": 0.8571
+        },
+        {
+          "sample_id": "S004204_P0003_T00",
+          "signer_id": "P0003",
+          "reference_char": "开 车 要 看 好 前 方 行 驶 , 小 心 驾 驶 。",
+          "first_char": "开 车 时 注 意 安 全 。",
+          "second_char": "开 车 看 车 , 注 意 安 全 。",
+          "sim_first": 0.2,
+          "sim_second": 0.3333
+        },
+        {
+          "sample_id": "S004419_P0008_T00",
+          "signer_id": "P0008",
+          "reference_char": "要 尊 重 客 观 规 律 。",
+          "first_char": "要 尊 重 客 户 的 实 际 情 况 。",
+          "second_char": "要 尊 重 客 观 规 律 。",
+          "sim_first": 0.4545,
+          "sim_second": 1.0
+        },
+        {
+          "sample_id": "S004459_P0003_T00",
+          "signer_id": "P0003",
+          "reference_char": "他 参 加 了 图 书 馆 的 暑 期 活 动 。",
+          "first_char": "他 参 加 图 书 馆 的 暑 假 活 动 。",
+          "second_char": "他 参 加 图 书 馆 的 夏 季 活 动 。",
+          "sim_first": 0.8462,
+          "sim_second": 0.7692
+        },
+        {
+          "sample_id": "S004571_P0000_T00",
+          "signer_id": "P0000",
+          "reference_char": "老 师 为 有 你 们 这 样 的 学 生 而 自 豪 。",
+          "first_char": "老 师 为 有 这 样 的 学 生 而 自 豪 。",
+          "second_char": "老 师 为 有 这 样 的 学 生 而 自 豪 。",
+          "sim_first": 0.8667,
+          "sim_second": 0.8667
+        },
+        {
+          "sample_id": "S004677_P0008_T00",
+          "signer_id": "P0008",
+          "reference_char": "世 界 上 没 有 后 悔 药 。",
+          "first_char": "世 界 上 没 有 后 悔 吃 药 。",
+          "second_char": "世 界 上 没 有 后 悔 吃 药 。",
+          "sim_first": 0.9,
+          "sim_second": 0.9
+        },
+        {
+          "sample_id": "S004752_P0003_T00",
+          "signer_id": "P0003",
+          "reference_char": "请 问 在 哪 里 可 以 买 到 城 市 地 图 ?",
+          "first_char": "请 问 城 市 地 图 在 哪 里 买 ?",
+          "second_char": "请 问 城 市 地 图 在 哪 里 买 的 ?",
+          "sim_first": 0.2143,
+          "sim_second": 0.2143
+        },
+        {
+          "sample_id": "S005011_P0003_T00",
+          "signer_id": "P0003",
+          "reference_char": "战 争 时 候 , 动 摇 军 心 的 人 必 然 要 受 到 处 罚 。",
+          "first_char": "战 时 , 学 习 原 则 很 脆 弱 , 要 严 肃 处 理 。",
+          "second_char": "战 时 , 学 习 纪 律 较 弱 , 要 严 肃 处 理 。",
+          "sim_first": 0.3158,
+          "sim_second": 0.3158
+        },
+        {
+          "sample_id": "S005040_P0006_T00",
+          "signer_id": "P0006",
+          "reference_char": "人 面 对 外 界 的 刺 激 , 精 神 会 做 出 反 应 。",
+          "first_char": "人 的 一 切 刺 激 , 精 神 上 会 产 生 反 应 。",
+          "second_char": "每 个 人 都 要 受 到 刺 激 , 精 神 上 的 人 总 是 会 做 出 反 应 。",
+          "sim_first": 0.5294,
+          "sim_second": 0.4783
+        },
+        {
+          "sample_id": "S005112_P0006_T00",
+          "signer_id": "P0006",
+          "reference_char": "心 情 不 好 , 没 有 一 顿 火 锅 是 解 决 不 了 的 , 如 果 还 是 不 行 , 那 就 再 一 顿 火 锅 。",
+          "first_char": "心 情 不 好 , 先 吃 火 锅 , 再 吃 火 锅 。",
+          "second_char": "你 心 情 不 好 , 火 锅 吃 不 消 , 就 不 能 再 吃 火 锅 。",
+          "sim_first": 0.3636,
+          "sim_second": 0.3939
+        },
+        {
+          "sample_id": "S005113_P0003_T00",
+          "signer_id": "P0003",
+          "reference_char": "找 女 朋 友 是 我 现 在 最 大 的 目 标 。",
+          "first_char": "找 女 朋 友 是 我 现 在 最 大 的 标 准 。",
+          "second_char": "找 女 朋 友 是 我 最 大 的 标 准 。",
+          "sim_first": 0.8571,
+          "sim_second": 0.7143
+        },
+        {
+          "sample_id": "S005276_P0009_T00",
+          "signer_id": "P0009",
+          "reference_char": "由 于 采 用 了 新 技 术 , 大 大 降 低 了 钱 财 开 销 。",
+          "first_char": "我 的 新 技 术 已 经 退 役 了 。",
+          "second_char": "我 的 新 技 术 也 差 点 儿 脱 离 了 。",
+          "sim_first": 0.2632,
+          "sim_second": 0.2105
+        },
+        {
+          "sample_id": "S005306_P0009_T00",
+          "signer_id": "P0009",
+          "reference_char": "兼 职 文 员 工 作 对 我 来 说 做 起 来 有 点 难 。",
+          "first_char": "我 做 兼 职 文 员 还 是 很 困 难 的 。",
+          "second_char": "我 做 兼 职 文 员 可 能 会 很 困 难 。",
+          "sim_first": 0.1765,
+          "sim_second": 0.2353
+        },
+        {
+          "sample_id": "S005354_P0006_T00",
+          "signer_id": "P0006",
+          "reference_char": "李 强 成 功 学 习 的 经 验 值 得 我 们 借 鉴 。",
+          "first_char": "我 们 要 认 真 吸 取 老 师 的 成 功 学 习 经 验 。",
+          "second_char": "我 们 借 鉴 老 师 的 成 功 学 习 经 验 。",
+          "sim_first": 0.0588,
+          "sim_second": 0.125
+        },
+        {
+          "sample_id": "S005540_P0006_T00",
+          "signer_id": "P0006",
+          "reference_char": "看 你 那 失 望 的 样 子 , 难 道 高 考 失 败 就 没 有 出 息 了 吗 ?",
+          "first_char": "他 生 气 了 , 差 点 儿 没 考 上 名 牌 大 学 。",
+          "second_char": "他 很 惭 愧 , 觉 得 考 试 没 有 失 败 的 迹 象 。",
+          "sim_first": 0.0435,
+          "sim_second": 0.1304
+        },
+        {
+          "sample_id": "S005607_P0009_T00",
+          "signer_id": "P0009",
+          "reference_char": "医 生 会 给 你 检 查 确 诊 阑 尾 炎 。",
+          "first_char": "医 生 给 她 检 查 了 阑 尾 炎 。",
+          "second_char": "医 生 为 我 们 诊 断 出 阑 尾 炎 。",
+          "sim_first": 0.6923,
+          "sim_second": 0.4615
+        },
+        {
+          "sample_id": "S005664_P0009_T00",
+          "signer_id": "P0009",
+          "reference_char": "这 个 问 题 整 体 和 局 部 的 情 况 出 现 了 问 题 。",
+          "first_char": "这 个 问 题 全 是 存 折 , 暴 露 出 很 多 问 题 。",
+          "second_char": "这 个 问 题 全 是 存 折 , 暴 露 出 问 题 。",
+          "sim_first": 0.4444,
+          "sim_second": 0.4444
+        },
+        {
+          "sample_id": "S005694_P0009_T00",
+          "signer_id": "P0009",
+          "reference_char": "包 装 和 邮 费 在 内 , 价 格 五 元 。",
+          "first_char": "包 装 费 共 计 5 0 0 元 。",
+          "second_char": "包 装 费 共 计 5 0 0 元 。",
+          "sim_first": 0.3846,
+          "sim_second": 0.3846
+        },
+        {
+          "sample_id": "S006078_P0006_T00",
+          "signer_id": "P0006",
+          "reference_char": "定 位 导 航 系 统 为 我 们 的 生 活 带 来 了 便 利 。",
+          "first_char": "定 位 导 航 系 统 为 我 们 的 生 活 提 供 了 方 便 。",
+          "second_char": "定 位 导 航 系 统 可 以 为 人 们 的 生 活 提 供 方 便 。",
+          "sim_first": 0.7778,
+          "sim_second": 0.6316
+        },
+        {
+          "sample_id": "S007175_P0007_T00",
+          "signer_id": "P0007",
+          "reference_char": "你 女 儿 的 房 间 很 漂 亮 , 都 是 粉 色 的 。",
+          "first_char": "你 女 儿 的 房 间 很 漂 亮 , 而 且 全 是 粉 色 的 。",
+          "second_char": "这 女 儿 的 房 子 很 漂 亮 , 全 是 粉 色 的 。",
+          "sim_first": 0.8333,
+          "sim_second": 0.8125
+        },
+        {
+          "sample_id": "S007211_P0007_T00",
+          "signer_id": "P0007",
+          "reference_char": "天 黑 了 , 我 害 怕 。",
+          "first_char": "天 黑 了 , 我 有 点 害 怕 。",
+          "second_char": "天 黑 了 , 我 害 怕 。",
+          "sim_first": 0.8,
+          "sim_second": 1.0
+        }
+      ]
+    },
+    "corrected_vs_pose_control": {
+      "label": "corrected minus pose control",
+      "n_pairs": 50,
+      "delta_bleu": {
+        "point": 1.3936164828193505,
+        "lower": -3.7945,
+        "upper": 7.1409,
+        "iterations": 1000,
+        "groups": 10,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "delta_edit": {
+        "point": 0.013558000000000014,
+        "lower": -0.0406,
+        "upper": 0.0791,
+        "iterations": 1000,
+        "groups": 10,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "improved": 21,
+      "equal": 12,
+      "harmed": 17,
+      "records": [
+        {
+          "sample_id": "S000230_P0008_T00",
+          "signer_id": "P0008",
+          "reference_char": "左 边 的 房 间 是 我 爸 爸 妈 妈 的 , 他 们 的 房 间 很 大 。",
+          "first_char": "靠 近 窗 户 的 位 置 , 父 母 把 房 间 扩 大 了 。",
+          "second_char": "旁 边 的 房 间 是 爸 爸 妈 妈 的 , 这 个 房 间 很 大 。",
+          "sim_first": 0.1905,
+          "sim_second": 0.7619
+        },
+        {
+          "sample_id": "S000414_P0004_T00",
+          "signer_id": "P0004",
+          "reference_char": "时 间 过 得 真 快 , 新 年 快 要 到 了 。",
+          "first_char": "时 间 过 得 可 真 快 , 新 年 就 要 到 了 。",
+          "second_char": "时 间 过 得 可 真 快 , 新 的 一 年 就 要 准 备 好 了 。",
+          "sim_first": 0.8667,
+          "sim_second": 0.6316
+        },
+        {
+          "sample_id": "S000440_P0004_T00",
+          "signer_id": "P0004",
+          "reference_char": "这 些 我 昨 天 下 午 就 准 备 好 了 。",
+          "first_char": "我 昨 天 下 午 就 准 备 了 。",
+          "second_char": "我 昨 天 下 午 就 准 备 好 了 。",
+          "sim_first": 0.7692,
+          "sim_second": 0.8462
+        },
+        {
+          "sample_id": "S000502_P0000_T00",
+          "signer_id": "P0000",
+          "reference_char": "学 校 太 大 , 多 累 啊 。",
+          "first_char": "学 校 太 大 了 , 很 累 。",
+          "second_char": "现 在 学 校 很 大 , 很 累 。",
+          "sim_first": 0.6667,
+          "sim_second": 0.5
+        },
+        {
+          "sample_id": "S000695_P0004_T00",
+          "signer_id": "P0004",
+          "reference_char": "上 海 的 夏 天 太 热 了 , 需 要 买 空 调 。",
+          "first_char": "上 海 的 天 气 很 热 , 要 买 些 西 瓜 。",
+          "second_char": "上 海 太 热 了 , 多 买 空 调 。",
+          "sim_first": 0.4667,
+          "sim_second": 0.6667
+        },
+        {
+          "sample_id": "S000849_P0004_T00",
+          "signer_id": "P0004",
+          "reference_char": "手 机 选 不 到 靠 近 窗 户 的 位 置 。",
+          "first_char": "靠 近 窗 户 的 位 置 , 手 机 不 见 了 。",
+          "second_char": "手 机 的 挡 风 玻 璃 被 拆 掉 了 。",
+          "sim_first": 0.2143,
+          "sim_second": 0.2308
+        },
+        {
+          "sample_id": "S001064_P0008_T00",
+          "signer_id": "P0008",
+          "reference_char": "爷 爷 年 龄 大 , 喜 欢 爬 山 。",
+          "first_char": "爷 爷 年 龄 大 , 喜 欢 爬 山 。",
+          "second_char": "爷 爷 年 龄 大 , 喜 欢 爬 山 。",
+          "sim_first": 1.0,
+          "sim_second": 1.0
+        },
+        {
+          "sample_id": "S001090_P0000_T00",
+          "signer_id": "P0000",
+          "reference_char": "蛋 糕 太 甜 , 吃 多 了 对 身 体 不 好 。",
+          "first_char": "蛋 糕 太 甜 , 对 身 体 不 好 。",
+          "second_char": "蛋 糕 太 甜 , 对 身 体 不 好 。",
+          "sim_first": 0.7857,
+          "sim_second": 0.7857
+        },
+        {
+          "sample_id": "S001414_P0008_T00",
+          "signer_id": "P0008",
+          "reference_char": "明 天 是 春 节 , 要 穿 新 衣 服 。",
+          "first_char": "明 天 是 春 节 , 我 要 新 的 衣 服 穿 。",
+          "second_char": "明 天 是 春 节 , 我 要 新 衣 服 。",
+          "sim_first": 0.7143,
+          "sim_second": 0.8333
+        },
+        {
+          "sample_id": "S001610_P0004_T00",
+          "signer_id": "P0004",
+          "reference_char": "服 务 员 说 黑 色 的 帽 子 很 适 合 我 。",
+          "first_char": "我 忘 记 与 朋 友 打 招 呼 。",
+          "second_char": "他 是 个 聪 明 人 , 适 合 我 的 奶 奶 说 。",
+          "sim_first": 0.0714,
+          "sim_second": 0.0667
+        },
+        {
+          "sample_id": "S001656_P0005_T00",
+          "signer_id": "P0005",
+          "reference_char": "手 术 治 疗 是 目 前 治 疗 白 内 障 比 较 有 效 的 手 段 。",
+          "first_char": "治 疗 白 内 障 的 有 效 措 施 是 手 术 切 除 白 内 障 。",
+          "second_char": "白 内 障 的 治 疗 效 果 主 要 是 手 术 切 除 白 内 障 。",
+          "sim_first": 0.1,
+          "sim_second": 0.05
+        },
+        {
+          "sample_id": "S002086_P0005_T00",
+          "signer_id": "P0005",
+          "reference_char": "为 读 者 的 家 居 生 活 带 来 不 同 凡 响 的 流 行 资 讯 。",
+          "first_char": "为 了 校 园 安 全 , 学 校 非 必 要 不 讲 究 新 闻 。",
+          "second_char": "为 了 校 园 的 校 园 , 人 们 都 把 非 主 流 的 信 息 都 掌 握 了 。",
+          "sim_first": 0.1,
+          "sim_second": 0.1739
+        },
+        {
+          "sample_id": "S002092_P0007_T00",
+          "signer_id": "P0007",
+          "reference_char": "他 一 听 到 自 己 被 录 取 的 消 息 , 情 绪 一 下 子 兴 奋 起 来 了 。",
+          "first_char": "当 他 成 功 时 , 他 激 动 了 留 下 了 泪 水 。",
+          "second_char": "当 他 成 功 竞 选 时 , 心 里 终 于 踏 实 了 。",
+          "sim_first": 0.0833,
+          "sim_second": 0.125
+        },
+        {
+          "sample_id": "S002128_P0005_T00",
+          "signer_id": "P0005",
+          "reference_char": "妈 妈 一 回 到 家 就 干 这 干 那 , 没 有 休 息 时 间 。",
+          "first_char": "妈 妈 回 房 间 工 作 , 你 没 时 间 休 息 。",
+          "second_char": "妈 妈 回 家 工 作 , 你 没 时 间 休 息 。",
+          "sim_first": 0.3158,
+          "sim_second": 0.3684
+        },
+        {
+          "sample_id": "S002143_P0007_T00",
+          "signer_id": "P0007",
+          "reference_char": "不 努 力 学 习 , 在 竞 争 中 就 会 处 于 劣 势 。",
+          "first_char": "不 要 太 努 力 了 , 要 比 赛 一 下 。",
+          "second_char": "自 己 不 努 力 学 习 , 不 应 该 比 赛 。",
+          "sim_first": 0.1765,
+          "sim_second": 0.2941
+        },
+        {
+          "sample_id": "S002199_P0005_T00",
+          "signer_id": "P0005",
+          "reference_char": "他 把 试 卷 拿 回 家 , 让 爸 爸 在 上 面 签 字 。",
+          "first_char": "他 把 这 份 文 件 带 到 学 校 给 爸 爸 签 字 。",
+          "second_char": "他 把 这 份 文 件 带 到 了 学 校 , 给 爸 爸 签 字 。",
+          "sim_first": 0.2941,
+          "sim_second": 0.2778
+        },
+        {
+          "sample_id": "S002199_P0007_T00",
+          "signer_id": "P0007",
+          "reference_char": "他 把 试 卷 拿 回 家 , 让 爸 爸 在 上 面 签 字 。",
+          "first_char": "他 把 作 文 带 回 家 , 送 给 爸 爸 签 字 。",
+          "second_char": "他 把 作 文 带 回 家 , 让 他 在 上 面 签 字 。",
+          "sim_first": 0.5294,
+          "sim_second": 0.7059
+        },
+        {
+          "sample_id": "S002240_P0005_T00",
+          "signer_id": "P0005",
+          "reference_char": "人 生 最 困 难 的 事 情 是 认 识 自 己 。",
+          "first_char": "人 生 最 困 难 的 是 认 识 你 自 己 。",
+          "second_char": "在 人 生 的 巅 峰 时 期 , 最 困 难 的 是 如 何 认 识 自 己 。",
+          "sim_first": 0.7857,
+          "sim_second": 0.5238
+        },
+        {
+          "sample_id": "S002951_P0002_T00",
+          "signer_id": "P0002",
+          "reference_char": "自 从 他 沉 迷 于 游 戏 后 , 学 习 成 绩 一 落 千 丈 。",
+          "first_char": "他 们 自 己 在 电 脑 面 前 沉 迷 赌 博 。",
+          "second_char": "他 沉 迷 在 自 己 的 电 脑 里 , 变 得 非 常 孤 单 。",
+          "sim_first": 0.1053,
+          "sim_second": 0.1579
+        },
+        {
+          "sample_id": "S003002_P0000_T00",
+          "signer_id": "P0000",
+          "reference_char": "你 迟 到 了 三 分 钟 , 所 以 要 罚 酒 三 杯 。",
+          "first_char": "他 迟 到 三 分 钟 就 被 酒 精 测 试 了 。",
+          "second_char": "你 迟 到 三 分 钟 就 会 喝 酒 , 被 罚 款 了 。",
+          "sim_first": 0.375,
+          "sim_second": 0.375
+        },
+        {
+          "sample_id": "S003181_P0001_T00",
+          "signer_id": "P0001",
+          "reference_char": "看 见 妈 妈 期 待 的 眼 神 , 我 感 到 惭 愧 。",
+          "first_char": "爸 爸 一 边 看 新 闻 , 一 边 哭 。",
+          "second_char": "我 爸 爸 也 希 望 能 看 见 我 , 感 到 很 惭 愧 。",
+          "sim_first": 0.125,
+          "sim_second": 0.2941
+        },
+        {
+          "sample_id": "S003256_P0002_T00",
+          "signer_id": "P0002",
+          "reference_char": "你 必 须 严 格 按 照 生 产 程 序 进 行 工 作 。",
+          "first_char": "你 必 须 按 照 生 产 程 序 来 做 。",
+          "second_char": "你 必 须 依 据 产 品 的 生 产 程 序 来 做 。",
+          "sim_first": 0.625,
+          "sim_second": 0.4375
+        },
+        {
+          "sample_id": "S003518_P0002_T00",
+          "signer_id": "P0002",
+          "reference_char": "我 们 不 想 毕 业 。",
+          "first_char": "我 们 不 想 毕 业 。",
+          "second_char": "我 们 不 想 毕 业 。",
+          "sim_first": 1.0,
+          "sim_second": 1.0
+        },
+        {
+          "sample_id": "S003572_P0002_T00",
+          "signer_id": "P0002",
+          "reference_char": "面 对 竞 争 , 我 们 不 能 躲 避 。",
+          "first_char": "这 种 竞 争 是 我 们 不 能 躲 避 的 。",
+          "second_char": "竞 争 是 不 可 避 免 的 。",
+          "sim_first": 0.6923,
+          "sim_second": 0.25
+        },
+        {
+          "sample_id": "S003605_P0001_T00",
+          "signer_id": "P0001",
+          "reference_char": "这 孩 子 一 天 到 晚 , 游 手 好 闲 , 真 令 人 操 心 。",
+          "first_char": "这 孩 子 天 赋 格 外 引 人 注 目 。",
+          "second_char": "这 孩 子 一 天 很 快 乐 , 真 让 人 提 心 吊 胆 。",
+          "sim_first": 0.3158,
+          "sim_second": 0.4211
+        },
+        {
+          "sample_id": "S003747_P0001_T00",
+          "signer_id": "P0001",
+          "reference_char": "垃 圾 处 理 问 题 有 关 我 们 每 个 人 的 生 活 。",
+          "first_char": "处 理 垃 圾 问 题 和 每 个 人 的 生 活 都 会 产 生 联 系 。",
+          "second_char": "处 理 垃 圾 问 题 和 我 们 每 个 人 的 生 活 息 息 相 关 。",
+          "sim_first": 0.3,
+          "sim_second": 0.5
+        },
+        {
+          "sample_id": "S003758_P0000_T00",
+          "signer_id": "P0000",
+          "reference_char": "我 在 考 虑 到 底 是 辞 职 还 是 继 续 工 作 。",
+          "first_char": "辞 职 还 是 工 作 的 想 法 。",
+          "second_char": "你 辞 职 之 后 还 要 上 班 吗 ?",
+          "sim_first": 0.25,
+          "sim_second": 0.0625
+        },
+        {
+          "sample_id": "S003961_P0002_T00",
+          "signer_id": "P0002",
+          "reference_char": "希 望 你 以 后 不 要 再 犯 一 样 的 错 误 。",
+          "first_char": "我 希 望 你 以 后 也 不 要 犯 错 误 。",
+          "second_char": "我 希 望 你 未 来 不 要 再 犯 错 误 。",
+          "sim_first": 0.6,
+          "sim_second": 0.6
+        },
+        {
+          "sample_id": "S003987_P0001_T00",
+          "signer_id": "P0001",
+          "reference_char": "明 天 是 他 的 生 日 , 你 打 算 送 什 么 礼 物 ?",
+          "first_char": "明 天 是 生 日 , 你 打 算 送 什 么 礼 物 ?",
+          "second_char": "明 天 是 生 日 , 你 打 算 送 什 么 礼 物 ?",
+          "sim_first": 0.8824,
+          "sim_second": 0.8824
+        },
+        {
+          "sample_id": "S004029_P0001_T00",
+          "signer_id": "P0001",
+          "reference_char": "青 春 期 是 身 体 成 熟 的 时 期 。",
+          "first_char": "青 春 期 是 身 体 成 熟 的 时 期 。",
+          "second_char": "青 春 期 是 身 体 成 熟 的 最 佳 时 期 。",
+          "sim_first": 1.0,
+          "sim_second": 0.8571
+        },
+        {
+          "sample_id": "S004204_P0003_T00",
+          "signer_id": "P0003",
+          "reference_char": "开 车 要 看 好 前 方 行 驶 , 小 心 驾 驶 。",
+          "first_char": "开 车 时 注 意 安 全 。",
+          "second_char": "开 车 看 车 , 注 意 安 全 。",
+          "sim_first": 0.2,
+          "sim_second": 0.3333
+        },
+        {
+          "sample_id": "S004419_P0008_T00",
+          "signer_id": "P0008",
+          "reference_char": "要 尊 重 客 观 规 律 。",
+          "first_char": "要 尊 重 客 户 的 实 际 情 况 。",
+          "second_char": "要 尊 重 客 观 规 律 。",
+          "sim_first": 0.4545,
+          "sim_second": 1.0
+        },
+        {
+          "sample_id": "S004459_P0003_T00",
+          "signer_id": "P0003",
+          "reference_char": "他 参 加 了 图 书 馆 的 暑 期 活 动 。",
+          "first_char": "他 参 加 图 书 馆 的 暑 假 活 动 。",
+          "second_char": "他 参 加 图 书 馆 的 夏 季 活 动 。",
+          "sim_first": 0.8462,
+          "sim_second": 0.7692
+        },
+        {
+          "sample_id": "S004571_P0000_T00",
+          "signer_id": "P0000",
+          "reference_char": "老 师 为 有 你 们 这 样 的 学 生 而 自 豪 。",
+          "first_char": "老 师 为 有 这 样 的 学 生 而 自 豪 。",
+          "second_char": "老 师 为 有 这 样 的 学 生 而 自 豪 。",
+          "sim_first": 0.8667,
+          "sim_second": 0.8667
+        },
+        {
+          "sample_id": "S004677_P0008_T00",
+          "signer_id": "P0008",
+          "reference_char": "世 界 上 没 有 后 悔 药 。",
+          "first_char": "世 界 上 没 有 后 悔 吃 药 。",
+          "second_char": "世 界 上 没 有 后 悔 吃 药 。",
+          "sim_first": 0.9,
+          "sim_second": 0.9
+        },
+        {
+          "sample_id": "S004752_P0003_T00",
+          "signer_id": "P0003",
+          "reference_char": "请 问 在 哪 里 可 以 买 到 城 市 地 图 ?",
+          "first_char": "请 问 城 市 地 图 在 哪 里 买 ?",
+          "second_char": "请 问 城 市 地 图 在 哪 里 买 的 ?",
+          "sim_first": 0.2143,
+          "sim_second": 0.2143
+        },
+        {
+          "sample_id": "S005011_P0003_T00",
+          "signer_id": "P0003",
+          "reference_char": "战 争 时 候 , 动 摇 军 心 的 人 必 然 要 受 到 处 罚 。",
+          "first_char": "战 时 , 学 习 原 则 很 脆 弱 , 要 严 肃 处 理 。",
+          "second_char": "战 时 , 学 习 纪 律 较 弱 , 要 严 肃 处 理 。",
+          "sim_first": 0.3158,
+          "sim_second": 0.3158
+        },
+        {
+          "sample_id": "S005040_P0006_T00",
+          "signer_id": "P0006",
+          "reference_char": "人 面 对 外 界 的 刺 激 , 精 神 会 做 出 反 应 。",
+          "first_char": "人 的 一 切 刺 激 , 精 神 上 会 产 生 反 应 。",
+          "second_char": "每 个 人 都 要 受 到 刺 激 , 精 神 上 的 人 总 是 会 做 出 反 应 。",
+          "sim_first": 0.5294,
+          "sim_second": 0.4783
+        },
+        {
+          "sample_id": "S005112_P0006_T00",
+          "signer_id": "P0006",
+          "reference_char": "心 情 不 好 , 没 有 一 顿 火 锅 是 解 决 不 了 的 , 如 果 还 是 不 行 , 那 就 再 一 顿 火 锅 。",
+          "first_char": "心 情 不 好 , 先 吃 火 锅 , 再 吃 火 锅 。",
+          "second_char": "你 心 情 不 好 , 火 锅 吃 不 消 , 就 不 能 再 吃 火 锅 。",
+          "sim_first": 0.3636,
+          "sim_second": 0.3939
+        },
+        {
+          "sample_id": "S005113_P0003_T00",
+          "signer_id": "P0003",
+          "reference_char": "找 女 朋 友 是 我 现 在 最 大 的 目 标 。",
+          "first_char": "找 女 朋 友 是 我 现 在 最 大 的 标 准 。",
+          "second_char": "找 女 朋 友 是 我 最 大 的 标 准 。",
+          "sim_first": 0.8571,
+          "sim_second": 0.7143
+        },
+        {
+          "sample_id": "S005276_P0009_T00",
+          "signer_id": "P0009",
+          "reference_char": "由 于 采 用 了 新 技 术 , 大 大 降 低 了 钱 财 开 销 。",
+          "first_char": "我 的 新 技 术 已 经 落 后 了 。",
+          "second_char": "我 的 新 技 术 也 差 点 儿 脱 离 了 。",
+          "sim_first": 0.2632,
+          "sim_second": 0.2105
+        },
+        {
+          "sample_id": "S005306_P0009_T00",
+          "signer_id": "P0009",
+          "reference_char": "兼 职 文 员 工 作 对 我 来 说 做 起 来 有 点 难 。",
+          "first_char": "我 做 兼 职 文 员 还 是 很 困 难 的 。",
+          "second_char": "我 做 兼 职 文 员 可 能 会 很 困 难 。",
+          "sim_first": 0.1765,
+          "sim_second": 0.2353
+        },
+        {
+          "sample_id": "S005354_P0006_T00",
+          "signer_id": "P0006",
+          "reference_char": "李 强 成 功 学 习 的 经 验 值 得 我 们 借 鉴 。",
+          "first_char": "我 们 要 认 真 吸 取 老 师 的 成 功 学 习 经 验 。",
+          "second_char": "我 们 借 鉴 老 师 的 成 功 学 习 经 验 。",
+          "sim_first": 0.0588,
+          "sim_second": 0.125
+        },
+        {
+          "sample_id": "S005540_P0006_T00",
+          "signer_id": "P0006",
+          "reference_char": "看 你 那 失 望 的 样 子 , 难 道 高 考 失 败 就 没 有 出 息 了 吗 ?",
+          "first_char": "他 生 气 了 , 差 点 儿 没 考 上 名 牌 大 学 。",
+          "second_char": "他 很 惭 愧 , 觉 得 考 试 没 有 失 败 的 迹 象 。",
+          "sim_first": 0.0435,
+          "sim_second": 0.1304
+        },
+        {
+          "sample_id": "S005607_P0009_T00",
+          "signer_id": "P0009",
+          "reference_char": "医 生 会 给 你 检 查 确 诊 阑 尾 炎 。",
+          "first_char": "医 生 给 她 检 查 了 阑 尾 炎 。",
+          "second_char": "医 生 为 我 们 诊 断 出 阑 尾 炎 。",
+          "sim_first": 0.6923,
+          "sim_second": 0.4615
+        },
+        {
+          "sample_id": "S005664_P0009_T00",
+          "signer_id": "P0009",
+          "reference_char": "这 个 问 题 整 体 和 局 部 的 情 况 出 现 了 问 题 。",
+          "first_char": "这 个 问 题 全 是 存 折 , 暴 露 出 很 多 问 题 。",
+          "second_char": "这 个 问 题 全 是 存 折 , 暴 露 出 问 题 。",
+          "sim_first": 0.4444,
+          "sim_second": 0.4444
+        },
+        {
+          "sample_id": "S005694_P0009_T00",
+          "signer_id": "P0009",
+          "reference_char": "包 装 和 邮 费 在 内 , 价 格 五 元 。",
+          "first_char": "包 装 费 共 计 5 0 0 元 。",
+          "second_char": "包 装 费 共 计 5 0 0 元 。",
+          "sim_first": 0.3846,
+          "sim_second": 0.3846
+        },
+        {
+          "sample_id": "S006078_P0006_T00",
+          "signer_id": "P0006",
+          "reference_char": "定 位 导 航 系 统 为 我 们 的 生 活 带 来 了 便 利 。",
+          "first_char": "定 位 导 航 系 统 为 我 们 的 生 活 提 供 了 方 便 。",
+          "second_char": "定 位 导 航 系 统 可 以 为 人 们 的 生 活 提 供 方 便 。",
+          "sim_first": 0.7778,
+          "sim_second": 0.6316
+        },
+        {
+          "sample_id": "S007175_P0007_T00",
+          "signer_id": "P0007",
+          "reference_char": "你 女 儿 的 房 间 很 漂 亮 , 都 是 粉 色 的 。",
+          "first_char": "你 女 儿 的 房 间 很 漂 亮 , 而 且 全 是 粉 色 的 。",
+          "second_char": "这 女 儿 的 房 子 很 漂 亮 , 全 是 粉 色 的 。",
+          "sim_first": 0.8333,
+          "sim_second": 0.8125
+        },
+        {
+          "sample_id": "S007211_P0007_T00",
+          "signer_id": "P0007",
+          "reference_char": "天 黑 了 , 我 害 怕 。",
+          "first_char": "天 黑 了 , 我 有 点 害 怕 。",
+          "second_char": "天 黑 了 , 我 害 怕 。",
+          "sim_first": 0.8,
+          "sim_second": 1.0
+        }
+      ]
+    },
+    "legacy_vs_A2": {
+      "label": "legacy minus A2",
+      "n_pairs": 50,
+      "delta_bleu": {
+        "point": 1.3908266918609478,
+        "lower": -3.798,
+        "upper": 7.1415,
+        "iterations": 1000,
+        "groups": 10,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "delta_edit": {
+        "point": 0.013558000000000014,
+        "lower": -0.0406,
+        "upper": 0.0791,
+        "iterations": 1000,
+        "groups": 10,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "improved": 21,
+      "equal": 12,
+      "harmed": 17,
+      "records": [
+        {
+          "sample_id": "S000230_P0008_T00",
+          "signer_id": "P0008",
+          "reference_char": "左 边 的 房 间 是 我 爸 爸 妈 妈 的 , 他 们 的 房 间 很 大 。",
+          "first_char": "靠 近 窗 户 的 位 置 , 父 母 把 房 间 扩 大 了 。",
+          "second_char": "旁 边 的 房 间 是 爸 爸 妈 妈 的 , 这 个 房 间 很 大 。",
+          "sim_first": 0.1905,
+          "sim_second": 0.7619
+        },
+        {
+          "sample_id": "S000414_P0004_T00",
+          "signer_id": "P0004",
+          "reference_char": "时 间 过 得 真 快 , 新 年 快 要 到 了 。",
+          "first_char": "时 间 过 得 可 真 快 , 新 年 就 要 到 了 。",
+          "second_char": "时 间 过 得 可 真 快 , 新 的 一 年 就 要 准 备 好 了 。",
+          "sim_first": 0.8667,
+          "sim_second": 0.6316
+        },
+        {
+          "sample_id": "S000440_P0004_T00",
+          "signer_id": "P0004",
+          "reference_char": "这 些 我 昨 天 下 午 就 准 备 好 了 。",
+          "first_char": "我 昨 天 下 午 就 准 备 了 。",
+          "second_char": "我 昨 天 下 午 就 准 备 好 了 。",
+          "sim_first": 0.7692,
+          "sim_second": 0.8462
+        },
+        {
+          "sample_id": "S000502_P0000_T00",
+          "signer_id": "P0000",
+          "reference_char": "学 校 太 大 , 多 累 啊 。",
+          "first_char": "学 校 太 大 了 , 很 累 。",
+          "second_char": "现 在 学 校 很 大 , 很 累 。",
+          "sim_first": 0.6667,
+          "sim_second": 0.5
+        },
+        {
+          "sample_id": "S000695_P0004_T00",
+          "signer_id": "P0004",
+          "reference_char": "上 海 的 夏 天 太 热 了 , 需 要 买 空 调 。",
+          "first_char": "上 海 的 天 气 很 热 , 要 买 些 西 瓜 。",
+          "second_char": "上 海 太 热 了 , 多 买 空 调 。",
+          "sim_first": 0.4667,
+          "sim_second": 0.6667
+        },
+        {
+          "sample_id": "S000849_P0004_T00",
+          "signer_id": "P0004",
+          "reference_char": "手 机 选 不 到 靠 近 窗 户 的 位 置 。",
+          "first_char": "靠 近 窗 户 的 位 置 , 手 机 不 见 了 。",
+          "second_char": "手 机 的 挡 风 玻 璃 被 拆 掉 了 。",
+          "sim_first": 0.2143,
+          "sim_second": 0.2308
+        },
+        {
+          "sample_id": "S001064_P0008_T00",
+          "signer_id": "P0008",
+          "reference_char": "爷 爷 年 龄 大 , 喜 欢 爬 山 。",
+          "first_char": "爷 爷 年 龄 大 , 喜 欢 爬 山 。",
+          "second_char": "爷 爷 年 龄 大 , 喜 欢 爬 山 。",
+          "sim_first": 1.0,
+          "sim_second": 1.0
+        },
+        {
+          "sample_id": "S001090_P0000_T00",
+          "signer_id": "P0000",
+          "reference_char": "蛋 糕 太 甜 , 吃 多 了 对 身 体 不 好 。",
+          "first_char": "蛋 糕 太 甜 , 对 身 体 不 好 。",
+          "second_char": "蛋 糕 太 甜 , 对 身 体 不 好 。",
+          "sim_first": 0.7857,
+          "sim_second": 0.7857
+        },
+        {
+          "sample_id": "S001414_P0008_T00",
+          "signer_id": "P0008",
+          "reference_char": "明 天 是 春 节 , 要 穿 新 衣 服 。",
+          "first_char": "明 天 是 春 节 , 我 要 新 的 衣 服 穿 。",
+          "second_char": "明 天 是 春 节 , 我 要 新 衣 服 。",
+          "sim_first": 0.7143,
+          "sim_second": 0.8333
+        },
+        {
+          "sample_id": "S001610_P0004_T00",
+          "signer_id": "P0004",
+          "reference_char": "服 务 员 说 黑 色 的 帽 子 很 适 合 我 。",
+          "first_char": "我 忘 记 与 朋 友 打 招 呼 。",
+          "second_char": "他 是 个 聪 明 人 , 适 合 我 的 奶 奶 说 。",
+          "sim_first": 0.0714,
+          "sim_second": 0.0667
+        },
+        {
+          "sample_id": "S001656_P0005_T00",
+          "signer_id": "P0005",
+          "reference_char": "手 术 治 疗 是 目 前 治 疗 白 内 障 比 较 有 效 的 手 段 。",
+          "first_char": "治 疗 白 内 障 的 有 效 措 施 是 手 术 切 除 白 内 障 。",
+          "second_char": "白 内 障 的 治 疗 效 果 主 要 是 手 术 切 除 白 内 障 。",
+          "sim_first": 0.1,
+          "sim_second": 0.05
+        },
+        {
+          "sample_id": "S002086_P0005_T00",
+          "signer_id": "P0005",
+          "reference_char": "为 读 者 的 家 居 生 活 带 来 不 同 凡 响 的 流 行 资 讯 。",
+          "first_char": "为 了 校 园 安 全 , 学 校 不 应 该 将 信 息 泄 露 出 去 。",
+          "second_char": "为 了 校 园 的 校 园 , 人 们 都 把 非 主 流 的 信 息 都 掌 握 了 。",
+          "sim_first": 0.1,
+          "sim_second": 0.1739
+        },
+        {
+          "sample_id": "S002092_P0007_T00",
+          "signer_id": "P0007",
+          "reference_char": "他 一 听 到 自 己 被 录 取 的 消 息 , 情 绪 一 下 子 兴 奋 起 来 了 。",
+          "first_char": "当 他 成 功 时 , 他 激 动 了 留 下 了 泪 水 。",
+          "second_char": "当 他 成 功 竞 选 时 , 心 里 终 于 踏 实 了 。",
+          "sim_first": 0.0833,
+          "sim_second": 0.125
+        },
+        {
+          "sample_id": "S002128_P0005_T00",
+          "signer_id": "P0005",
+          "reference_char": "妈 妈 一 回 到 家 就 干 这 干 那 , 没 有 休 息 时 间 。",
+          "first_char": "妈 妈 回 房 间 工 作 , 你 没 时 间 休 息 。",
+          "second_char": "妈 妈 回 家 工 作 , 你 没 时 间 休 息 。",
+          "sim_first": 0.3158,
+          "sim_second": 0.3684
+        },
+        {
+          "sample_id": "S002143_P0007_T00",
+          "signer_id": "P0007",
+          "reference_char": "不 努 力 学 习 , 在 竞 争 中 就 会 处 于 劣 势 。",
+          "first_char": "不 要 太 努 力 了 , 要 比 赛 一 下 。",
+          "second_char": "自 己 不 努 力 学 习 , 不 应 该 比 赛 。",
+          "sim_first": 0.1765,
+          "sim_second": 0.2941
+        },
+        {
+          "sample_id": "S002199_P0005_T00",
+          "signer_id": "P0005",
+          "reference_char": "他 把 试 卷 拿 回 家 , 让 爸 爸 在 上 面 签 字 。",
+          "first_char": "他 把 这 份 文 件 带 到 学 校 给 爸 爸 签 字 。",
+          "second_char": "他 把 这 份 文 件 带 到 了 学 校 , 给 爸 爸 签 字 。",
+          "sim_first": 0.2941,
+          "sim_second": 0.2778
+        },
+        {
+          "sample_id": "S002199_P0007_T00",
+          "signer_id": "P0007",
+          "reference_char": "他 把 试 卷 拿 回 家 , 让 爸 爸 在 上 面 签 字 。",
+          "first_char": "他 把 作 文 带 回 家 , 送 给 爸 爸 签 字 。",
+          "second_char": "他 把 作 文 带 回 家 , 让 他 在 上 面 签 字 。",
+          "sim_first": 0.5294,
+          "sim_second": 0.7059
+        },
+        {
+          "sample_id": "S002240_P0005_T00",
+          "signer_id": "P0005",
+          "reference_char": "人 生 最 困 难 的 事 情 是 认 识 自 己 。",
+          "first_char": "人 生 最 困 难 的 是 认 识 你 自 己 。",
+          "second_char": "在 人 生 的 巅 峰 时 期 , 最 困 难 的 是 如 何 认 识 自 己 。",
+          "sim_first": 0.7857,
+          "sim_second": 0.5238
+        },
+        {
+          "sample_id": "S002951_P0002_T00",
+          "signer_id": "P0002",
+          "reference_char": "自 从 他 沉 迷 于 游 戏 后 , 学 习 成 绩 一 落 千 丈 。",
+          "first_char": "他 们 自 己 在 电 脑 面 前 沉 迷 赌 博 。",
+          "second_char": "他 沉 迷 在 自 己 的 电 脑 里 , 变 得 非 常 孤 单 。",
+          "sim_first": 0.1053,
+          "sim_second": 0.1579
+        },
+        {
+          "sample_id": "S003002_P0000_T00",
+          "signer_id": "P0000",
+          "reference_char": "你 迟 到 了 三 分 钟 , 所 以 要 罚 酒 三 杯 。",
+          "first_char": "他 迟 到 三 分 钟 就 被 酒 精 测 试 了 。",
+          "second_char": "你 迟 到 三 分 钟 就 会 喝 酒 , 被 罚 款 了 。",
+          "sim_first": 0.375,
+          "sim_second": 0.375
+        },
+        {
+          "sample_id": "S003181_P0001_T00",
+          "signer_id": "P0001",
+          "reference_char": "看 见 妈 妈 期 待 的 眼 神 , 我 感 到 惭 愧 。",
+          "first_char": "爸 爸 一 边 看 新 闻 , 一 边 哭 。",
+          "second_char": "我 爸 爸 也 希 望 能 看 见 我 , 感 到 很 惭 愧 。",
+          "sim_first": 0.125,
+          "sim_second": 0.2941
+        },
+        {
+          "sample_id": "S003256_P0002_T00",
+          "signer_id": "P0002",
+          "reference_char": "你 必 须 严 格 按 照 生 产 程 序 进 行 工 作 。",
+          "first_char": "你 必 须 按 照 生 产 程 序 来 做 。",
+          "second_char": "你 必 须 依 据 产 品 的 生 产 程 序 来 做 。",
+          "sim_first": 0.625,
+          "sim_second": 0.4375
+        },
+        {
+          "sample_id": "S003518_P0002_T00",
+          "signer_id": "P0002",
+          "reference_char": "我 们 不 想 毕 业 。",
+          "first_char": "我 们 不 想 毕 业 。",
+          "second_char": "我 们 不 想 毕 业 。",
+          "sim_first": 1.0,
+          "sim_second": 1.0
+        },
+        {
+          "sample_id": "S003572_P0002_T00",
+          "signer_id": "P0002",
+          "reference_char": "面 对 竞 争 , 我 们 不 能 躲 避 。",
+          "first_char": "这 种 竞 争 是 我 们 不 能 躲 避 的 。",
+          "second_char": "竞 争 是 不 可 避 免 的 。",
+          "sim_first": 0.6923,
+          "sim_second": 0.25
+        },
+        {
+          "sample_id": "S003605_P0001_T00",
+          "signer_id": "P0001",
+          "reference_char": "这 孩 子 一 天 到 晚 , 游 手 好 闲 , 真 令 人 操 心 。",
+          "first_char": "这 孩 子 天 赋 格 外 引 人 注 目 。",
+          "second_char": "这 孩 子 一 天 很 快 乐 , 真 让 人 提 心 吊 胆 。",
+          "sim_first": 0.3158,
+          "sim_second": 0.4211
+        },
+        {
+          "sample_id": "S003747_P0001_T00",
+          "signer_id": "P0001",
+          "reference_char": "垃 圾 处 理 问 题 有 关 我 们 每 个 人 的 生 活 。",
+          "first_char": "处 理 垃 圾 问 题 和 每 个 人 的 生 活 都 会 产 生 联 系 。",
+          "second_char": "处 理 垃 圾 问 题 和 我 们 每 个 人 的 生 活 息 息 相 关 。",
+          "sim_first": 0.3,
+          "sim_second": 0.5
+        },
+        {
+          "sample_id": "S003758_P0000_T00",
+          "signer_id": "P0000",
+          "reference_char": "我 在 考 虑 到 底 是 辞 职 还 是 继 续 工 作 。",
+          "first_char": "辞 职 还 是 工 作 的 想 法 。",
+          "second_char": "你 辞 职 之 后 还 要 上 班 吗 ?",
+          "sim_first": 0.25,
+          "sim_second": 0.0625
+        },
+        {
+          "sample_id": "S003961_P0002_T00",
+          "signer_id": "P0002",
+          "reference_char": "希 望 你 以 后 不 要 再 犯 一 样 的 错 误 。",
+          "first_char": "我 希 望 你 以 后 也 不 要 犯 错 误 。",
+          "second_char": "我 希 望 你 未 来 不 要 再 犯 错 误 。",
+          "sim_first": 0.6,
+          "sim_second": 0.6
+        },
+        {
+          "sample_id": "S003987_P0001_T00",
+          "signer_id": "P0001",
+          "reference_char": "明 天 是 他 的 生 日 , 你 打 算 送 什 么 礼 物 ?",
+          "first_char": "明 天 是 生 日 , 你 打 算 送 什 么 礼 物 ?",
+          "second_char": "明 天 是 生 日 , 你 打 算 送 什 么 礼 物 ?",
+          "sim_first": 0.8824,
+          "sim_second": 0.8824
+        },
+        {
+          "sample_id": "S004029_P0001_T00",
+          "signer_id": "P0001",
+          "reference_char": "青 春 期 是 身 体 成 熟 的 时 期 。",
+          "first_char": "青 春 期 是 身 体 成 熟 的 时 期 。",
+          "second_char": "青 春 期 是 身 体 成 熟 的 最 佳 时 期 。",
+          "sim_first": 1.0,
+          "sim_second": 0.8571
+        },
+        {
+          "sample_id": "S004204_P0003_T00",
+          "signer_id": "P0003",
+          "reference_char": "开 车 要 看 好 前 方 行 驶 , 小 心 驾 驶 。",
+          "first_char": "开 车 时 注 意 安 全 。",
+          "second_char": "开 车 看 车 , 注 意 安 全 。",
+          "sim_first": 0.2,
+          "sim_second": 0.3333
+        },
+        {
+          "sample_id": "S004419_P0008_T00",
+          "signer_id": "P0008",
+          "reference_char": "要 尊 重 客 观 规 律 。",
+          "first_char": "要 尊 重 客 户 的 实 际 情 况 。",
+          "second_char": "要 尊 重 客 观 规 律 。",
+          "sim_first": 0.4545,
+          "sim_second": 1.0
+        },
+        {
+          "sample_id": "S004459_P0003_T00",
+          "signer_id": "P0003",
+          "reference_char": "他 参 加 了 图 书 馆 的 暑 期 活 动 。",
+          "first_char": "他 参 加 图 书 馆 的 暑 假 活 动 。",
+          "second_char": "他 参 加 图 书 馆 的 夏 季 活 动 。",
+          "sim_first": 0.8462,
+          "sim_second": 0.7692
+        },
+        {
+          "sample_id": "S004571_P0000_T00",
+          "signer_id": "P0000",
+          "reference_char": "老 师 为 有 你 们 这 样 的 学 生 而 自 豪 。",
+          "first_char": "老 师 为 有 这 样 的 学 生 而 自 豪 。",
+          "second_char": "老 师 为 有 这 样 的 学 生 而 自 豪 。",
+          "sim_first": 0.8667,
+          "sim_second": 0.8667
+        },
+        {
+          "sample_id": "S004677_P0008_T00",
+          "signer_id": "P0008",
+          "reference_char": "世 界 上 没 有 后 悔 药 。",
+          "first_char": "世 界 上 没 有 后 悔 吃 药 。",
+          "second_char": "世 界 上 没 有 后 悔 吃 药 。",
+          "sim_first": 0.9,
+          "sim_second": 0.9
+        },
+        {
+          "sample_id": "S004752_P0003_T00",
+          "signer_id": "P0003",
+          "reference_char": "请 问 在 哪 里 可 以 买 到 城 市 地 图 ?",
+          "first_char": "请 问 城 市 地 图 在 哪 里 买 ?",
+          "second_char": "请 问 城 市 地 图 在 哪 里 买 的 ?",
+          "sim_first": 0.2143,
+          "sim_second": 0.2143
+        },
+        {
+          "sample_id": "S005011_P0003_T00",
+          "signer_id": "P0003",
+          "reference_char": "战 争 时 候 , 动 摇 军 心 的 人 必 然 要 受 到 处 罚 。",
+          "first_char": "战 时 , 学 习 原 则 很 脆 弱 , 要 严 肃 处 理 。",
+          "second_char": "战 时 , 学 习 纪 律 较 弱 , 要 严 肃 处 理 。",
+          "sim_first": 0.3158,
+          "sim_second": 0.3158
+        },
+        {
+          "sample_id": "S005040_P0006_T00",
+          "signer_id": "P0006",
+          "reference_char": "人 面 对 外 界 的 刺 激 , 精 神 会 做 出 反 应 。",
+          "first_char": "人 的 一 切 刺 激 , 精 神 上 会 产 生 反 应 。",
+          "second_char": "每 个 人 都 要 受 到 刺 激 , 精 神 上 的 人 总 是 会 做 出 反 应 。",
+          "sim_first": 0.5294,
+          "sim_second": 0.4783
+        },
+        {
+          "sample_id": "S005112_P0006_T00",
+          "signer_id": "P0006",
+          "reference_char": "心 情 不 好 , 没 有 一 顿 火 锅 是 解 决 不 了 的 , 如 果 还 是 不 行 , 那 就 再 一 顿 火 锅 。",
+          "first_char": "心 情 不 好 , 先 吃 火 锅 , 再 吃 火 锅 。",
+          "second_char": "你 心 情 不 好 , 火 锅 吃 不 消 , 就 不 能 再 吃 火 锅 。",
+          "sim_first": 0.3636,
+          "sim_second": 0.3939
+        },
+        {
+          "sample_id": "S005113_P0003_T00",
+          "signer_id": "P0003",
+          "reference_char": "找 女 朋 友 是 我 现 在 最 大 的 目 标 。",
+          "first_char": "找 女 朋 友 是 我 现 在 最 大 的 标 准 。",
+          "second_char": "找 女 朋 友 是 我 最 大 的 标 准 。",
+          "sim_first": 0.8571,
+          "sim_second": 0.7143
+        },
+        {
+          "sample_id": "S005276_P0009_T00",
+          "signer_id": "P0009",
+          "reference_char": "由 于 采 用 了 新 技 术 , 大 大 降 低 了 钱 财 开 销 。",
+          "first_char": "我 的 新 技 术 已 经 退 役 了 。",
+          "second_char": "我 的 新 技 术 也 差 点 儿 脱 离 了 。",
+          "sim_first": 0.2632,
+          "sim_second": 0.2105
+        },
+        {
+          "sample_id": "S005306_P0009_T00",
+          "signer_id": "P0009",
+          "reference_char": "兼 职 文 员 工 作 对 我 来 说 做 起 来 有 点 难 。",
+          "first_char": "我 做 兼 职 文 员 还 是 很 困 难 的 。",
+          "second_char": "我 做 兼 职 文 员 可 能 会 很 困 难 。",
+          "sim_first": 0.1765,
+          "sim_second": 0.2353
+        },
+        {
+          "sample_id": "S005354_P0006_T00",
+          "signer_id": "P0006",
+          "reference_char": "李 强 成 功 学 习 的 经 验 值 得 我 们 借 鉴 。",
+          "first_char": "我 们 要 认 真 吸 取 老 师 的 成 功 学 习 经 验 。",
+          "second_char": "我 们 借 鉴 老 师 的 成 功 学 习 经 验 。",
+          "sim_first": 0.0588,
+          "sim_second": 0.125
+        },
+        {
+          "sample_id": "S005540_P0006_T00",
+          "signer_id": "P0006",
+          "reference_char": "看 你 那 失 望 的 样 子 , 难 道 高 考 失 败 就 没 有 出 息 了 吗 ?",
+          "first_char": "他 生 气 了 , 差 点 儿 没 考 上 名 牌 大 学 。",
+          "second_char": "他 很 惭 愧 , 觉 得 考 试 没 有 失 败 的 迹 象 。",
+          "sim_first": 0.0435,
+          "sim_second": 0.1304
+        },
+        {
+          "sample_id": "S005607_P0009_T00",
+          "signer_id": "P0009",
+          "reference_char": "医 生 会 给 你 检 查 确 诊 阑 尾 炎 。",
+          "first_char": "医 生 给 她 检 查 了 阑 尾 炎 。",
+          "second_char": "医 生 为 我 们 诊 断 出 阑 尾 炎 。",
+          "sim_first": 0.6923,
+          "sim_second": 0.4615
+        },
+        {
+          "sample_id": "S005664_P0009_T00",
+          "signer_id": "P0009",
+          "reference_char": "这 个 问 题 整 体 和 局 部 的 情 况 出 现 了 问 题 。",
+          "first_char": "这 个 问 题 全 是 存 折 , 暴 露 出 很 多 问 题 。",
+          "second_char": "这 个 问 题 全 是 存 折 , 暴 露 出 问 题 。",
+          "sim_first": 0.4444,
+          "sim_second": 0.4444
+        },
+        {
+          "sample_id": "S005694_P0009_T00",
+          "signer_id": "P0009",
+          "reference_char": "包 装 和 邮 费 在 内 , 价 格 五 元 。",
+          "first_char": "包 装 费 共 计 5 0 0 元 。",
+          "second_char": "包 装 费 共 计 5 0 0 元 。",
+          "sim_first": 0.3846,
+          "sim_second": 0.3846
+        },
+        {
+          "sample_id": "S006078_P0006_T00",
+          "signer_id": "P0006",
+          "reference_char": "定 位 导 航 系 统 为 我 们 的 生 活 带 来 了 便 利 。",
+          "first_char": "定 位 导 航 系 统 为 我 们 的 生 活 提 供 了 方 便 。",
+          "second_char": "定 位 导 航 系 统 可 以 为 人 们 的 生 活 提 供 方 便 。",
+          "sim_first": 0.7778,
+          "sim_second": 0.6316
+        },
+        {
+          "sample_id": "S007175_P0007_T00",
+          "signer_id": "P0007",
+          "reference_char": "你 女 儿 的 房 间 很 漂 亮 , 都 是 粉 色 的 。",
+          "first_char": "你 女 儿 的 房 间 很 漂 亮 , 而 且 全 是 粉 色 的 。",
+          "second_char": "这 女 儿 的 房 子 很 漂 亮 , 全 是 粉 色 的 。",
+          "sim_first": 0.8333,
+          "sim_second": 0.8125
+        },
+        {
+          "sample_id": "S007211_P0007_T00",
+          "signer_id": "P0007",
+          "reference_char": "天 黑 了 , 我 害 怕 。",
+          "first_char": "天 黑 了 , 我 有 点 害 怕 。",
+          "second_char": "天 黑 了 , 我 害 怕 。",
+          "sim_first": 0.8,
+          "sim_second": 1.0
+        }
+      ]
+    },
+    "legacy_vs_pose_control": {
+      "label": "legacy minus pose control",
+      "n_pairs": 50,
+      "delta_bleu": {
+        "point": 1.3936164828193505,
+        "lower": -3.7945,
+        "upper": 7.1409,
+        "iterations": 1000,
+        "groups": 10,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "delta_edit": {
+        "point": 0.013558000000000014,
+        "lower": -0.0406,
+        "upper": 0.0791,
+        "iterations": 1000,
+        "groups": 10,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "improved": 21,
+      "equal": 12,
+      "harmed": 17,
+      "records": [
+        {
+          "sample_id": "S000230_P0008_T00",
+          "signer_id": "P0008",
+          "reference_char": "左 边 的 房 间 是 我 爸 爸 妈 妈 的 , 他 们 的 房 间 很 大 。",
+          "first_char": "靠 近 窗 户 的 位 置 , 父 母 把 房 间 扩 大 了 。",
+          "second_char": "旁 边 的 房 间 是 爸 爸 妈 妈 的 , 这 个 房 间 很 大 。",
+          "sim_first": 0.1905,
+          "sim_second": 0.7619
+        },
+        {
+          "sample_id": "S000414_P0004_T00",
+          "signer_id": "P0004",
+          "reference_char": "时 间 过 得 真 快 , 新 年 快 要 到 了 。",
+          "first_char": "时 间 过 得 可 真 快 , 新 年 就 要 到 了 。",
+          "second_char": "时 间 过 得 可 真 快 , 新 的 一 年 就 要 准 备 好 了 。",
+          "sim_first": 0.8667,
+          "sim_second": 0.6316
+        },
+        {
+          "sample_id": "S000440_P0004_T00",
+          "signer_id": "P0004",
+          "reference_char": "这 些 我 昨 天 下 午 就 准 备 好 了 。",
+          "first_char": "我 昨 天 下 午 就 准 备 了 。",
+          "second_char": "我 昨 天 下 午 就 准 备 好 了 。",
+          "sim_first": 0.7692,
+          "sim_second": 0.8462
+        },
+        {
+          "sample_id": "S000502_P0000_T00",
+          "signer_id": "P0000",
+          "reference_char": "学 校 太 大 , 多 累 啊 。",
+          "first_char": "学 校 太 大 了 , 很 累 。",
+          "second_char": "现 在 学 校 很 大 , 很 累 。",
+          "sim_first": 0.6667,
+          "sim_second": 0.5
+        },
+        {
+          "sample_id": "S000695_P0004_T00",
+          "signer_id": "P0004",
+          "reference_char": "上 海 的 夏 天 太 热 了 , 需 要 买 空 调 。",
+          "first_char": "上 海 的 天 气 很 热 , 要 买 些 西 瓜 。",
+          "second_char": "上 海 太 热 了 , 多 买 空 调 。",
+          "sim_first": 0.4667,
+          "sim_second": 0.6667
+        },
+        {
+          "sample_id": "S000849_P0004_T00",
+          "signer_id": "P0004",
+          "reference_char": "手 机 选 不 到 靠 近 窗 户 的 位 置 。",
+          "first_char": "靠 近 窗 户 的 位 置 , 手 机 不 见 了 。",
+          "second_char": "手 机 的 挡 风 玻 璃 被 拆 掉 了 。",
+          "sim_first": 0.2143,
+          "sim_second": 0.2308
+        },
+        {
+          "sample_id": "S001064_P0008_T00",
+          "signer_id": "P0008",
+          "reference_char": "爷 爷 年 龄 大 , 喜 欢 爬 山 。",
+          "first_char": "爷 爷 年 龄 大 , 喜 欢 爬 山 。",
+          "second_char": "爷 爷 年 龄 大 , 喜 欢 爬 山 。",
+          "sim_first": 1.0,
+          "sim_second": 1.0
+        },
+        {
+          "sample_id": "S001090_P0000_T00",
+          "signer_id": "P0000",
+          "reference_char": "蛋 糕 太 甜 , 吃 多 了 对 身 体 不 好 。",
+          "first_char": "蛋 糕 太 甜 , 对 身 体 不 好 。",
+          "second_char": "蛋 糕 太 甜 , 对 身 体 不 好 。",
+          "sim_first": 0.7857,
+          "sim_second": 0.7857
+        },
+        {
+          "sample_id": "S001414_P0008_T00",
+          "signer_id": "P0008",
+          "reference_char": "明 天 是 春 节 , 要 穿 新 衣 服 。",
+          "first_char": "明 天 是 春 节 , 我 要 新 的 衣 服 穿 。",
+          "second_char": "明 天 是 春 节 , 我 要 新 衣 服 。",
+          "sim_first": 0.7143,
+          "sim_second": 0.8333
+        },
+        {
+          "sample_id": "S001610_P0004_T00",
+          "signer_id": "P0004",
+          "reference_char": "服 务 员 说 黑 色 的 帽 子 很 适 合 我 。",
+          "first_char": "我 忘 记 与 朋 友 打 招 呼 。",
+          "second_char": "他 是 个 聪 明 人 , 适 合 我 的 奶 奶 说 。",
+          "sim_first": 0.0714,
+          "sim_second": 0.0667
+        },
+        {
+          "sample_id": "S001656_P0005_T00",
+          "signer_id": "P0005",
+          "reference_char": "手 术 治 疗 是 目 前 治 疗 白 内 障 比 较 有 效 的 手 段 。",
+          "first_char": "治 疗 白 内 障 的 有 效 措 施 是 手 术 切 除 白 内 障 。",
+          "second_char": "白 内 障 的 治 疗 效 果 主 要 是 手 术 切 除 白 内 障 。",
+          "sim_first": 0.1,
+          "sim_second": 0.05
+        },
+        {
+          "sample_id": "S002086_P0005_T00",
+          "signer_id": "P0005",
+          "reference_char": "为 读 者 的 家 居 生 活 带 来 不 同 凡 响 的 流 行 资 讯 。",
+          "first_char": "为 了 校 园 安 全 , 学 校 非 必 要 不 讲 究 新 闻 。",
+          "second_char": "为 了 校 园 的 校 园 , 人 们 都 把 非 主 流 的 信 息 都 掌 握 了 。",
+          "sim_first": 0.1,
+          "sim_second": 0.1739
+        },
+        {
+          "sample_id": "S002092_P0007_T00",
+          "signer_id": "P0007",
+          "reference_char": "他 一 听 到 自 己 被 录 取 的 消 息 , 情 绪 一 下 子 兴 奋 起 来 了 。",
+          "first_char": "当 他 成 功 时 , 他 激 动 了 留 下 了 泪 水 。",
+          "second_char": "当 他 成 功 竞 选 时 , 心 里 终 于 踏 实 了 。",
+          "sim_first": 0.0833,
+          "sim_second": 0.125
+        },
+        {
+          "sample_id": "S002128_P0005_T00",
+          "signer_id": "P0005",
+          "reference_char": "妈 妈 一 回 到 家 就 干 这 干 那 , 没 有 休 息 时 间 。",
+          "first_char": "妈 妈 回 房 间 工 作 , 你 没 时 间 休 息 。",
+          "second_char": "妈 妈 回 家 工 作 , 你 没 时 间 休 息 。",
+          "sim_first": 0.3158,
+          "sim_second": 0.3684
+        },
+        {
+          "sample_id": "S002143_P0007_T00",
+          "signer_id": "P0007",
+          "reference_char": "不 努 力 学 习 , 在 竞 争 中 就 会 处 于 劣 势 。",
+          "first_char": "不 要 太 努 力 了 , 要 比 赛 一 下 。",
+          "second_char": "自 己 不 努 力 学 习 , 不 应 该 比 赛 。",
+          "sim_first": 0.1765,
+          "sim_second": 0.2941
+        },
+        {
+          "sample_id": "S002199_P0005_T00",
+          "signer_id": "P0005",
+          "reference_char": "他 把 试 卷 拿 回 家 , 让 爸 爸 在 上 面 签 字 。",
+          "first_char": "他 把 这 份 文 件 带 到 学 校 给 爸 爸 签 字 。",
+          "second_char": "他 把 这 份 文 件 带 到 了 学 校 , 给 爸 爸 签 字 。",
+          "sim_first": 0.2941,
+          "sim_second": 0.2778
+        },
+        {
+          "sample_id": "S002199_P0007_T00",
+          "signer_id": "P0007",
+          "reference_char": "他 把 试 卷 拿 回 家 , 让 爸 爸 在 上 面 签 字 。",
+          "first_char": "他 把 作 文 带 回 家 , 送 给 爸 爸 签 字 。",
+          "second_char": "他 把 作 文 带 回 家 , 让 他 在 上 面 签 字 。",
+          "sim_first": 0.5294,
+          "sim_second": 0.7059
+        },
+        {
+          "sample_id": "S002240_P0005_T00",
+          "signer_id": "P0005",
+          "reference_char": "人 生 最 困 难 的 事 情 是 认 识 自 己 。",
+          "first_char": "人 生 最 困 难 的 是 认 识 你 自 己 。",
+          "second_char": "在 人 生 的 巅 峰 时 期 , 最 困 难 的 是 如 何 认 识 自 己 。",
+          "sim_first": 0.7857,
+          "sim_second": 0.5238
+        },
+        {
+          "sample_id": "S002951_P0002_T00",
+          "signer_id": "P0002",
+          "reference_char": "自 从 他 沉 迷 于 游 戏 后 , 学 习 成 绩 一 落 千 丈 。",
+          "first_char": "他 们 自 己 在 电 脑 面 前 沉 迷 赌 博 。",
+          "second_char": "他 沉 迷 在 自 己 的 电 脑 里 , 变 得 非 常 孤 单 。",
+          "sim_first": 0.1053,
+          "sim_second": 0.1579
+        },
+        {
+          "sample_id": "S003002_P0000_T00",
+          "signer_id": "P0000",
+          "reference_char": "你 迟 到 了 三 分 钟 , 所 以 要 罚 酒 三 杯 。",
+          "first_char": "他 迟 到 三 分 钟 就 被 酒 精 测 试 了 。",
+          "second_char": "你 迟 到 三 分 钟 就 会 喝 酒 , 被 罚 款 了 。",
+          "sim_first": 0.375,
+          "sim_second": 0.375
+        },
+        {
+          "sample_id": "S003181_P0001_T00",
+          "signer_id": "P0001",
+          "reference_char": "看 见 妈 妈 期 待 的 眼 神 , 我 感 到 惭 愧 。",
+          "first_char": "爸 爸 一 边 看 新 闻 , 一 边 哭 。",
+          "second_char": "我 爸 爸 也 希 望 能 看 见 我 , 感 到 很 惭 愧 。",
+          "sim_first": 0.125,
+          "sim_second": 0.2941
+        },
+        {
+          "sample_id": "S003256_P0002_T00",
+          "signer_id": "P0002",
+          "reference_char": "你 必 须 严 格 按 照 生 产 程 序 进 行 工 作 。",
+          "first_char": "你 必 须 按 照 生 产 程 序 来 做 。",
+          "second_char": "你 必 须 依 据 产 品 的 生 产 程 序 来 做 。",
+          "sim_first": 0.625,
+          "sim_second": 0.4375
+        },
+        {
+          "sample_id": "S003518_P0002_T00",
+          "signer_id": "P0002",
+          "reference_char": "我 们 不 想 毕 业 。",
+          "first_char": "我 们 不 想 毕 业 。",
+          "second_char": "我 们 不 想 毕 业 。",
+          "sim_first": 1.0,
+          "sim_second": 1.0
+        },
+        {
+          "sample_id": "S003572_P0002_T00",
+          "signer_id": "P0002",
+          "reference_char": "面 对 竞 争 , 我 们 不 能 躲 避 。",
+          "first_char": "这 种 竞 争 是 我 们 不 能 躲 避 的 。",
+          "second_char": "竞 争 是 不 可 避 免 的 。",
+          "sim_first": 0.6923,
+          "sim_second": 0.25
+        },
+        {
+          "sample_id": "S003605_P0001_T00",
+          "signer_id": "P0001",
+          "reference_char": "这 孩 子 一 天 到 晚 , 游 手 好 闲 , 真 令 人 操 心 。",
+          "first_char": "这 孩 子 天 赋 格 外 引 人 注 目 。",
+          "second_char": "这 孩 子 一 天 很 快 乐 , 真 让 人 提 心 吊 胆 。",
+          "sim_first": 0.3158,
+          "sim_second": 0.4211
+        },
+        {
+          "sample_id": "S003747_P0001_T00",
+          "signer_id": "P0001",
+          "reference_char": "垃 圾 处 理 问 题 有 关 我 们 每 个 人 的 生 活 。",
+          "first_char": "处 理 垃 圾 问 题 和 每 个 人 的 生 活 都 会 产 生 联 系 。",
+          "second_char": "处 理 垃 圾 问 题 和 我 们 每 个 人 的 生 活 息 息 相 关 。",
+          "sim_first": 0.3,
+          "sim_second": 0.5
+        },
+        {
+          "sample_id": "S003758_P0000_T00",
+          "signer_id": "P0000",
+          "reference_char": "我 在 考 虑 到 底 是 辞 职 还 是 继 续 工 作 。",
+          "first_char": "辞 职 还 是 工 作 的 想 法 。",
+          "second_char": "你 辞 职 之 后 还 要 上 班 吗 ?",
+          "sim_first": 0.25,
+          "sim_second": 0.0625
+        },
+        {
+          "sample_id": "S003961_P0002_T00",
+          "signer_id": "P0002",
+          "reference_char": "希 望 你 以 后 不 要 再 犯 一 样 的 错 误 。",
+          "first_char": "我 希 望 你 以 后 也 不 要 犯 错 误 。",
+          "second_char": "我 希 望 你 未 来 不 要 再 犯 错 误 。",
+          "sim_first": 0.6,
+          "sim_second": 0.6
+        },
+        {
+          "sample_id": "S003987_P0001_T00",
+          "signer_id": "P0001",
+          "reference_char": "明 天 是 他 的 生 日 , 你 打 算 送 什 么 礼 物 ?",
+          "first_char": "明 天 是 生 日 , 你 打 算 送 什 么 礼 物 ?",
+          "second_char": "明 天 是 生 日 , 你 打 算 送 什 么 礼 物 ?",
+          "sim_first": 0.8824,
+          "sim_second": 0.8824
+        },
+        {
+          "sample_id": "S004029_P0001_T00",
+          "signer_id": "P0001",
+          "reference_char": "青 春 期 是 身 体 成 熟 的 时 期 。",
+          "first_char": "青 春 期 是 身 体 成 熟 的 时 期 。",
+          "second_char": "青 春 期 是 身 体 成 熟 的 最 佳 时 期 。",
+          "sim_first": 1.0,
+          "sim_second": 0.8571
+        },
+        {
+          "sample_id": "S004204_P0003_T00",
+          "signer_id": "P0003",
+          "reference_char": "开 车 要 看 好 前 方 行 驶 , 小 心 驾 驶 。",
+          "first_char": "开 车 时 注 意 安 全 。",
+          "second_char": "开 车 看 车 , 注 意 安 全 。",
+          "sim_first": 0.2,
+          "sim_second": 0.3333
+        },
+        {
+          "sample_id": "S004419_P0008_T00",
+          "signer_id": "P0008",
+          "reference_char": "要 尊 重 客 观 规 律 。",
+          "first_char": "要 尊 重 客 户 的 实 际 情 况 。",
+          "second_char": "要 尊 重 客 观 规 律 。",
+          "sim_first": 0.4545,
+          "sim_second": 1.0
+        },
+        {
+          "sample_id": "S004459_P0003_T00",
+          "signer_id": "P0003",
+          "reference_char": "他 参 加 了 图 书 馆 的 暑 期 活 动 。",
+          "first_char": "他 参 加 图 书 馆 的 暑 假 活 动 。",
+          "second_char": "他 参 加 图 书 馆 的 夏 季 活 动 。",
+          "sim_first": 0.8462,
+          "sim_second": 0.7692
+        },
+        {
+          "sample_id": "S004571_P0000_T00",
+          "signer_id": "P0000",
+          "reference_char": "老 师 为 有 你 们 这 样 的 学 生 而 自 豪 。",
+          "first_char": "老 师 为 有 这 样 的 学 生 而 自 豪 。",
+          "second_char": "老 师 为 有 这 样 的 学 生 而 自 豪 。",
+          "sim_first": 0.8667,
+          "sim_second": 0.8667
+        },
+        {
+          "sample_id": "S004677_P0008_T00",
+          "signer_id": "P0008",
+          "reference_char": "世 界 上 没 有 后 悔 药 。",
+          "first_char": "世 界 上 没 有 后 悔 吃 药 。",
+          "second_char": "世 界 上 没 有 后 悔 吃 药 。",
+          "sim_first": 0.9,
+          "sim_second": 0.9
+        },
+        {
+          "sample_id": "S004752_P0003_T00",
+          "signer_id": "P0003",
+          "reference_char": "请 问 在 哪 里 可 以 买 到 城 市 地 图 ?",
+          "first_char": "请 问 城 市 地 图 在 哪 里 买 ?",
+          "second_char": "请 问 城 市 地 图 在 哪 里 买 的 ?",
+          "sim_first": 0.2143,
+          "sim_second": 0.2143
+        },
+        {
+          "sample_id": "S005011_P0003_T00",
+          "signer_id": "P0003",
+          "reference_char": "战 争 时 候 , 动 摇 军 心 的 人 必 然 要 受 到 处 罚 。",
+          "first_char": "战 时 , 学 习 原 则 很 脆 弱 , 要 严 肃 处 理 。",
+          "second_char": "战 时 , 学 习 纪 律 较 弱 , 要 严 肃 处 理 。",
+          "sim_first": 0.3158,
+          "sim_second": 0.3158
+        },
+        {
+          "sample_id": "S005040_P0006_T00",
+          "signer_id": "P0006",
+          "reference_char": "人 面 对 外 界 的 刺 激 , 精 神 会 做 出 反 应 。",
+          "first_char": "人 的 一 切 刺 激 , 精 神 上 会 产 生 反 应 。",
+          "second_char": "每 个 人 都 要 受 到 刺 激 , 精 神 上 的 人 总 是 会 做 出 反 应 。",
+          "sim_first": 0.5294,
+          "sim_second": 0.4783
+        },
+        {
+          "sample_id": "S005112_P0006_T00",
+          "signer_id": "P0006",
+          "reference_char": "心 情 不 好 , 没 有 一 顿 火 锅 是 解 决 不 了 的 , 如 果 还 是 不 行 , 那 就 再 一 顿 火 锅 。",
+          "first_char": "心 情 不 好 , 先 吃 火 锅 , 再 吃 火 锅 。",
+          "second_char": "你 心 情 不 好 , 火 锅 吃 不 消 , 就 不 能 再 吃 火 锅 。",
+          "sim_first": 0.3636,
+          "sim_second": 0.3939
+        },
+        {
+          "sample_id": "S005113_P0003_T00",
+          "signer_id": "P0003",
+          "reference_char": "找 女 朋 友 是 我 现 在 最 大 的 目 标 。",
+          "first_char": "找 女 朋 友 是 我 现 在 最 大 的 标 准 。",
+          "second_char": "找 女 朋 友 是 我 最 大 的 标 准 。",
+          "sim_first": 0.8571,
+          "sim_second": 0.7143
+        },
+        {
+          "sample_id": "S005276_P0009_T00",
+          "signer_id": "P0009",
+          "reference_char": "由 于 采 用 了 新 技 术 , 大 大 降 低 了 钱 财 开 销 。",
+          "first_char": "我 的 新 技 术 已 经 落 后 了 。",
+          "second_char": "我 的 新 技 术 也 差 点 儿 脱 离 了 。",
+          "sim_first": 0.2632,
+          "sim_second": 0.2105
+        },
+        {
+          "sample_id": "S005306_P0009_T00",
+          "signer_id": "P0009",
+          "reference_char": "兼 职 文 员 工 作 对 我 来 说 做 起 来 有 点 难 。",
+          "first_char": "我 做 兼 职 文 员 还 是 很 困 难 的 。",
+          "second_char": "我 做 兼 职 文 员 可 能 会 很 困 难 。",
+          "sim_first": 0.1765,
+          "sim_second": 0.2353
+        },
+        {
+          "sample_id": "S005354_P0006_T00",
+          "signer_id": "P0006",
+          "reference_char": "李 强 成 功 学 习 的 经 验 值 得 我 们 借 鉴 。",
+          "first_char": "我 们 要 认 真 吸 取 老 师 的 成 功 学 习 经 验 。",
+          "second_char": "我 们 借 鉴 老 师 的 成 功 学 习 经 验 。",
+          "sim_first": 0.0588,
+          "sim_second": 0.125
+        },
+        {
+          "sample_id": "S005540_P0006_T00",
+          "signer_id": "P0006",
+          "reference_char": "看 你 那 失 望 的 样 子 , 难 道 高 考 失 败 就 没 有 出 息 了 吗 ?",
+          "first_char": "他 生 气 了 , 差 点 儿 没 考 上 名 牌 大 学 。",
+          "second_char": "他 很 惭 愧 , 觉 得 考 试 没 有 失 败 的 迹 象 。",
+          "sim_first": 0.0435,
+          "sim_second": 0.1304
+        },
+        {
+          "sample_id": "S005607_P0009_T00",
+          "signer_id": "P0009",
+          "reference_char": "医 生 会 给 你 检 查 确 诊 阑 尾 炎 。",
+          "first_char": "医 生 给 她 检 查 了 阑 尾 炎 。",
+          "second_char": "医 生 为 我 们 诊 断 出 阑 尾 炎 。",
+          "sim_first": 0.6923,
+          "sim_second": 0.4615
+        },
+        {
+          "sample_id": "S005664_P0009_T00",
+          "signer_id": "P0009",
+          "reference_char": "这 个 问 题 整 体 和 局 部 的 情 况 出 现 了 问 题 。",
+          "first_char": "这 个 问 题 全 是 存 折 , 暴 露 出 很 多 问 题 。",
+          "second_char": "这 个 问 题 全 是 存 折 , 暴 露 出 问 题 。",
+          "sim_first": 0.4444,
+          "sim_second": 0.4444
+        },
+        {
+          "sample_id": "S005694_P0009_T00",
+          "signer_id": "P0009",
+          "reference_char": "包 装 和 邮 费 在 内 , 价 格 五 元 。",
+          "first_char": "包 装 费 共 计 5 0 0 元 。",
+          "second_char": "包 装 费 共 计 5 0 0 元 。",
+          "sim_first": 0.3846,
+          "sim_second": 0.3846
+        },
+        {
+          "sample_id": "S006078_P0006_T00",
+          "signer_id": "P0006",
+          "reference_char": "定 位 导 航 系 统 为 我 们 的 生 活 带 来 了 便 利 。",
+          "first_char": "定 位 导 航 系 统 为 我 们 的 生 活 提 供 了 方 便 。",
+          "second_char": "定 位 导 航 系 统 可 以 为 人 们 的 生 活 提 供 方 便 。",
+          "sim_first": 0.7778,
+          "sim_second": 0.6316
+        },
+        {
+          "sample_id": "S007175_P0007_T00",
+          "signer_id": "P0007",
+          "reference_char": "你 女 儿 的 房 间 很 漂 亮 , 都 是 粉 色 的 。",
+          "first_char": "你 女 儿 的 房 间 很 漂 亮 , 而 且 全 是 粉 色 的 。",
+          "second_char": "这 女 儿 的 房 子 很 漂 亮 , 全 是 粉 色 的 。",
+          "sim_first": 0.8333,
+          "sim_second": 0.8125
+        },
+        {
+          "sample_id": "S007211_P0007_T00",
+          "signer_id": "P0007",
+          "reference_char": "天 黑 了 , 我 害 怕 。",
+          "first_char": "天 黑 了 , 我 有 点 害 怕 。",
+          "second_char": "天 黑 了 , 我 害 怕 。",
+          "sim_first": 0.8,
+          "sim_second": 1.0
+        }
+      ]
+    },
+    "corrected_vs_A": {
+      "label": "corrected minus A",
+      "n_pairs": 50,
+      "delta_bleu": {
+        "point": 1.9423184868751697,
+        "lower": -4.4029,
+        "upper": 8.0787,
+        "iterations": 1000,
+        "groups": 10,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "delta_edit": {
+        "point": 0.018934000000000062,
+        "lower": -0.0269,
+        "upper": 0.0761,
+        "iterations": 1000,
+        "groups": 10,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "improved": 20,
+      "equal": 15,
+      "harmed": 15,
+      "records": [
+        {
+          "sample_id": "S000230_P0008_T00",
+          "signer_id": "P0008",
+          "reference_char": "左 边 的 房 间 是 我 爸 爸 妈 妈 的 , 他 们 的 房 间 很 大 。",
+          "first_char": "靠 近 窗 户 的 位 置 , 妈 妈 把 房 间 扩 大 了 。",
+          "second_char": "旁 边 的 房 间 是 爸 爸 妈 妈 的 , 这 个 房 间 很 大 。",
+          "sim_first": 0.2381,
+          "sim_second": 0.7619
+        },
+        {
+          "sample_id": "S000414_P0004_T00",
+          "signer_id": "P0004",
+          "reference_char": "时 间 过 得 真 快 , 新 年 快 要 到 了 。",
+          "first_char": "时 间 过 得 可 真 快 , 新 年 就 要 到 了 。",
+          "second_char": "时 间 过 得 可 真 快 , 新 的 一 年 就 要 准 备 好 了 。",
+          "sim_first": 0.8667,
+          "sim_second": 0.6316
+        },
+        {
+          "sample_id": "S000440_P0004_T00",
+          "signer_id": "P0004",
+          "reference_char": "这 些 我 昨 天 下 午 就 准 备 好 了 。",
+          "first_char": "我 昨 天 下 午 就 准 备 好 了 。",
+          "second_char": "我 昨 天 下 午 就 准 备 好 了 。",
+          "sim_first": 0.8462,
+          "sim_second": 0.8462
+        },
+        {
+          "sample_id": "S000502_P0000_T00",
+          "signer_id": "P0000",
+          "reference_char": "学 校 太 大 , 多 累 啊 。",
+          "first_char": "学 校 太 大 了 , 很 累 。",
+          "second_char": "现 在 学 校 很 大 , 很 累 。",
+          "sim_first": 0.6667,
+          "sim_second": 0.5
+        },
+        {
+          "sample_id": "S000695_P0004_T00",
+          "signer_id": "P0004",
+          "reference_char": "上 海 的 夏 天 太 热 了 , 需 要 买 空 调 。",
+          "first_char": "上 海 的 夏 天 很 热 , 要 买 暖 和 。",
+          "second_char": "上 海 太 热 了 , 多 买 空 调 。",
+          "sim_first": 0.6667,
+          "sim_second": 0.6667
+        },
+        {
+          "sample_id": "S000849_P0004_T00",
+          "signer_id": "P0004",
+          "reference_char": "手 机 选 不 到 靠 近 窗 户 的 位 置 。",
+          "first_char": "靠 近 窗 户 的 位 置 , 手 机 不 见 了 。",
+          "second_char": "手 机 的 挡 风 玻 璃 被 拆 掉 了 。",
+          "sim_first": 0.2143,
+          "sim_second": 0.2308
+        },
+        {
+          "sample_id": "S001064_P0008_T00",
+          "signer_id": "P0008",
+          "reference_char": "爷 爷 年 龄 大 , 喜 欢 爬 山 。",
+          "first_char": "爷 爷 年 龄 大 , 喜 欢 爬 山 。",
+          "second_char": "爷 爷 年 龄 大 , 喜 欢 爬 山 。",
+          "sim_first": 1.0,
+          "sim_second": 1.0
+        },
+        {
+          "sample_id": "S001090_P0000_T00",
+          "signer_id": "P0000",
+          "reference_char": "蛋 糕 太 甜 , 吃 多 了 对 身 体 不 好 。",
+          "first_char": "蛋 糕 太 甜 , 对 身 体 不 好 。",
+          "second_char": "蛋 糕 太 甜 , 对 身 体 不 好 。",
+          "sim_first": 0.7857,
+          "sim_second": 0.7857
+        },
+        {
+          "sample_id": "S001414_P0008_T00",
+          "signer_id": "P0008",
+          "reference_char": "明 天 是 春 节 , 要 穿 新 衣 服 。",
+          "first_char": "明 天 是 春 节 , 我 要 新 的 衣 服 穿 。",
+          "second_char": "明 天 是 春 节 , 我 要 新 衣 服 。",
+          "sim_first": 0.7143,
+          "sim_second": 0.8333
+        },
+        {
+          "sample_id": "S001610_P0004_T00",
+          "signer_id": "P0004",
+          "reference_char": "服 务 员 说 黑 色 的 帽 子 很 适 合 我 。",
+          "first_char": "医 生 向 我 辩 护 , 不 可 以 指 手 画 脚 。",
+          "second_char": "他 是 个 聪 明 人 , 适 合 我 的 奶 奶 说 。",
+          "sim_first": 0.0667,
+          "sim_second": 0.0667
+        },
+        {
+          "sample_id": "S001656_P0005_T00",
+          "signer_id": "P0005",
+          "reference_char": "手 术 治 疗 是 目 前 治 疗 白 内 障 比 较 有 效 的 手 段 。",
+          "first_char": "白 内 障 的 治 疗 效 果 主 要 是 手 术 切 除 白 内 障 。",
+          "second_char": "白 内 障 的 治 疗 效 果 主 要 是 手 术 切 除 白 内 障 。",
+          "sim_first": 0.05,
+          "sim_second": 0.05
+        },
+        {
+          "sample_id": "S002086_P0005_T00",
+          "signer_id": "P0005",
+          "reference_char": "为 读 者 的 家 居 生 活 带 来 不 同 凡 响 的 流 行 资 讯 。",
+          "first_char": "为 了 校 园 安 全 , 可 不 是 校 园 里 有 传 闻 。",
+          "second_char": "为 了 校 园 的 校 园 , 人 们 都 把 非 主 流 的 信 息 都 掌 握 了 。",
+          "sim_first": 0.15,
+          "sim_second": 0.1739
+        },
+        {
+          "sample_id": "S002092_P0007_T00",
+          "signer_id": "P0007",
+          "reference_char": "他 一 听 到 自 己 被 录 取 的 消 息 , 情 绪 一 下 子 兴 奋 起 来 了 。",
+          "first_char": "每 次 自 己 选 择 成 功 时 , 我 都 非 常 高 兴 。",
+          "second_char": "当 他 成 功 竞 选 时 , 心 里 终 于 踏 实 了 。",
+          "sim_first": 0.2083,
+          "sim_second": 0.125
+        },
+        {
+          "sample_id": "S002128_P0005_T00",
+          "signer_id": "P0005",
+          "reference_char": "妈 妈 一 回 到 家 就 干 这 干 那 , 没 有 休 息 时 间 。",
+          "first_char": "妈 妈 回 房 间 工 作 , 你 没 时 间 休 息 。",
+          "second_char": "妈 妈 回 家 工 作 , 你 没 时 间 休 息 。",
+          "sim_first": 0.3158,
+          "sim_second": 0.3684
+        },
+        {
+          "sample_id": "S002143_P0007_T00",
+          "signer_id": "P0007",
+          "reference_char": "不 努 力 学 习 , 在 竞 争 中 就 会 处 于 劣 势 。",
+          "first_char": "自 己 不 努 力 学 习 , 与 其 比 赛 , 都 不 能 减 弱 。",
+          "second_char": "自 己 不 努 力 学 习 , 不 应 该 比 赛 。",
+          "sim_first": 0.3684,
+          "sim_second": 0.2941
+        },
+        {
+          "sample_id": "S002199_P0005_T00",
+          "signer_id": "P0005",
+          "reference_char": "他 把 试 卷 拿 回 家 , 让 爸 爸 在 上 面 签 字 。",
+          "first_char": "他 把 这 份 文 件 带 到 学 校 给 父 母 签 字 。",
+          "second_char": "他 把 这 份 文 件 带 到 了 学 校 , 给 爸 爸 签 字 。",
+          "sim_first": 0.2941,
+          "sim_second": 0.2778
+        },
+        {
+          "sample_id": "S002199_P0007_T00",
+          "signer_id": "P0007",
+          "reference_char": "他 把 试 卷 拿 回 家 , 让 爸 爸 在 上 面 签 字 。",
+          "first_char": "他 把 作 文 带 回 家 , 送 给 爸 爸 签 字 。",
+          "second_char": "他 把 作 文 带 回 家 , 让 他 在 上 面 签 字 。",
+          "sim_first": 0.5294,
+          "sim_second": 0.7059
+        },
+        {
+          "sample_id": "S002240_P0005_T00",
+          "signer_id": "P0005",
+          "reference_char": "人 生 最 困 难 的 事 情 是 认 识 自 己 。",
+          "first_char": "人 生 最 困 难 的 是 认 识 你 自 己 。",
+          "second_char": "在 人 生 的 巅 峰 时 期 , 最 困 难 的 是 如 何 认 识 自 己 。",
+          "sim_first": 0.7857,
+          "sim_second": 0.5238
+        },
+        {
+          "sample_id": "S002951_P0002_T00",
+          "signer_id": "P0002",
+          "reference_char": "自 从 他 沉 迷 于 游 戏 后 , 学 习 成 绩 一 落 千 丈 。",
+          "first_char": "他 用 电 脑 沉 迷 在 教 室 里 。",
+          "second_char": "他 沉 迷 在 自 己 的 电 脑 里 , 变 得 非 常 孤 单 。",
+          "sim_first": 0.1053,
+          "sim_second": 0.1579
+        },
+        {
+          "sample_id": "S003002_P0000_T00",
+          "signer_id": "P0000",
+          "reference_char": "你 迟 到 了 三 分 钟 , 所 以 要 罚 酒 三 杯 。",
+          "first_char": "他 差 点 儿 喝 了 酒 , 被 罚 款 了 。",
+          "second_char": "你 迟 到 三 分 钟 就 会 喝 酒 , 被 罚 款 了 。",
+          "sim_first": 0.1875,
+          "sim_second": 0.375
+        },
+        {
+          "sample_id": "S003181_P0001_T00",
+          "signer_id": "P0001",
+          "reference_char": "看 见 妈 妈 期 待 的 眼 神 , 我 感 到 惭 愧 。",
+          "first_char": "爸 爸 看 我 希 望 的 偶 像 , 我 惭 愧 得 无 地 自 容 。",
+          "second_char": "我 爸 爸 也 希 望 能 看 见 我 , 感 到 很 惭 愧 。",
+          "sim_first": 0.2105,
+          "sim_second": 0.2941
+        },
+        {
+          "sample_id": "S003256_P0002_T00",
+          "signer_id": "P0002",
+          "reference_char": "你 必 须 严 格 按 照 生 产 程 序 进 行 工 作 。",
+          "first_char": "你 必 须 按 照 生 产 程 序 来 做 。",
+          "second_char": "你 必 须 依 据 产 品 的 生 产 程 序 来 做 。",
+          "sim_first": 0.625,
+          "sim_second": 0.4375
+        },
+        {
+          "sample_id": "S003518_P0002_T00",
+          "signer_id": "P0002",
+          "reference_char": "我 们 不 想 毕 业 。",
+          "first_char": "我 们 不 想 毕 业 。",
+          "second_char": "我 们 不 想 毕 业 。",
+          "sim_first": 1.0,
+          "sim_second": 1.0
+        },
+        {
+          "sample_id": "S003572_P0002_T00",
+          "signer_id": "P0002",
+          "reference_char": "面 对 竞 争 , 我 们 不 能 躲 避 。",
+          "first_char": "竞 争 , 我 们 不 能 躲 避 。",
+          "second_char": "竞 争 是 不 可 避 免 的 。",
+          "sim_first": 0.8333,
+          "sim_second": 0.25
+        },
+        {
+          "sample_id": "S003605_P0001_T00",
+          "signer_id": "P0001",
+          "reference_char": "这 孩 子 一 天 到 晚 , 游 手 好 闲 , 真 令 人 操 心 。",
+          "first_char": "这 孩 子 天 赋 格 外 引 人 注 目 。",
+          "second_char": "这 孩 子 一 天 很 快 乐 , 真 让 人 提 心 吊 胆 。",
+          "sim_first": 0.3158,
+          "sim_second": 0.4211
+        },
+        {
+          "sample_id": "S003747_P0001_T00",
+          "signer_id": "P0001",
+          "reference_char": "垃 圾 处 理 问 题 有 关 我 们 每 个 人 的 生 活 。",
+          "first_char": "垃 圾 问 题 和 每 个 人 的 生 活 都 有 着 密 切 的 关 系 。",
+          "second_char": "处 理 垃 圾 问 题 和 我 们 每 个 人 的 生 活 息 息 相 关 。",
+          "sim_first": 0.3,
+          "sim_second": 0.5
+        },
+        {
+          "sample_id": "S003758_P0000_T00",
+          "signer_id": "P0000",
+          "reference_char": "我 在 考 虑 到 底 是 辞 职 还 是 继 续 工 作 。",
+          "first_char": "辞 职 还 是 工 作 , 我 觉 得 很 困 难 。",
+          "second_char": "你 辞 职 之 后 还 要 上 班 吗 ?",
+          "sim_first": 0.0625,
+          "sim_second": 0.0625
+        },
+        {
+          "sample_id": "S003961_P0002_T00",
+          "signer_id": "P0002",
+          "reference_char": "希 望 你 以 后 不 要 再 犯 一 样 的 错 误 。",
+          "first_char": "我 希 望 你 以 后 也 不 记 仇 。",
+          "second_char": "我 希 望 你 未 来 不 要 再 犯 错 误 。",
+          "sim_first": 0.3333,
+          "sim_second": 0.6
+        },
+        {
+          "sample_id": "S003987_P0001_T00",
+          "signer_id": "P0001",
+          "reference_char": "明 天 是 他 的 生 日 , 你 打 算 送 什 么 礼 物 ?",
+          "first_char": "明 天 是 生 日 , 你 打 算 送 什 么 礼 物 ?",
+          "second_char": "明 天 是 生 日 , 你 打 算 送 什 么 礼 物 ?",
+          "sim_first": 0.8824,
+          "sim_second": 0.8824
+        },
+        {
+          "sample_id": "S004029_P0001_T00",
+          "signer_id": "P0001",
+          "reference_char": "青 春 期 是 身 体 成 熟 的 时 期 。",
+          "first_char": "青 春 期 是 身 体 最 成 熟 的 时 期 。",
+          "second_char": "青 春 期 是 身 体 成 熟 的 最 佳 时 期 。",
+          "sim_first": 0.9231,
+          "sim_second": 0.8571
+        },
+        {
+          "sample_id": "S004204_P0003_T00",
+          "signer_id": "P0003",
+          "reference_char": "开 车 要 看 好 前 方 行 驶 , 小 心 驾 驶 。",
+          "first_char": "开 车 时 注 意 安 全 。",
+          "second_char": "开 车 看 车 , 注 意 安 全 。",
+          "sim_first": 0.2,
+          "sim_second": 0.3333
+        },
+        {
+          "sample_id": "S004419_P0008_T00",
+          "signer_id": "P0008",
+          "reference_char": "要 尊 重 客 观 规 律 。",
+          "first_char": "要 尊 重 客 户 的 实 际 情 况 。",
+          "second_char": "要 尊 重 客 观 规 律 。",
+          "sim_first": 0.4545,
+          "sim_second": 1.0
+        },
+        {
+          "sample_id": "S004459_P0003_T00",
+          "signer_id": "P0003",
+          "reference_char": "他 参 加 了 图 书 馆 的 暑 期 活 动 。",
+          "first_char": "他 参 加 图 书 馆 的 暑 假 活 动 。",
+          "second_char": "他 参 加 图 书 馆 的 夏 季 活 动 。",
+          "sim_first": 0.8462,
+          "sim_second": 0.7692
+        },
+        {
+          "sample_id": "S004571_P0000_T00",
+          "signer_id": "P0000",
+          "reference_char": "老 师 为 有 你 们 这 样 的 学 生 而 自 豪 。",
+          "first_char": "老 师 为 有 这 样 的 学 生 而 自 豪 。",
+          "second_char": "老 师 为 有 这 样 的 学 生 而 自 豪 。",
+          "sim_first": 0.8667,
+          "sim_second": 0.8667
+        },
+        {
+          "sample_id": "S004677_P0008_T00",
+          "signer_id": "P0008",
+          "reference_char": "世 界 上 没 有 后 悔 药 。",
+          "first_char": "世 界 上 没 有 后 悔 吃 药 。",
+          "second_char": "世 界 上 没 有 后 悔 吃 药 。",
+          "sim_first": 0.9,
+          "sim_second": 0.9
+        },
+        {
+          "sample_id": "S004752_P0003_T00",
+          "signer_id": "P0003",
+          "reference_char": "请 问 在 哪 里 可 以 买 到 城 市 地 图 ?",
+          "first_char": "请 问 城 市 地 图 在 哪 里 买 ?",
+          "second_char": "请 问 城 市 地 图 在 哪 里 买 的 ?",
+          "sim_first": 0.2143,
+          "sim_second": 0.2143
+        },
+        {
+          "sample_id": "S005011_P0003_T00",
+          "signer_id": "P0003",
+          "reference_char": "战 争 时 候 , 动 摇 军 心 的 人 必 然 要 受 到 处 罚 。",
+          "first_char": "战 时 , 学 习 原 则 很 脆 弱 , 要 严 肃 处 理 。",
+          "second_char": "战 时 , 学 习 纪 律 较 弱 , 要 严 肃 处 理 。",
+          "sim_first": 0.3158,
+          "sim_second": 0.3158
+        },
+        {
+          "sample_id": "S005040_P0006_T00",
+          "signer_id": "P0006",
+          "reference_char": "人 面 对 外 界 的 刺 激 , 精 神 会 做 出 反 应 。",
+          "first_char": "人 往 往 以 刺 激 精 神 反 应 为 代 价 来 做 事 。",
+          "second_char": "每 个 人 都 要 受 到 刺 激 , 精 神 上 的 人 总 是 会 做 出 反 应 。",
+          "sim_first": 0.1765,
+          "sim_second": 0.4783
+        },
+        {
+          "sample_id": "S005112_P0006_T00",
+          "signer_id": "P0006",
+          "reference_char": "心 情 不 好 , 没 有 一 顿 火 锅 是 解 决 不 了 的 , 如 果 还 是 不 行 , 那 就 再 一 顿 火 锅 。",
+          "first_char": "我 心 情 不 好 的 时 候 , 只 吃 火 锅 解 决 , 就 不 能 再 吃 火 锅 。",
+          "second_char": "你 心 情 不 好 , 火 锅 吃 不 消 , 就 不 能 再 吃 火 锅 。",
+          "sim_first": 0.3636,
+          "sim_second": 0.3939
+        },
+        {
+          "sample_id": "S005113_P0003_T00",
+          "signer_id": "P0003",
+          "reference_char": "找 女 朋 友 是 我 现 在 最 大 的 目 标 。",
+          "first_char": "找 女 朋 友 是 我 现 在 最 大 的 标 准 。",
+          "second_char": "找 女 朋 友 是 我 最 大 的 标 准 。",
+          "sim_first": 0.8571,
+          "sim_second": 0.7143
+        },
+        {
+          "sample_id": "S005276_P0009_T00",
+          "signer_id": "P0009",
+          "reference_char": "由 于 采 用 了 新 技 术 , 大 大 降 低 了 钱 财 开 销 。",
+          "first_char": "我 的 新 技 术 已 经 失 效 了 。",
+          "second_char": "我 的 新 技 术 也 差 点 儿 脱 离 了 。",
+          "sim_first": 0.2632,
+          "sim_second": 0.2105
+        },
+        {
+          "sample_id": "S005306_P0009_T00",
+          "signer_id": "P0009",
+          "reference_char": "兼 职 文 员 工 作 对 我 来 说 做 起 来 有 点 难 。",
+          "first_char": "我 做 兼 职 也 很 难 , 语 无 伦 次 。",
+          "second_char": "我 做 兼 职 文 员 可 能 会 很 困 难 。",
+          "sim_first": 0.0588,
+          "sim_second": 0.2353
+        },
+        {
+          "sample_id": "S005354_P0006_T00",
+          "signer_id": "P0006",
+          "reference_char": "李 强 成 功 学 习 的 经 验 值 得 我 们 借 鉴 。",
+          "first_char": "我 们 要 认 真 吸 取 老 师 的 成 功 经 验 。",
+          "second_char": "我 们 借 鉴 老 师 的 成 功 学 习 经 验 。",
+          "sim_first": 0.0625,
+          "sim_second": 0.125
+        },
+        {
+          "sample_id": "S005540_P0006_T00",
+          "signer_id": "P0006",
+          "reference_char": "看 你 那 失 望 的 样 子 , 难 道 高 考 失 败 就 没 有 出 息 了 吗 ?",
+          "first_char": "他 生 气 了 , 差 点 儿 没 考 上 名 牌 大 学 。",
+          "second_char": "他 很 惭 愧 , 觉 得 考 试 没 有 失 败 的 迹 象 。",
+          "sim_first": 0.0435,
+          "sim_second": 0.1304
+        },
+        {
+          "sample_id": "S005607_P0009_T00",
+          "signer_id": "P0009",
+          "reference_char": "医 生 会 给 你 检 查 确 诊 阑 尾 炎 。",
+          "first_char": "医 生 给 她 检 查 了 阑 尾 炎 。",
+          "second_char": "医 生 为 我 们 诊 断 出 阑 尾 炎 。",
+          "sim_first": 0.6923,
+          "sim_second": 0.4615
+        },
+        {
+          "sample_id": "S005664_P0009_T00",
+          "signer_id": "P0009",
+          "reference_char": "这 个 问 题 整 体 和 局 部 的 情 况 出 现 了 问 题 。",
+          "first_char": "这 个 问 题 全 是 存 折 , 暴 露 出 一 些 问 题 。",
+          "second_char": "这 个 问 题 全 是 存 折 , 暴 露 出 问 题 。",
+          "sim_first": 0.4444,
+          "sim_second": 0.4444
+        },
+        {
+          "sample_id": "S005694_P0009_T00",
+          "signer_id": "P0009",
+          "reference_char": "包 装 和 邮 费 在 内 , 价 格 五 元 。",
+          "first_char": "包 装 费 共 计 5 0 0 元 。",
+          "second_char": "包 装 费 共 计 5 0 0 元 。",
+          "sim_first": 0.3846,
+          "sim_second": 0.3846
+        },
+        {
+          "sample_id": "S006078_P0006_T00",
+          "signer_id": "P0006",
+          "reference_char": "定 位 导 航 系 统 为 我 们 的 生 活 带 来 了 便 利 。",
+          "first_char": "定 位 导 航 系 统 , 为 人 们 的 生 活 提 供 了 便 利 。",
+          "second_char": "定 位 导 航 系 统 可 以 为 人 们 的 生 活 提 供 方 便 。",
+          "sim_first": 0.7895,
+          "sim_second": 0.6316
+        },
+        {
+          "sample_id": "S007175_P0007_T00",
+          "signer_id": "P0007",
+          "reference_char": "你 女 儿 的 房 间 很 漂 亮 , 都 是 粉 色 的 。",
+          "first_char": "她 女 儿 的 房 间 很 漂 亮 , 全 是 粉 色 的 。",
+          "second_char": "这 女 儿 的 房 子 很 漂 亮 , 全 是 粉 色 的 。",
+          "sim_first": 0.875,
+          "sim_second": 0.8125
+        },
+        {
+          "sample_id": "S007211_P0007_T00",
+          "signer_id": "P0007",
+          "reference_char": "天 黑 了 , 我 害 怕 。",
+          "first_char": "天 黑 了 , 我 感 到 害 怕 。",
+          "second_char": "天 黑 了 , 我 害 怕 。",
+          "sim_first": 0.8,
+          "sim_second": 1.0
+        }
+      ]
+    }
+  },
+  "hand_frame_stats": {
+    "legacy": {
+      "available": true,
+      "layout": "legacy",
+      "n_samples": 50,
+      "left_frames": {
+        "min": 0,
+        "max": 0,
+        "mean": 0.0,
+        "zero_samples": 50
+      },
+      "right_frames": {
+        "min": 0,
+        "max": 0,
+        "mean": 0.0,
+        "zero_samples": 50
+      },
+      "samples_with_no_hand_frames": 50,
+      "zero_sample_ids": [
+        "S003002_P0000_T00",
+        "S001090_P0000_T00",
+        "S003758_P0000_T00",
+        "S004571_P0000_T00",
+        "S000502_P0000_T00",
+        "S003181_P0001_T00",
+        "S003605_P0001_T00",
+        "S004029_P0001_T00",
+        "S003987_P0001_T00",
+        "S003747_P0001_T00",
+        "S003961_P0002_T00",
+        "S002951_P0002_T00",
+        "S003518_P0002_T00",
+        "S003572_P0002_T00",
+        "S003256_P0002_T00",
+        "S004204_P0003_T00",
+        "S005113_P0003_T00",
+        "S005011_P0003_T00",
+        "S004459_P0003_T00",
+        "S004752_P0003_T00"
+      ]
+    },
+    "corrected": {
+      "available": true,
+      "layout": "squeeze",
+      "n_samples": 50,
+      "left_frames": {
+        "min": 1,
+        "max": 18,
+        "mean": 10.32,
+        "zero_samples": 0
+      },
+      "right_frames": {
+        "min": 5,
+        "max": 17,
+        "mean": 11.66,
+        "zero_samples": 0
+      },
+      "samples_with_no_hand_frames": 0,
+      "zero_sample_ids": []
+    }
+  },
+  "fusion_gate_audit": {
+    "available": true,
+    "checkpoint": "models\\external\\uni_sign\\csl_daily_rgb_pose_slt.pth",
+    "checkpoint_sha256": "c2ba5d7ae32f3fa40f7c6807b5004042be81fca192abe7d8ed7182c0d13470f6",
+    "fusion_gate_keys": [
+      "fusion_gate.0.bias",
+      "fusion_gate.0.weight",
+      "fusion_gate.2.bias",
+      "fusion_gate.2.weight"
+    ],
+    "entries": {
+      "fusion_gate.0.bias": {
+        "shape": [
+          256
+        ],
+        "nonzero": 0,
+        "absmax": 0.0
+      },
+      "fusion_gate.0.weight": {
+        "shape": [
+          256,
+          512,
+          1
+        ],
+        "nonzero": 0,
+        "absmax": 0.0
+      },
+      "fusion_gate.2.bias": {
+        "shape": [
+          1
+        ],
+        "nonzero": 0,
+        "absmax": 0.0
+      },
+      "fusion_gate.2.weight": {
+        "shape": [
+          1,
+          256,
+          1
+        ],
+        "nonzero": 0,
+        "absmax": 0.0
+      }
+    },
+    "all_zero": true,
+    "implication": "fusion_gate all-zero -> gate_score=0 -> fused_post = 0*fused + 1*pose; the RGB branch cannot change the model output",
+    "upstream_init": "models/external/uni_sign_source/models.py zero-initialises fusion_gate Conv1d weights/biases"
+  },
+  "text_identical_legacy_vs_corrected": true,
+  "gt_eval_only": {
+    "path": "experiments\\p1\\references\\gt_1086.csv",
+    "eval_only": true
+  }
+}
