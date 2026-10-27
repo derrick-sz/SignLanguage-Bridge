@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "run_id": "slrt-frame-cache-validate-20261027T125624Z",
+  "experiment": "E04-validate-slrt-frame-cache",
+  "run_status": "PASS",
+  "created_at": "2026-10-27T04:56:25+00:00",
+  "purpose": "production SLRT frame-cache validation: cached vs batched prepare path, Gloss/WER must be identical, e2e improvement expected ~16-18%",
+  "code": {
+    "repository": "SignLanguage-Bridge",
+    "git_sha": "bbfb088881303eeed661e82bb9f89e61628460ae",
+    "branch": "codex/model-contract-auto-captions",
+    "dirty_tree": true,
+    "dirty_path_count": 15
+  },
+  "host": {
+    "host_alias": "PC-HPVYVOTACGSS",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "cpu": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+    "cpu_count": 20,
+    "memory_total_gb": 31.84
+  },
+  "gpu_baseline": {
+    "sampled_at": "2026-10-27T04:56:24+00:00",
+    "devices": [
+      {
+        "index": 0,
+        "name": "NVIDIA GeForce RTX 5060 Ti",
+        "driver_version": "616.92",
+        "memory_total_mb": 16311.0,
+        "memory_used_mb": 1981.0,
+        "memory_free_mb": 14070.0,
+        "utilization_gpu_pct": 5.0
+      }
+    ]
+  },
+  "privacy": {
+    "no_gt_in_perf_artifacts": true,
+    "no_raw_media_export": true,
+    "no_credentials_in_logs": true
+  },
+  "model_assets": {
+    "unisign": {
+      "bundle": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\model_bundle",
+      "bundle_manifest_sha256": "462ea712c73ba0b0c7a91a4c6d5e596e8ff5bd58854dca53f8c73e03b8cdba7e",
+      "checkpoint": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\csl_daily_pose_only_slt.pth",
+      "checkpoint_bytes": 1186925112,
+      "checkpoint_sha256_declared": "73bea87a9603f719b4f4a481a3a1a5ed24e7e5f7b81afd14ef498c40469c1a6c",
+      "source_commit": "eed438bcb49e30405cd6ccdfcccca330c134e830",
+      "model_revision": "182913ca7a8b7dd9837d7d6f10717353f4408f80",
+      "max_frames": 256,
+      "num_beams": 4,
+      "license": "CC-BY-NC-4.0"
+    },
+    "slrt": {
+      "config": "E:\\githubproject\\SignLanguage-Bridge\\configs\\slrt-csl-hrnet-npz.example.json",
+      "config_sha256": "a9600cc3e5c44931623c0ad9e87818ca5111d976e83d219861c23ddd3b16deb9",
+      "checkpoint": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\EMNLP24_Online\\CSL-Daily\\ckpts\\cslr_best.ckpt",
+      "checkpoint_bytes": 499554423,
+      "checkpoint_sha256_declared": "e9fdd3a66d9667e7685c2b1437c67b8cbc9e45d2562730f04c0226717b7cbd4d",
+      "vocabulary": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\EMNLP24_Online\\CSL-Daily\\meta\\csl_iso_with_blank.vocab",
+      "window_size": 16,
+      "stride": 1,
+      "vote_size": 7
+    }
+  },
+  "environment": {
+    "python": "3.10.22",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "host_alias": "PC-HPVYVOTACGSS",
+    "cpu_count": 20,
+    "torch": "2.9.1+cu128",
+    "cuda_available": true,
+    "cuda_version": "12.8",
+    "gpu_name": "NVIDIA GeForce RTX 5060 Ti",
+    "gpu_total_vram_mb": 16283.4,
+    "gpu_capability": "12.0"
+  },
+  "samples": [
+    "S000502_P0000_T00",
+    "S003181_P0001_T00",
+    "S002951_P0002_T00",
+    "S004204_P0003_T00",
+    "S000414_P0004_T00",
+    "S001656_P0005_T00",
+    "S005040_P0006_T00",
+    "S002092_P0007_T00"
+  ],
+  "signers": [
+    "P0000",
+    "P0001",
+    "P0002",
+    "P0003",
+    "P0004",
+    "P0005",
+    "P0006",
+    "P0007"
+  ],
+  "gt_usage": "EVAL-ONLY gt_1086 gt_gloss joined after inference for corpus WER",
+  "commands": [
+    "E:\\githubproject\\SignLanguage-Bridge\\.conda-env\\python.exe experiments\\p1\\e04\\validate_slrt_frame_cache.py run --run-dir experiments/p1/e04/opt-runs/slrt-frame-cache-validate-20261027T1258Z --samples 8 --max-foreign-vram-mb 4500"
+  ],
+  "finished_at": "2026-10-27T04:58:04+00:00",
+  "output_files": [
+    "manifest.json",
+    "metrics.json",
+    "predictions-batched.jsonl",
+    "predictions-cached.jsonl"
+  ]
+}

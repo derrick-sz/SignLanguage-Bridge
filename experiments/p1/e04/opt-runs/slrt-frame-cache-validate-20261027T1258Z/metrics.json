@@ -1,0 +1,144 @@
+{
+  "schema_version": 1,
+  "run_id": "slrt-frame-cache-validate-20261027T125624Z",
+  "created_at": "2026-10-27T04:58:04+00:00",
+  "samples": 8,
+  "cached": {
+    "arm": "cached",
+    "frame_cache_enabled": true,
+    "load_seconds": 1.07,
+    "attempted": 8,
+    "successful": 8,
+    "failed": 0,
+    "wer": {
+      "n": 8,
+      "wer": 0.30189,
+      "substitutions": 11,
+      "insertions": 1,
+      "deletions": 4,
+      "reference_tokens": 53,
+      "correct_tokens": 37
+    },
+    "e2e_wall_ms": {
+      "p50": 5463.5555,
+      "p95": 6847.66705,
+      "mean": 5472.24,
+      "count": 8
+    },
+    "sum_preprocess_ms": {
+      "p50": 436.078,
+      "p95": 1423.4503999999993,
+      "mean": 611.24,
+      "count": 8
+    },
+    "sum_inference_ms": {
+      "p50": 2581.001,
+      "p95": 2857.71025,
+      "mean": 2488.01,
+      "count": 8
+    },
+    "sum_window_total_ms": {
+      "p50": 3027.904,
+      "p95": 4165.594149999999,
+      "mean": 3109.91,
+      "count": 8
+    },
+    "windows_processed": {
+      "p50": 117.0,
+      "p95": 137.95,
+      "mean": 118.0,
+      "count": 8
+    },
+    "cache_final": {
+      "enabled": true,
+      "limit": 128,
+      "size": 120,
+      "hits": 14132,
+      "misses": 972
+    }
+  },
+  "batched": {
+    "arm": "batched",
+    "frame_cache_enabled": false,
+    "load_seconds": 0.87,
+    "attempted": 8,
+    "successful": 8,
+    "failed": 0,
+    "wer": {
+      "n": 8,
+      "wer": 0.30189,
+      "substitutions": 11,
+      "insertions": 1,
+      "deletions": 4,
+      "reference_tokens": 53,
+      "correct_tokens": 37
+    },
+    "e2e_wall_ms": {
+      "p50": 6496.9515,
+      "p95": 7755.3074,
+      "mean": 6479.66,
+      "count": 8
+    },
+    "sum_preprocess_ms": {
+      "p50": 1496.43,
+      "p95": 1763.20905,
+      "mean": 1508.46,
+      "count": 8
+    },
+    "sum_inference_ms": {
+      "p50": 2461.145,
+      "p95": 2886.5109,
+      "mean": 2476.84,
+      "count": 8
+    },
+    "sum_window_total_ms": {
+      "p50": 3968.59,
+      "p95": 4663.3102,
+      "mean": 3996.3,
+      "count": 8
+    },
+    "windows_processed": {
+      "p50": 117.0,
+      "p95": 137.95,
+      "mean": 118.0,
+      "count": 8
+    },
+    "cache_final": {
+      "enabled": false,
+      "limit": 0,
+      "size": 0,
+      "hits": 0,
+      "misses": 0
+    }
+  },
+  "comparison": {
+    "shared_samples": 8,
+    "identical_gloss_sequences": 8,
+    "gloss_equality": "8/8",
+    "wer_cached": 0.30189,
+    "wer_batched": 0.30189,
+    "wer_delta": 0.0,
+    "e2e_p50_cached_ms": 5463.5555,
+    "e2e_p50_batched_ms": 6496.9515,
+    "e2e_p50_speedup": 1.189,
+    "e2e_p50_reduction_pct": 15.91,
+    "e2e_p95_cached_ms": 6847.66705,
+    "e2e_p95_batched_ms": 7755.3074,
+    "sum_preprocess_ms_p50_cached": 436.078,
+    "sum_preprocess_ms_p50_batched": 1496.43
+  },
+  "gpu_baseline": {
+    "sampled_at": "2026-10-27T04:56:24+00:00",
+    "devices": [
+      {
+        "index": 0,
+        "name": "NVIDIA GeForce RTX 5060 Ti",
+        "driver_version": "616.92",
+        "memory_total_mb": 16311.0,
+        "memory_used_mb": 1981.0,
+        "memory_free_mb": 14070.0,
+        "utilization_gpu_pct": 5.0
+      }
+    ]
+  }
+}

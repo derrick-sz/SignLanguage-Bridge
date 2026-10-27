@@ -10,7 +10,13 @@ from pathlib import Path
 CHECKPOINT_SHA256 = 'e9fdd3a66d9667e7685c2b1437c67b8cbc9e45d2562730f04c0226717b7cbd4d'
 VOCAB_SHA256 = '0c4984f0dd3e7897b8c8d9e6e99a848b60814a5d9cf7a49baf7cc9b9cd124c76'
 BACKEND_ID = 'slrt_online_csl'
-PROTOCOL = 'slrt-csl-rgb320-crop270-hm170-sigma8-v1'
+# v2: frame-level RGB+heatmap cache inside the batch preparation path.  The
+# numeric protocol is unchanged (each frame is prepared by the same code); the
+# identity is bumped so runs/caches recorded under v1 are never mixed with the
+# new execution path.  tests/test_slrt_frame_cache.py proves bit-identical
+# tensors and identical Gloss.
+PROTOCOL = 'slrt-csl-rgb320-crop270-hm170-sigma8-v2'
+PROTOCOL_V1 = 'slrt-csl-rgb320-crop270-hm170-sigma8-v1'
 
 
 class SLRTResourceError(ValueError):

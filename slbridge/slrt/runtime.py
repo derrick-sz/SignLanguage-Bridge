@@ -6,13 +6,19 @@ import sys
 from time import perf_counter
 
 from .assets import SLRTConfig, SLRTResourceError, load_vocabulary, require_file
+from .preprocess import FramePreparationCache
 
 
 class SLRTRuntime:
-    def __init__(self, config: SLRTConfig):
+    def __init__(self, config: SLRTConfig, *, frame_cache_enabled: bool = True):
+        if not isinstance(frame_cache_enabled, bool):
+            raise ValueError('frame_cache_enabled must be a boolean')
         started = perf_counter()
         self.config = config
         self._closed = False
+        # Optional per-frame preparation cache (stride < window removes ~16x
+        # duplicate work); values are bit-identical to the batched path.
+        self._frame_cache = FramePreparationCache() if frame_cache_enabled else None
         require_file(config.checkpoint_path, 'SLRT checkpoint', config.checkpoint_sha256)
         require_file(config.vocabulary_path, 'SLRT vocabulary', config.vocabulary_sha256)
         self.vocabulary = load_vocabulary(config.vocabulary_path)
@@ -63,6 +69,17 @@ class SLRTRuntime:
         if self.device == 'cuda':
             self.torch.cuda.synchronize(self.config.device_id)
 
+    @property
+    def frame_cache_info(self) -> dict:
+        """Cache counters for diagnostics; not part of the textual result contract."""
+        if self._frame_cache is None:
+            return dict(enabled=False, limit=0, size=0, hits=0, misses=0)
+        return self._frame_cache.info()
+
+    def clear_frame_cache(self) -> None:
+        if self._frame_cache is not None:
+            self._frame_cache.clear()
+
     def predict(self, bgr, keypoints):
         from .preprocess import prepare_inputs
         if self._closed:
@@ -70,7 +87,10 @@ class SLRTRuntime:
         self.synchronize()
         start = perf_counter()
         with self.torch.inference_mode():
-            rgb, hm = prepare_inputs(bgr, keypoints, device=self.torch_device)
+            if self._frame_cache is not None:
+                rgb, hm = self._frame_cache.prepare(bgr, keypoints, device=self.torch_device)
+            else:
+                rgb, hm = prepare_inputs(bgr, keypoints, device=self.torch_device)
             self.synchronize()
             preprocessed = perf_counter()
             probabilities = self.model(rgb, hm)
@@ -86,6 +106,7 @@ class SLRTRuntime:
             return
         self._closed = True
         self.model = None
+        self._frame_cache = None
         gc.collect()
         if self.device == 'cuda':
             self.torch.cuda.empty_cache()

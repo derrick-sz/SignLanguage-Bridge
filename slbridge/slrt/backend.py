@@ -62,15 +62,19 @@ def video_packets(path, *, cancellation=None, metadata=None):
 
 
 class SLRTBackend:
-    def __init__(self,config):
+    def __init__(self, config, *, frame_cache_enabled: bool = True):
         self.config = config
-        self.runtime = SLRTRuntime(config)
+        self.runtime = SLRTRuntime(config, frame_cache_enabled=frame_cache_enabled)
         self._lock = threading.RLock()
         self._closed = False
 
     def new_stream(self,*,pose_npz=None,video_path=None,event_sink=None,window_sink=None):
         if self._closed:
             raise RuntimeError('SLRT backend is closed')
+        # Each stream is one clip/source: drop prepared-frame tensors from the
+        # previous clip before starting.  (Within a stream the cache removes the
+        # stride=1 duplicate work; values are bit-identical to the batched path.)
+        self.runtime.clear_frame_cache()
         frontend = make_frontend(self.config,pose_npz=pose_npz,video_path=video_path)
         return SLRTStream(self.runtime,frontend,self.config,event_sink=event_sink,window_sink=window_sink)
 
