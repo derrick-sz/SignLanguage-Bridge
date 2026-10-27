@@ -30,7 +30,7 @@
 | # | 任务 | 现状 | 交付 |
 |---|---|---|---|
 | 0 | Git 冻结 | ✅ 本次完成 | 可复现稳定版本 |
-| 1 | SLRT CSL-Daily G2T/SLT | **BLOCKED（外部）**：作者未发布 CSL-Daily G2T 权重与作者剪枝 mBART_zh（E00 实测确认；本地仅有 Phoenix SLT、SingleStream s2t、full-vocab fallback，均未接入） | SLRT 中文翻译基线（B） |
+| 1 | SLRT CSL-Daily G2T/SLT | **BLOCKED（外部，2026-10-27 实网复核）**：`g2t_asset_tracker.md` 逐项实测——CSL-Daily G2T 从未发布（issue #17 无回复、#54 0 回复）；官方 9 个 SharePoint 链接全部 404；作者 2026-08 Drive 替换包只有 `ckpts.zip/data.zip/EMNLP24_Online.zip/mBart_de_t2g.zip/mBart_zh_t2g.zip/TA.zip`，**无 G2T/SLT**；HF 无可追溯转载；仓库 `license=null`。**FOUND 但非 B 所需**：CSL-Daily SingleStream-S2T（video→sentence，本地 `F:\model_weigth\ckpts\TwoStreamSLT\SingleStream\csl-daily_s2t\ckpts\best.ckpt`，SHA256 b6bdf7c2…）——它是独立句子翻译路径，值得做一次可行性评估（不等同 G2T） | SLRT 中文翻译基线（B）或 S2T 替代基线 |
 | 2 | Uni-Sign + SLRT + LLM 融合消融 | harness 已建（`experiments/p1/e02/llm_fusion/`，stub 验证通过）；**等 LLM 端点选择**（§2.3） | 统一任务消融结果 |
 | 3 | 人工关键语义评审 | 协议 + Round-1 评审表（A/A2/B0）生成中；**需要用户本人评审** | 纠错率/误改率/严重错误率 |
 | 4 | 预处理优化对照 | 排队（阶段 4） | 优化前后质量与延迟 |
