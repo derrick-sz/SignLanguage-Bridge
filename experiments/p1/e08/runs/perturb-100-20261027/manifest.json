@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "run_id": "perturb-100-20261027",
+  "created_at": "2026-10-27T12:41:05.313981+00:00",
+  "experiment": "E08-pose-perturbation-robustness",
+  "bundle": "E:\\githubproject\\SignLanguage-Bridge\\configs\\bundles\\unisign_stage2_pose",
+  "checkpoint_sha256": "951601a39fbbe19f633e0df9690df432056b4286609f75a3ee723c8f001fc2e3",
+  "source_commit": "eed438bcb49e30405cd6ccdfcccca330c134e830",
+  "samples": 100,
+  "conditions": [
+    "baseline",
+    "speed_x1.25",
+    "speed_x0.80",
+    "dropout_10",
+    "dropout_25",
+    "jitter_0.002",
+    "jitter_0.005",
+    "jitter_0.01",
+    "jitter_0.03",
+    "hand_conf_dropout_30"
+  ],
+  "seed": 20261027,
+  "max_frames": 256,
+  "num_beams": 4,
+  "max_new_tokens": 100,
+  "device": "cuda",
+  "dtype": "auto",
+  "load_seconds": 9.207,
+  "notes": [
+    "pose perturbation only (no new training data available); reference text used for offline scoring only (EVAL ONLY)"
+  ]
+}
