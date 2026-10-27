@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "analysis_id": "p1-e07-semantic-coverage-v1",
-  "created_at_utc": "2026-10-27T09:31:38Z",
+  "created_at_utc": "2026-10-27T09:35:01Z",
   "metric_definition_version": "p1-v1",
   "device": "cpu",
   "trained_anything": false,
@@ -431,7 +431,6 @@
         "格外",
         "过于",
         "越",
-        "差不多",
         "极了"
       ],
       "regex": [],
@@ -530,7 +529,6 @@
       "test_share": 0.15193,
       "test_mean_ref_len": 17.65,
       "train_test_share_ratio": 1.051,
-      "test_mean_ref_len_official_same": true,
       "s2_mean_edit": 0.422,
       "s2_median_edit": 0.381,
       "s2_std_edit": 0.226,
@@ -589,7 +587,6 @@
       "test_share": 0.26888,
       "test_mean_ref_len": 17.73,
       "train_test_share_ratio": 1.077,
-      "test_mean_ref_len_official_same": true,
       "s2_mean_edit": 0.4043,
       "s2_median_edit": 0.375,
       "s2_std_edit": 0.2168,
@@ -648,7 +645,6 @@
       "test_share": 0.56906,
       "test_mean_ref_len": 16.35,
       "train_test_share_ratio": 1.032,
-      "test_mean_ref_len_official_same": true,
       "s2_mean_edit": 0.451,
       "s2_median_edit": 0.4286,
       "s2_std_edit": 0.2359,
@@ -707,7 +703,6 @@
       "test_share": 0.11602,
       "test_mean_ref_len": 15.67,
       "train_test_share_ratio": 1.064,
-      "test_mean_ref_len_official_same": true,
       "s2_mean_edit": 0.4964,
       "s2_median_edit": 0.5,
       "s2_std_edit": 0.254,
@@ -766,7 +761,6 @@
       "test_share": 0.07735,
       "test_mean_ref_len": 17.36,
       "train_test_share_ratio": 1.13,
-      "test_mean_ref_len_official_same": true,
       "s2_mean_edit": 0.501,
       "s2_median_edit": 0.5,
       "s2_std_edit": 0.2183,
@@ -827,7 +821,6 @@
       "test_share": 0.49355,
       "test_mean_ref_len": 17.11,
       "train_test_share_ratio": 1.004,
-      "test_mean_ref_len_official_same": true,
       "s2_mean_edit": 0.4457,
       "s2_median_edit": 0.4286,
       "s2_std_edit": 0.2263,
@@ -886,7 +879,6 @@
       "test_share": 0.20718,
       "test_mean_ref_len": 16.09,
       "train_test_share_ratio": 1.089,
-      "test_mean_ref_len_official_same": true,
       "s2_mean_edit": 0.5005,
       "s2_median_edit": 0.5,
       "s2_std_edit": 0.2547,
@@ -945,7 +937,6 @@
       "test_share": 0.15746,
       "test_mean_ref_len": 17.76,
       "train_test_share_ratio": 1.046,
-      "test_mean_ref_len_official_same": true,
       "s2_mean_edit": 0.4674,
       "s2_median_edit": 0.4545,
       "s2_std_edit": 0.2255,
@@ -1004,7 +995,6 @@
       "test_share": 0.10773,
       "test_mean_ref_len": 15.63,
       "train_test_share_ratio": 1.03,
-      "test_mean_ref_len_official_same": true,
       "s2_mean_edit": 0.4713,
       "s2_median_edit": 0.4545,
       "s2_std_edit": 0.2456,
@@ -1066,7 +1056,6 @@
       "test_share": 0.1418,
       "test_mean_ref_len": 16.16,
       "train_test_share_ratio": 0.808,
-      "test_mean_ref_len_official_same": true,
       "s2_mean_edit": 0.4738,
       "s2_median_edit": 0.4545,
       "s2_std_edit": 0.2414,
@@ -1125,7 +1114,6 @@
       "test_share": 0.2081,
       "test_mean_ref_len": 16.16,
       "train_test_share_ratio": 0.956,
-      "test_mean_ref_len_official_same": true,
       "s2_mean_edit": 0.4319,
       "s2_median_edit": 0.4174,
       "s2_std_edit": 0.2143,
@@ -1184,7 +1172,6 @@
       "test_share": 0.1105,
       "test_mean_ref_len": 18.98,
       "train_test_share_ratio": 1.19,
-      "test_mean_ref_len_official_same": true,
       "s2_mean_edit": 0.3835,
       "s2_median_edit": 0.378,
       "s2_std_edit": 0.1734,
@@ -1232,7 +1219,7 @@
       "is_weak": true,
       "length_adjusted_weak": true,
       "verdict": "model_or_method",
-      "verdict_note": "n_train=2419（13.1% 训练占比），词项级数据缺口只覆盖 2% 的测试样本 —— 数据量不解释其弱势。另一个事实：该类测试句均长 19.0 字（整体均值 16.2 字），长度校正后残差 -0.020，**仍低于**同长度预期，属真正的语义性弱。",
+      "verdict_note": "n_train=2,419（13.1% 训练占比），词项级数据缺口只覆盖 2% 的测试样本 —— 数据量不解释其弱势。另一个事实：该类测试句均长 19.0 字（整体均值 16.2 字），长度校正后残差 -0.020，**略低于**同长度预期（残差恰好压在阈值边界上），语义层面的弱有信号但量级很小。",
       "weak_rank": 1
     }
   ],
@@ -1252,7 +1239,7 @@
       "data_gap_share": 0.025,
       "is_formally_weak": true,
       "verdict": "model_or_method",
-      "verdict_note": "n_train=2419（13.1% 训练占比），词项级数据缺口只覆盖 2% 的测试样本 —— 数据量不解释其弱势。另一个事实：该类测试句均长 19.0 字（整体均值 16.2 字），长度校正后残差 -0.020，**仍低于**同长度预期，属真正的语义性弱。"
+      "verdict_note": "n_train=2,419（13.1% 训练占比），词项级数据缺口只覆盖 2% 的测试样本 —— 数据量不解释其弱势。另一个事实：该类测试句均长 19.0 字（整体均值 16.2 字），长度校正后残差 -0.020，**略低于**同长度预期（残差恰好压在阈值边界上），语义层面的弱有信号但量级很小。"
     },
     {
       "rank": 2,
@@ -1335,7 +1322,7 @@
       "s2_exact_rate": 0.0,
       "delta_edit_vs_a2": -0.0104,
       "verdict": "model_or_method",
-      "verdict_note": "n_train=2419（13.1% 训练占比），词项级数据缺口只覆盖 2% 的测试样本 —— 数据量不解释其弱势。另一个事实：该类测试句均长 19.0 字（整体均值 16.2 字），长度校正后残差 -0.020，**仍低于**同长度预期，属真正的语义性弱。",
+      "verdict_note": "n_train=2,419（13.1% 训练占比），词项级数据缺口只覆盖 2% 的测试样本 —— 数据量不解释其弱势。另一个事实：该类测试句均长 19.0 字（整体均值 16.2 字），长度校正后残差 -0.020，**略低于**同长度预期（残差恰好压在阈值边界上），语义层面的弱有信号但量级很小。",
       "length_adjusted_residual": -0.02,
       "length_adjusted_weak": true,
       "data_gap_share": 0.025
@@ -1345,26 +1332,25 @@
     "count_weak": 1,
     "count_length_adjusted_weak": 1,
     "count_data_insufficient": 0,
-    "count_model_or_method": 1,
-    "trained_on_test_overlap": 0
+    "count_model_or_method": 1
   },
   "frequency_evidence": {
     "keyword_level": {
       "n_units": 135,
-      "pearson_log10_train_vs_edit": -0.0855,
-      "spearman_log10_train_vs_edit": -0.0364
+      "pearson_log10_train_vs_edit": -0.0771,
+      "spearman_log10_train_vs_edit": -0.0248
     },
     "keyword_quintiles": [
       {
         "quintile": 1,
         "n_train_range": [
           31,
-          101
+          99
         ],
         "n_units": 27,
         "n_test_samples_covered": 190,
-        "mean_edit": 0.4737,
-        "mean_ref_len": 16.73
+        "mean_edit": 0.4631,
+        "mean_ref_len": 16.77
       },
       {
         "quintile": 2,
@@ -1373,9 +1359,9 @@
           156
         ],
         "n_units": 27,
-        "n_test_samples_covered": 243,
-        "mean_edit": 0.4698,
-        "mean_ref_len": 16.53
+        "n_test_samples_covered": 238,
+        "mean_edit": 0.4804,
+        "mean_ref_len": 16.49
       },
       {
         "quintile": 3,
@@ -1428,7 +1414,8 @@
     "category_level": {
       "n_categories": 12,
       "pearson_log10_ntrain_vs_edit": -0.2781,
-      "spearman_log10_ntrain_vs_edit": -0.4336
+      "spearman_log10_ntrain_vs_edit": -0.4336,
+      "spearman_log10_ntrain_vs_length_residual": -0.3916
     }
   },
   "coverage": {
@@ -1442,6 +1429,13 @@
     "test_samples_with_gloss_oov": 0,
     "gloss_oov_token_types": 0,
     "gloss_oov_tokens_eval_only": [],
+    "bigram_novelty_robustness": {
+      "unseen_bigram_tokens_total": 3755,
+      "unseen_bigrams_touching_punctuation": 199,
+      "unseen_bigrams_punctuation_share": 0.053,
+      "cjk_only_bigram_coverage_mean": 0.7376,
+      "note": "测试参考与训练文本的标点不同（全角/半角），此项检验「未见二元组」是否只是标点差异"
+    },
     "bands": {
       "char_coverage": [
         {
@@ -7317,10 +7311,10 @@
       "category_id": "comparison_degree",
       "category_label": "比较/程度",
       "unit": "差不多",
-      "n_train": 126,
-      "train_share": 0.00685,
-      "n_test": 10,
-      "test_share": 0.00921,
+      "n_train": 63,
+      "train_share": 0.00342,
+      "n_test": 5,
+      "test_share": 0.0046,
       "s2_mean_edit": 0.2992,
       "a2_mean_edit": 0.3238,
       "delta_edit_vs_a2": -0.0246,
@@ -21560,10 +21554,12 @@
   ],
   "limitations": [
     "类别为多标签关键词匹配，非互斥；一个句子可同时落在多类，类别指标之间不可相加。",
-    "词表由人工按 CSL-Daily 日常域语料设计，长尾/低频词的召回不完整（例如未收录方言或极低频称谓）。",
+    "词表由人工按 CSL-Daily 日常域语料设计：24 个词表项在 train/test 都是 0 命中（语料不用这些词），另有极低频邻域词可能未被收录，故类别召回不完整。",
     "错误类型为字符级 Levenshtein 回溯（替换/删除/插入），与「语义级漏译/多译」只近似对应。",
-    "A2 与 S2 共用同一 1086 测试集与同一参考，Δedit 为配对比较，但两者不是同一次运行的超参扫描。",
-    "长度校正使用全体测试样本的长度分箱均值，只能消掉线性/分箱级长度效应。",
-    "n_train 统计的是「含该类关键词的训练句子数」，不等于「该类语义的训练覆盖量」。"
+    "A2 与 S2 共用同一 1086 测试集与同一参考，Δedit 为配对比较；两者不是同一次运行的超参扫描。",
+    "长度校正使用全体测试样本的长度分箱均值，只能消掉分箱级长度效应，不是连续变量的回归校正。",
+    "n_train 统计的是「含该类关键词的训练句子数」，不等于「该类语义的训练覆盖量」。",
+    "类别级相关系数只有 12 个点，符号可读但不宜当显著性结论；词项级 135 个点更可靠。",
+    "bigram 覆盖率衡量「字面搭配是否在训练集出现过」，它会同时反映句式常见度与难度，不能单独解释为「数据缺口」的因果证据。"
   ]
 }

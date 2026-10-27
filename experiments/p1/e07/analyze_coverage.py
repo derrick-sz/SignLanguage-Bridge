@@ -203,7 +203,7 @@ CATEGORIES: list[dict[str, Any]] = [
         "label": "比较/程度",
         "keywords": ["比", "比较", "更", "最", "太", "很", "非常", "特别", "一样", "不如",
                      "差不多", "越来越", "有点", "挺", "十分", "相当", "格外", "过于", "越",
-                     "差不多", "极了"],
+                     "极了"],
         "regex": [],
         "rationale": "比较结构（比/像/不如/一样）+ 程度副词（很/非常/最/太）",
     },
@@ -577,7 +577,6 @@ def analyse(check_only: bool = False) -> dict[str, Any]:
                       if gap_keywords and set(test_hits[s][cid]) & set(gap_keywords)]
 
         entry.update({
-            "test_mean_ref_len_official_same": True,
             "s2_mean_edit": round(statistics.fmean(s2_edits), 4),
             "s2_median_edit": round(statistics.median(s2_edits), 4),
             "s2_std_edit": round(statistics.pstdev(s2_edits), 4),
@@ -643,19 +642,20 @@ def analyse(check_only: bool = False) -> dict[str, Any]:
             continue
         if entry["n_train"] < DATA_SHORT_TRAIN:
             verdict = "data_insufficient"
-            note = f"n_train={entry['n_train']} < {DATA_SHORT_TRAIN}：该类训练样本本身就少"
+            note = f"n_train={entry['n_train']:,} < {DATA_SHORT_TRAIN}：该类训练样本本身就少"
         elif entry["data_gap_share"] >= DATA_GAP_SHARE:
             verdict = "data_insufficient"
             note = (f"n_train={entry['n_train']} 看似充足，但 {entry['data_gap_share']*100:.0f}% 的测试样本"
                     f"由长尾关键词驱动（train<{GAP_KW_TRAIN} 次）：数据缺口在词项级而非类别级")
         else:
             verdict = "model_or_method"
-            note = (f"n_train={entry['n_train']}（{entry['train_share']*100:.1f}% 训练占比），"
+            note = (f"n_train={entry['n_train']:,}（{entry['train_share']*100:.1f}% 训练占比），"
                     f"词项级数据缺口只覆盖 {entry['data_gap_share']*100:.0f}% 的测试样本 —— 数据量不解释其弱势。"
                     f"另一个事实：该类测试句均长 {entry['test_mean_ref_len']:.1f} 字（整体均值 "
                     f"{statistics.fmean(list(ref_len.values())):.1f} 字），长度校正后残差 "
                     f"{entry['length_adjusted']['residual_s2']:+.3f}，"
-                    + ("**仍低于**同长度预期，属真正的语义性弱。" if entry["length_adjusted_weak"]
+                    + ("**略低于**同长度预期（残差恰好压在阈值边界上），"
+                       "语义层面的弱有信号但量级很小。" if entry["length_adjusted_weak"]
                        else "**基本回到同长度预期**，即弱势主要来自句长而非语义。"))
         entry["verdict"] = verdict
         entry["verdict_note"] = note
@@ -740,12 +740,15 @@ def analyse(check_only: bool = False) -> dict[str, Any]:
         freq_bins_short = []
 
     # category-count vs category quality (does more training data buy better edits?)
-    cat_freq = [math.log10(entry["n_train"]) for entry in categories if "s2_mean_edit" in entry]
-    cat_edit = [entry["s2_mean_edit"] for entry in categories if "s2_mean_edit" in entry]
+    cat_entries = [entry for entry in categories if "s2_mean_edit" in entry]
+    cat_freq = [math.log10(entry["n_train"]) for entry in cat_entries]
+    cat_edit = [entry["s2_mean_edit"] for entry in cat_entries]
     category_scatter = {
         "n_categories": len(cat_freq),
         "pearson_log10_ntrain_vs_edit": round(pearson(cat_freq, cat_edit), 4),
         "spearman_log10_ntrain_vs_edit": round(spearman(cat_freq, cat_edit), 4),
+        "spearman_log10_ntrain_vs_length_residual": round(spearman(
+            cat_freq, [entry["length_adjusted"]["residual_s2"] for entry in cat_entries]), 4),
     }
 
     # coverage at lexical granularity ---------------------------------------
@@ -1029,7 +1032,6 @@ def analyse(check_only: bool = False) -> dict[str, Any]:
             "count_length_adjusted_weak": sum(1 for e in weak_sorted if e["length_adjusted_weak"]),
             "count_data_insufficient": sum(1 for e in weak_sorted if e["verdict"] == "data_insufficient"),
             "count_model_or_method": sum(1 for e in weak_sorted if e["verdict"] == "model_or_method"),
-            "trained_on_test_overlap": 0,
         },
         "frequency_evidence": {
             "keyword_level": keyword_scatter,
@@ -1060,11 +1062,15 @@ def analyse(check_only: bool = False) -> dict[str, Any]:
         "per_sample": per_sample,
         "limitations": [
             "类别为多标签关键词匹配，非互斥；一个句子可同时落在多类，类别指标之间不可相加。",
-            "词表由人工按 CSL-Daily 日常域语料设计，长尾/低频词的召回不完整（例如未收录方言或极低频称谓）。",
+            "词表由人工按 CSL-Daily 日常域语料设计：24 个词表项在 train/test 都是 0 命中（语料不用这些词），"
+            "另有极低频邻域词可能未被收录，故类别召回不完整。",
             "错误类型为字符级 Levenshtein 回溯（替换/删除/插入），与「语义级漏译/多译」只近似对应。",
-            "A2 与 S2 共用同一 1086 测试集与同一参考，Δedit 为配对比较，但两者不是同一次运行的超参扫描。",
-            "长度校正使用全体测试样本的长度分箱均值，只能消掉线性/分箱级长度效应。",
+            "A2 与 S2 共用同一 1086 测试集与同一参考，Δedit 为配对比较；两者不是同一次运行的超参扫描。",
+            "长度校正使用全体测试样本的长度分箱均值，只能消掉分箱级长度效应，不是连续变量的回归校正。",
             "n_train 统计的是「含该类关键词的训练句子数」，不等于「该类语义的训练覆盖量」。",
+            "类别级相关系数只有 12 个点，符号可读但不宜当显著性结论；词项级 135 个点更可靠。",
+            "bigram 覆盖率衡量「字面搭配是否在训练集出现过」，它会同时反映句式常见度与难度，"
+            "不能单独解释为「数据缺口」的因果证据。",
         ],
     }
     return payload
@@ -1297,37 +1303,45 @@ def render_markdown(payload: dict[str, Any]) -> str:
                             f"（Δ {delta:+.3f}）：词项越稀有识别越差 → 词表长尾仍有数据价值。")
         else:
             freq_reading = (f"最稀有五分位 Q1 平均 {lowest:.3f} **反而高于**最高频 Q5 的 {highest:.3f}"
-                            f"（Δ {delta:+.3f}）：方向与「见得多就更好」相反——"
-                            f"主要因为高频词项多出现在更长的句子里（见句均长列），"
-                            "所以「见得少」解释不了这些词项的失败。")
+                            f"（Δ {delta:+.3f}）：方向与「见得多就更好」完全相反，"
+                            "因此不能用「见得少」解释这些词项的失败。")
         add(f"- {freq_reading}")
         add("")
     short_ctrl = freq.get("keyword_length_controlled") or []
     if short_ctrl:
         low, high = short_ctrl[0], short_ctrl[1]
+        delta_ctrl = low["mean_edit"] - high["mean_edit"]
         add(f"- **长度控制后**（只留所在句均长 ≤15 字的词项，n={low['n_units'] + high['n_units']}）："
             f"低频半（{low['n_units']} 项，句均长 {low['mean_ref_len']:.2f}）平均 edit **{low['mean_edit']:.3f}**、"
             f"高频半（{high['n_units']} 项，句均长 {high['mean_ref_len']:.2f}）平均 edit **{high['mean_edit']:.3f}**，"
-            f"差 **{low['mean_edit'] - high['mean_edit']:+.3f}**。"
-            "把这层混杂去掉之后，「训练频次 → 表现」的关系依然不成立。")
+            f"差 **{delta_ctrl:+.3f}**。"
+            + ("即句长固定后仍是低频略好，说明这个反向关系不是句长造成的；"
+               "结论仍是不存在「训练频次越高 → 表现越好」的正关系。"
+               if delta_ctrl > 0 else
+               "句长固定后低频略差，但幅度很小，仍不足以支持「按频次补数据」的强结论。"))
         add("")
     add("### 6.2 类别级（每个语义类别）「n_train → edit」")
     add("")
     cat = freq["category_level"]
     cat_rho = cat["spearman_log10_ntrain_vs_edit"]
+    cat_rho_res = cat.get("spearman_log10_ntrain_vs_length_residual")
     if cat_rho is None:
         cat_reading = "样本不足以计算相关。"
     elif cat_rho > 0.3:
         cat_reading = "为正：训练量越大的类别表现越好 → 支持「继续扩数据」。"
-    elif cat_rho < -0.3:
-        cat_reading = ("为**负**：训练量大的类别（人物指代、动作）在测试集上表现更好，"
-                       "但这是因为它们的句子更短、句式更常见；训练量最小的「因果/条件」句均长最长。"
-                       "把句长控制掉之后（§8），这个负相关不构成任何「该扩数据」的证据。")
+    elif cat_rho > 0.3:
+        cat_reading = "为正：训练量越大的类别表现越好 → 支持「继续扩数据」。"
     else:
-        cat_reading = "接近 0：类别的训练量差异解释不了类间表现差异。"
+        cat_reading = ("没有出现「训练量越大越好」的正关系。注意只有 "
+                       f"{cat['n_categories']} 个类别点，|ρ|={abs(cat_rho):.2f} 在这个样本量下并不统计显著，"
+                       "但它至少**没有提供任何「补样本量就能改善」的支持**——"
+                       "而这正是「按类别扩数据」路线需要的证据。")
     add(f"- {cat['n_categories']} 个类别上，`log10(n_train)` 与类别平均 edit 的 "
         f"**Spearman ρ = {fmt(cat_rho, 3)}**、Pearson r = {fmt(cat['pearson_log10_ntrain_vs_edit'], 3)}，"
-        f"符号{cat_reading}")
+        f"{cat_reading}")
+    add(f"- 换成**长度校正残差**再做一次同样的相关：ρ = **{fmt(cat_rho_res, 3)}**"
+        f"（残差 = 该类 edit 减去同句长分箱的全体均值）。即便把句长效应扣掉，"
+        "「训练量 → 表现」依旧不是正关系，所以这个结论不是句长混杂造出来的。")
     add("")
     idle = payload["coverage"]["idle_vocabulary_units"]
     add(f"- 词表设计事实：{len(payload['category_system'])} 类共 {idle['of_total']} 个词表项，"
@@ -1390,6 +1404,13 @@ def render_markdown(payload: dict[str, Any]) -> str:
     add("  2. 它与「模型靠字面记忆」一致（训练集上 99.5% 完全匹配、测试集 1.7%），"
         "因此**单纯加大同分布数据只会追加更多可记忆的字面形式**，收益递减；"
         "真正要补的是**未见搭配与长句**这类绝对量稀缺的区间。")
+    robust = cov.get("bigram_novelty_robustness") or {}
+    if robust:
+        add(f"- **稳健性（排除标点差异伪影）**：测试参考与训练文本的标点写法不同（全角 vs 半角），"
+            f"但全部未见二元组里只有 **{pct(robust['unseen_bigrams_punctuation_share'])}** 涉及标点；"
+            f"只统计汉字二元组时平均覆盖率 {pct(robust['cjk_only_bigram_coverage_mean'])}"
+            f"（全二元组口径 {pct(cov['test_mean_bigram_coverage'])}），量级一致。"
+            "→「字面新颖度」信号不是标点造成的伪影。")
     add("")
 
     # ---- length
@@ -1482,6 +1503,14 @@ def render_markdown(payload: dict[str, Any]) -> str:
         add("- **偏「模型/训练方法」**：无。")
     add("")
 
+    # ---- limitations
+    add("## 10. 局限")
+    add("")
+    for item in payload["limitations"]:
+        add(f"- {item}")
+    add("- 本报告只做评测侧统计，不涉及任何训练；GT 原文不进入报告，表格内只出现计数与指标。")
+    add("")
+
     # ---- appendix: keyword level
     add("## 附录 A. 词项级明细（词汇 × 训练量 × 测试表现 × 错误类型）")
     add("")
@@ -1498,14 +1527,6 @@ def render_markdown(payload: dict[str, Any]) -> str:
         add(f"| {row['category_label']} | {row['unit']} | {row['n_train']:,} | {row['n_test']} | "
             f"{fmt(row['test_mean_ref_len'], 2)} | {fmt(row['s2_mean_edit'])} | {pct(row['s2_exact_rate'])} | "
             f"{fmt(row.get('delta_edit_vs_a2'), 4)} | {ops_text} | {'是' if row['data_gap'] else ''} |")
-    add("")
-
-    # ---- limitations
-    add("## 附录 B / 局限")
-    add("")
-    for item in payload["limitations"]:
-        add(f"- {item}")
-    add("- 本报告只做评测侧统计，不涉及任何训练；GT 原文不进入报告，表格内只出现计数与指标。")
     add("")
     return "\n".join(lines)
 
