@@ -56,6 +56,12 @@ slbridge/model_adapters.py: unisign_rgb_pose_slt ┘     ├─ UniSignRGBPoseRu
 
 ## 5. 已知偏差（必须在报告中保留）
 
+0. **【重大·2026-10-27 发现】冻结基线的 RGB 分支实际为零输入**：
+   - 官方 pose pkl 的 `scores` 形状是 `(T, 1, 133)`（多一个 singleton 维）
+   - 冻结脚本的 `sample_hand_indices` 用 `confs[:, 91:112]` 索引（无中间维）→ 返回空 → 左右手均 `None` → `build_support_rgb` 产出**全零占位张量**
+   - 实证：squeeze 成 `(T,133)` 后 left=13 / right=15 帧可采到
+   - **因此冻结基线 BLEU 26.3026 是"融合模型 + 零 RGB 支持"的结果，不是论文 RGB+pose 协议；26.30≈26.36 属巧合，不能作为"复现论文"的证据**
+   - 处理：adapter 提供 `hand_conf_layout: legacy（默认，复现冻结）/ squeeze（真实手部）/ auto`；corrected 数字单独测量与报告
 1. 官方 Uni-Sign `sentence-crop` 视频（`sentence_frames-512x512.zip`）本地缺失 → RGB 用本地近似句段 trimmed 视频
 2. 帧映射偏移实测 min −170 / median −1 / max +14（个别样本手部 crop 与 pose 帧对不齐）
 3. 手部/帧采样改为固定种子（上游随机），保证可复现
