@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "kind": "frozen-rgb-pose-regression-baseline",
+  "created_at": "2026-10-27T06:55:29+00:00",
+  "immutable": true,
+  "note": "Do not modify these files or metric definitions; adapter regression (task-33) compares against them.",
+  "pilot50": {
+    "predictions": "experiments/p1/e01/runs/unisign-rgb-pose-pilot50-20261027/predictions_rgb_pose.jsonl",
+    "predictions_sha256": "d64bc2aac46e39943a25470b2f81ac6423fb09e75b8febdd1612f0b683121ab4",
+    "n_samples": 50,
+    "metrics": {
+      "bleu4_13a": 33.1731,
+      "chrf": 28.1884,
+      "mean_char_edit_similarity": 0.502
+    },
+    "metrics_source": "runs/unisign-rgb-pose-pilot50-20261027/metrics.json",
+    "acceptance": "50/50 exact character-identical predictions"
+  },
+  "full1086": {
+    "predictions": "experiments/p1/e01/runs/unisign-rgb-pose-1086-20261027/predictions_rgb_pose.jsonl",
+    "predictions_sha256": "f335548822511bbc321b14b9a7830f1b59c9bced148e47d3fe0c72cd76b825d5",
+    "metrics": "experiments/p1/e01/runs/unisign-rgb-pose-1086-20261027/metrics.json",
+    "metrics_sha256": "8b4c1974d5489f748d5060a5d9237e508041ecd3ee7cf17eb3306bf2434423c9",
+    "protocol": "experiments/p1/e01/runs/unisign-rgb-pose-1086-20261027/protocol.json",
+    "protocol_sha256": "89bf204cbb5b6f7e07538f655f9f7227930eeeace6a282972e6798c3b8458b9c",
+    "n_samples": 1086,
+    "metrics_values": {
+      "bleu4_13a": 26.3026,
+      "chrf": 23.0005,
+      "mean_char_edit_similarity": 0.4358
+    },
+    "acceptance": "canonical metrics within 0.01; exact match reported as extra evidence"
+  },
+  "regression_config": {
+    "backend_id": "unisign_rgb_pose_slt",
+    "pose_source": "official_archive",
+    "pose_dir": "artifacts/cslnews-eval/csl-daily-pose/pose-format",
+    "alignment_dir": "artifacts/csldaily-video-test-627-20261026/alignment",
+    "enable_rgb": true,
+    "fallback_to_pose_only": false,
+    "note": "rtmpose production mode is NOT the regression mode; differences there belong to task-34"
+  },
+  "metric_tolerance": 0.01
+}

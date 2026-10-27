@@ -1,0 +1,15 @@
+{
+  "backend": "unisign_rgb_pose_slt",
+  "pose_source": "official_archive",
+  "pose_dir": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\cslnews-eval\\csl-daily-pose\\pose-format",
+  "alignment_dir": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\pose",
+  "video_dir": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\trimmed",
+  "checkpoint": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\csl_daily_rgb_pose_slt.pth",
+  "pose_only_checkpoint": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\csl_daily_pose_only_slt.pth",
+  "enable_rgb": true,
+  "fallback_to_pose_only": false,
+  "device": "cuda",
+  "dtype": "bfloat16",
+  "num_beams": 4,
+  "max_new_tokens": 100
+}

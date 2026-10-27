@@ -407,3 +407,11 @@ def _load_replay(path: Path, options: RuntimeOptions) -> ModelAdapter:
 
 
 register_model_adapter(AdapterDefinition("replay_jsonl_v1", _load_replay))
+
+
+def _load_unisign_rgb_pose(path: Path, options: RuntimeOptions) -> ModelAdapter:
+    from .uni_sign_rgb_pose import load_unisign_rgb_pose_adapter
+    return load_unisign_rgb_pose_adapter(path, options=options)
+
+
+register_model_adapter(AdapterDefinition("unisign_rgb_pose_slt", _load_unisign_rgb_pose))

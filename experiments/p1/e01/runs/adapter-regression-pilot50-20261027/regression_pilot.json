@@ -1,0 +1,82 @@
+{
+  "label": "pilot50",
+  "status": "PASS",
+  "frozen_predictions": "experiments\\p1\\e01\\runs\\unisign-rgb-pose-pilot50-20261027\\predictions_rgb_pose.jsonl",
+  "frozen_predictions_sha256": "d64bc2aac46e39943a25470b2f81ac6423fb09e75b8febdd1612f0b683121ab4",
+  "candidate_predictions": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\e01\\runs\\adapter-regression-pilot50-20261027\\predictions_rgb_pose_adapter.jsonl",
+  "candidate_predictions_sha256": "7154a81dd9030f766b229d7531aa8f17d802e6fb8caabf65834f2a9fc98819c2",
+  "candidate_run_dir": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\e01\\runs\\adapter-regression-pilot50-20261027",
+  "n_frozen": 50,
+  "n_candidate": 50,
+  "n_common": 50,
+  "n_missing": 0,
+  "n_extra": 0,
+  "missing_sample_ids": [],
+  "extra_sample_ids": [],
+  "exact_match": 50,
+  "exact_match_rate": 1.0,
+  "exact_required": true,
+  "metric_comparison": {
+    "bleu4_13a": {
+      "baseline": 33.1731,
+      "adapter_run": 33.1731,
+      "delta": 0.0,
+      "within_tolerance": true
+    },
+    "chrf": {
+      "baseline": 28.1884,
+      "adapter_run": 28.1884,
+      "delta": 0.0,
+      "within_tolerance": true
+    },
+    "mean_char_edit_similarity": {
+      "baseline": 0.502,
+      "adapter_run": 0.502,
+      "delta": 0.0,
+      "within_tolerance": true
+    }
+  },
+  "metrics_candidate_recomputed": {
+    "metric_definition_version": "p1-v1",
+    "n": 50,
+    "bleu4_13a": 33.1731,
+    "bleu4_13a_precisions": [
+      65.13,
+      42.58,
+      29.98,
+      21.16
+    ],
+    "bleu4_13a_bp": 0.9108,
+    "chrf": 28.1884,
+    "mean_char_edit_similarity": 0.502,
+    "char_rogue_l_f1": 0.6104,
+    "exact_match_count": 4,
+    "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+  },
+  "metrics_frozen_recomputed": {
+    "metric_definition_version": "p1-v1",
+    "n": 50,
+    "bleu4_13a": 33.1731,
+    "bleu4_13a_precisions": [
+      65.13,
+      42.58,
+      29.98,
+      21.16
+    ],
+    "bleu4_13a_bp": 0.9108,
+    "chrf": 28.1884,
+    "mean_char_edit_similarity": 0.502,
+    "char_rogue_l_f1": 0.6104,
+    "exact_match_count": 4,
+    "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+  },
+  "differences": [],
+  "gt_eval_only": {
+    "path": "experiments\\p1\\references\\gt_1086.csv",
+    "eval_only": true
+  },
+  "created_at": "2026-10-27T07:22:26+00:00",
+  "adapter_manifest": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\e01\\runs\\adapter-regression-pilot50-20261027\\manifest.json",
+  "adapter_manifest_sha256": "14a02563d0404addd656b3d38cf669c249d75a97c4a81ea292827450227d81ad",
+  "adapter_failures": []
+}

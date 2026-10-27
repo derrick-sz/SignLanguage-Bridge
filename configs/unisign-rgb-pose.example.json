@@ -1,0 +1,18 @@
+{
+  "_comment": "Template for the unisign_rgb_pose_slt model bundle manifest. Copy to <bundle-dir>/manifest.json and adjust the relative paths. All path fields resolve relative to the bundle directory (absolute paths also work). models/ is gitignored, so live bundles never enter the repository; this template is the committed reconstruction recipe. alignment_dir MUST be the npz directory (artifacts/.../pose) whose metadata_json carries alignment.best_start -- the JSON alignment directory is NOT supported and is rejected at load time.",
+  "backend": "unisign_rgb_pose_slt",
+  "pose_source": "official_archive",
+  "pose_dir": "../../artifacts/cslnews-eval/csl-daily-pose/pose-format",
+  "alignment_dir": "../../artifacts/csldaily-video-test-627-20261026/pose",
+  "video_dir": "../../artifacts/csldaily-video-test-627-20261026/trimmed",
+  "checkpoint": "../../models/external/uni_sign/csl_daily_rgb_pose_slt.pth",
+  "pose_only_checkpoint": "../../models/external/uni_sign/csl_daily_pose_only_slt.pth",
+  "source_dir": "../../models/external/uni_sign_source",
+  "mt5_dir": "../../models/external/uni_sign/mt5-base",
+  "enable_rgb": true,
+  "fallback_to_pose_only": false,
+  "device": "cuda",
+  "dtype": "bfloat16",
+  "num_beams": 4,
+  "max_new_tokens": 100
+}
