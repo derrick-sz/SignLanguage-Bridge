@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "run_id": "unisign-rgb-pose-pilot50-20261027",
+  "created_at": "2026-10-27T05:46:43+00:00",
+  "experiment": "E01-unisign-rgb-pose-pilot50",
+  "checkpoints": {
+    "rgb_pose": {
+      "path": "models\\external\\uni_sign\\csl_daily_rgb_pose_slt.pth",
+      "sha256": "c2ba5d7ae32f3fa40f7c6807b5004042be81fca192abe7d8ed7182c0d13470f6",
+      "bytes": 1197268371
+    },
+    "pose_only": {
+      "path": "models\\external\\uni_sign\\csl_daily_pose_only_slt.pth",
+      "sha256": "73bea87a9603f719b4f4a481a3a1a5ed24e7e5f7b81afd14ef498c40469c1a6c",
+      "bytes": 1186925112
+    }
+  },
+  "source": {
+    "dir": "models\\external\\uni_sign_source",
+    "commit": "eed438bcb49e30405cd6ccdfcccca330c134e830"
+  },
+  "input_protocol": {
+    "pose": "official released CSL-Daily pose archive (normalized 133 keypoints; same as A2)",
+    "rgb": "hand crops 112x112 from local approximate sentence-trimmed videos",
+    "rgb_frame_mapping": "pose frame index -> local video frame via local RTMPose alignment best_start",
+    "max_length": 256,
+    "frame_sampling": "deterministic linspace (upstream: random.sample)",
+    "hand_sampling": "upstream low-confidence weighted sampling with per-sample fixed RNG seed"
+  },
+  "deviations": [
+    "official Uni-Sign sentence-crop RGB videos are not available locally; local approximate trimmed videos are used",
+    "pose remains official pose archive, so pose-only control is comparable to A2",
+    "deterministic frame/hand sampling for reproducibility"
+  ],
+  "decoding": {
+    "num_beams": 4,
+    "max_new_tokens": 100,
+    "dtype": "bfloat16"
+  },
+  "device": "cuda",
+  "gpu_baseline": "16311 MiB, 2351 MiB, 4 %",
+  "samples": [
+    "S003002_P0000_T00",
+    "S001090_P0000_T00",
+    "S003758_P0000_T00",
+    "S004571_P0000_T00",
+    "S000502_P0000_T00",
+    "S003181_P0001_T00",
+    "S003605_P0001_T00",
+    "S004029_P0001_T00",
+    "S003987_P0001_T00",
+    "S003747_P0001_T00",
+    "S003961_P0002_T00",
+    "S002951_P0002_T00",
+    "S003518_P0002_T00",
+    "S003572_P0002_T00",
+    "S003256_P0002_T00",
+    "S004204_P0003_T00",
+    "S005113_P0003_T00",
+    "S005011_P0003_T00",
+    "S004459_P0003_T00",
+    "S004752_P0003_T00",
+    "S000849_P0004_T00",
+    "S000440_P0004_T00",
+    "S001610_P0004_T00",
+    "S000414_P0004_T00",
+    "S000695_P0004_T00",
+    "S002128_P0005_T00",
+    "S002086_P0005_T00",
+    "S002240_P0005_T00",
+    "S002199_P0005_T00",
+    "S001656_P0005_T00",
+    "S005354_P0006_T00",
+    "S006078_P0006_T00",
+    "S005040_P0006_T00",
+    "S005540_P0006_T00",
+    "S005112_P0006_T00",
+    "S002143_P0007_T00",
+    "S002092_P0007_T00",
+    "S007211_P0007_T00",
+    "S007175_P0007_T00",
+    "S002199_P0007_T00",
+    "S000230_P0008_T00",
+    "S004677_P0008_T00",
+    "S004419_P0008_T00",
+    "S001064_P0008_T00",
+    "S001414_P0008_T00",
+    "S005306_P0009_T00",
+    "S005694_P0009_T00",
+    "S005607_P0009_T00",
+    "S005664_P0009_T00",
+    "S005276_P0009_T00"
+  ]
+}
