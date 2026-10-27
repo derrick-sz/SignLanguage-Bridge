@@ -1,0 +1,161 @@
+{
+  "run_id": "g2f-stub-smoke-3",
+  "experiment": "G2-2A-LLM-FUSION",
+  "status": "IMPLEMENTED_UNTESTED",
+  "data_status": "STUB_ONLY_NOT_LLM_RESULTS",
+  "created_at": "2026-10-27T04:48:57+00:00",
+  "git": {
+    "repository": "SignLanguage-Bridge",
+    "git_sha": "bbfb088881303eeed661e82bb9f89e61628460ae",
+    "branch": "codex/model-contract-auto-captions",
+    "dirty_tree": true,
+    "dirty_path_count": 8
+  },
+  "backend": {
+    "name": "stub",
+    "version": "stub-v1-deterministic",
+    "is_stub": true,
+    "is_real": false,
+    "available": true,
+    "rule_set": {
+      "C": "echo normalized Uni-Sign text",
+      "D": "C + single-number alignment to SLRT gloss when values conflict",
+      "E": "D + question-marker alignment to SLRT gloss"
+    },
+    "warning": "STUB ONLY: outputs are deterministic rules, not LLM results"
+  },
+  "backend_config_sha256": "9b866545ffa71ce2fabfb5cd37535d671809f7001e0ce493a55e310454d37125",
+  "params_sha256": "d32c339016b6155603282ec61fef98d73466bfe9d15fb92a0b374ec2a61877cb",
+  "llm_endpoint": {
+    "provider": null,
+    "base_url": null,
+    "endpoint": null,
+    "model": null,
+    "credentials_ref": null,
+    "credentials_present": null,
+    "credentials_source": null,
+    "timeout_seconds": null,
+    "max_retries": null,
+    "enable_env": null
+  },
+  "security": {
+    "api_key_persisted": false,
+    "api_key_in_manifest": false,
+    "api_key_in_outputs": false,
+    "credentials_reference_only": true,
+    "note": "key is resolved at runtime in memory only; this manifest stores a reference string, not the value"
+  },
+  "model": {
+    "model_version": "stub-v1-deterministic",
+    "decoding": {
+      "temperature": 0,
+      "max_tokens": 2048,
+      "top_p": 1.0,
+      "stop": null,
+      "reasoning": "max_tokens=2048 because the endpoint is a reasoning model (v1 evidence: 256 truncated 73/150 calls; v2 fixed at 2048)."
+    }
+  },
+  "prompt": {
+    "version": "v3_f",
+    "files": {
+      "json": "experiments\\p1\\e02\\llm_fusion\\prompts\\v3_f.json",
+      "md": "experiments\\p1\\e02\\llm_fusion\\prompts\\v3_f.md",
+      "json_sha256": "4606066c95b2ad05ee88843eaee0e2be86261063c42874a6423f8ad1cf282432",
+      "md_sha256": "5b7255c06441cc7b502abf7000b77a123e133e5179ebfa4a95c8ef0d7e4eb516"
+    },
+    "system_prompt_sha256": "6af7bec2ed0d6cdc48886c2084e2c2401f30b6421f1f430b5b5a4054afacaac0"
+  },
+  "groups": [
+    "F"
+  ],
+  "sampling": {
+    "strategy": "signer-stratified round-robin over sorted sample_id (deterministic)",
+    "seed_recorded": 20261026,
+    "limit": 3,
+    "n_samples": 3,
+    "signer_counts": {
+      "P0000": 1,
+      "P0001": 1,
+      "P0002": 1
+    },
+    "sample_ids_sha256": "fd1116f3e2ff8a5cafa897750d68b5b03029c08c9ec4f3a57a41f35859090377"
+  },
+  "inputs": {
+    "candidate_outputs": "experiments\\p1\\e02\\candidate_outputs.jsonl",
+    "candidate_outputs_sha256": "9318cde5690f369a8cac25653cac6ef317a0501bc534820bc1d70eafd188f2ba",
+    "e03_scores": "experiments\\p1\\e03\\per_sample_scores.csv",
+    "e03_scores_sha256": "b43f88f8f20ecf6290b6aa49f9525bf8229375c78b2a4e34b0b4bd40bc5ea585",
+    "manifest_1086_sha256": "22cd0e4969557ce7e40f96e83f3ff0f466c1e3081a883c267fbabe8f1119851f",
+    "score_feature_whitelist": [
+      "token_score_mean",
+      "token_score_min",
+      "token_score_median",
+      "token_score_p10",
+      "token_score_max",
+      "window_top_prob_mean",
+      "window_top_prob_min",
+      "window_top_prob_p10",
+      "window_top_prob_max",
+      "low_prob_window_frac_05",
+      "low_prob_window_frac_03",
+      "blank_window_frac",
+      "n_tokens",
+      "n_windows"
+    ],
+    "forbidden_score_features_excluded": [
+      "bad",
+      "bad_03",
+      "error_any",
+      "oof_p_bad_logistic_combo",
+      "oof_p_bad_logistic_token",
+      "oof_p_bad_logistic_window",
+      "should_upgrade_proxy_EVAL_ONLY",
+      "uni_video_edit_sim_EVAL_ONLY",
+      "wer",
+      "wer_d",
+      "wer_i",
+      "wer_s"
+    ]
+  },
+  "outputs": {
+    "fusion_outputs": "experiments\\p1\\e02\\llm_fusion\\runs\\g2f-stub-smoke-3\\fusion_outputs.jsonl",
+    "fusion_outputs_sha256": "9c27960a29a93f2881ce0890eb8345464ff154aa6aefbc7cdd5a21556c62d711",
+    "n_rows": 3,
+    "n_expected_rows": 3,
+    "n_errors": 0
+  },
+  "gt_isolation": {
+    "harness_reads_gt": false,
+    "gt_reading_module": "llm_fusion/evaluate.py only (harness/backends/prompts never open a GT file)",
+    "gt_reference_opened_here": false,
+    "gt_guard_rows_checked": 3,
+    "gt_guard_leaks": 0,
+    "leak_details": [],
+    "label_columns_dropped_from_e03_csv": [
+      "bad",
+      "bad_03",
+      "error_any",
+      "oof_p_bad_logistic_combo",
+      "oof_p_bad_logistic_token",
+      "oof_p_bad_logistic_window",
+      "should_upgrade_proxy_EVAL_ONLY",
+      "uni_video_edit_sim_EVAL_ONLY",
+      "wer",
+      "wer_d",
+      "wer_i",
+      "wer_s"
+    ]
+  },
+  "cost": {
+    "latency_ms_total": 1.9,
+    "concurrency": 1,
+    "n_llm_calls": 3,
+    "note": "stub latency is rule-execution time, not LLM latency"
+  },
+  "notes": [
+    "real LLM backends are gated by P1_LLM_ENABLE_REAL=1 + --allow-real",
+    "stub outputs are deterministic rules, not model results; metrics are pipeline validation only",
+    "GT join and canonical metrics are done by llm_fusion/evaluate.py (EVAL ONLY)",
+    "group F (v3_f): the prompt contains the SLRT gloss text only; Uni-Sign text is not sent to the LLM"
+  ]
+}

@@ -37,10 +37,17 @@ BOOTSTRAP_SEED = 20261026
 GROUP_DESCRIPTIONS = {
     "A": "Uni-Sign 原始译文（基准，不调 LLM）",
     "B": "SLRT -> G2T/SLT（BLOCKED：外部权重缺失；B0 只是确定性 join 退化基线）",
+    "B0": "SLRT Gloss 确定性 join（无 G2T；词列，不成句）",
     "C": "Uni-Sign -> LLM（润色对照）",
     "D": "Uni-Sign + SLRT Gloss -> LLM",
     "E": "双模型 + 证据约束（槽位冲突提示 + 未校准 SLRT 分数）-> LLM",
+    "F": "SLRT Gloss -> LLM 造句（v3_f：只给词汇序列，不给 Uni-Sign 译文）",
 }
+
+# GT-free candidate texts (A/A2/B0) may be loaded here when a run does not
+# contain the corresponding group rows (e.g. group-F-only runs need A/B0 baselines
+# for paired comparisons). Candidate files are model outputs, never GT.
+E02_CANDIDATES = common.P1 / "e02" / "candidate_outputs.jsonl"
 
 ABLATION_COLUMNS = [
     "run_id", "data_status", "prompt_version", "backend", "group", "description", "n",
@@ -55,6 +62,43 @@ ABLATION_COLUMNS = [
 
 def load_gt() -> dict[str, dict]:
     return {row["sample_id"]: row for row in common.read_csv_rows(GT_PATH)}
+
+
+def load_candidate_texts(sample_ids: set[str] | None = None) -> dict[str, dict[str, str]]:
+    """Load GT-free A/A2/B0 candidate model outputs for baseline injection.
+
+    Group-F-only runs do not contain A/B0 rows (A has no LLM call; B0 is not a
+    pipeline group), but paired comparisons need the same-sample A and B0 texts.
+    These are model outputs from ``candidate_outputs.jsonl``, never GT.
+    """
+
+    by_sample: dict[str, dict[str, str]] = defaultdict(dict)
+    for row in common.read_jsonl(E02_CANDIDATES):
+        sample = row.get("sample_id")
+        if sample_ids is not None and sample not in sample_ids:
+            continue
+        text = (row.get("output") or {}).get("text")
+        by_sample[sample][row["candidate_id"]] = "" if text is None else str(text)
+    return by_sample
+
+
+def _pseudo_group_rows(group: str, texts: dict[str, str], samples: set[str]) -> list[dict]:
+    rows: list[dict] = []
+    for sample in sorted(samples):
+        rows.append(
+            {
+                "run_id": None,
+                "sample_id": sample,
+                "group": group,
+                "status": "ok" if texts[sample].strip() else "error",
+                "output_text": texts[sample],
+                "latency_ms": None,
+                "tokens": {"in": None, "out": None, "total": None},
+                "retries": None,
+                "backend": "candidate_outputs (no LLM)",
+            }
+        )
+    return rows
 
 
 def edit_similarity(reference: str, hypothesis: str) -> float:
@@ -113,6 +157,30 @@ def evaluate_run(
     by_group: dict[str, list[dict]] = defaultdict(list)
     for row in rows:
         by_group[row["group"]].append(row)
+
+    # ---- baseline injection (GT-free candidate outputs, never overrides run rows) ----
+    # Only group-F runs need injected baselines: F has no A rows (no LLM call for A)
+    # and no B0 group rows. Legacy A/C/D/E runs keep their exact previous behaviour so
+    # the existing self-test contract (eval_records == n_rows) stays valid.
+    baseline_sources: dict[str, dict[str, Any]] = {}
+    baseline_groups = ("A", "B0") if "F" in by_group else ("A",)
+    run_samples = {row["sample_id"] for group_rows in by_group.values() for row in group_rows}
+    candidate_texts = load_candidate_texts(run_samples)
+    for baseline_group in baseline_groups:
+        if baseline_group in by_group:
+            baseline_sources[baseline_group] = {"source": "fusion_outputs rows", "injected": False}
+            continue
+        texts = {sample: mapping.get(baseline_group, "") for sample, mapping in candidate_texts.items()}
+        samples = {sample for sample, text in texts.items() if sample in run_samples and text.strip()}
+        if not samples:
+            continue
+        by_group[baseline_group] = _pseudo_group_rows(baseline_group, texts, samples)
+        baseline_sources[baseline_group] = {
+            "source": str(E02_CANDIDATES.relative_to(ROOT)),
+            "file_sha256": common.sha256_file(E02_CANDIDATES),
+            "injected": True,
+            "note": "GT-free model output candidate; not an LLM call",
+        }
 
     a_rows = {row["sample_id"]: row for row in by_group.get("A", [])}
     if not a_rows:
@@ -224,7 +292,10 @@ def evaluate_run(
         for group, group_rows in ok_rows_by_group.items()
     }
     paired_group: dict[str, dict[str, Any]] = {}
-    for first, second in (("A", "C"), ("A", "D"), ("A", "E"), ("C", "D"), ("D", "E"), ("C", "E")):
+    for first, second in (
+        ("A", "C"), ("A", "D"), ("A", "E"), ("C", "D"), ("D", "E"), ("C", "E"),
+        ("A", "F"), ("B0", "F"), ("A", "B0"),
+    ):
         if first not in group_rows_by_sample or second not in group_rows_by_sample:
             continue
         common_samples = sorted(set(group_rows_by_sample[first]) & set(group_rows_by_sample[second]))
@@ -294,6 +365,7 @@ def evaluate_run(
         },
         "n_samples": manifest.get("sampling", {}).get("n_samples"),
         "groups": group_metrics,
+        "baseline_sources": baseline_sources,
         "paired_group_comparisons": paired_group,
         "llm_endpoint": manifest.get("llm_endpoint"),
         "security": manifest.get("security"),

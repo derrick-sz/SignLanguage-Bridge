@@ -1,0 +1,178 @@
+{
+  "run_id": "g2f-wbproxy-50-v3f-20261027",
+  "experiment": "G2-2A-LLM-FUSION",
+  "status": "REAL_RUN",
+  "data_status": "REAL_EXPLORATORY_50_GROUP_F",
+  "created_at": "2026-10-27T04:57:05+00:00",
+  "git": {
+    "repository": "SignLanguage-Bridge",
+    "git_sha": "bbfb088881303eeed661e82bb9f89e61628460ae",
+    "branch": "codex/model-contract-auto-captions",
+    "dirty_tree": true,
+    "dirty_path_count": 17
+  },
+  "backend": {
+    "name": "openai_compat",
+    "version": "openai-compat-urllib-v1",
+    "provider": "wb-proxy",
+    "base_url": "http://127.0.0.1:8788/v1",
+    "endpoint": "http://127.0.0.1:8788/v1/chat/completions",
+    "model": "deepseek-v4.1-flash",
+    "is_stub": false,
+    "is_real": true,
+    "available": true,
+    "endpoint_probe": {
+      "reachable": true,
+      "status": "HTTP 401"
+    },
+    "credentials_ref": "WB_PROXY_API_KEY@dsh-credentials",
+    "credentials_present": true,
+    "credentials_source": "yaml:refs.WB_PROXY_API_KEY",
+    "enabled": true,
+    "enable_env": "P1_LLM_ENABLE_REAL",
+    "timeout_seconds": 90,
+    "max_retries": 2,
+    "status": "REAL_READY"
+  },
+  "backend_config_sha256": "951263c2ef78e87c5d6b3d8729b2e0a0843390bd3aa47688ed78be5178280425",
+  "params_sha256": "d32c339016b6155603282ec61fef98d73466bfe9d15fb92a0b374ec2a61877cb",
+  "llm_endpoint": {
+    "provider": "wb-proxy",
+    "base_url": "http://127.0.0.1:8788/v1",
+    "endpoint": "http://127.0.0.1:8788/v1/chat/completions",
+    "model": "deepseek-v4.1-flash",
+    "credentials_ref": "WB_PROXY_API_KEY@dsh-credentials",
+    "credentials_present": true,
+    "credentials_source": "yaml:refs.WB_PROXY_API_KEY",
+    "timeout_seconds": 90,
+    "max_retries": 2,
+    "enable_env": "P1_LLM_ENABLE_REAL"
+  },
+  "security": {
+    "api_key_persisted": false,
+    "api_key_in_manifest": false,
+    "api_key_in_outputs": false,
+    "credentials_reference_only": true,
+    "note": "key is resolved at runtime in memory only; this manifest stores a reference string, not the value"
+  },
+  "model": {
+    "model_version": "deepseek-v4.1-flash",
+    "decoding": {
+      "temperature": 0,
+      "max_tokens": 2048,
+      "top_p": 1.0,
+      "stop": null,
+      "reasoning": "max_tokens=2048 because the endpoint is a reasoning model (v1 evidence: 256 truncated 73/150 calls; v2 fixed at 2048)."
+    }
+  },
+  "prompt": {
+    "version": "v3_f",
+    "files": {
+      "json": "experiments\\p1\\e02\\llm_fusion\\prompts\\v3_f.json",
+      "md": "experiments\\p1\\e02\\llm_fusion\\prompts\\v3_f.md",
+      "json_sha256": "4606066c95b2ad05ee88843eaee0e2be86261063c42874a6423f8ad1cf282432",
+      "md_sha256": "5b7255c06441cc7b502abf7000b77a123e133e5179ebfa4a95c8ef0d7e4eb516"
+    },
+    "system_prompt_sha256": "6af7bec2ed0d6cdc48886c2084e2c2401f30b6421f1f430b5b5a4054afacaac0"
+  },
+  "groups": [
+    "F"
+  ],
+  "sampling": {
+    "strategy": "signer-stratified round-robin over sorted sample_id (deterministic)",
+    "seed_recorded": 20261026,
+    "limit": 15,
+    "n_samples": 50,
+    "signer_counts": {
+      "P0000": 5,
+      "P0001": 5,
+      "P0002": 5,
+      "P0003": 5,
+      "P0004": 5,
+      "P0005": 5,
+      "P0006": 5,
+      "P0007": 5,
+      "P0008": 5,
+      "P0009": 5
+    },
+    "sample_ids_sha256": "b7f7d7e9ff50b673c926b1392d2755a2243db3ae448487d83aedae3949547a9b"
+  },
+  "inputs": {
+    "candidate_outputs": "experiments\\p1\\e02\\candidate_outputs.jsonl",
+    "candidate_outputs_sha256": "9318cde5690f369a8cac25653cac6ef317a0501bc534820bc1d70eafd188f2ba",
+    "e03_scores": "experiments\\p1\\e03\\per_sample_scores.csv",
+    "e03_scores_sha256": "b43f88f8f20ecf6290b6aa49f9525bf8229375c78b2a4e34b0b4bd40bc5ea585",
+    "manifest_1086_sha256": "22cd0e4969557ce7e40f96e83f3ff0f466c1e3081a883c267fbabe8f1119851f",
+    "score_feature_whitelist": [
+      "token_score_mean",
+      "token_score_min",
+      "token_score_median",
+      "token_score_p10",
+      "token_score_max",
+      "window_top_prob_mean",
+      "window_top_prob_min",
+      "window_top_prob_p10",
+      "window_top_prob_max",
+      "low_prob_window_frac_05",
+      "low_prob_window_frac_03",
+      "blank_window_frac",
+      "n_tokens",
+      "n_windows"
+    ],
+    "forbidden_score_features_excluded": [
+      "bad",
+      "bad_03",
+      "error_any",
+      "oof_p_bad_logistic_combo",
+      "oof_p_bad_logistic_token",
+      "oof_p_bad_logistic_window",
+      "should_upgrade_proxy_EVAL_ONLY",
+      "uni_video_edit_sim_EVAL_ONLY",
+      "wer",
+      "wer_d",
+      "wer_i",
+      "wer_s"
+    ]
+  },
+  "outputs": {
+    "fusion_outputs": "experiments\\p1\\e02\\llm_fusion\\runs\\g2f-wbproxy-50-v3f-20261027\\fusion_outputs.jsonl",
+    "fusion_outputs_sha256": "4dec50d2fb638de847f8584ee211a9d60920211f665fee2b334aaad6a8ee507a",
+    "n_rows": 50,
+    "n_expected_rows": 50,
+    "n_errors": 3
+  },
+  "gt_isolation": {
+    "harness_reads_gt": false,
+    "gt_reading_module": "llm_fusion/evaluate.py only (harness/backends/prompts never open a GT file)",
+    "gt_reference_opened_here": false,
+    "gt_guard_rows_checked": 50,
+    "gt_guard_leaks": 0,
+    "leak_details": [],
+    "label_columns_dropped_from_e03_csv": [
+      "bad",
+      "bad_03",
+      "error_any",
+      "oof_p_bad_logistic_combo",
+      "oof_p_bad_logistic_token",
+      "oof_p_bad_logistic_window",
+      "should_upgrade_proxy_EVAL_ONLY",
+      "uni_video_edit_sim_EVAL_ONLY",
+      "wer",
+      "wer_d",
+      "wer_i",
+      "wer_s"
+    ]
+  },
+  "cost": {
+    "latency_ms_total": 364644.9,
+    "concurrency": 1,
+    "n_llm_calls": 50,
+    "note": "LLM latency recorded per call (latency_s); total is batch wall time"
+  },
+  "notes": [
+    "REAL LLM run: provider/model/params recorded; stub numbers are separate",
+    "outputs are real model generations from the declared endpoint",
+    "GT join and canonical metrics are done by llm_fusion/evaluate.py (EVAL ONLY)",
+    "group F (v3_f): the prompt contains the SLRT gloss text only; Uni-Sign text is not sent to the LLM"
+  ]
+}

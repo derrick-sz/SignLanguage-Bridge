@@ -1,4 +1,9 @@
-"""G2 phase-2A: LLM fusion ablation harness (A/C/D/E groups).
+"""G2 phase-2A/2-F: LLM fusion ablation harness (A/C/D/E + group F).
+
+Group F (v3_f prompt) is the "gloss -> sentence" path: the backend receives the
+SLRT gloss word sequence ONLY and is asked to compose a natural Chinese sentence.
+The Uni-Sign translation (candidate A) is never put into an F prompt (asserted in
+``run``); A remains only the paired evaluation baseline.
 
 Pipeline (CPU only, GT-free):
 
@@ -45,9 +50,19 @@ RUNS_DIR = FUSION_DIR / "runs"
 E02_CANDIDATES = common.P1 / "e02" / "candidate_outputs.jsonl"
 E03_SCORES = common.P1 / "e03" / "per_sample_scores.csv"
 MANIFEST_1086 = common.P1 / "datasets" / "manifest_1086.csv"
+SLRT_GLOSS_DIR = common.SHARED_ARTIFACTS / "slrt"
 
 DEFAULT_PROMPT_VERSION = "v1_zh"
 DEFAULT_GROUPS = ("A", "C", "D", "E")
+# Group F is a separate experiment path (v3_f prompt: gloss -> sentence). It is
+# allowed when explicitly requested but is NOT part of the legacy default batch.
+ALL_GROUPS = ("A", "C", "D", "E", "F")
+# How group F's gloss input is rendered in the prompt.
+#   candidate_text : use the E02 B0 text verbatim (deterministic "".join(tokens))
+#   spaced_tokens  : use the SLRT gloss token sequence with single spaces
+#                    (the "词汇序列（空格分隔的词列）" form specified for group F)
+GLOSS_INPUT_MODES = ("candidate_text", "spaced_tokens")
+DEFAULT_GLOSS_INPUT_MODE = "candidate_text"
 SAMPLING_SEED = 20261026
 BOOTSTRAP_ITERATIONS = 1000
 BOOTSTRAP_SEED = 20261026
@@ -154,6 +169,26 @@ def load_signer_map(path: Path = MANIFEST_1086) -> dict[str, str]:
     """Signer ids from the GT-free dataset manifest (used for stratified sampling only)."""
 
     return {row["sample_id"]: row["signer_id"] for row in common.read_csv_rows(path)}
+
+
+def load_gloss_sequences(path: Path = SLRT_GLOSS_DIR) -> dict[str, list[str]]:
+    """Load GT-free SLRT gloss token sequences (model output, NOT reference gloss).
+
+    Used only for the ``spaced_tokens`` rendering of group F's gloss input, which
+    matches the "词汇序列（空格分隔的词列）" form specified for the experiment.
+    """
+
+    sequences: dict[str, list[str]] = {}
+    if not path.exists():
+        return sequences
+    for json_path in sorted(path.glob("*.json")):
+        if json_path.name.endswith((".events.jsonl", ".windows.jsonl")):
+            continue
+        record = common.read_json(json_path)
+        name = record.get("name") or json_path.stem
+        tokens = [str(token) for token in (record.get("gloss_sequence") or [])]
+        sequences[str(name)] = tokens
+    return sequences
 
 
 def select_samples(
@@ -321,15 +356,19 @@ def run(
     backend_kwargs: dict[str, Any] | None = None,
     concurrency: int = 1,
     max_tokens_override: int | None = None,
+    gloss_input_mode: str = DEFAULT_GLOSS_INPUT_MODE,
 ) -> dict[str, Any]:
-    if not set(groups) <= set(DEFAULT_GROUPS):
-        raise SystemExit(f"unknown groups: {groups}; allowed {DEFAULT_GROUPS}")
+    if not set(groups) <= set(ALL_GROUPS):
+        raise SystemExit(f"unknown groups: {groups}; allowed {ALL_GROUPS}")
+    if gloss_input_mode not in GLOSS_INPUT_MODES:
+        raise SystemExit(f"unknown gloss_input_mode: {gloss_input_mode!r}; allowed {GLOSS_INPUT_MODES}")
     if concurrency != 1:
         raise SystemExit("this harness runs strictly serial (concurrency=1) to protect the shared proxy")
     spec = load_prompt_spec(prompt_version)
     candidates = load_candidates()
     features = load_score_features()
     signers = load_signer_map()
+    gloss_token_map = load_gloss_sequences() if gloss_input_mode == "spaced_tokens" else {}
     backend = get_backend(backend_name, **(backend_kwargs or {}))
     backend_description = backend.describe()
     if backend.is_real and not allow_real:
@@ -364,6 +403,11 @@ def run(
     for sample in sample_ids:
         unisign_text = candidates[sample]["A"]
         gloss_text = candidates[sample]["B0"]
+        gloss_tokens = None
+        if gloss_input_mode == "spaced_tokens":
+            gloss_tokens = gloss_token_map.get(sample) or []
+            if gloss_tokens:
+                gloss_text = " ".join(gloss_tokens)
         sample_features = features.get(sample, {})
         for group in groups:
             prompt_messages = build_messages(
@@ -373,6 +417,13 @@ def run(
                 features=sample_features,
                 spec=spec,
             )
+            if group == "F":
+                # hard discipline guard: group F must never see the Uni-Sign translation
+                if unisign_text.strip() and unisign_text.strip() in prompt_messages[1]["content"]:
+                    raise SystemExit(
+                        f"prompt-discipline violation: Uni-Sign text leaked into group F prompt "
+                        f"for sample {sample}; refusing to run"
+                    )
             base_record: dict[str, Any] = {
                 "run_id": run_id,
                 "sample_id": sample,
@@ -387,12 +438,21 @@ def run(
                     "top_p": decoding["top_p"],
                 },
                 "evidence": {
-                    "unisign_text": unisign_text,
+                    "unisign_text": None if group == "F" else unisign_text,
                     "slrt_gloss_text": gloss_text,
                     "slot_evidence": slot_evidence_text(unisign_text, gloss_text) if group == "E" else None,
                     "score_note": score_note(sample_features) if group in ("D", "E") else None,
                 },
-                "score_features": sample_features,
+                "prompt_input_scope": {
+                    "unisign_text": bool(prompt_messages) and group != "F",
+                    "slrt_gloss_text": bool(prompt_messages) and group in ("D", "E", "F"),
+                    "slot_evidence": group == "E",
+                    "score_note": group in ("D", "E"),
+                },
+                "score_features": None if group == "F" else sample_features,
+                "gloss_input_mode": gloss_input_mode,
+                "gloss_input_text_sha256": sha256_text(gloss_text),
+                "slrt_gloss_tokens": gloss_tokens,
                 "system_prompt_sha256": sha256_text(spec["system_prompt"]) if prompt_messages else None,
                 "user_prompt_sha256": sha256_text(prompt_messages[1]["content"]) if prompt_messages else None,
                 "prompt_sha256": sha256_json(prompt_messages) if prompt_messages else None,
@@ -537,6 +597,20 @@ def run(
             "files": spec["_files"],
             "system_prompt_sha256": sha256_text(spec["system_prompt"]),
         },
+        "gloss_input": {
+            "mode": gloss_input_mode,
+            "mode_description": (
+                "group F prompt receives the E02 B0 text verbatim"
+                if gloss_input_mode == "candidate_text"
+                else "group F prompt receives SLRT gloss tokens joined with single spaces"
+            ),
+            "source": str(SLRT_GLOSS_DIR.relative_to(ROOT))
+            if gloss_input_mode == "spaced_tokens" else str(E02_CANDIDATES.relative_to(ROOT)),
+            "n_samples_with_gloss_tokens": (
+                sum(1 for sample in sample_ids if gloss_token_map.get(sample))
+                if gloss_input_mode == "spaced_tokens" else None
+            ),
+        },
         "groups": list(groups),
         "sampling": {
             "strategy": "signer-stratified round-robin over sorted sample_id (deterministic)",
@@ -584,6 +658,7 @@ def run(
             "stub outputs are deterministic rules, not model results; metrics are pipeline validation only"
             if backend.is_stub else "outputs are real model generations from the declared endpoint",
             "GT join and canonical metrics are done by llm_fusion/evaluate.py (EVAL ONLY)",
+            "group F (v3_f): the prompt contains the SLRT gloss text only; Uni-Sign text is not sent to the LLM",
         ],
     }
     common.write_json(run_dir / "manifest.json", manifest)
@@ -631,6 +706,9 @@ def main(argv: list[str] | None = None) -> int:
     run_parser.add_argument("--max-concurrency", type=int, default=1, help="must stay 1 (serial)")
     run_parser.add_argument("--max-tokens", type=int, default=None,
                             help="run-level max_tokens override (prompt text unchanged; recorded in manifest)")
+    run_parser.add_argument("--gloss-input-mode", default=DEFAULT_GLOSS_INPUT_MODE, choices=GLOSS_INPUT_MODES,
+                            help="group F gloss rendering: candidate_text (E02 B0 verbatim) or "
+                                 "spaced_tokens (SLRT gloss token list, space separated)")
     args = parser.parse_args(argv)
 
     if args.command == "run":
@@ -662,6 +740,7 @@ def main(argv: list[str] | None = None) -> int:
             backend_kwargs=backend_kwargs,
             concurrency=args.max_concurrency,
             max_tokens_override=args.max_tokens,
+            gloss_input_mode=args.gloss_input_mode,
         )
         return 0
     return 1

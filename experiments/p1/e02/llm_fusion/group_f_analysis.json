@@ -1,0 +1,553 @@
+{
+  "run_id": "g2f-wbproxy-50-v3f-spaced-20261027",
+  "prompt_version": "v3_f",
+  "metrics": {
+    "A": {
+      "group": "A",
+      "description": "Uni-Sign 原始译文（基准，不调 LLM）",
+      "n_rows": 50,
+      "n_ok": 50,
+      "metrics": {
+        "metric_definition_version": "p1-v1",
+        "n": 50,
+        "bleu4_13a": 31.2308,
+        "bleu4_13a_precisions": [
+          63.78,
+          40.59,
+          28.84,
+          21.55
+        ],
+        "bleu4_13a_bp": 0.8769,
+        "chrf": 27.1849,
+        "mean_char_edit_similarity": 0.4831,
+        "char_rogue_l_f1": 0.5925,
+        "exact_match_count": 2,
+        "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+      },
+      "delta_bleu_vs_A": {
+        "point": 0.0,
+        "lower": 0.0,
+        "upper": 0.0,
+        "iterations": 1000,
+        "groups": 10,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "delta_edit_vs_A": {
+        "point": 0.0,
+        "lower": 0.0,
+        "upper": 0.0,
+        "iterations": 1000,
+        "groups": 10,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "backend_latency_ms": {
+        "p50": null,
+        "p95": null,
+        "mean": null,
+        "n": 0
+      },
+      "tokens": {
+        "prompt_sum": null,
+        "completion_sum": null,
+        "total_sum": null,
+        "n_calls_with_usage": 0
+      },
+      "tokens_out_sum": null,
+      "retries_total": 0,
+      "failed_calls": 0,
+      "calls": 50
+    },
+    "B0": {
+      "group": "B0",
+      "description": "SLRT Gloss 确定性 join（无 G2T；词列，不成句）",
+      "n_rows": 50,
+      "n_ok": 50,
+      "metrics": {
+        "metric_definition_version": "p1-v1",
+        "n": 50,
+        "bleu4_13a": 12.5914,
+        "bleu4_13a_precisions": [
+          63.28,
+          32.64,
+          12.99,
+          6.3
+        ],
+        "bleu4_13a_bp": 0.621,
+        "chrf": 13.9142,
+        "mean_char_edit_similarity": 0.355,
+        "char_rogue_l_f1": 0.4731,
+        "exact_match_count": 0,
+        "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+      },
+      "delta_bleu_vs_A": {
+        "point": -18.63934895104837,
+        "lower": -26.2983,
+        "upper": -11.0978,
+        "iterations": 1000,
+        "groups": 10,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "delta_edit_vs_A": {
+        "point": -0.12808199999999997,
+        "lower": -0.182,
+        "upper": -0.0696,
+        "iterations": 1000,
+        "groups": 10,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "backend_latency_ms": {
+        "p50": null,
+        "p95": null,
+        "mean": null,
+        "n": 0
+      },
+      "tokens": {
+        "prompt_sum": null,
+        "completion_sum": null,
+        "total_sum": null,
+        "n_calls_with_usage": 0
+      },
+      "tokens_out_sum": null,
+      "retries_total": 0,
+      "failed_calls": 0,
+      "calls": 50
+    },
+    "F": {
+      "group": "F",
+      "description": "SLRT Gloss -> LLM 造句（v3_f：只给词汇序列，不给 Uni-Sign 译文）",
+      "n_rows": 50,
+      "n_ok": 43,
+      "metrics": {
+        "metric_definition_version": "p1-v1",
+        "n": 43,
+        "bleu4_13a": 19.4749,
+        "bleu4_13a_precisions": [
+          61.12,
+          32.6,
+          15.9,
+          8.48
+        ],
+        "bleu4_13a_bp": 0.8554,
+        "chrf": 18.2871,
+        "mean_char_edit_similarity": 0.4009,
+        "char_rogue_l_f1": 0.5471,
+        "exact_match_count": 1,
+        "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+      },
+      "delta_bleu_vs_A": {
+        "point": -12.69099592219979,
+        "lower": -18.3408,
+        "upper": -6.3451,
+        "iterations": 1000,
+        "groups": 10,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "delta_edit_vs_A": {
+        "point": -0.09426046511627906,
+        "lower": -0.1507,
+        "upper": -0.0413,
+        "iterations": 1000,
+        "groups": 10,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "backend_latency_ms": {
+        "p50": 6796.946,
+        "p95": 12382.07,
+        "mean": 7039.403,
+        "n": 43
+      },
+      "tokens": {
+        "prompt_sum": 6946,
+        "completion_sum": 36832,
+        "total_sum": 43778,
+        "n_calls_with_usage": 43
+      },
+      "tokens_out_sum": 36832,
+      "retries_total": 0,
+      "failed_calls": 7,
+      "calls": 50
+    }
+  },
+  "paired_deltas": {
+    "F_minus_A": {
+      "first": "A",
+      "second": "F",
+      "n_pairs": 43,
+      "delta_bleu_second_minus_first": {
+        "point": -12.69099592219979,
+        "lower": -18.3408,
+        "upper": -6.3451,
+        "iterations": 1000,
+        "groups": 10,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "delta_edit_second_minus_first": {
+        "point": -0.09426046511627906,
+        "lower": -0.1507,
+        "upper": -0.0413,
+        "iterations": 1000,
+        "groups": 10,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "interpretation": "F minus A on the same samples (positive = F better)"
+    },
+    "F_minus_B0": {
+      "first": "B0",
+      "second": "F",
+      "n_pairs": 43,
+      "delta_bleu_second_minus_first": {
+        "point": 7.07247229999628,
+        "lower": 3.6445,
+        "upper": 10.7,
+        "iterations": 1000,
+        "groups": 10,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "delta_edit_second_minus_first": {
+        "point": 0.045911627906976726,
+        "lower": -0.0005,
+        "upper": 0.089,
+        "iterations": 1000,
+        "groups": 10,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "interpretation": "F minus B0 on the same samples (positive = F better)"
+    },
+    "B0_minus_A": {
+      "first": "A",
+      "second": "B0",
+      "n_pairs": 50,
+      "delta_bleu_second_minus_first": {
+        "point": -18.63934895104837,
+        "lower": -26.2983,
+        "upper": -11.0978,
+        "iterations": 1000,
+        "groups": 10,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "delta_edit_second_minus_first": {
+        "point": -0.12808199999999997,
+        "lower": -0.182,
+        "upper": -0.0696,
+        "iterations": 1000,
+        "groups": 10,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "interpretation": "B0 minus A on the same samples (positive = B0 better)"
+    }
+  },
+  "deltas_point": {
+    "F_minus_A": {
+      "point": -12.69099592219979,
+      "lower": -18.3408,
+      "upper": -6.3451,
+      "iterations": 1000,
+      "groups": 10,
+      "confidence": 0.95,
+      "method": "cluster_bootstrap_by_signer"
+    },
+    "F_minus_B0": {
+      "point": 7.07247229999628,
+      "lower": 3.6445,
+      "upper": 10.7,
+      "iterations": 1000,
+      "groups": 10,
+      "confidence": 0.95,
+      "method": "cluster_bootstrap_by_signer"
+    },
+    "B0_minus_A": {
+      "point": -18.63934895104837,
+      "lower": -26.2983,
+      "upper": -11.0978,
+      "iterations": 1000,
+      "groups": 10,
+      "confidence": 0.95,
+      "method": "cluster_bootstrap_by_signer"
+    }
+  },
+  "deltas_edit": {
+    "F_minus_A": {
+      "point": -0.09426046511627906,
+      "lower": -0.1507,
+      "upper": -0.0413,
+      "iterations": 1000,
+      "groups": 10,
+      "confidence": 0.95,
+      "method": "cluster_bootstrap_by_signer"
+    },
+    "F_minus_B0": {
+      "point": 0.045911627906976726,
+      "lower": -0.0005,
+      "upper": 0.089,
+      "iterations": 1000,
+      "groups": 10,
+      "confidence": 0.95,
+      "method": "cluster_bootstrap_by_signer"
+    },
+    "B0_minus_A": {
+      "point": -0.12808199999999997,
+      "lower": -0.182,
+      "upper": -0.0696,
+      "iterations": 1000,
+      "groups": 10,
+      "confidence": 0.95,
+      "method": "cluster_bootstrap_by_signer"
+    }
+  },
+  "verdicts": {
+    "F_vs_A_bleu": "显著更差（CI 不含 0）",
+    "F_vs_B0_bleu": "显著更好（CI 不含 0）",
+    "F_vs_A_edit": "显著更差（CI 不含 0）"
+  },
+  "failure": {
+    "n_calls": 50,
+    "n_ok": 43,
+    "n_failed": 7,
+    "failed_finish_reasons": {
+      "length": 7
+    },
+    "failed_error_types": {
+      "empty completion text (finish_reason=length; max_tokens=2048)": 7
+    },
+    "latency_p50_s": 8.309,
+    "latency_p95_s": 14.093,
+    "latency_mean_s": 8.071,
+    "tokens_in_sum": 8087,
+    "tokens_out_sum": 51167,
+    "retries_total": 0,
+    "endpoint": "wb-proxy",
+    "model": "deepseek-v4.1-flash",
+    "prompt_version": "v3_f"
+  },
+  "gloss_retention": {
+    "mean": 0.8578,
+    "min": 0.0,
+    "max": 1.0,
+    "frac_below_1": 0.16,
+    "n": 50,
+    "token_source": "artifacts\\csldaily-video-test-627-20261026\\slrt",
+    "note": "retention = fraction of SLRT gloss tokens appearing in the F sentence (model-output tokens, not reference gloss)"
+  },
+  "per_sample_edit_vs_A": {
+    "n_pairs_ok": 43,
+    "F_better_than_A": 15,
+    "F_worse_than_A": 23,
+    "F_equal_to_A": 5
+  },
+  "failed_calls": 7,
+  "examples": [
+    {
+      "sample_id": "S001064_P0008_T00",
+      "signer_id": "P0008",
+      "gt": "爷爷年龄大，喜欢爬山。",
+      "reference": "爷 爷 年 龄 大 , 喜 欢 爬 山 。",
+      "A": "爷爷年龄大,喜欢爬山。",
+      "B0": "爷爷年龄大山爬他喜欢",
+      "B0_spaced": "爷爷 年龄 大 山 爬 他 喜欢",
+      "F": "爷爷年龄大了，他喜欢爬山。",
+      "sim_A": 1.0,
+      "sim_B0": 0.4545,
+      "sim_F": 0.8462,
+      "dF_B0": 0.3917,
+      "dF_A": -0.1538,
+      "gloss_retention": 1.0,
+      "gloss_tokens_matched": "7/7",
+      "selection": "F−B0 增益最大"
+    },
+    {
+      "sample_id": "S000414_P0004_T00",
+      "signer_id": "P0004",
+      "gt": "时间过得真快，新年快要到了。",
+      "reference": "时 间 过 得 真 快 , 新 年 快 要 到 了 。",
+      "A": "时间过得可真快,新年就要到了。",
+      "B0": "时间过快新年龄准备到",
+      "B0_spaced": "时间 过 快 新 年龄 准备 到",
+      "F": "时间过得快，新年龄准备到了。",
+      "sim_A": 0.8667,
+      "sim_B0": 0.4286,
+      "sim_F": 0.7143,
+      "dF_B0": 0.2857,
+      "dF_A": -0.1524,
+      "gloss_retention": 1.0,
+      "gloss_tokens_matched": "7/7",
+      "selection": "F−B0 增益最大"
+    },
+    {
+      "sample_id": "S000230_P0008_T00",
+      "signer_id": "P0008",
+      "gt": "左边的房间是我爸爸妈妈的，他们的房间很大。",
+      "reference": "左 边 的 房 间 是 我 爸 爸 妈 妈 的 , 他 们 的 房 间 很 大 。",
+      "A": "靠近窗户的位置,妈妈把房间扩大了。",
+      "B0": "左房子爸爸妈妈他他房子大",
+      "B0_spaced": "左 房子 爸爸 妈妈 他 他 房子 大",
+      "F": "他左边的房子是爸爸和妈妈的，他的房子大。",
+      "sim_A": 0.2381,
+      "sim_B0": 0.4286,
+      "sim_F": 0.6667,
+      "dF_B0": 0.2381,
+      "dF_A": 0.4286,
+      "gloss_retention": 1.0,
+      "gloss_tokens_matched": "8/8",
+      "selection": "F−B0 增益最大"
+    },
+    {
+      "sample_id": "S000440_P0004_T00",
+      "signer_id": "P0004",
+      "gt": "这些我昨天下午就准备好了。",
+      "reference": "这 些 我 昨 天 下 午 就 准 备 好 了 。",
+      "A": "我昨天下午就准备好了。",
+      "B0": "你们我不会下午准备好了",
+      "B0_spaced": "你们 我 不会 下午 准备 好了",
+      "F": "下午你们准备好了，我不会。",
+      "sim_A": 0.8462,
+      "sim_B0": 0.5385,
+      "sim_F": 0.1538,
+      "dF_B0": -0.3847,
+      "dF_A": -0.6924,
+      "gloss_retention": 1.0,
+      "gloss_tokens_matched": "6/6",
+      "selection": "F−B0 损失最大"
+    },
+    {
+      "sample_id": "S005113_P0003_T00",
+      "signer_id": "P0003",
+      "gt": "找女朋友是我现在最大的目标。",
+      "reference": "找 女 朋 友 是 我 现 在 最 大 的 目 标 。",
+      "A": "找女朋友是我现在最大的标准。",
+      "B0": "找朋友是我今天最标准正确",
+      "B0_spaced": "找 朋友 是 我 今天 最 标准 正确",
+      "F": "今天，我找朋友是最标准正确。",
+      "sim_A": 0.8571,
+      "sim_B0": 0.4286,
+      "sim_F": 0.1429,
+      "dF_B0": -0.2857,
+      "dF_A": -0.7142,
+      "gloss_retention": 1.0,
+      "gloss_tokens_matched": "8/8",
+      "selection": "F−B0 损失最大"
+    },
+    {
+      "sample_id": "S003758_P0000_T00",
+      "signer_id": "P0000",
+      "gt": "我在考虑到底是辞职还是继续工作。",
+      "reference": "我 在 考 虑 到 底 是 辞 职 还 是 继 续 工 作 。",
+      "A": "辞职还是工作,我觉得很困难。",
+      "B0": "辞职还是是工作想感觉",
+      "B0_spaced": "辞职 还是 是 工作 想 感觉",
+      "F": "感觉是想辞职还是工作？",
+      "sim_A": 0.0625,
+      "sim_B0": 0.25,
+      "sim_F": 0.375,
+      "dF_B0": 0.125,
+      "dF_A": 0.3125,
+      "gloss_retention": 1.0,
+      "gloss_tokens_matched": "6/6",
+      "selection": "F−A 增益最大"
+    },
+    {
+      "sample_id": "S003747_P0001_T00",
+      "signer_id": "P0001",
+      "gt": "垃圾处理问题有关我们每个人的生活。",
+      "reference": "垃 圾 处 理 问 题 有 关 我 们 每 个 人 的 生 活 。",
+      "A": "垃圾问题和每个人的生活都有着密切的关系。",
+      "B0": "垃圾问题我们每人生活有联系",
+      "B0_spaced": "垃圾 问题 我们 每 人 生活 有 联系",
+      "F": "垃圾问题与我们每个人的生活有联系。",
+      "sim_A": 0.3,
+      "sim_B0": 0.4706,
+      "sim_F": 0.5882,
+      "dF_B0": 0.1176,
+      "dF_A": 0.2882,
+      "gloss_retention": 1.0,
+      "gloss_tokens_matched": "8/8",
+      "selection": "F−A 增益最大"
+    },
+    {
+      "sample_id": "S004459_P0003_T00",
+      "signer_id": "P0003",
+      "gt": "他参加了图书馆的暑期活动。",
+      "reference": "他 参 加 了 图 书 馆 的 暑 期 活 动 。",
+      "A": "他参加图书馆的暑假活动。",
+      "B0": "他参加书房子热行为",
+      "B0_spaced": "他 参加 书 房子 热 行为",
+      "F": "他参加书、房子和热的行为。",
+      "sim_A": 0.8462,
+      "sim_B0": 0.3077,
+      "sim_F": 0.3077,
+      "dF_B0": 0.0,
+      "dF_A": -0.5385,
+      "gloss_retention": 1.0,
+      "gloss_tokens_matched": "6/6",
+      "selection": "F−A 损失最大"
+    }
+  ],
+  "gt_join": {
+    "path": "experiments\\p1\\references\\gt_1086.csv",
+    "eval_only": true
+  },
+  "security": {
+    "api_key_persisted": false,
+    "api_key_in_manifest": false,
+    "api_key_in_outputs": false,
+    "credentials_reference_only": true,
+    "note": "key is resolved at runtime in memory only; this manifest stores a reference string, not the value"
+  },
+  "prompt_files": {
+    "json": "experiments\\p1\\e02\\llm_fusion\\prompts\\v3_f.json",
+    "md": "experiments\\p1\\e02\\llm_fusion\\prompts\\v3_f.md",
+    "json_sha256": "4606066c95b2ad05ee88843eaee0e2be86261063c42874a6423f8ad1cf282432",
+    "md_sha256": "5b7255c06441cc7b502abf7000b77a123e133e5179ebfa4a95c8ef0d7e4eb516"
+  },
+  "created_at": "2026-10-27T05:09:04+00:00",
+  "main_run_gloss_input_mode": "spaced_tokens",
+  "segmentation_comparison": [
+    {
+      "run_id": "g2f-wbproxy-50-v3f-20261027",
+      "available": true,
+      "gloss_input_mode": "candidate_text (pre-gloss_input-field run)",
+      "n_ok": 47,
+      "bleu4_13a": 18.4356,
+      "chrf": 17.6788,
+      "mean_char_edit_similarity": 0.3915,
+      "F_minus_A_bleu": {
+        "point": -11.591986007247222,
+        "lower": -18.7935,
+        "upper": -4.3414,
+        "iterations": 1000,
+        "groups": 10,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "F_minus_B0_bleu": {
+        "point": 5.715249844444381,
+        "lower": 3.2046,
+        "upper": 7.8627,
+        "iterations": 1000,
+        "groups": 10,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "F_minus_A_edit": {
+        "point": -0.07931489361702126,
+        "lower": -0.1295,
+        "upper": -0.0289,
+        "iterations": 1000,
+        "groups": 10,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      }
+    }
+  ]
+}

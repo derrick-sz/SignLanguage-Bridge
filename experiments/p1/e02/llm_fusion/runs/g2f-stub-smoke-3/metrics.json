@@ -1,0 +1,318 @@
+{
+  "experiment": "G2-2A-LLM-FUSION",
+  "run_id": "g2f-stub-smoke-3",
+  "status": "IMPLEMENTED_UNTESTED",
+  "data_status": "STUB_ONLY_NOT_LLM_RESULTS",
+  "prompt_version": "v3_f",
+  "prompt_sha256": "4606066c95b2ad05ee88843eaee0e2be86261063c42874a6423f8ad1cf282432",
+  "prompt_md_sha256": "5b7255c06441cc7b502abf7000b77a123e133e5179ebfa4a95c8ef0d7e4eb516",
+  "backend": "stub",
+  "provider": null,
+  "model": null,
+  "model_version": "stub-v1-deterministic",
+  "decoding": {
+    "temperature": 0,
+    "max_tokens": 2048,
+    "top_p": 1.0,
+    "stop": null,
+    "reasoning": "max_tokens=2048 because the endpoint is a reasoning model (v1 evidence: 256 truncated 73/150 calls; v2 fixed at 2048)."
+  },
+  "labels": {
+    "stub_backend": true,
+    "warning": "STUB_ONLY numbers validate the pipeline; they are NOT LLM model results"
+  },
+  "n_samples": 3,
+  "groups": {
+    "A": {
+      "group": "A",
+      "description": "Uni-Sign 原始译文（基准，不调 LLM）",
+      "n_rows": 3,
+      "n_ok": 3,
+      "metrics": {
+        "metric_definition_version": "p1-v1",
+        "n": 3,
+        "bleu4_13a": 35.612,
+        "bleu4_13a_precisions": [
+          66.67,
+          45.45,
+          33.33,
+          22.22
+        ],
+        "bleu4_13a_bp": 0.92,
+        "chrf": 30.6874,
+        "mean_char_edit_similarity": 0.5278,
+        "char_rogue_l_f1": 0.6011,
+        "exact_match_count": 0,
+        "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+      },
+      "delta_bleu_vs_A": {
+        "point": 0.0,
+        "lower": 0.0,
+        "upper": 0.0,
+        "iterations": 200,
+        "groups": 3,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "delta_edit_vs_A": {
+        "point": 0.0,
+        "lower": 0.0,
+        "upper": 0.0,
+        "iterations": 200,
+        "groups": 3,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "backend_latency_ms": {
+        "p50": null,
+        "p95": null,
+        "mean": null,
+        "n": 0
+      },
+      "tokens": {
+        "prompt_sum": null,
+        "completion_sum": null,
+        "total_sum": null,
+        "n_calls_with_usage": 0
+      },
+      "tokens_out_sum": null,
+      "retries_total": 0,
+      "failed_calls": 0,
+      "calls": 3
+    },
+    "B0": {
+      "group": "B0",
+      "description": "SLRT Gloss 确定性 join（无 G2T；词列，不成句）",
+      "n_rows": 3,
+      "n_ok": 3,
+      "metrics": {
+        "metric_definition_version": "p1-v1",
+        "n": 3,
+        "bleu4_13a": 7.1269,
+        "bleu4_13a_precisions": [
+          55.56,
+          26.67,
+          16.67,
+          11.11
+        ],
+        "bleu4_13a_bp": 0.3114,
+        "chrf": 8.7012,
+        "mean_char_edit_similarity": 0.2778,
+        "char_rogue_l_f1": 0.3444,
+        "exact_match_count": 0,
+        "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+      },
+      "delta_bleu_vs_A": {
+        "point": -28.485173011399844,
+        "lower": -38.4258,
+        "upper": -3.2642,
+        "iterations": 200,
+        "groups": 3,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "delta_edit_vs_A": {
+        "point": -0.2500333333333333,
+        "lower": -0.6667,
+        "upper": 0.0833,
+        "iterations": 200,
+        "groups": 3,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "backend_latency_ms": {
+        "p50": null,
+        "p95": null,
+        "mean": null,
+        "n": 0
+      },
+      "tokens": {
+        "prompt_sum": null,
+        "completion_sum": null,
+        "total_sum": null,
+        "n_calls_with_usage": 0
+      },
+      "tokens_out_sum": null,
+      "retries_total": 0,
+      "failed_calls": 0,
+      "calls": 3
+    },
+    "F": {
+      "group": "F",
+      "description": "SLRT Gloss -> LLM 造句（v3_f：只给词汇序列，不给 Uni-Sign 译文）",
+      "n_rows": 3,
+      "n_ok": 3,
+      "metrics": {
+        "metric_definition_version": "p1-v1",
+        "n": 3,
+        "bleu4_13a": 35.612,
+        "bleu4_13a_precisions": [
+          66.67,
+          45.45,
+          33.33,
+          22.22
+        ],
+        "bleu4_13a_bp": 0.92,
+        "chrf": 30.6874,
+        "mean_char_edit_similarity": 0.5278,
+        "char_rogue_l_f1": 0.6011,
+        "exact_match_count": 0,
+        "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+      },
+      "delta_bleu_vs_A": {
+        "point": 0.0,
+        "lower": 0.0,
+        "upper": 0.0,
+        "iterations": 200,
+        "groups": 3,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "delta_edit_vs_A": {
+        "point": 0.0,
+        "lower": 0.0,
+        "upper": 0.0,
+        "iterations": 200,
+        "groups": 3,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "backend_latency_ms": {
+        "p50": 0.003,
+        "p95": 0.014,
+        "mean": 0.006,
+        "n": 3
+      },
+      "tokens": {
+        "prompt_sum": null,
+        "completion_sum": null,
+        "total_sum": null,
+        "n_calls_with_usage": 0
+      },
+      "tokens_out_sum": null,
+      "retries_total": 0,
+      "failed_calls": 0,
+      "calls": 3
+    }
+  },
+  "baseline_sources": {
+    "A": {
+      "source": "experiments\\p1\\e02\\candidate_outputs.jsonl",
+      "file_sha256": "9318cde5690f369a8cac25653cac6ef317a0501bc534820bc1d70eafd188f2ba",
+      "injected": true,
+      "note": "GT-free model output candidate; not an LLM call"
+    },
+    "B0": {
+      "source": "experiments\\p1\\e02\\candidate_outputs.jsonl",
+      "file_sha256": "9318cde5690f369a8cac25653cac6ef317a0501bc534820bc1d70eafd188f2ba",
+      "injected": true,
+      "note": "GT-free model output candidate; not an LLM call"
+    }
+  },
+  "paired_group_comparisons": {
+    "A_vs_F": {
+      "first": "A",
+      "second": "F",
+      "n_pairs": 3,
+      "delta_bleu_second_minus_first": {
+        "point": 0.0,
+        "lower": 0.0,
+        "upper": 0.0,
+        "iterations": 200,
+        "groups": 3,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "delta_edit_second_minus_first": {
+        "point": 0.0,
+        "lower": 0.0,
+        "upper": 0.0,
+        "iterations": 200,
+        "groups": 3,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "interpretation": "F minus A on the same samples (positive = F better)"
+    },
+    "B0_vs_F": {
+      "first": "B0",
+      "second": "F",
+      "n_pairs": 3,
+      "delta_bleu_second_minus_first": {
+        "point": 28.485173011399844,
+        "lower": 3.2642,
+        "upper": 38.4258,
+        "iterations": 200,
+        "groups": 3,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "delta_edit_second_minus_first": {
+        "point": 0.2500333333333333,
+        "lower": -0.0833,
+        "upper": 0.6667,
+        "iterations": 200,
+        "groups": 3,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "interpretation": "F minus B0 on the same samples (positive = F better)"
+    },
+    "A_vs_B0": {
+      "first": "A",
+      "second": "B0",
+      "n_pairs": 3,
+      "delta_bleu_second_minus_first": {
+        "point": -28.485173011399844,
+        "lower": -38.4258,
+        "upper": -3.2642,
+        "iterations": 200,
+        "groups": 3,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "delta_edit_second_minus_first": {
+        "point": -0.2500333333333333,
+        "lower": -0.6667,
+        "upper": 0.0833,
+        "iterations": 200,
+        "groups": 3,
+        "confidence": 0.95,
+        "method": "cluster_bootstrap_by_signer"
+      },
+      "interpretation": "B0 minus A on the same samples (positive = B0 better)"
+    }
+  },
+  "llm_endpoint": {
+    "provider": null,
+    "base_url": null,
+    "endpoint": null,
+    "model": null,
+    "credentials_ref": null,
+    "credentials_present": null,
+    "credentials_source": null,
+    "timeout_seconds": null,
+    "max_retries": null,
+    "enable_env": null
+  },
+  "security": {
+    "api_key_persisted": false,
+    "api_key_in_manifest": false,
+    "api_key_in_outputs": false,
+    "credentials_reference_only": true,
+    "note": "key is resolved at runtime in memory only; this manifest stores a reference string, not the value"
+  },
+  "gt_join": {
+    "path": "experiments\\p1\\references\\gt_1086.csv",
+    "sha256": "feb1b42daa74ed3efa992b50746c29f145550d381a80460669060ca00c087bb7",
+    "eval_only": true,
+    "reference_field": "gt_1086.csv ref_sentence_upstream"
+  },
+  "bootstrap": {
+    "iterations": 200,
+    "seed": 20261026,
+    "method": "cluster_bootstrap_by_signer (paired: group vs A on the same samples)",
+    "metric": "corpus BLEU-4 delta and mean char-edit-similarity delta"
+  },
+  "created_at": "2026-10-27T04:49:23+00:00"
+}

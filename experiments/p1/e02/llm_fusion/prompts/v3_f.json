@@ -1,0 +1,37 @@
+{
+  "version": "v3_f",
+  "language": "zh",
+  "created_at": "2026-10-27T04:50:00+00:00",
+  "description": "G2 improvement direction 1, group F: LLM as language organizer (B0 SLRT gloss -> natural Chinese sentence). No Uni-Sign translation is given to the LLM, so it cannot be anchored by a fluent-but-wrong A sentence. This is a NEW experiment path, not a re-run of the C/D/E fact-arbitration fusion.",
+  "change_log_from_v2": [
+    "F: new group. Input = SLRT gloss word sequence only (candidate B0); no Uni-Sign translation, no slot evidence, no score note.",
+    "Role change: from 'fact arbiter' (C/D/E) to 'language organizer' (F). The prompt only asks to compose a fluent sentence from the given gloss words.",
+    "Rationale (see docs/experiments/P-1/G2_IMPROVEMENT_ANALYSIS.md): gloss content words are more reliable than Uni-Sign (action-slot error 45.0% vs 57.5%), while B0 is not fluent (2.07/5); LLM is strong at organizing given content into fluent text.",
+    "Decoding: temperature=0, max_tokens=2048 (reasoning model; v1 evidence showed truncation at 256)."
+  ],
+  "system_prompt": "你是手语翻译助手。输入是手语识别模型给出的词汇序列。请把这些词汇组成一句自然流畅的简体中文句子。规则：1 只输出一句中文译文；2 必须保留所有词汇的意思，不得添加、删除或改变任何内容；3 不得虚构词汇之外的信息；4 使用简体中文与中文标点。",
+  "group_prompts": {
+    "F": {
+      "description": "SLRT gloss word sequence -> natural Chinese sentence (LLM as language organizer; no Uni-Sign text given).",
+      "template": "【任务】把下面这些手语识别出的词汇组成一句自然流畅的简体中文句子。保留所有词汇的意思，不添加不删除不改变。\n【词汇序列】{gloss_text}\n【输出】仅输出一句中文译文。"
+    },
+    "A": {
+      "description": "No LLM. Direct Uni-Sign output baseline (never sent to a backend).",
+      "template": null
+    }
+  },
+  "output_format": {},
+  "decoding": {
+    "temperature": 0,
+    "max_tokens": 2048,
+    "top_p": 1.0,
+    "stop": null,
+    "reasoning": "max_tokens=2048 because the endpoint is a reasoning model (v1 evidence: 256 truncated 73/150 calls; v2 fixed at 2048)."
+  },
+  "discipline": [
+    "group F input is the SLRT gloss word sequence ONLY; the Uni-Sign translation (candidate A) must never appear in the prompt (harness asserts this).",
+    "gloss input is the GT-free E02 candidate B0 text, not a reference; no reference sentence, GT gloss, WER/edit label or GT-derived score may enter the prompt.",
+    "prompts must not contain candidate identity (model names) or EVAL_ONLY fields.",
+    "this prompt file is versioned (v3_f); v1_zh/v2_zh stay untouched."
+  ]
+}
