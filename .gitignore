@@ -44,3 +44,7 @@ experiments/p1/e05/replay-probe-*/negatives/
 # ONNX runtime cache pulled during runs (large, reproducible)
 rtmlib-cache/
 
+# ---- environment-aware model defaults (task-36) ----
+# Real config pins local bundle paths; the *.example.json is the committed schema.
+configs/model_defaults.json
+

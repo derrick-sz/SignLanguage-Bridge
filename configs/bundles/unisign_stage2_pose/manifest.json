@@ -1,0 +1,51 @@
+{
+  "backend": "uni_sign_pose_slt",
+  "capabilities": [
+    "clip"
+  ],
+  "checkpoint": "../../../models/external/uni_sign/csl_daily_stage2_pose_subset.pth",
+  "checkpoint_bytes": 1947137670,
+  "checkpoint_sha256": "951601a39fbbe19f633e0df9690df432056b4286609f75a3ee723c8f001fc2e3",
+  "display_name": "Uni-Sign stage2 pose subset (627 pose/mT5 keys, pose-only architecture; dev/test default, prod keeps stage1)",
+  "license": {
+    "model": "CC-BY-NC-4.0",
+    "model_note": "Uni-Sign model weights are CC BY-NC 4.0: attribution is required and commercial use is not permitted by that license.",
+    "mt5": "Apache-2.0",
+    "source_note": "The pinned Uni-Sign source tree contains no explicit LICENSE file. Do not redistribute the upstream source in this repository or use it commercially without written clarification from the authors.",
+    "source_status": "no-license-file-at-pinned-commit"
+  },
+  "model_repo": "ZechengLi19/Uni-Sign",
+  "model_revision": "182913ca7a8b7dd9837d7d6f10717353f4408f80",
+  "mt5_dir": "../../../models/external/uni_sign/mt5-base",
+  "mt5_model_file_sha256": "180573b534144580f04af026da62bf71bc976ee1b7eb311b8945e2fefde8d614",
+  "mt5_repo": "google/mt5-base",
+  "mt5_revision": "2eb15465c5dd7f72a8f7984306ad05ebc3dd1e1f",
+  "provenance": {
+    "model_card": "https://huggingface.co/ZechengLi19/Uni-Sign",
+    "not": "general-purpose CSL recognition or Libras classification",
+    "paper": "https://arxiv.org/abs/2501.15187",
+    "source": "https://github.com/ZechengLi19/Uni-Sign/tree/eed438bcb49e30405cd6ccdfcccca330c134e830",
+    "task": "CSL-Daily pose-only sign-language translation (SLT)"
+  },
+  "run_id": "uni-sign-stage2-pose-subset-devdefault-20261027",
+  "runtime": {
+    "device": "auto",
+    "dtype": "auto",
+    "max_frames": 256,
+    "max_new_tokens": 100,
+    "max_video_frames": 600,
+    "num_beams": 4,
+    "pose_backend": "onnxruntime",
+    "pose_device": "auto",
+    "pose_mode": "lightweight",
+    "pose_normalization": "isotropic_short_side",
+    "stabilize_after": 2
+  },
+  "schema_version": 1,
+  "sign_language": "csl",
+  "source_commit": "eed438bcb49e30405cd6ccdfcccca330c134e830",
+  "source_dir": "../../../models/external/uni_sign_source",
+  "source_repo": "ZechengLi19/Uni-Sign",
+  "source_zip_sha256": "8022b073bb1de962a8e3f424e9858ee50465e46228bc8854b966d54107d8cc97",
+  "task_type": "text"
+}

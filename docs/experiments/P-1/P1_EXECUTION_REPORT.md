@@ -322,3 +322,16 @@
 - 同时修复两个生产缺陷：①pose-only adapter 的 checkpoint 校验从硬编码常量改为按 manifest 声明（`verify_file`），使替代 checkpoint 可加载；②rtmpose 路径 backend/cache/EOF/归一化四处（原路径任何真实视频都跑不通）。
 - 门：**Round-2 独立人评 + 部署泛化验收通过前保持候选**；生产默认仍为 A（视频）/A2（官方 pose）。
 - 边界：真实 RGB+pose 不可用（gate 恒零，见 ADR-P1-011 修正）；该 adapter 的实际价值是承载 1012 键的 stage2 pose 权重（627 键子集已在纯 pose 架构上 1086/1086 等价验证）。
+
+### ADR-P1-013 分环境默认模型：dev/test 用 S2，生产保持 A2（2026-10-27，用户决定）
+- 状态：**ACCEPTED**（用户明确选择"B：生产默认不变 + S2 在开发/测试环境默认"）；对应 P1-RGBPOSE-ADAPTER 收尾与 Round-2/LOSO 证据。
+- 背景：Round-2 人评显示 S2 全项优于 A2（平均分 1.90 vs 1.60、严重错误 73.3% vs 80.0%、可用率 93.3% vs 86.7%，纠对 10 : 改错 2），但平均分差 CI [−0.10,+0.73] 含 0、评审为 AI 辅助（用户确认）、且无独立 signer 集；LOSO 显示编辑相似度改善覆盖 9/10 signer、留一后 10/10 仍为正（Δedit +0.0109~+0.0159），ΔBLEU 仍不显著。
+- 决策（分层）：
+  | 环境 | 默认 | 回退 | 说明 |
+  |---|---|---|---|
+  | dev / test | **S2**（`unisign_stage2_pose`） | A2（`unisign_pose_stage1`） | 立即启用，便于在开发中暴露问题 |
+  | prod（及未设环境变量） | **A2**（stage1） | 无 | 保持现状，等下一道门 |
+- 实现：`slbridge/model_defaults.py` + `configs/model_defaults.example.json`（真实文件 gitignored）。环境判定 = 显式参数 > `SLBRIDGE_ENV` > **安全默认 prod**；`override` 最高优先；未知/拼错环境 fail-fast。S2 bundle 用仓库内相对路径 `configs/bundles/unisign_stage2_pose/manifest.json`（权重仍在 gitignored 的 `models/` 下）。
+- 证据链：`G2_ROUND2_REVIEW.md`（人评 + 口径审计）、`LOSO_SENSITIVITY_ANALYSIS.md`（敏感性）、`S2_VS_RGBPOSE_RELATIONSHIP.md`（与完整 RGB+Pose 1086/1086 逐字一致）、`experiments/p1/e04/rgbpose_perf_report.md`（零延迟代价）。
+- **生产切换的门（未满足）**：①独立双人盲评（Rubric v2）确认关键事实错误风险；②新 signer 数据上的泛化验证；③P0006 类退化样本的监控。三者任一未满足都不得改 prod 默认。
+- 影响：不触碰冻结评测基线（`experiments/p1/**` 产物不动）；解析层为纯新增，未接线到 CLI/API/桌面入口（调用方需显式使用）。

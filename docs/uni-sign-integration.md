@@ -91,6 +91,28 @@ models/external/uni_sign/
 
 模型包 manifest 使用相对路径，可整体移动。下载脚本在最终文件完成前只写 `.downloads/` 暂存目录；只有大小和哈希都通过的完整文件才会被原子替换到正式路径。残缺文件不会被标记成功。
 
+## 环境与默认模型（2026-10-27）
+
+产品决定：**生产默认仍是 A2（固定 pose-only stage1），S2 只在开发/测试环境做默认**。切换由配置驱动，不改任何推理代码，也不改 `experiments/p1/**` 下的冻结评测产物。
+
+| 环境 | 默认 | 回退链 | 说明 |
+|---|---|---|---|
+| `dev` | S2 `unisign_stage2_pose` | A2 `unisign_pose_stage1` | 本地开发/试跑 |
+| `test` | S2 `unisign_stage2_pose` | A2 `unisign_pose_stage1` | 测试/CI 侧试跑 |
+| `prod` | A2 `unisign_pose_stage1` | 无 | 交付默认，**不设变量即此档** |
+
+- 配置文件：`configs/model_defaults.json`（本机真实配置，已 gitignore）；schema 见入库的 `configs/model_defaults.example.json`。bundle 路径按仓库根目录解析，也可写绝对路径。
+- 解析层：`slbridge/model_defaults.py`（`load_model_defaults` / `resolve_pose_default` / `resolve_with_fallback`）。环境判定顺序：**显式参数 > 环境变量 `SLBRIDGE_ENV` > 安全默认 `prod`**；`override=` 优先级最高，但返回值仍记录实际环境。
+- 为什么安全默认是 prod：S2 是“去掉数学上一支恒零的 RGB 分支”的实验构建，尚未经过独立双人盲评与新 signer 数据验收，不能让任何未设置环境变量的进程意外用上它。
+- 切回 A2：`$env:SLBRIDGE_ENV='prod'`（或直接不设）即可；临时单次覆盖用 `resolve_pose_default(override='unisign_pose_stage1')`。
+- 先看当前解析结果（不加载权重）：
+
+```powershell
+.\.conda-env\python.exe -c "from slbridge.model_defaults import resolve_with_fallback as r; print([(m.name, m.role) for m in r()])"
+```
+
+- 约束与边界：本层只决定“用哪个 bundle”；加载仍走 `slbridge.model_adapters.load_model_adapter`（S2 的 bundle 需要 `models/external/uni_sign/csl_daily_stage2_pose_subset.pth` 这类本地权重，缺失时 bundle 不可用）。S2 的等价性证据见 `experiments/p1/e01/stage2_pose_subset_report*.md`（1086 条与冻结 RGB+pose 逐字一致），但**该证据不构成产品验收**，prod 不切换。
+
 ## 独立真实推理
 
 ```powershell
