@@ -1,0 +1,1546 @@
+{
+  "experiment": "G2-direction2-slot-patch",
+  "date": "2026-10-27",
+  "pilot": {
+    "path": "experiments\\p1\\datasets\\pilot_50.csv",
+    "n_samples": 50,
+    "sha256": "f0f46125a6acf9768e696d1053450652ddca1146bb6ac2962be2b4efe4c99c4b"
+  },
+  "sources": {
+    "A": "experiments\\p1\\e02\\candidate_outputs.jsonl",
+    "gloss": "experiments\\p1\\e02\\slrt_gloss_predictions.jsonl",
+    "scores": "experiments\\p1\\e03\\per_sample_scores.csv",
+    "slot_logic": "experiments/p1/e06/build_e06.py extract_slots/slot_conflicts (native: numbers/negation/person/question; time/action/object are local deterministic lexicons)"
+  },
+  "thresholds": [
+    0.4,
+    0.5,
+    0.6
+  ],
+  "policies": {
+    "all": [
+      "numbers",
+      "negation",
+      "person",
+      "time",
+      "action",
+      "object"
+    ],
+    "explicit": [
+      "numbers",
+      "negation",
+      "person"
+    ],
+    "explicit_no_negation": [
+      "numbers",
+      "person"
+    ],
+    "person_only": [
+      "person"
+    ]
+  },
+  "gating": {
+    "score_column": "token_score_mean (e03 whitelist; no GT-derived columns)",
+    "note": "sample-level gate; per-token scores were not used (e03 aggregate whitelist only)"
+  },
+  "runs": {
+    "all": {
+      "0.4": {
+        "policy": "all",
+        "stats": {
+          "policy": "all",
+          "threshold": 0.4,
+          "n_samples": 50,
+          "n_fired_samples": 31,
+          "total_patches": 41,
+          "patch_slot_counts": {
+            "person": 4,
+            "object": 18,
+            "negation": 5,
+            "time": 5,
+            "action": 9
+          },
+          "skipped_counts": {
+            "numbers:number_missing_on_one_side": 46,
+            "action:action_missing_on_A_side": 11,
+            "object:no_object_alignment": 28,
+            "action:action_not_single_on_A_side": 15,
+            "person:no_gloss_person_candidate": 1
+          },
+          "trigger_rate": 0.62,
+          "mean_patches_per_fired_sample": 1.323
+        },
+        "metrics": {
+          "metric_definition_version": "p1-v1",
+          "n": 50,
+          "bleu4_13a": 26.103,
+          "bleu4_13a_precisions": [
+            60.94,
+            35.75,
+            23.21,
+            14.94
+          ],
+          "bleu4_13a_bp": 0.8855,
+          "chrf": 22.5262,
+          "mean_char_edit_similarity": 0.4482,
+          "char_rogue_l_f1": 0.5666,
+          "exact_match_count": 2,
+          "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+        },
+        "metrics_A_same_samples": {
+          "metric_definition_version": "p1-v1",
+          "n": 50,
+          "bleu4_13a": 31.2308,
+          "bleu4_13a_precisions": [
+            63.78,
+            40.59,
+            28.84,
+            21.55
+          ],
+          "bleu4_13a_bp": 0.8769,
+          "chrf": 27.1849,
+          "mean_char_edit_similarity": 0.4831,
+          "char_rogue_l_f1": 0.5925,
+          "exact_match_count": 2,
+          "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+        },
+        "delta_bleu_vs_A": {
+          "point": -5.127807230534351,
+          "lower": -7.3315,
+          "upper": -2.9503,
+          "iterations": 1000,
+          "groups": 10,
+          "confidence": 0.95,
+          "method": "cluster_bootstrap_by_signer"
+        },
+        "delta_edit_vs_A": {
+          "point": -0.03491599999999995,
+          "lower": -0.049,
+          "upper": -0.0217,
+          "iterations": 1000,
+          "groups": 10,
+          "confidence": 0.95,
+          "method": "cluster_bootstrap_by_signer"
+        },
+        "n_improved_vs_A": 2,
+        "n_harmed_vs_A": 19,
+        "n_unchanged_vs_A": 29
+      },
+      "0.5": {
+        "policy": "all",
+        "stats": {
+          "policy": "all",
+          "threshold": 0.5,
+          "n_samples": 50,
+          "n_fired_samples": 12,
+          "total_patches": 13,
+          "patch_slot_counts": {
+            "object": 6,
+            "person": 2,
+            "action": 4,
+            "time": 1
+          },
+          "skipped_counts": {
+            "numbers:number_missing_on_one_side": 23,
+            "object:no_object_alignment": 17,
+            "action:action_missing_on_A_side": 4,
+            "action:action_not_single_on_A_side": 9,
+            "person:no_gloss_person_candidate": 1
+          },
+          "trigger_rate": 0.24,
+          "mean_patches_per_fired_sample": 1.083
+        },
+        "metrics": {
+          "metric_definition_version": "p1-v1",
+          "n": 50,
+          "bleu4_13a": 29.283,
+          "bleu4_13a_precisions": [
+            62.82,
+            38.66,
+            26.6,
+            19.12
+          ],
+          "bleu4_13a_bp": 0.8784,
+          "chrf": 25.4428,
+          "mean_char_edit_similarity": 0.4689,
+          "char_rogue_l_f1": 0.5808,
+          "exact_match_count": 2,
+          "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+        },
+        "metrics_A_same_samples": {
+          "metric_definition_version": "p1-v1",
+          "n": 50,
+          "bleu4_13a": 31.2308,
+          "bleu4_13a_precisions": [
+            63.78,
+            40.59,
+            28.84,
+            21.55
+          ],
+          "bleu4_13a_bp": 0.8769,
+          "chrf": 27.1849,
+          "mean_char_edit_similarity": 0.4831,
+          "char_rogue_l_f1": 0.5925,
+          "exact_match_count": 2,
+          "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+        },
+        "delta_bleu_vs_A": {
+          "point": -1.9477729021445427,
+          "lower": -3.2804,
+          "upper": -0.7824,
+          "iterations": 1000,
+          "groups": 10,
+          "confidence": 0.95,
+          "method": "cluster_bootstrap_by_signer"
+        },
+        "delta_edit_vs_A": {
+          "point": -0.014215999999999951,
+          "lower": -0.0244,
+          "upper": -0.0064,
+          "iterations": 1000,
+          "groups": 10,
+          "confidence": 0.95,
+          "method": "cluster_bootstrap_by_signer"
+        },
+        "n_improved_vs_A": 0,
+        "n_harmed_vs_A": 8,
+        "n_unchanged_vs_A": 42
+      },
+      "0.6": {
+        "policy": "all",
+        "stats": {
+          "policy": "all",
+          "threshold": 0.6,
+          "n_samples": 50,
+          "n_fired_samples": 1,
+          "total_patches": 1,
+          "patch_slot_counts": {
+            "object": 1
+          },
+          "skipped_counts": {
+            "numbers:number_missing_on_one_side": 4,
+            "action:action_not_single_on_A_side": 3,
+            "object:no_object_alignment": 3,
+            "action:action_missing_on_A_side": 1
+          },
+          "trigger_rate": 0.02,
+          "mean_patches_per_fired_sample": 1.0
+        },
+        "metrics": {
+          "metric_definition_version": "p1-v1",
+          "n": 50,
+          "bleu4_13a": 31.2131,
+          "bleu4_13a_precisions": [
+            63.64,
+            40.59,
+            28.84,
+            21.55
+          ],
+          "bleu4_13a_bp": 0.8769,
+          "chrf": 27.1631,
+          "mean_char_edit_similarity": 0.4831,
+          "char_rogue_l_f1": 0.5925,
+          "exact_match_count": 2,
+          "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+        },
+        "metrics_A_same_samples": {
+          "metric_definition_version": "p1-v1",
+          "n": 50,
+          "bleu4_13a": 31.2308,
+          "bleu4_13a_precisions": [
+            63.78,
+            40.59,
+            28.84,
+            21.55
+          ],
+          "bleu4_13a_bp": 0.8769,
+          "chrf": 27.1849,
+          "mean_char_edit_similarity": 0.4831,
+          "char_rogue_l_f1": 0.5925,
+          "exact_match_count": 2,
+          "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+        },
+        "delta_bleu_vs_A": {
+          "point": -0.01767947924189528,
+          "lower": -0.0585,
+          "upper": 0.0,
+          "iterations": 1000,
+          "groups": 10,
+          "confidence": 0.95,
+          "method": "cluster_bootstrap_by_signer"
+        },
+        "delta_edit_vs_A": {
+          "point": 0.0,
+          "lower": 0.0,
+          "upper": 0.0,
+          "iterations": 1000,
+          "groups": 10,
+          "confidence": 0.95,
+          "method": "cluster_bootstrap_by_signer"
+        },
+        "n_improved_vs_A": 0,
+        "n_harmed_vs_A": 0,
+        "n_unchanged_vs_A": 50
+      }
+    },
+    "explicit": {
+      "0.4": {
+        "policy": "explicit",
+        "stats": {
+          "policy": "explicit",
+          "threshold": 0.4,
+          "n_samples": 50,
+          "n_fired_samples": 9,
+          "total_patches": 9,
+          "patch_slot_counts": {
+            "person": 4,
+            "negation": 5
+          },
+          "skipped_counts": {
+            "numbers:number_missing_on_one_side": 46,
+            "person:no_gloss_person_candidate": 1
+          },
+          "trigger_rate": 0.18,
+          "mean_patches_per_fired_sample": 1.0
+        },
+        "metrics": {
+          "metric_definition_version": "p1-v1",
+          "n": 50,
+          "bleu4_13a": 30.2693,
+          "bleu4_13a_precisions": [
+            64.11,
+            40.25,
+            27.92,
+            19.96
+          ],
+          "bleu4_13a_bp": 0.8741,
+          "chrf": 26.1405,
+          "mean_char_edit_similarity": 0.4821,
+          "char_rogue_l_f1": 0.593,
+          "exact_match_count": 2,
+          "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+        },
+        "metrics_A_same_samples": {
+          "metric_definition_version": "p1-v1",
+          "n": 50,
+          "bleu4_13a": 31.2308,
+          "bleu4_13a_precisions": [
+            63.78,
+            40.59,
+            28.84,
+            21.55
+          ],
+          "bleu4_13a_bp": 0.8769,
+          "chrf": 27.1849,
+          "mean_char_edit_similarity": 0.4831,
+          "char_rogue_l_f1": 0.5925,
+          "exact_match_count": 2,
+          "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+        },
+        "delta_bleu_vs_A": {
+          "point": -0.9615177175635665,
+          "lower": -2.2924,
+          "upper": 0.2551,
+          "iterations": 1000,
+          "groups": 10,
+          "confidence": 0.95,
+          "method": "cluster_bootstrap_by_signer"
+        },
+        "delta_edit_vs_A": {
+          "point": -0.0010299999999999754,
+          "lower": -0.0055,
+          "upper": 0.0038,
+          "iterations": 1000,
+          "groups": 10,
+          "confidence": 0.95,
+          "method": "cluster_bootstrap_by_signer"
+        },
+        "n_improved_vs_A": 4,
+        "n_harmed_vs_A": 3,
+        "n_unchanged_vs_A": 43
+      },
+      "0.5": {
+        "policy": "explicit",
+        "stats": {
+          "policy": "explicit",
+          "threshold": 0.5,
+          "n_samples": 50,
+          "n_fired_samples": 2,
+          "total_patches": 2,
+          "patch_slot_counts": {
+            "person": 2
+          },
+          "skipped_counts": {
+            "numbers:number_missing_on_one_side": 23,
+            "person:no_gloss_person_candidate": 1
+          },
+          "trigger_rate": 0.04,
+          "mean_patches_per_fired_sample": 1.0
+        },
+        "metrics": {
+          "metric_definition_version": "p1-v1",
+          "n": 50,
+          "bleu4_13a": 30.7645,
+          "bleu4_13a_precisions": [
+            63.69,
+            40.22,
+            28.28,
+            20.77
+          ],
+          "bleu4_13a_bp": 0.8784,
+          "chrf": 26.7,
+          "mean_char_edit_similarity": 0.4819,
+          "char_rogue_l_f1": 0.5911,
+          "exact_match_count": 2,
+          "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+        },
+        "metrics_A_same_samples": {
+          "metric_definition_version": "p1-v1",
+          "n": 50,
+          "bleu4_13a": 31.2308,
+          "bleu4_13a_precisions": [
+            63.78,
+            40.59,
+            28.84,
+            21.55
+          ],
+          "bleu4_13a_bp": 0.8769,
+          "chrf": 27.1849,
+          "mean_char_edit_similarity": 0.4831,
+          "char_rogue_l_f1": 0.5925,
+          "exact_match_count": 2,
+          "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+        },
+        "delta_bleu_vs_A": {
+          "point": -0.4663373036083023,
+          "lower": -1.4133,
+          "upper": 0.0055,
+          "iterations": 1000,
+          "groups": 10,
+          "confidence": 0.95,
+          "method": "cluster_bootstrap_by_signer"
+        },
+        "delta_edit_vs_A": {
+          "point": -0.0011779999999999569,
+          "lower": -0.0035,
+          "upper": 0.0,
+          "iterations": 1000,
+          "groups": 10,
+          "confidence": 0.95,
+          "method": "cluster_bootstrap_by_signer"
+        },
+        "n_improved_vs_A": 0,
+        "n_harmed_vs_A": 1,
+        "n_unchanged_vs_A": 49
+      },
+      "0.6": {
+        "policy": "explicit",
+        "stats": {
+          "policy": "explicit",
+          "threshold": 0.6,
+          "n_samples": 50,
+          "n_fired_samples": 0,
+          "total_patches": 0,
+          "patch_slot_counts": {},
+          "skipped_counts": {
+            "numbers:number_missing_on_one_side": 4
+          },
+          "trigger_rate": 0.0,
+          "mean_patches_per_fired_sample": 0.0
+        },
+        "metrics": {
+          "metric_definition_version": "p1-v1",
+          "n": 50,
+          "bleu4_13a": 31.2308,
+          "bleu4_13a_precisions": [
+            63.78,
+            40.59,
+            28.84,
+            21.55
+          ],
+          "bleu4_13a_bp": 0.8769,
+          "chrf": 27.1849,
+          "mean_char_edit_similarity": 0.4831,
+          "char_rogue_l_f1": 0.5925,
+          "exact_match_count": 2,
+          "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+        },
+        "metrics_A_same_samples": {
+          "metric_definition_version": "p1-v1",
+          "n": 50,
+          "bleu4_13a": 31.2308,
+          "bleu4_13a_precisions": [
+            63.78,
+            40.59,
+            28.84,
+            21.55
+          ],
+          "bleu4_13a_bp": 0.8769,
+          "chrf": 27.1849,
+          "mean_char_edit_similarity": 0.4831,
+          "char_rogue_l_f1": 0.5925,
+          "exact_match_count": 2,
+          "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+        },
+        "delta_bleu_vs_A": {
+          "point": 0.0,
+          "lower": 0.0,
+          "upper": 0.0,
+          "iterations": 1000,
+          "groups": 10,
+          "confidence": 0.95,
+          "method": "cluster_bootstrap_by_signer"
+        },
+        "delta_edit_vs_A": {
+          "point": 0.0,
+          "lower": 0.0,
+          "upper": 0.0,
+          "iterations": 1000,
+          "groups": 10,
+          "confidence": 0.95,
+          "method": "cluster_bootstrap_by_signer"
+        },
+        "n_improved_vs_A": 0,
+        "n_harmed_vs_A": 0,
+        "n_unchanged_vs_A": 50
+      }
+    },
+    "explicit_no_negation": {
+      "0.4": {
+        "policy": "explicit_no_negation",
+        "stats": {
+          "policy": "explicit_no_negation",
+          "threshold": 0.4,
+          "n_samples": 50,
+          "n_fired_samples": 4,
+          "total_patches": 4,
+          "patch_slot_counts": {
+            "person": 4
+          },
+          "skipped_counts": {
+            "numbers:number_missing_on_one_side": 46,
+            "person:no_gloss_person_candidate": 1
+          },
+          "trigger_rate": 0.08,
+          "mean_patches_per_fired_sample": 1.0
+        },
+        "metrics": {
+          "metric_definition_version": "p1-v1",
+          "n": 50,
+          "bleu4_13a": 31.0182,
+          "bleu4_13a_precisions": [
+            63.98,
+            40.53,
+            28.62,
+            20.96
+          ],
+          "bleu4_13a_bp": 0.8784,
+          "chrf": 26.8671,
+          "mean_char_edit_similarity": 0.4847,
+          "char_rogue_l_f1": 0.5941,
+          "exact_match_count": 2,
+          "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+        },
+        "metrics_A_same_samples": {
+          "metric_definition_version": "p1-v1",
+          "n": 50,
+          "bleu4_13a": 31.2308,
+          "bleu4_13a_precisions": [
+            63.78,
+            40.59,
+            28.84,
+            21.55
+          ],
+          "bleu4_13a_bp": 0.8769,
+          "chrf": 27.1849,
+          "mean_char_edit_similarity": 0.4831,
+          "char_rogue_l_f1": 0.5925,
+          "exact_match_count": 2,
+          "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+        },
+        "delta_bleu_vs_A": {
+          "point": -0.21262756564677687,
+          "lower": -1.3273,
+          "upper": 0.727,
+          "iterations": 1000,
+          "groups": 10,
+          "confidence": 0.95,
+          "method": "cluster_bootstrap_by_signer"
+        },
+        "delta_edit_vs_A": {
+          "point": 0.0016100000000000558,
+          "lower": -0.0024,
+          "upper": 0.0062,
+          "iterations": 1000,
+          "groups": 10,
+          "confidence": 0.95,
+          "method": "cluster_bootstrap_by_signer"
+        },
+        "n_improved_vs_A": 2,
+        "n_harmed_vs_A": 1,
+        "n_unchanged_vs_A": 47
+      },
+      "0.5": {
+        "policy": "explicit_no_negation",
+        "stats": {
+          "policy": "explicit_no_negation",
+          "threshold": 0.5,
+          "n_samples": 50,
+          "n_fired_samples": 2,
+          "total_patches": 2,
+          "patch_slot_counts": {
+            "person": 2
+          },
+          "skipped_counts": {
+            "numbers:number_missing_on_one_side": 23,
+            "person:no_gloss_person_candidate": 1
+          },
+          "trigger_rate": 0.04,
+          "mean_patches_per_fired_sample": 1.0
+        },
+        "metrics": {
+          "metric_definition_version": "p1-v1",
+          "n": 50,
+          "bleu4_13a": 30.7645,
+          "bleu4_13a_precisions": [
+            63.69,
+            40.22,
+            28.28,
+            20.77
+          ],
+          "bleu4_13a_bp": 0.8784,
+          "chrf": 26.7,
+          "mean_char_edit_similarity": 0.4819,
+          "char_rogue_l_f1": 0.5911,
+          "exact_match_count": 2,
+          "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+        },
+        "metrics_A_same_samples": {
+          "metric_definition_version": "p1-v1",
+          "n": 50,
+          "bleu4_13a": 31.2308,
+          "bleu4_13a_precisions": [
+            63.78,
+            40.59,
+            28.84,
+            21.55
+          ],
+          "bleu4_13a_bp": 0.8769,
+          "chrf": 27.1849,
+          "mean_char_edit_similarity": 0.4831,
+          "char_rogue_l_f1": 0.5925,
+          "exact_match_count": 2,
+          "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+        },
+        "delta_bleu_vs_A": {
+          "point": -0.4663373036083023,
+          "lower": -1.4133,
+          "upper": 0.0055,
+          "iterations": 1000,
+          "groups": 10,
+          "confidence": 0.95,
+          "method": "cluster_bootstrap_by_signer"
+        },
+        "delta_edit_vs_A": {
+          "point": -0.0011779999999999569,
+          "lower": -0.0035,
+          "upper": 0.0,
+          "iterations": 1000,
+          "groups": 10,
+          "confidence": 0.95,
+          "method": "cluster_bootstrap_by_signer"
+        },
+        "n_improved_vs_A": 0,
+        "n_harmed_vs_A": 1,
+        "n_unchanged_vs_A": 49
+      },
+      "0.6": {
+        "policy": "explicit_no_negation",
+        "stats": {
+          "policy": "explicit_no_negation",
+          "threshold": 0.6,
+          "n_samples": 50,
+          "n_fired_samples": 0,
+          "total_patches": 0,
+          "patch_slot_counts": {},
+          "skipped_counts": {
+            "numbers:number_missing_on_one_side": 4
+          },
+          "trigger_rate": 0.0,
+          "mean_patches_per_fired_sample": 0.0
+        },
+        "metrics": {
+          "metric_definition_version": "p1-v1",
+          "n": 50,
+          "bleu4_13a": 31.2308,
+          "bleu4_13a_precisions": [
+            63.78,
+            40.59,
+            28.84,
+            21.55
+          ],
+          "bleu4_13a_bp": 0.8769,
+          "chrf": 27.1849,
+          "mean_char_edit_similarity": 0.4831,
+          "char_rogue_l_f1": 0.5925,
+          "exact_match_count": 2,
+          "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+        },
+        "metrics_A_same_samples": {
+          "metric_definition_version": "p1-v1",
+          "n": 50,
+          "bleu4_13a": 31.2308,
+          "bleu4_13a_precisions": [
+            63.78,
+            40.59,
+            28.84,
+            21.55
+          ],
+          "bleu4_13a_bp": 0.8769,
+          "chrf": 27.1849,
+          "mean_char_edit_similarity": 0.4831,
+          "char_rogue_l_f1": 0.5925,
+          "exact_match_count": 2,
+          "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+        },
+        "delta_bleu_vs_A": {
+          "point": 0.0,
+          "lower": 0.0,
+          "upper": 0.0,
+          "iterations": 1000,
+          "groups": 10,
+          "confidence": 0.95,
+          "method": "cluster_bootstrap_by_signer"
+        },
+        "delta_edit_vs_A": {
+          "point": 0.0,
+          "lower": 0.0,
+          "upper": 0.0,
+          "iterations": 1000,
+          "groups": 10,
+          "confidence": 0.95,
+          "method": "cluster_bootstrap_by_signer"
+        },
+        "n_improved_vs_A": 0,
+        "n_harmed_vs_A": 0,
+        "n_unchanged_vs_A": 50
+      }
+    },
+    "person_only": {
+      "0.4": {
+        "policy": "person_only",
+        "stats": {
+          "policy": "person_only",
+          "threshold": 0.4,
+          "n_samples": 50,
+          "n_fired_samples": 4,
+          "total_patches": 4,
+          "patch_slot_counts": {
+            "person": 4
+          },
+          "skipped_counts": {
+            "person:no_gloss_person_candidate": 1
+          },
+          "trigger_rate": 0.08,
+          "mean_patches_per_fired_sample": 1.0
+        },
+        "metrics": {
+          "metric_definition_version": "p1-v1",
+          "n": 50,
+          "bleu4_13a": 31.0182,
+          "bleu4_13a_precisions": [
+            63.98,
+            40.53,
+            28.62,
+            20.96
+          ],
+          "bleu4_13a_bp": 0.8784,
+          "chrf": 26.8671,
+          "mean_char_edit_similarity": 0.4847,
+          "char_rogue_l_f1": 0.5941,
+          "exact_match_count": 2,
+          "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+        },
+        "metrics_A_same_samples": {
+          "metric_definition_version": "p1-v1",
+          "n": 50,
+          "bleu4_13a": 31.2308,
+          "bleu4_13a_precisions": [
+            63.78,
+            40.59,
+            28.84,
+            21.55
+          ],
+          "bleu4_13a_bp": 0.8769,
+          "chrf": 27.1849,
+          "mean_char_edit_similarity": 0.4831,
+          "char_rogue_l_f1": 0.5925,
+          "exact_match_count": 2,
+          "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+        },
+        "delta_bleu_vs_A": {
+          "point": -0.21262756564677687,
+          "lower": -1.3273,
+          "upper": 0.727,
+          "iterations": 1000,
+          "groups": 10,
+          "confidence": 0.95,
+          "method": "cluster_bootstrap_by_signer"
+        },
+        "delta_edit_vs_A": {
+          "point": 0.0016100000000000558,
+          "lower": -0.0024,
+          "upper": 0.0062,
+          "iterations": 1000,
+          "groups": 10,
+          "confidence": 0.95,
+          "method": "cluster_bootstrap_by_signer"
+        },
+        "n_improved_vs_A": 2,
+        "n_harmed_vs_A": 1,
+        "n_unchanged_vs_A": 47
+      },
+      "0.5": {
+        "policy": "person_only",
+        "stats": {
+          "policy": "person_only",
+          "threshold": 0.5,
+          "n_samples": 50,
+          "n_fired_samples": 2,
+          "total_patches": 2,
+          "patch_slot_counts": {
+            "person": 2
+          },
+          "skipped_counts": {
+            "person:no_gloss_person_candidate": 1
+          },
+          "trigger_rate": 0.04,
+          "mean_patches_per_fired_sample": 1.0
+        },
+        "metrics": {
+          "metric_definition_version": "p1-v1",
+          "n": 50,
+          "bleu4_13a": 30.7645,
+          "bleu4_13a_precisions": [
+            63.69,
+            40.22,
+            28.28,
+            20.77
+          ],
+          "bleu4_13a_bp": 0.8784,
+          "chrf": 26.7,
+          "mean_char_edit_similarity": 0.4819,
+          "char_rogue_l_f1": 0.5911,
+          "exact_match_count": 2,
+          "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+        },
+        "metrics_A_same_samples": {
+          "metric_definition_version": "p1-v1",
+          "n": 50,
+          "bleu4_13a": 31.2308,
+          "bleu4_13a_precisions": [
+            63.78,
+            40.59,
+            28.84,
+            21.55
+          ],
+          "bleu4_13a_bp": 0.8769,
+          "chrf": 27.1849,
+          "mean_char_edit_similarity": 0.4831,
+          "char_rogue_l_f1": 0.5925,
+          "exact_match_count": 2,
+          "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+        },
+        "delta_bleu_vs_A": {
+          "point": -0.4663373036083023,
+          "lower": -1.4133,
+          "upper": 0.0055,
+          "iterations": 1000,
+          "groups": 10,
+          "confidence": 0.95,
+          "method": "cluster_bootstrap_by_signer"
+        },
+        "delta_edit_vs_A": {
+          "point": -0.0011779999999999569,
+          "lower": -0.0035,
+          "upper": 0.0,
+          "iterations": 1000,
+          "groups": 10,
+          "confidence": 0.95,
+          "method": "cluster_bootstrap_by_signer"
+        },
+        "n_improved_vs_A": 0,
+        "n_harmed_vs_A": 1,
+        "n_unchanged_vs_A": 49
+      },
+      "0.6": {
+        "policy": "person_only",
+        "stats": {
+          "policy": "person_only",
+          "threshold": 0.6,
+          "n_samples": 50,
+          "n_fired_samples": 0,
+          "total_patches": 0,
+          "patch_slot_counts": {},
+          "skipped_counts": {},
+          "trigger_rate": 0.0,
+          "mean_patches_per_fired_sample": 0.0
+        },
+        "metrics": {
+          "metric_definition_version": "p1-v1",
+          "n": 50,
+          "bleu4_13a": 31.2308,
+          "bleu4_13a_precisions": [
+            63.78,
+            40.59,
+            28.84,
+            21.55
+          ],
+          "bleu4_13a_bp": 0.8769,
+          "chrf": 27.1849,
+          "mean_char_edit_similarity": 0.4831,
+          "char_rogue_l_f1": 0.5925,
+          "exact_match_count": 2,
+          "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+        },
+        "metrics_A_same_samples": {
+          "metric_definition_version": "p1-v1",
+          "n": 50,
+          "bleu4_13a": 31.2308,
+          "bleu4_13a_precisions": [
+            63.78,
+            40.59,
+            28.84,
+            21.55
+          ],
+          "bleu4_13a_bp": 0.8769,
+          "chrf": 27.1849,
+          "mean_char_edit_similarity": 0.4831,
+          "char_rogue_l_f1": 0.5925,
+          "exact_match_count": 2,
+          "sacrebleu_signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.2.0"
+        },
+        "delta_bleu_vs_A": {
+          "point": 0.0,
+          "lower": 0.0,
+          "upper": 0.0,
+          "iterations": 1000,
+          "groups": 10,
+          "confidence": 0.95,
+          "method": "cluster_bootstrap_by_signer"
+        },
+        "delta_edit_vs_A": {
+          "point": 0.0,
+          "lower": 0.0,
+          "upper": 0.0,
+          "iterations": 1000,
+          "groups": 10,
+          "confidence": 0.95,
+          "method": "cluster_bootstrap_by_signer"
+        },
+        "n_improved_vs_A": 0,
+        "n_harmed_vs_A": 0,
+        "n_unchanged_vs_A": 50
+      }
+    }
+  },
+  "per_slot": {
+    "0.4": {
+      "numbers": {
+        "slot": "numbers",
+        "threshold": 0.4,
+        "n_fired_samples": 0,
+        "n_pairs": 50,
+        "bleu4_13a": 31.2308,
+        "mean_char_edit_similarity": 0.4831,
+        "delta_edit_mean": 0.0,
+        "n_samples_improved_vs_A": 0,
+        "n_samples_unchanged_vs_A": 50,
+        "n_samples_harmed_vs_A": 0,
+        "delta_bleu_vs_A": {
+          "point": 0.0,
+          "lower": 0.0,
+          "upper": 0.0,
+          "iterations": 500,
+          "groups": 10,
+          "confidence": 0.95,
+          "method": "cluster_bootstrap_by_signer"
+        }
+      },
+      "negation": {
+        "slot": "negation",
+        "threshold": 0.4,
+        "n_fired_samples": 5,
+        "n_pairs": 50,
+        "bleu4_13a": 30.4887,
+        "mean_char_edit_similarity": 0.4804,
+        "delta_edit_mean": -0.0026,
+        "n_samples_improved_vs_A": 2,
+        "n_samples_unchanged_vs_A": 46,
+        "n_samples_harmed_vs_A": 2,
+        "delta_bleu_vs_A": {
+          "point": -0.742089741515251,
+          "lower": -1.7947,
+          "upper": 0.0015,
+          "iterations": 500,
+          "groups": 10,
+          "confidence": 0.95,
+          "method": "cluster_bootstrap_by_signer"
+        }
+      },
+      "person": {
+        "slot": "person",
+        "threshold": 0.4,
+        "n_fired_samples": 4,
+        "n_pairs": 50,
+        "bleu4_13a": 31.0182,
+        "mean_char_edit_similarity": 0.4847,
+        "delta_edit_mean": 0.0016,
+        "n_samples_improved_vs_A": 2,
+        "n_samples_unchanged_vs_A": 47,
+        "n_samples_harmed_vs_A": 1,
+        "delta_bleu_vs_A": {
+          "point": -0.21262756564677687,
+          "lower": -1.3369,
+          "upper": 0.7069,
+          "iterations": 500,
+          "groups": 10,
+          "confidence": 0.95,
+          "method": "cluster_bootstrap_by_signer"
+        }
+      },
+      "time": {
+        "slot": "time",
+        "threshold": 0.4,
+        "n_fired_samples": 5,
+        "n_pairs": 50,
+        "bleu4_13a": 30.5843,
+        "mean_char_edit_similarity": 0.4728,
+        "delta_edit_mean": -0.0102,
+        "n_samples_improved_vs_A": 0,
+        "n_samples_unchanged_vs_A": 45,
+        "n_samples_harmed_vs_A": 5,
+        "delta_bleu_vs_A": {
+          "point": -0.6464561021023592,
+          "lower": -2.0303,
+          "upper": 0.007,
+          "iterations": 500,
+          "groups": 10,
+          "confidence": 0.95,
+          "method": "cluster_bootstrap_by_signer"
+        }
+      },
+      "action": {
+        "slot": "action",
+        "threshold": 0.4,
+        "n_fired_samples": 9,
+        "n_pairs": 50,
+        "bleu4_13a": 30.4863,
+        "mean_char_edit_similarity": 0.4751,
+        "delta_edit_mean": -0.008,
+        "n_samples_improved_vs_A": 0,
+        "n_samples_unchanged_vs_A": 45,
+        "n_samples_harmed_vs_A": 5,
+        "delta_bleu_vs_A": {
+          "point": -0.7444653579852201,
+          "lower": -1.4265,
+          "upper": -0.1514,
+          "iterations": 500,
+          "groups": 10,
+          "confidence": 0.95,
+          "method": "cluster_bootstrap_by_signer"
+        }
+      },
+      "object": {
+        "slot": "object",
+        "threshold": 0.4,
+        "n_fired_samples": 17,
+        "n_pairs": 50,
+        "bleu4_13a": 28.8688,
+        "mean_char_edit_similarity": 0.4667,
+        "delta_edit_mean": -0.0164,
+        "n_samples_improved_vs_A": 0,
+        "n_samples_unchanged_vs_A": 41,
+        "n_samples_harmed_vs_A": 9,
+        "delta_bleu_vs_A": {
+          "point": -2.3619395265643597,
+          "lower": -3.8732,
+          "upper": -1.0234,
+          "iterations": 500,
+          "groups": 10,
+          "confidence": 0.95,
+          "method": "cluster_bootstrap_by_signer"
+        }
+      }
+    },
+    "0.5": {
+      "numbers": {
+        "slot": "numbers",
+        "threshold": 0.5,
+        "n_fired_samples": 0,
+        "n_pairs": 50,
+        "bleu4_13a": 31.2308,
+        "mean_char_edit_similarity": 0.4831,
+        "delta_edit_mean": 0.0,
+        "n_samples_improved_vs_A": 0,
+        "n_samples_unchanged_vs_A": 50,
+        "n_samples_harmed_vs_A": 0,
+        "delta_bleu_vs_A": {
+          "point": 0.0,
+          "lower": 0.0,
+          "upper": 0.0,
+          "iterations": 500,
+          "groups": 10,
+          "confidence": 0.95,
+          "method": "cluster_bootstrap_by_signer"
+        }
+      },
+      "negation": {
+        "slot": "negation",
+        "threshold": 0.5,
+        "n_fired_samples": 0,
+        "n_pairs": 50,
+        "bleu4_13a": 31.2308,
+        "mean_char_edit_similarity": 0.4831,
+        "delta_edit_mean": 0.0,
+        "n_samples_improved_vs_A": 0,
+        "n_samples_unchanged_vs_A": 50,
+        "n_samples_harmed_vs_A": 0,
+        "delta_bleu_vs_A": {
+          "point": 0.0,
+          "lower": 0.0,
+          "upper": 0.0,
+          "iterations": 500,
+          "groups": 10,
+          "confidence": 0.95,
+          "method": "cluster_bootstrap_by_signer"
+        }
+      },
+      "person": {
+        "slot": "person",
+        "threshold": 0.5,
+        "n_fired_samples": 2,
+        "n_pairs": 50,
+        "bleu4_13a": 30.7645,
+        "mean_char_edit_similarity": 0.4819,
+        "delta_edit_mean": -0.0012,
+        "n_samples_improved_vs_A": 0,
+        "n_samples_unchanged_vs_A": 49,
+        "n_samples_harmed_vs_A": 1,
+        "delta_bleu_vs_A": {
+          "point": -0.4663373036083023,
+          "lower": -1.4113,
+          "upper": 0.0059,
+          "iterations": 500,
+          "groups": 10,
+          "confidence": 0.95,
+          "method": "cluster_bootstrap_by_signer"
+        }
+      },
+      "time": {
+        "slot": "time",
+        "threshold": 0.5,
+        "n_fired_samples": 1,
+        "n_pairs": 50,
+        "bleu4_13a": 31.2307,
+        "mean_char_edit_similarity": 0.4804,
+        "delta_edit_mean": -0.0027,
+        "n_samples_improved_vs_A": 0,
+        "n_samples_unchanged_vs_A": 49,
+        "n_samples_harmed_vs_A": 1,
+        "delta_bleu_vs_A": {
+          "point": -6.72303274527053e-05,
+          "lower": -0.0141,
+          "upper": 0.0054,
+          "iterations": 500,
+          "groups": 10,
+          "confidence": 0.95,
+          "method": "cluster_bootstrap_by_signer"
+        }
+      },
+      "action": {
+        "slot": "action",
+        "threshold": 0.5,
+        "n_fired_samples": 4,
+        "n_pairs": 50,
+        "bleu4_13a": 30.7397,
+        "mean_char_edit_similarity": 0.479,
+        "delta_edit_mean": -0.0041,
+        "n_samples_improved_vs_A": 0,
+        "n_samples_unchanged_vs_A": 47,
+        "n_samples_harmed_vs_A": 3,
+        "delta_bleu_vs_A": {
+          "point": -0.49109911442306853,
+          "lower": -1.1895,
+          "upper": 0.0,
+          "iterations": 500,
+          "groups": 10,
+          "confidence": 0.95,
+          "method": "cluster_bootstrap_by_signer"
+        }
+      },
+      "object": {
+        "slot": "object",
+        "threshold": 0.5,
+        "n_fired_samples": 6,
+        "n_pairs": 50,
+        "bleu4_13a": 30.252,
+        "mean_char_edit_similarity": 0.4768,
+        "delta_edit_mean": -0.0063,
+        "n_samples_improved_vs_A": 0,
+        "n_samples_unchanged_vs_A": 47,
+        "n_samples_harmed_vs_A": 3,
+        "delta_bleu_vs_A": {
+          "point": -0.9787909750733412,
+          "lower": -2.311,
+          "upper": -0.0627,
+          "iterations": 500,
+          "groups": 10,
+          "confidence": 0.95,
+          "method": "cluster_bootstrap_by_signer"
+        }
+      }
+    },
+    "0.6": {
+      "numbers": {
+        "slot": "numbers",
+        "threshold": 0.6,
+        "n_fired_samples": 0,
+        "n_pairs": 50,
+        "bleu4_13a": 31.2308,
+        "mean_char_edit_similarity": 0.4831,
+        "delta_edit_mean": 0.0,
+        "n_samples_improved_vs_A": 0,
+        "n_samples_unchanged_vs_A": 50,
+        "n_samples_harmed_vs_A": 0,
+        "delta_bleu_vs_A": {
+          "point": 0.0,
+          "lower": 0.0,
+          "upper": 0.0,
+          "iterations": 500,
+          "groups": 10,
+          "confidence": 0.95,
+          "method": "cluster_bootstrap_by_signer"
+        }
+      },
+      "negation": {
+        "slot": "negation",
+        "threshold": 0.6,
+        "n_fired_samples": 0,
+        "n_pairs": 50,
+        "bleu4_13a": 31.2308,
+        "mean_char_edit_similarity": 0.4831,
+        "delta_edit_mean": 0.0,
+        "n_samples_improved_vs_A": 0,
+        "n_samples_unchanged_vs_A": 50,
+        "n_samples_harmed_vs_A": 0,
+        "delta_bleu_vs_A": {
+          "point": 0.0,
+          "lower": 0.0,
+          "upper": 0.0,
+          "iterations": 500,
+          "groups": 10,
+          "confidence": 0.95,
+          "method": "cluster_bootstrap_by_signer"
+        }
+      },
+      "person": {
+        "slot": "person",
+        "threshold": 0.6,
+        "n_fired_samples": 0,
+        "n_pairs": 50,
+        "bleu4_13a": 31.2308,
+        "mean_char_edit_similarity": 0.4831,
+        "delta_edit_mean": 0.0,
+        "n_samples_improved_vs_A": 0,
+        "n_samples_unchanged_vs_A": 50,
+        "n_samples_harmed_vs_A": 0,
+        "delta_bleu_vs_A": {
+          "point": 0.0,
+          "lower": 0.0,
+          "upper": 0.0,
+          "iterations": 500,
+          "groups": 10,
+          "confidence": 0.95,
+          "method": "cluster_bootstrap_by_signer"
+        }
+      },
+      "time": {
+        "slot": "time",
+        "threshold": 0.6,
+        "n_fired_samples": 0,
+        "n_pairs": 50,
+        "bleu4_13a": 31.2308,
+        "mean_char_edit_similarity": 0.4831,
+        "delta_edit_mean": 0.0,
+        "n_samples_improved_vs_A": 0,
+        "n_samples_unchanged_vs_A": 50,
+        "n_samples_harmed_vs_A": 0,
+        "delta_bleu_vs_A": {
+          "point": 0.0,
+          "lower": 0.0,
+          "upper": 0.0,
+          "iterations": 500,
+          "groups": 10,
+          "confidence": 0.95,
+          "method": "cluster_bootstrap_by_signer"
+        }
+      },
+      "action": {
+        "slot": "action",
+        "threshold": 0.6,
+        "n_fired_samples": 0,
+        "n_pairs": 50,
+        "bleu4_13a": 31.2308,
+        "mean_char_edit_similarity": 0.4831,
+        "delta_edit_mean": 0.0,
+        "n_samples_improved_vs_A": 0,
+        "n_samples_unchanged_vs_A": 50,
+        "n_samples_harmed_vs_A": 0,
+        "delta_bleu_vs_A": {
+          "point": 0.0,
+          "lower": 0.0,
+          "upper": 0.0,
+          "iterations": 500,
+          "groups": 10,
+          "confidence": 0.95,
+          "method": "cluster_bootstrap_by_signer"
+        }
+      },
+      "object": {
+        "slot": "object",
+        "threshold": 0.6,
+        "n_fired_samples": 1,
+        "n_pairs": 50,
+        "bleu4_13a": 31.2131,
+        "mean_char_edit_similarity": 0.4831,
+        "delta_edit_mean": 0.0,
+        "n_samples_improved_vs_A": 0,
+        "n_samples_unchanged_vs_A": 50,
+        "n_samples_harmed_vs_A": 0,
+        "delta_bleu_vs_A": {
+          "point": -0.01767947924189528,
+          "lower": -0.0585,
+          "upper": 0.0,
+          "iterations": 500,
+          "groups": 10,
+          "confidence": 0.95,
+          "method": "cluster_bootstrap_by_signer"
+        }
+      }
+    }
+  },
+  "gt_join": {
+    "path": "experiments\\p1\\references\\gt_1086.csv",
+    "eval_only": true
+  },
+  "examples": [
+    {
+      "sample_id": "S003002_P0000_T00",
+      "signer_id": "P0000",
+      "GT": "你迟到了三分钟，所以要罚酒三杯。",
+      "A": "他差点儿喝了酒,被罚款了。",
+      "patched": "你差点儿喝了酒,惩罚款了。",
+      "gloss": "你 迟到 3 分钟 好 谢谢 酒 惩罚 3 喝",
+      "score_mean": 0.478384,
+      "patches": [
+        {
+          "slot": "person",
+          "op": "replace",
+          "from": "他",
+          "to": "你",
+          "reason": "A/gloss person pronoun sets conflict; replace first disagreeing A pronoun",
+          "score_mean": 0.478384
+        },
+        {
+          "slot": "object",
+          "op": "replace",
+          "from": "被罚",
+          "to": "惩罚",
+          "reason": "gloss content word absent from A; best char-overlap A span (overlap=0.50)",
+          "score_mean": 0.478384
+        }
+      ],
+      "sim_A": 0.1875,
+      "sim_patched": 0.25,
+      "delta_edit": 0.0625
+    },
+    {
+      "sample_id": "S003181_P0001_T00",
+      "signer_id": "P0001",
+      "GT": "看见妈妈期待的眼神，我感到惭愧。",
+      "A": "爸爸看我希望的偶像,我惭愧得无地自容。",
+      "patched": "爸爸看我希望的偶像,我惭愧得地自容。",
+      "gloss": "爸爸 看 期待 看 我 惭愧",
+      "score_mean": 0.473154,
+      "patches": [
+        {
+          "slot": "negation",
+          "op": "delete",
+          "from": "无",
+          "to": "",
+          "reason": "A has negation marker but gloss has none",
+          "score_mean": 0.473154
+        }
+      ],
+      "sim_A": 0.2105,
+      "sim_patched": 0.2222,
+      "delta_edit": 0.0117
+    },
+    {
+      "sample_id": "S003758_P0000_T00",
+      "signer_id": "P0000",
+      "GT": "我在考虑到底是辞职还是继续工作。",
+      "A": "辞职还是工作,我觉得很困难。",
+      "patched": "辞职还是工作,感觉得很困难。",
+      "gloss": "辞职 还是 是 工作 想 感觉",
+      "score_mean": 0.44094,
+      "patches": [
+        {
+          "slot": "object",
+          "op": "replace",
+          "from": "我觉",
+          "to": "感觉",
+          "reason": "gloss content word absent from A; best char-overlap A span (overlap=0.50)",
+          "score_mean": 0.44094
+        }
+      ],
+      "sim_A": 0.0625,
+      "sim_patched": 0.0625,
+      "delta_edit": 0.0
+    },
+    {
+      "sample_id": "S003747_P0001_T00",
+      "signer_id": "P0001",
+      "GT": "垃圾处理问题有关我们每个人的生活。",
+      "A": "垃圾问题和每个人的生活都有着密切的关系。",
+      "patched": "垃圾问题和每个人的生活都有着密切的联系。",
+      "gloss": "垃圾 问题 我们 每 人 生活 有 联系",
+      "score_mean": 0.627745,
+      "patches": [
+        {
+          "slot": "object",
+          "op": "replace",
+          "from": "关系",
+          "to": "联系",
+          "reason": "gloss content word absent from A; best char-overlap A span (overlap=0.50)",
+          "score_mean": 0.627745
+        }
+      ],
+      "sim_A": 0.3,
+      "sim_patched": 0.3,
+      "delta_edit": 0.0
+    },
+    {
+      "sample_id": "S000414_P0004_T00",
+      "signer_id": "P0004",
+      "GT": "时间过得真快，新年快要到了。",
+      "A": "时间过得可真快,新年就要到了。",
+      "patched": "时间过得可真快,年龄就要准备了。",
+      "gloss": "时间 过 快 新 年龄 准备 到",
+      "score_mean": 0.49799,
+      "patches": [
+        {
+          "slot": "action",
+          "op": "replace",
+          "from": "到",
+          "to": "准备",
+          "reason": "A has one action word; gloss supplies a different action word",
+          "score_mean": 0.49799
+        },
+        {
+          "slot": "object",
+          "op": "replace",
+          "from": "新年",
+          "to": "年龄",
+          "reason": "gloss content word absent from A; best char-overlap A span (overlap=0.50)",
+          "score_mean": 0.49799
+        }
+      ],
+      "sim_A": 0.8667,
+      "sim_patched": 0.625,
+      "delta_edit": -0.2417
+    },
+    {
+      "sample_id": "S003572_P0002_T00",
+      "signer_id": "P0002",
+      "GT": "面对竞争，我们不能躲避。",
+      "A": "竞争,我们不能躲避。",
+      "patched": "竞争,我不行能躲避。",
+      "gloss": "竞争 我们 躲 不行",
+      "score_mean": 0.429218,
+      "patches": [
+        {
+          "slot": "object",
+          "op": "replace",
+          "from": "们不",
+          "to": "不行",
+          "reason": "gloss content word absent from A; best char-overlap A span (overlap=0.50)",
+          "score_mean": 0.429218
+        }
+      ],
+      "sim_A": 0.8333,
+      "sim_patched": 0.6667,
+      "delta_edit": -0.1666
+    },
+    {
+      "sample_id": "S000440_P0004_T00",
+      "signer_id": "P0004",
+      "GT": "这些我昨天下午就准备好了。",
+      "A": "我昨天下午就准备好了。",
+      "patched": "我昨天下午不会准备好了。",
+      "gloss": "你们 我 不会 下午 准备 好了",
+      "score_mean": 0.482862,
+      "patches": [
+        {
+          "slot": "negation",
+          "op": "insert",
+          "from": "",
+          "to": "不",
+          "reason": "gloss has negation but A has none; insert before first action word",
+          "score_mean": 0.482862
+        },
+        {
+          "slot": "object",
+          "op": "replace",
+          "from": "就不",
+          "to": "不会",
+          "reason": "gloss content word absent from A; best char-overlap A span (overlap=0.50)",
+          "score_mean": 0.482862
+        }
+      ],
+      "sim_A": 0.8462,
+      "sim_patched": 0.6923,
+      "delta_edit": -0.1539
+    },
+    {
+      "sample_id": "S005113_P0003_T00",
+      "signer_id": "P0003",
+      "GT": "找女朋友是我现在最大的目标。",
+      "A": "找女朋友是我现在最大的标准。",
+      "patched": "找女朋友是我今天最大的标准。",
+      "gloss": "找 朋友 是 我 今天 最 标准 正确",
+      "score_mean": 0.484968,
+      "patches": [
+        {
+          "slot": "time",
+          "op": "replace",
+          "from": "现在",
+          "to": "今天",
+          "reason": "A and gloss both carry a time term but differ",
+          "score_mean": 0.484968
+        }
+      ],
+      "sim_A": 0.8571,
+      "sim_patched": 0.7143,
+      "delta_edit": -0.1428
+    }
+  ],
+  "report_threshold": 0.4,
+  "best_policy": {
+    "name": "explicit_no_negation@0.4",
+    "delta_edit_vs_A": 0.0016100000000000558,
+    "delta_bleu_vs_A": -0.21262756564677687,
+    "note": "best char-edit point estimate among policies that fired patches; exploratory only"
+  }
+}
