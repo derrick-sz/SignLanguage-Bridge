@@ -345,9 +345,11 @@ def stats(review_file: Path) -> int:
     rows = read_review_file(review_file)
     with open(HERE / "blind_map_EVAL_ONLY.csv", encoding="utf-8") as fh:
         blind = {b["review_id"]: b for b in csv.DictReader(fh)}
-    missing = [r["review_id"] for r in rows if any(not r.get(c) for c in REQUIRED_FILLED)]
+    complete = [r for r in rows if all(str(r.get(c) or "").strip() for c in REQUIRED_FILLED)]
+    missing = [r["review_id"] for r in rows if r not in complete]
+    # Partial fills are expected while reviewing: statistics run on complete rows only.
     per_candidate: dict[str, list[dict[str, str]]] = {c: [] for c in CANDIDATES}
-    for row in rows:
+    for row in complete:
         cand = blind[row["review_id"]]["candidate_id"]
         per_candidate[cand].append(row)
 
@@ -372,7 +374,7 @@ def stats(review_file: Path) -> int:
             "slot_error_rates": slots,
         }
     by_sample: dict[str, dict[str, float]] = {}
-    for row in rows:
+    for row in complete:
         info = blind[row["review_id"]]
         by_sample.setdefault(info["sample_id"], {})[info["candidate_id"]] = score(row)
     def delta(a: str, b: str) -> dict[str, Any] | None:
