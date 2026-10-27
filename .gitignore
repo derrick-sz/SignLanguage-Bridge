@@ -40,3 +40,7 @@ experiments/p1/e02/llm_fusion/runs/*/eval_records.jsonl
 experiments/p1/e06/human_review/
 
 experiments/p1/e05/replay-probe-*/negatives/
+
+# ONNX runtime cache pulled during runs (large, reproducible)
+rtmlib-cache/
+

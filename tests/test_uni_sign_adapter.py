@@ -202,7 +202,7 @@ def test_adapter_warmup_loads_torch_before_pose_extractor(tmp_path, monkeypatch)
     FakeRuntime.instances.clear()
     cfg = config(tmp_path)
     order = []
-    monkeypatch.setattr(uni_sign_module, 'verify_checkpoint', lambda path: FileCheck(
+    monkeypatch.setattr(uni_sign_module, 'verify_file', lambda path, **kwargs: FileCheck(
         Path(path), True, UNISIGN_CHECKPOINT_BYTES, UNISIGN_CHECKPOINT_SHA256, True))
     monkeypatch.setattr(uni_sign_module, 'verify_mt5_dir', lambda path: {
         name: FileCheck(Path(path) / name, True, size, digest, True)
@@ -229,7 +229,7 @@ def test_adapter_warmup_loads_torch_before_pose_extractor(tmp_path, monkeypatch)
 
 def test_runtime_load_failure_releases_runtime(tmp_path, monkeypatch):
     cfg = config(tmp_path)
-    monkeypatch.setattr(uni_sign_module, 'verify_checkpoint', lambda path: FileCheck(
+    monkeypatch.setattr(uni_sign_module, 'verify_file', lambda path, **kwargs: FileCheck(
         Path(path), True, UNISIGN_CHECKPOINT_BYTES, UNISIGN_CHECKPOINT_SHA256, True))
     monkeypatch.setattr(uni_sign_module, 'verify_mt5_dir', lambda path: {
         name: FileCheck(Path(path) / name, True, size, digest, True)
@@ -267,7 +267,7 @@ def test_public_inference_applies_direction_to_file_and_captured_video(tmp_path,
 
     cfg = config(tmp_path)
     cfg.runtime['pose_orientation'] = orientation
-    monkeypatch.setattr(uni_sign_module, 'verify_checkpoint', lambda path: FileCheck(
+    monkeypatch.setattr(uni_sign_module, 'verify_file', lambda path, **kwargs: FileCheck(
         Path(path), True, UNISIGN_CHECKPOINT_BYTES, UNISIGN_CHECKPOINT_SHA256, True))
     monkeypatch.setattr(uni_sign_module, 'verify_mt5_dir', lambda path: {
         name: FileCheck(Path(path) / name, True, size, digest, True)

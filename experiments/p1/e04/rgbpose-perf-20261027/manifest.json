@@ -1,0 +1,443 @@
+{
+  "schema_version": 1,
+  "run_id": "rgbpose-perf-20261027",
+  "experiment": "E04-rgbpose-perf",
+  "run_status": "PASS",
+  "created_at": "2026-10-27T07:55:14+00:00",
+  "purpose": "RGB+pose zero-gate production form (legacy, no hand crops) vs squeeze hand-crop waste control vs pose-only video path A: paired e2e/RTF/VRAM",
+  "code": {
+    "repository": "SignLanguage-Bridge",
+    "git_sha": "e5ed141dea3bdbd1c22f3cad45ca73b161fb6022",
+    "branch": "codex/model-contract-auto-captions",
+    "dirty_tree": true,
+    "dirty_path_count": 10
+  },
+  "host": {
+    "host_alias": "PC-HPVYVOTACGSS",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "cpu": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+    "cpu_count": 20,
+    "memory_total_gb": 31.84
+  },
+  "gpu_baseline": {
+    "sampled_at": "2026-10-27T07:55:14+00:00",
+    "devices": [
+      {
+        "index": 0,
+        "name": "NVIDIA GeForce RTX 5060 Ti",
+        "driver_version": "616.92",
+        "memory_total_mb": 16311.0,
+        "memory_used_mb": 2078.0,
+        "memory_free_mb": 13973.0,
+        "utilization_gpu_pct": 6.0
+      }
+    ]
+  },
+  "privacy": {
+    "no_gt_in_perf_artifacts": true,
+    "no_raw_media_export": true,
+    "no_credentials_in_logs": true
+  },
+  "model_assets": {
+    "unisign": {
+      "bundle": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\model_bundle",
+      "bundle_manifest_sha256": "462ea712c73ba0b0c7a91a4c6d5e596e8ff5bd58854dca53f8c73e03b8cdba7e",
+      "checkpoint": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\csl_daily_pose_only_slt.pth",
+      "checkpoint_bytes": 1186925112,
+      "checkpoint_sha256_declared": "73bea87a9603f719b4f4a481a3a1a5ed24e7e5f7b81afd14ef498c40469c1a6c",
+      "source_commit": "eed438bcb49e30405cd6ccdfcccca330c134e830",
+      "model_revision": "182913ca7a8b7dd9837d7d6f10717353f4408f80",
+      "max_frames": 256,
+      "num_beams": 4,
+      "license": "CC-BY-NC-4.0"
+    },
+    "slrt": {
+      "config": "E:\\githubproject\\SignLanguage-Bridge\\configs\\slrt-csl-hrnet-npz.example.json",
+      "config_sha256": "a9600cc3e5c44931623c0ad9e87818ca5111d976e83d219861c23ddd3b16deb9",
+      "checkpoint": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\EMNLP24_Online\\CSL-Daily\\ckpts\\cslr_best.ckpt",
+      "checkpoint_bytes": 499554423,
+      "checkpoint_sha256_declared": "e9fdd3a66d9667e7685c2b1437c67b8cbc9e45d2562730f04c0226717b7cbd4d",
+      "vocabulary": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\EMNLP24_Online\\CSL-Daily\\meta\\csl_iso_with_blank.vocab",
+      "window_size": 16,
+      "stride": 1,
+      "vote_size": 7
+    }
+  },
+  "environment": {
+    "python": "3.10.22",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "host_alias": "PC-HPVYVOTACGSS",
+    "cpu_count": 20,
+    "torch": "2.9.1+cu128",
+    "cuda_available": true,
+    "cuda_version": "12.8",
+    "gpu_name": "NVIDIA GeForce RTX 5060 Ti",
+    "gpu_total_vram_mb": 16283.4,
+    "gpu_capability": "12.0"
+  },
+  "ram": {
+    "total_gb": 31.84,
+    "available_gb": 10.08,
+    "used_percent": 68.4
+  },
+  "samples": [
+    "S000502_P0000_T00",
+    "S003181_P0001_T00",
+    "S002951_P0002_T00",
+    "S004204_P0003_T00",
+    "S000414_P0004_T00",
+    "S001656_P0005_T00",
+    "S005040_P0006_T00",
+    "S002092_P0007_T00",
+    "S000230_P0008_T00",
+    "S005276_P0009_T00",
+    "S001090_P0000_T00",
+    "S003605_P0001_T00",
+    "S003256_P0002_T00",
+    "S004459_P0003_T00",
+    "S000440_P0004_T00",
+    "S002086_P0005_T00",
+    "S005112_P0006_T00",
+    "S002143_P0007_T00",
+    "S001064_P0008_T00",
+    "S005306_P0009_T00"
+  ],
+  "signers": [
+    "P0000",
+    "P0001",
+    "P0002",
+    "P0003",
+    "P0004",
+    "P0005",
+    "P0006",
+    "P0007",
+    "P0008",
+    "P0009"
+  ],
+  "readiness": {
+    "checked_at": "2026-10-27T07:55:14+00:00",
+    "a_bundle": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\model_bundle",
+    "a_bundle_ok": true,
+    "a_registered": true,
+    "rgb_pose": {
+      "module": "slbridge.uni_sign_rgb_pose",
+      "module_present": true,
+      "module_symbols": [
+        "UniSignRGBPoseAdapter",
+        "UniSignRGBPoseConfig",
+        "UniSignRGBPoseRuntime",
+        "load_official_pose",
+        "load_part_kp",
+        "load_unisign_rgb_pose_adapter",
+        "load_upstream_class"
+      ],
+      "factory_candidates": [
+        "load_official_pose",
+        "load_part_kp",
+        "load_unisign_rgb_pose_adapter",
+        "load_upstream_class"
+      ],
+      "registered_backend_ids": [
+        "unisign_rgb_pose_slt"
+      ],
+      "adapter_ids": [
+        "random_forest_v1",
+        "onnx_classifier_v1",
+        "onnx_ctc",
+        "uni_sign_pose_slt",
+        "slrt_online_csl",
+        "replay_jsonl_v1",
+        "unisign_rgb_pose_slt"
+      ],
+      "registry_error": null,
+      "bundles": [
+        {
+          "path": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign_rgb_pose\\model_bundle",
+          "backend": "unisign_rgb_pose_slt"
+        },
+        {
+          "path": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\slrt_csl_bundle",
+          "backend": "slrt_online_csl"
+        },
+        {
+          "path": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\slrt_hrnet_bundle",
+          "backend": "slrt_online_csl"
+        },
+        {
+          "path": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\model_bundle",
+          "backend": "uni_sign_pose_slt"
+        },
+        {
+          "path": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\model_bundle_stride5",
+          "backend": "uni_sign_pose_slt"
+        }
+      ],
+      "base_config": {
+        "pose_source": "rtmpose",
+        "enable_rgb": true,
+        "fallback_to_pose_only": false
+      },
+      "variants": {
+        "rgbpose_legacy": {
+          "pose_source": "rtmpose",
+          "enable_rgb": true,
+          "fallback_to_pose_only": false,
+          "hand_conf_layout": "legacy",
+          "role": "production form: zero-gate RGB branch, no hand crops"
+        },
+        "rgbpose_squeeze": {
+          "pose_source": "rtmpose",
+          "enable_rgb": true,
+          "fallback_to_pose_only": false,
+          "hand_conf_layout": "squeeze",
+          "role": "waste control: real hand crops discarded by the zero gate"
+        }
+      }
+    },
+    "stage2_bundle": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\e01\\runs\\stage2-pose-subset-pilot50-20261027\\pose_bundle",
+    "stage2_bundle_ok": true,
+    "stage2_checkpoint": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\csl_daily_stage2_pose_subset.pth",
+    "stage2_checkpoint_sha256": "951601a39fbbe19f633e0df9690df432056b4286609f75a3ee723c8f001fc2e3",
+    "pilot_samples_available": 20,
+    "ready": true,
+    "frozen_model_reference": {
+      "model_total_mean_ms": 376.4,
+      "model_total_p50_ms": 369.8,
+      "peak_allocated_mb": 1265.5,
+      "peak_reserved_mb": 2700.0,
+      "load_seconds": 5.4497,
+      "note": "experiments/p1/e01/runs/unisign-rgb-pose-1086-20261027 (model side only)"
+    }
+  },
+  "variants": {},
+  "path_labels": {
+    "a": "unisign_pose_slt (A, pose-only video, stage1)",
+    "b_stage2": "unisign_pose_slt + stage2 pose subset (B, product candidate)"
+  },
+  "arms": [
+    "a",
+    "b_stage2"
+  ],
+  "stage2_bundle": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\e01\\runs\\stage2-pose-subset-pilot50-20261027\\pose_bundle",
+  "frozen_model_reference": {
+    "model_total_mean_ms": 376.4,
+    "model_total_p50_ms": 369.8,
+    "peak_allocated_mb": 1265.5,
+    "peak_reserved_mb": 2700.0,
+    "load_seconds": 5.4497,
+    "note": "experiments/p1/e01/runs/unisign-rgb-pose-1086-20261027 (model side only)"
+  },
+  "protocol": {
+    "decode": "production ModelAdapter.infer(path, input_kind='file')",
+    "pose_source": "rtmpose",
+    "order": "rotating A/legacy/squeeze per sample inside each round",
+    "rounds": 2,
+    "samples": 20,
+    "continuous_minutes": 2.0,
+    "gate_note": "pinned checkpoint fusion_gate all-zero; legacy carries the RGB branch without hand crops, squeeze pays for crops the gate discards"
+  },
+  "commands": [
+    "E:\\githubproject\\SignLanguage-Bridge\\.conda-env\\python.exe experiments\\p1\\e04\\rgbpose_perf.py run --run-dir experiments\\p1\\e04\\rgbpose-perf-20261027 --run-id rgbpose-perf-20261027 --arms a,b_stage2 --samples 20 --rounds 2 --continuous-minutes 2"
+  ],
+  "load": {
+    "a": {
+      "load_seconds": 26.361,
+      "runner_load_seconds": 26.361,
+      "resolution": {
+        "route": "load_model_adapter",
+        "bundle": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\model_bundle"
+      },
+      "config": null,
+      "runtime_info": {
+        "backend": "pytorch_uni_sign",
+        "providers": [
+          "PyTorch CUDA"
+        ],
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "load_ms": 7409.668899956159,
+        "model_warmup_ms": 14038.279000029434,
+        "checkpoint": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\csl_daily_pose_only_slt.pth",
+        "checkpoint_sha256": "73bea87a9603f719b4f4a481a3a1a5ed24e7e5f7b81afd14ef498c40469c1a6c",
+        "mt5_dir": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\mt5-base",
+        "source_dir": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign_source",
+        "source_commit": "eed438bcb49e30405cd6ccdfcccca330c134e830",
+        "model_revision": "182913ca7a8b7dd9837d7d6f10717353f4408f80",
+        "license": "CC-BY-NC-4.0",
+        "source_license_status": "no-license-file-at-pinned-commit",
+        "pose_normalization": "isotropic_short_side",
+        "pose_orientation": "preserve",
+        "pose_mode": "lightweight",
+        "pose_sample_only": false,
+        "pose_detect_stride": 1,
+        "max_frames": 256,
+        "streaming": "sliding_window_over_complete_windows",
+        "pose_backend": "onnxruntime",
+        "pose_requested_device": "cuda",
+        "pose_device": "cuda",
+        "pose_detection_providers": [
+          "CUDAExecutionProvider",
+          "CPUExecutionProvider"
+        ],
+        "pose_estimation_providers": [
+          "CUDAExecutionProvider",
+          "CPUExecutionProvider"
+        ],
+        "pose_fallback_reason": null,
+        "pose_preload_failures": [],
+        "pose_warmup_error": null,
+        "pose_cache_dir": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\rtmlib-cache",
+        "pose_warmup_image": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign_source\\demo\\rtmlib-main\\demo.jpg",
+        "parameter_count": 587747368,
+        "gpu_allocated_mb": 1148.85009765625,
+        "gpu_reserved_mb": 2688.0,
+        "gpu_peak_allocated_mb": 1183.4521484375,
+        "gpu_peak_reserved_mb": 2708.0
+      },
+      "vram_after_load": {
+        "torch_peak_allocated_mb": 1183.5,
+        "torch_peak_reserved_mb": 2708.0,
+        "torch_allocated_mb": 1158.1,
+        "torch_reserved_mb": 2708.0,
+        "scope": "process_torch_allocator",
+        "device_free_mb_at_read": 12066.0,
+        "device_total_mb": 16283.4
+      }
+    },
+    "b_stage2": {
+      "load_seconds": 15.354,
+      "runner_load_seconds": 15.354,
+      "resolution": {
+        "route": "load_model_adapter",
+        "bundle": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\e01\\runs\\stage2-pose-subset-pilot50-20261027\\pose_bundle"
+      },
+      "config": null,
+      "runtime_info": {
+        "backend": "pytorch_uni_sign",
+        "providers": [
+          "PyTorch CUDA"
+        ],
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "load_ms": 4741.405399981886,
+        "model_warmup_ms": 168.89269999228418,
+        "checkpoint": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\csl_daily_stage2_pose_subset.pth",
+        "checkpoint_sha256": "951601a39fbbe19f633e0df9690df432056b4286609f75a3ee723c8f001fc2e3",
+        "mt5_dir": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\mt5-base",
+        "source_dir": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign_source",
+        "source_commit": "eed438bcb49e30405cd6ccdfcccca330c134e830",
+        "model_revision": "182913ca7a8b7dd9837d7d6f10717353f4408f80",
+        "license": "CC-BY-NC-4.0",
+        "source_license_status": "no-license-file-at-pinned-commit",
+        "pose_normalization": "isotropic_short_side",
+        "pose_orientation": "preserve",
+        "pose_mode": "lightweight",
+        "pose_sample_only": false,
+        "pose_detect_stride": 1,
+        "max_frames": 256,
+        "streaming": "sliding_window_over_complete_windows",
+        "pose_backend": "onnxruntime",
+        "pose_requested_device": "cuda",
+        "pose_device": "cuda",
+        "pose_detection_providers": [
+          "CUDAExecutionProvider",
+          "CPUExecutionProvider"
+        ],
+        "pose_estimation_providers": [
+          "CUDAExecutionProvider",
+          "CPUExecutionProvider"
+        ],
+        "pose_fallback_reason": null,
+        "pose_preload_failures": [],
+        "pose_warmup_error": null,
+        "pose_cache_dir": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\e01\\runs\\stage2-pose-subset-pilot50-20261027\\rtmlib-cache",
+        "pose_warmup_image": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign_source\\demo\\rtmlib-main\\demo.jpg",
+        "parameter_count": 587747368,
+        "gpu_allocated_mb": 2290.2001953125,
+        "gpu_reserved_mb": 3810.0,
+        "gpu_peak_allocated_mb": 2315.89404296875,
+        "gpu_peak_reserved_mb": 3818.0
+      },
+      "vram_after_load": {
+        "torch_peak_allocated_mb": 2315.9,
+        "torch_peak_reserved_mb": 3818.0,
+        "torch_allocated_mb": 2290.2,
+        "torch_reserved_mb": 3818.0,
+        "scope": "process_torch_allocator",
+        "device_free_mb_at_read": 10596.0,
+        "device_total_mb": 16283.4
+      }
+    }
+  },
+  "finished_at": "2026-10-27T08:01:59+00:00",
+  "failures": [],
+  "comparison": {
+    "arms": [
+      "a",
+      "b_stage2"
+    ],
+    "e2e_p50_ms": {
+      "a": 2885.601,
+      "b_stage2": 2909.6324999999997
+    },
+    "e2e_p95_ms": {
+      "a": 4236.188,
+      "b_stage2": 4039.0609
+    },
+    "e2e_mean_ms": {
+      "a": 2953.5062786885246,
+      "b_stage2": 2897.3661166666666
+    },
+    "model_forward_p50_ms": {
+      "a": 31.054,
+      "b_stage2": 32.104
+    },
+    "preprocess_total_p50_ms": {
+      "a": 2612.526,
+      "b_stage2": 2633.0325000000003
+    },
+    "rtf_p50": {
+      "a": 0.737,
+      "b_stage2": 0.73935
+    },
+    "peak_allocated_mb": {
+      "a": 2361.3,
+      "b_stage2": 2363.0
+    },
+    "peak_reserved_mb": {
+      "a": 3858.0,
+      "b_stage2": 3858.0
+    },
+    "paired_delta_e2e_p50_ms": {
+      "b_stage2_minus_a": 19.04
+    },
+    "paired_delta_e2e_mean_ms": {
+      "b_stage2_minus_a": -56.14
+    },
+    "identical_predictions": {
+      "b_stage2_vs_a": {
+        "identical": 8,
+        "pairs": 40
+      }
+    },
+    "cold_load_seconds": {
+      "a": 26.361,
+      "b_stage2": 15.354
+    },
+    "stage2_bundle": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\e01\\runs\\stage2-pose-subset-pilot50-20261027\\pose_bundle",
+    "core_question_b_vs_a": {
+      "delta_e2e_p50_ms": 19.04,
+      "delta_e2e_mean_ms": -56.14,
+      "delta_model_forward_p50_ms": 1.05,
+      "delta_peak_allocated_mb": 1.7
+    },
+    "tiny_note": "paired rotating-round deltas are the primary number; absolute values are not clean-room SLA; C/D rgb-pose arms are optional and BLOCKED until the rtmpose adapter defect is fixed"
+  },
+  "output_files": [
+    "device_samples.jsonl",
+    "load.json",
+    "manifest.json",
+    "metrics.json",
+    "trace.jsonl"
+  ]
+}

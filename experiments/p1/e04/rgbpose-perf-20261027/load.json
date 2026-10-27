@@ -1,0 +1,130 @@
+{
+  "a": {
+    "load_seconds": 26.361,
+    "runner_load_seconds": 26.361,
+    "resolution": {
+      "route": "load_model_adapter",
+      "bundle": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\model_bundle"
+    },
+    "config": null,
+    "runtime_info": {
+      "backend": "pytorch_uni_sign",
+      "providers": [
+        "PyTorch CUDA"
+      ],
+      "device": "cuda",
+      "dtype": "bfloat16",
+      "load_ms": 7409.668899956159,
+      "model_warmup_ms": 14038.279000029434,
+      "checkpoint": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\csl_daily_pose_only_slt.pth",
+      "checkpoint_sha256": "73bea87a9603f719b4f4a481a3a1a5ed24e7e5f7b81afd14ef498c40469c1a6c",
+      "mt5_dir": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\mt5-base",
+      "source_dir": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign_source",
+      "source_commit": "eed438bcb49e30405cd6ccdfcccca330c134e830",
+      "model_revision": "182913ca7a8b7dd9837d7d6f10717353f4408f80",
+      "license": "CC-BY-NC-4.0",
+      "source_license_status": "no-license-file-at-pinned-commit",
+      "pose_normalization": "isotropic_short_side",
+      "pose_orientation": "preserve",
+      "pose_mode": "lightweight",
+      "pose_sample_only": false,
+      "pose_detect_stride": 1,
+      "max_frames": 256,
+      "streaming": "sliding_window_over_complete_windows",
+      "pose_backend": "onnxruntime",
+      "pose_requested_device": "cuda",
+      "pose_device": "cuda",
+      "pose_detection_providers": [
+        "CUDAExecutionProvider",
+        "CPUExecutionProvider"
+      ],
+      "pose_estimation_providers": [
+        "CUDAExecutionProvider",
+        "CPUExecutionProvider"
+      ],
+      "pose_fallback_reason": null,
+      "pose_preload_failures": [],
+      "pose_warmup_error": null,
+      "pose_cache_dir": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\rtmlib-cache",
+      "pose_warmup_image": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign_source\\demo\\rtmlib-main\\demo.jpg",
+      "parameter_count": 587747368,
+      "gpu_allocated_mb": 1148.85009765625,
+      "gpu_reserved_mb": 2688.0,
+      "gpu_peak_allocated_mb": 1183.4521484375,
+      "gpu_peak_reserved_mb": 2708.0
+    },
+    "vram_after_load": {
+      "torch_peak_allocated_mb": 1183.5,
+      "torch_peak_reserved_mb": 2708.0,
+      "torch_allocated_mb": 1158.1,
+      "torch_reserved_mb": 2708.0,
+      "scope": "process_torch_allocator",
+      "device_free_mb_at_read": 12066.0,
+      "device_total_mb": 16283.4
+    }
+  },
+  "b_stage2": {
+    "load_seconds": 15.354,
+    "runner_load_seconds": 15.354,
+    "resolution": {
+      "route": "load_model_adapter",
+      "bundle": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\e01\\runs\\stage2-pose-subset-pilot50-20261027\\pose_bundle"
+    },
+    "config": null,
+    "runtime_info": {
+      "backend": "pytorch_uni_sign",
+      "providers": [
+        "PyTorch CUDA"
+      ],
+      "device": "cuda",
+      "dtype": "bfloat16",
+      "load_ms": 4741.405399981886,
+      "model_warmup_ms": 168.89269999228418,
+      "checkpoint": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\csl_daily_stage2_pose_subset.pth",
+      "checkpoint_sha256": "951601a39fbbe19f633e0df9690df432056b4286609f75a3ee723c8f001fc2e3",
+      "mt5_dir": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\mt5-base",
+      "source_dir": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign_source",
+      "source_commit": "eed438bcb49e30405cd6ccdfcccca330c134e830",
+      "model_revision": "182913ca7a8b7dd9837d7d6f10717353f4408f80",
+      "license": "CC-BY-NC-4.0",
+      "source_license_status": "no-license-file-at-pinned-commit",
+      "pose_normalization": "isotropic_short_side",
+      "pose_orientation": "preserve",
+      "pose_mode": "lightweight",
+      "pose_sample_only": false,
+      "pose_detect_stride": 1,
+      "max_frames": 256,
+      "streaming": "sliding_window_over_complete_windows",
+      "pose_backend": "onnxruntime",
+      "pose_requested_device": "cuda",
+      "pose_device": "cuda",
+      "pose_detection_providers": [
+        "CUDAExecutionProvider",
+        "CPUExecutionProvider"
+      ],
+      "pose_estimation_providers": [
+        "CUDAExecutionProvider",
+        "CPUExecutionProvider"
+      ],
+      "pose_fallback_reason": null,
+      "pose_preload_failures": [],
+      "pose_warmup_error": null,
+      "pose_cache_dir": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\e01\\runs\\stage2-pose-subset-pilot50-20261027\\rtmlib-cache",
+      "pose_warmup_image": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign_source\\demo\\rtmlib-main\\demo.jpg",
+      "parameter_count": 587747368,
+      "gpu_allocated_mb": 2290.2001953125,
+      "gpu_reserved_mb": 3810.0,
+      "gpu_peak_allocated_mb": 2315.89404296875,
+      "gpu_peak_reserved_mb": 3818.0
+    },
+    "vram_after_load": {
+      "torch_peak_allocated_mb": 2315.9,
+      "torch_peak_reserved_mb": 3818.0,
+      "torch_allocated_mb": 2290.2,
+      "torch_reserved_mb": 3818.0,
+      "scope": "process_torch_allocator",
+      "device_free_mb_at_read": 10596.0,
+      "device_total_mb": 16283.4
+    }
+  }
+}

@@ -35,16 +35,18 @@ slbridge/model_adapters.py: unisign_rgb_pose_slt ┘     ├─ UniSignRGBPoseRu
 - 异常：加载失败/显存不足/输入缺失 → 明确错误码，不静默、不返回空文本冒充成功。
 - GT-free：结果过 `gt_guard`。
 
-## 3. 验收标准
+## 3. 验收标准与结果（2026-10-27 收口）
 
-| # | 验收项 | 判据 |
-|---|---|---|
-| 1 | Pilot-50 逐条回归（经 adapter 协议路径） | 与冻结 `predictions_rgb_pose.jsonl` **50/50 逐字一致**；差异必须逐条归因 |
-| 2 | 1086 全量（经 adapter） | canonical 指标与基线差 **≤0.01**（BLEU 26.3026 / chrF 23.0005 / edit 0.4358） |
-| 3 | 单元/集成测试 | 注册、能力、配置校验、回退、GT-free、确定性、手部 crop 几何；opt-in GPU 1 样本对照 |
-| 4 | 双环境回归 | `.conda-env` 944+/14、`.venv-libras` 990+/14，零退化 |
-| 5 | 性能（task-34） | RTX 5060 Ti：e2e/RTF/P50/P95/显存，与现有视频路径 A 配对比较；延迟/显存增量可接受性结论 |
-| 6 | 产物完整 | 每 run 的 manifest / 预测 / 指标 / 性能日志；回归报告；ADR 更新 |
+| # | 验收项 | 判据 | 结果 |
+|---|---|---|---|
+| 1 | Pilot-50 逐条回归（经 adapter 协议路径） | 与冻结预测 50/50 逐字一致 | ✅ **50/50（100%）**，指标 Δ=0 |
+| 2 | 1086 全量（经 adapter） | 指标与基线差 ≤0.01 | ✅ **1086/1086 逐字一致**；BLEU 26.3026 / chrF 23.0005 / edit 0.4358（Δ=0），430 s、0 失败 |
+| 3 | 单元/集成测试 | 注册、能力、配置校验、回退、GT-free、确定性、手部 crop 几何 | ✅ `test_unisign_rgb_pose_adapter.py`（23 passed + 1 opt-in） |
+| 4 | 双环境回归 | 零退化 | ✅ `.conda-env` 967/15、`.venv-libras` 1011/17 |
+| 5 | 性能（RTX 5060 Ti） | e2e/RTF/P50/P95/显存 vs 现有视频路径 | ✅ A vs stage2 子集：e2e P50 **+19 ms**、均值 **−56 ms**、显存 **+1.7 MB**、RTF +0.002 → 零代价（`experiments/p1/e04/rgbpose_perf_report.md`） |
+| 6 | 产物完整 | manifest/预测/指标/日志/报告/ADR | ✅ 见 `runs/adapter-regression-full1086-20261027/`、`runs/stage2-pose-subset-1086-20261027/`、`rgbpose-perf-20261027/`、`adapter_regression_report.md`、ADR-P1-011/012 |
+
+**附加成果**：stage2 pose 子集（627 键）在纯 pose 架构下与 legacy RGB+pose **1086/1086 逐字一致**，证明 RGB 分支可完全去掉（`stage2_pose_subset_report_1086.md`）。
 
 ## 4. 状态门（不自动启用）
 

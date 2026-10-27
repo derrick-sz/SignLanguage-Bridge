@@ -1,0 +1,638 @@
+{
+  "schema_version": 1,
+  "run_id": "rgbpose-perf-20261027",
+  "created_at": "2026-10-27T08:01:59+00:00",
+  "paths": {
+    "a": {
+      "label": "unisign_pose_slt (A, pose-only video, stage1)",
+      "variant": null,
+      "runs": 61,
+      "failures": 0,
+      "video_decode_ms": {
+        "count": 61,
+        "p50": 294.031,
+        "p95": 496.457,
+        "mean": 311.5648524590164,
+        "min": 202.567,
+        "max": 506.431
+      },
+      "pose_extract_ms": {
+        "count": 61,
+        "p50": 2602.998,
+        "p95": 3846.344,
+        "mean": 2671.8201803278685,
+        "min": 313.099,
+        "max": 3888.247
+      },
+      "hand_crop_ms": {
+        "count": 0,
+        "p50": null,
+        "p95": null,
+        "mean": null,
+        "min": null,
+        "max": null
+      },
+      "model_forward_ms": {
+        "count": 61,
+        "p50": 31.054,
+        "p95": 53.381,
+        "mean": 34.963967213114756,
+        "min": 28.922,
+        "max": 58.748
+      },
+      "text_decode_ms": {
+        "count": 61,
+        "p50": 228.154,
+        "p95": 351.166,
+        "mean": 235.70395081967214,
+        "min": 156.453,
+        "max": 379.785
+      },
+      "preprocess_total_ms": {
+        "count": 61,
+        "p50": 2612.526,
+        "p95": 3858.196,
+        "mean": 2682.5761147540984,
+        "min": 326.609,
+        "max": 3900.622
+      },
+      "e2e_ms": {
+        "count": 61,
+        "p50": 2885.601,
+        "p95": 4236.188,
+        "mean": 2953.5062786885246,
+        "min": 549.775,
+        "max": 4324.769
+      },
+      "rtf": {
+        "count": 61,
+        "p50": 0.737,
+        "p95": 0.7675,
+        "mean": 0.7266557377049181,
+        "min": 0.1527,
+        "max": 0.7882
+      },
+      "vram": {
+        "peak_allocated_mb": 2361.3,
+        "peak_reserved_mb": 3858.0,
+        "resident_allocated_mb_p50": 2290.2
+      },
+      "phases": {
+        "continuous": {
+          "runs": 21,
+          "e2e_ms": {
+            "count": 21,
+            "p50": 2885.601,
+            "p95": 4236.188,
+            "mean": 3052.983,
+            "min": 2285.357,
+            "max": 4286.339
+          },
+          "peak_allocated_mb": 2361.3
+        },
+        "round1": {
+          "runs": 20,
+          "e2e_ms": {
+            "count": 20,
+            "p50": 2873.8990000000003,
+            "p95": 3889.28425,
+            "mean": 2853.14345,
+            "min": 549.775,
+            "max": 4324.769
+          },
+          "peak_allocated_mb": 2361.3
+        },
+        "round2": {
+          "runs": 20,
+          "e2e_ms": {
+            "count": 20,
+            "p50": 2886.5605,
+            "p95": 3960.98415,
+            "mean": 2949.41855,
+            "min": 2099.314,
+            "max": 4268.578
+          },
+          "peak_allocated_mb": 2361.3
+        }
+      }
+    },
+    "b_stage2": {
+      "label": "unisign_pose_slt + stage2 pose subset (B, product candidate)",
+      "variant": null,
+      "runs": 60,
+      "failures": 0,
+      "video_decode_ms": {
+        "count": 60,
+        "p50": 267.50350000000003,
+        "p95": 468.14599999999996,
+        "mean": 296.8297166666667,
+        "min": 198.841,
+        "max": 493.212
+      },
+      "pose_extract_ms": {
+        "count": 60,
+        "p50": 2608.8540000000003,
+        "p95": 3630.6658999999995,
+        "mean": 2591.11455,
+        "min": 302.448,
+        "max": 3860.676
+      },
+      "hand_crop_ms": {
+        "count": 0,
+        "p50": null,
+        "p95": null,
+        "mean": null,
+        "min": null,
+        "max": null
+      },
+      "model_forward_ms": {
+        "count": 60,
+        "p50": 32.104,
+        "p95": 62.722349999999985,
+        "mean": 37.434533333333334,
+        "min": 28.686,
+        "max": 77.008
+      },
+      "text_decode_ms": {
+        "count": 60,
+        "p50": 248.8265,
+        "p95": 355.8295499999999,
+        "mean": 257.4946,
+        "min": 163.594,
+        "max": 406.146
+      },
+      "preprocess_total_ms": {
+        "count": 60,
+        "p50": 2633.0325000000003,
+        "p95": 3641.3608,
+        "mean": 2602.1688166666663,
+        "min": 313.979,
+        "max": 3872.428
+      },
+      "e2e_ms": {
+        "count": 60,
+        "p50": 2909.6324999999997,
+        "p95": 4039.0609,
+        "mean": 2897.3661166666666,
+        "min": 516.601,
+        "max": 4312.691
+      },
+      "rtf": {
+        "count": 60,
+        "p50": 0.73935,
+        "p95": 0.798905,
+        "mean": 0.7348416666666666,
+        "min": 0.1435,
+        "max": 0.8199
+      },
+      "vram": {
+        "peak_allocated_mb": 2363.0,
+        "peak_reserved_mb": 3858.0,
+        "resident_allocated_mb_p50": 2290.2
+      },
+      "phases": {
+        "continuous": {
+          "runs": 20,
+          "e2e_ms": {
+            "count": 20,
+            "p50": 2894.7295000000004,
+            "p95": 3993.84375,
+            "mean": 2850.7519,
+            "min": 2181.306,
+            "max": 4044.645
+          },
+          "peak_allocated_mb": 2354.4
+        },
+        "round1": {
+          "runs": 20,
+          "e2e_ms": {
+            "count": 20,
+            "p50": 2959.352,
+            "p95": 3980.96715,
+            "mean": 2888.3611,
+            "min": 516.601,
+            "max": 4312.691
+          },
+          "peak_allocated_mb": 2363.0
+        },
+        "round2": {
+          "runs": 20,
+          "e2e_ms": {
+            "count": 20,
+            "p50": 2905.034,
+            "p95": 4049.3761,
+            "mean": 2952.98535,
+            "min": 2230.588,
+            "max": 4250.949
+          },
+          "peak_allocated_mb": 2363.0
+        }
+      }
+    }
+  },
+  "pairs": {
+    "b_stage2_minus_a": {
+      "first": "a",
+      "second": "b_stage2",
+      "phases": {
+        "continuous": {
+          "pairs": 0,
+          "delta_e2e_ms": {
+            "count": 0,
+            "p50": null,
+            "p95": null,
+            "mean": null,
+            "min": null,
+            "max": null
+          },
+          "delta_model_forward_ms": {
+            "count": 0,
+            "p50": null,
+            "p95": null,
+            "mean": null,
+            "min": null,
+            "max": null
+          },
+          "delta_preprocess_total_ms": {
+            "count": 0,
+            "p50": null,
+            "p95": null,
+            "mean": null,
+            "min": null,
+            "max": null
+          },
+          "second_slower_e2e_count": 0,
+          "identical_predictions": 0
+        },
+        "round1": {
+          "pairs": 20,
+          "delta_e2e_ms": {
+            "count": 20,
+            "p50": 33.04999999999973,
+            "p95": 120.54925000000043,
+            "mean": 35.21764999999998,
+            "min": -67.60600000000022,
+            "max": 134.08199999999988
+          },
+          "delta_model_forward_ms": {
+            "count": 20,
+            "p50": 8.1185,
+            "p95": 40.15370000000001,
+            "mean": 3.75235,
+            "min": -26.427999999999997,
+            "max": 47.919
+          },
+          "delta_preprocess_total_ms": {
+            "count": 20,
+            "p50": 9.813500000000204,
+            "p95": 74.65410000000008,
+            "mean": 13.465350000000097,
+            "min": -46.68899999999985,
+            "max": 86.05600000000004
+          },
+          "second_slower_e2e_count": 14,
+          "identical_predictions": 4
+        },
+        "round2": {
+          "pairs": 20,
+          "delta_e2e_ms": {
+            "count": 20,
+            "p50": 5.022499999999809,
+            "p95": 95.83709999999981,
+            "mean": 3.566800000000035,
+            "min": -111.77799999999979,
+            "max": 131.27400000000034
+          },
+          "delta_model_forward_ms": {
+            "count": 20,
+            "p50": 0.7599999999999998,
+            "p95": 9.5273,
+            "mean": -0.1548999999999996,
+            "min": -15.730999999999998,
+            "max": 11.033999999999999
+          },
+          "delta_preprocess_total_ms": {
+            "count": 20,
+            "p50": -0.3554999999998927,
+            "p95": 47.111949999999766,
+            "mean": -3.975649999999985,
+            "min": -71.8819999999996,
+            "max": 51.95600000000013
+          },
+          "second_slower_e2e_count": 11,
+          "identical_predictions": 4
+        }
+      }
+    }
+  },
+  "comparison": {
+    "arms": [
+      "a",
+      "b_stage2"
+    ],
+    "e2e_p50_ms": {
+      "a": 2885.601,
+      "b_stage2": 2909.6324999999997
+    },
+    "e2e_p95_ms": {
+      "a": 4236.188,
+      "b_stage2": 4039.0609
+    },
+    "e2e_mean_ms": {
+      "a": 2953.5062786885246,
+      "b_stage2": 2897.3661166666666
+    },
+    "model_forward_p50_ms": {
+      "a": 31.054,
+      "b_stage2": 32.104
+    },
+    "preprocess_total_p50_ms": {
+      "a": 2612.526,
+      "b_stage2": 2633.0325000000003
+    },
+    "rtf_p50": {
+      "a": 0.737,
+      "b_stage2": 0.73935
+    },
+    "peak_allocated_mb": {
+      "a": 2361.3,
+      "b_stage2": 2363.0
+    },
+    "peak_reserved_mb": {
+      "a": 3858.0,
+      "b_stage2": 3858.0
+    },
+    "paired_delta_e2e_p50_ms": {
+      "b_stage2_minus_a": 19.04
+    },
+    "paired_delta_e2e_mean_ms": {
+      "b_stage2_minus_a": -56.14
+    },
+    "identical_predictions": {
+      "b_stage2_vs_a": {
+        "identical": 8,
+        "pairs": 40
+      }
+    },
+    "cold_load_seconds": {
+      "a": 26.361,
+      "b_stage2": 15.354
+    },
+    "stage2_bundle": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\e01\\runs\\stage2-pose-subset-pilot50-20261027\\pose_bundle",
+    "core_question_b_vs_a": {
+      "delta_e2e_p50_ms": 19.04,
+      "delta_e2e_mean_ms": -56.14,
+      "delta_model_forward_p50_ms": 1.05,
+      "delta_peak_allocated_mb": 1.7
+    },
+    "tiny_note": "paired rotating-round deltas are the primary number; absolute values are not clean-room SLA; C/D rgb-pose arms are optional and BLOCKED until the rtmpose adapter defect is fixed"
+  },
+  "failures": [],
+  "load": {
+    "a": {
+      "load_seconds": 26.361,
+      "runner_load_seconds": 26.361,
+      "resolution": {
+        "route": "load_model_adapter",
+        "bundle": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\model_bundle"
+      },
+      "config": null,
+      "runtime_info": {
+        "backend": "pytorch_uni_sign",
+        "providers": [
+          "PyTorch CUDA"
+        ],
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "load_ms": 7409.668899956159,
+        "model_warmup_ms": 14038.279000029434,
+        "checkpoint": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\csl_daily_pose_only_slt.pth",
+        "checkpoint_sha256": "73bea87a9603f719b4f4a481a3a1a5ed24e7e5f7b81afd14ef498c40469c1a6c",
+        "mt5_dir": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\mt5-base",
+        "source_dir": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign_source",
+        "source_commit": "eed438bcb49e30405cd6ccdfcccca330c134e830",
+        "model_revision": "182913ca7a8b7dd9837d7d6f10717353f4408f80",
+        "license": "CC-BY-NC-4.0",
+        "source_license_status": "no-license-file-at-pinned-commit",
+        "pose_normalization": "isotropic_short_side",
+        "pose_orientation": "preserve",
+        "pose_mode": "lightweight",
+        "pose_sample_only": false,
+        "pose_detect_stride": 1,
+        "max_frames": 256,
+        "streaming": "sliding_window_over_complete_windows",
+        "pose_backend": "onnxruntime",
+        "pose_requested_device": "cuda",
+        "pose_device": "cuda",
+        "pose_detection_providers": [
+          "CUDAExecutionProvider",
+          "CPUExecutionProvider"
+        ],
+        "pose_estimation_providers": [
+          "CUDAExecutionProvider",
+          "CPUExecutionProvider"
+        ],
+        "pose_fallback_reason": null,
+        "pose_preload_failures": [],
+        "pose_warmup_error": null,
+        "pose_cache_dir": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\rtmlib-cache",
+        "pose_warmup_image": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign_source\\demo\\rtmlib-main\\demo.jpg",
+        "parameter_count": 587747368,
+        "gpu_allocated_mb": 1148.85009765625,
+        "gpu_reserved_mb": 2688.0,
+        "gpu_peak_allocated_mb": 1183.4521484375,
+        "gpu_peak_reserved_mb": 2708.0
+      },
+      "vram_after_load": {
+        "torch_peak_allocated_mb": 1183.5,
+        "torch_peak_reserved_mb": 2708.0,
+        "torch_allocated_mb": 1158.1,
+        "torch_reserved_mb": 2708.0,
+        "scope": "process_torch_allocator",
+        "device_free_mb_at_read": 12066.0,
+        "device_total_mb": 16283.4
+      }
+    },
+    "b_stage2": {
+      "load_seconds": 15.354,
+      "runner_load_seconds": 15.354,
+      "resolution": {
+        "route": "load_model_adapter",
+        "bundle": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\e01\\runs\\stage2-pose-subset-pilot50-20261027\\pose_bundle"
+      },
+      "config": null,
+      "runtime_info": {
+        "backend": "pytorch_uni_sign",
+        "providers": [
+          "PyTorch CUDA"
+        ],
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "load_ms": 4741.405399981886,
+        "model_warmup_ms": 168.89269999228418,
+        "checkpoint": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\csl_daily_stage2_pose_subset.pth",
+        "checkpoint_sha256": "951601a39fbbe19f633e0df9690df432056b4286609f75a3ee723c8f001fc2e3",
+        "mt5_dir": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\mt5-base",
+        "source_dir": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign_source",
+        "source_commit": "eed438bcb49e30405cd6ccdfcccca330c134e830",
+        "model_revision": "182913ca7a8b7dd9837d7d6f10717353f4408f80",
+        "license": "CC-BY-NC-4.0",
+        "source_license_status": "no-license-file-at-pinned-commit",
+        "pose_normalization": "isotropic_short_side",
+        "pose_orientation": "preserve",
+        "pose_mode": "lightweight",
+        "pose_sample_only": false,
+        "pose_detect_stride": 1,
+        "max_frames": 256,
+        "streaming": "sliding_window_over_complete_windows",
+        "pose_backend": "onnxruntime",
+        "pose_requested_device": "cuda",
+        "pose_device": "cuda",
+        "pose_detection_providers": [
+          "CUDAExecutionProvider",
+          "CPUExecutionProvider"
+        ],
+        "pose_estimation_providers": [
+          "CUDAExecutionProvider",
+          "CPUExecutionProvider"
+        ],
+        "pose_fallback_reason": null,
+        "pose_preload_failures": [],
+        "pose_warmup_error": null,
+        "pose_cache_dir": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\e01\\runs\\stage2-pose-subset-pilot50-20261027\\rtmlib-cache",
+        "pose_warmup_image": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign_source\\demo\\rtmlib-main\\demo.jpg",
+        "parameter_count": 587747368,
+        "gpu_allocated_mb": 2290.2001953125,
+        "gpu_reserved_mb": 3810.0,
+        "gpu_peak_allocated_mb": 2315.89404296875,
+        "gpu_peak_reserved_mb": 3818.0
+      },
+      "vram_after_load": {
+        "torch_peak_allocated_mb": 2315.9,
+        "torch_peak_reserved_mb": 3818.0,
+        "torch_allocated_mb": 2290.2,
+        "torch_reserved_mb": 3818.0,
+        "scope": "process_torch_allocator",
+        "device_free_mb_at_read": 10596.0,
+        "device_total_mb": 16283.4
+      }
+    }
+  },
+  "samples": [
+    {
+      "sample_id": "S000502_P0000_T00",
+      "video_seconds": 3.6
+    },
+    {
+      "sample_id": "S003181_P0001_T00",
+      "video_seconds": 3.1364698031364697
+    },
+    {
+      "sample_id": "S002951_P0002_T00",
+      "video_seconds": 4.533333333333333
+    },
+    {
+      "sample_id": "S004204_P0003_T00",
+      "video_seconds": 3.533333333333333
+    },
+    {
+      "sample_id": "S000414_P0004_T00",
+      "video_seconds": 3.803803803803804
+    },
+    {
+      "sample_id": "S001656_P0005_T00",
+      "video_seconds": 4.233333333333333
+    },
+    {
+      "sample_id": "S005040_P0006_T00",
+      "video_seconds": 4.637971304637971
+    },
+    {
+      "sample_id": "S002092_P0007_T00",
+      "video_seconds": 4.0
+    },
+    {
+      "sample_id": "S000230_P0008_T00",
+      "video_seconds": 5.266666666666667
+    },
+    {
+      "sample_id": "S005276_P0009_T00",
+      "video_seconds": 2.7333333333333334
+    },
+    {
+      "sample_id": "S001090_P0000_T00",
+      "video_seconds": 3.4
+    },
+    {
+      "sample_id": "S003605_P0001_T00",
+      "video_seconds": 4.033333333333333
+    },
+    {
+      "sample_id": "S003256_P0002_T00",
+      "video_seconds": 3.3666666666666667
+    },
+    {
+      "sample_id": "S004459_P0003_T00",
+      "video_seconds": 3.2666666666666666
+    },
+    {
+      "sample_id": "S000440_P0004_T00",
+      "video_seconds": 3.0363697030363697
+    },
+    {
+      "sample_id": "S002086_P0005_T00",
+      "video_seconds": 5.333333333333333
+    },
+    {
+      "sample_id": "S005112_P0006_T00",
+      "video_seconds": 5.733333333333333
+    },
+    {
+      "sample_id": "S002143_P0007_T00",
+      "video_seconds": 4.066666666666666
+    },
+    {
+      "sample_id": "S001064_P0008_T00",
+      "video_seconds": 4.633333333333334
+    },
+    {
+      "sample_id": "S005306_P0009_T00",
+      "video_seconds": 3.8666666666666667
+    }
+  ],
+  "device_peak": {
+    "samples": 373,
+    "peak_memory_used_mb": 6861.0,
+    "mean_memory_used_mb": 6580.6,
+    "mean_utilization_gpu_pct": 40.1,
+    "max_utilization_gpu_pct": 49.0,
+    "scope": "whole_device_including_other_processes"
+  },
+  "gpu_baseline": {
+    "sampled_at": "2026-10-27T07:55:14+00:00",
+    "devices": [
+      {
+        "index": 0,
+        "name": "NVIDIA GeForce RTX 5060 Ti",
+        "driver_version": "616.92",
+        "memory_total_mb": 16311.0,
+        "memory_used_mb": 2078.0,
+        "memory_free_mb": 13973.0,
+        "utilization_gpu_pct": 6.0
+      }
+    ]
+  },
+  "ram": {
+    "total_gb": 31.84,
+    "available_gb": 8.69,
+    "used_percent": 72.7
+  },
+  "frozen_model_reference": {
+    "model_total_mean_ms": 376.4,
+    "model_total_p50_ms": 369.8,
+    "peak_allocated_mb": 1265.5,
+    "peak_reserved_mb": 2700.0,
+    "load_seconds": 5.4497,
+    "note": "experiments/p1/e01/runs/unisign-rgb-pose-1086-20261027 (model side only)"
+  }
+}

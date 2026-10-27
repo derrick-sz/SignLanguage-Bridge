@@ -40,7 +40,7 @@ from .uni_sign_assets import (
     UNISIGN_REVISION,
     UNISIGN_SOURCE_COMMIT,
     all_checks_ok,
-    verify_checkpoint,
+    verify_file,
     verify_mt5_dir,
 )
 from .uni_sign_preprocess import (
@@ -675,7 +675,15 @@ class UniSignBackend:
                 raise RuntimeError("Uni-Sign backend is closed")
             if self._loaded:
                 return self.get_model_info()
-            checkpoint_check = verify_checkpoint(self.config.checkpoint)
+            # Verify against the bundle's declared size/digest, not the pinned
+            # pose-only constants: alternate checkpoints (e.g. the stage2 pose
+            # subset) carry their own manifest declaration and must stay
+            # verifiable without relaxing the integrity check.
+            checkpoint_check = verify_file(
+                self.config.checkpoint,
+                expected_bytes=self.config.checkpoint_bytes,
+                expected_sha256=self.config.checkpoint_sha256,
+            )
             if not checkpoint_check.ok:
                 raise ValueError(
                     f"Uni-Sign checkpoint is incomplete or corrupt: {checkpoint_check.reason}"

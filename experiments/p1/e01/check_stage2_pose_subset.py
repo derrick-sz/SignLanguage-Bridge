@@ -52,10 +52,19 @@ POSE_CKPT = ROOT / "models" / "external" / "uni_sign" / "csl_daily_pose_only_slt
 SUBSET_CKPT = ROOT / "models" / "external" / "uni_sign" / "csl_daily_stage2_pose_subset.pth"
 BASE_POSE_BUNDLE = ROOT / "models" / "external" / "uni_sign" / "model_bundle"
 FROZEN_PILOT = common.P1 / "e01" / "runs" / "unisign-rgb-pose-pilot50-20261027"
+FROZEN_1086 = common.P1 / "e01" / "runs" / "unisign-rgb-pose-1086-20261027"
 FROZEN_PILOT_PRED = FROZEN_PILOT / "predictions_rgb_pose.jsonl"
+FROZEN_1086_PRED = FROZEN_1086 / "predictions_rgb_pose.jsonl"
 FROZEN_CONTROL_PRED = FROZEN_PILOT / "predictions_pose_control.jsonl"
-RUN_DIR = common.P1 / "e01" / "runs" / "stage2-pose-subset-pilot50-20261027"
-REPORT = common.P1 / "e01" / "stage2_pose_subset_report.md"
+FROZEN_CONTROL_1086 = FROZEN_1086 / "predictions_pose_control.jsonl"
+RUN_DIRS = {
+    "pilot": common.P1 / "e01" / "runs" / "stage2-pose-subset-pilot50-20261027",
+    "full": common.P1 / "e01" / "runs" / "stage2-pose-subset-1086-20261027",
+}
+REPORTS = {
+    "pilot": common.P1 / "e01" / "stage2_pose_subset_report.md",
+    "full": common.P1 / "e01" / "stage2_pose_subset_report_1086.md",
+}
 POSE_DIR = ROOT / "artifacts" / "cslnews-eval" / "csl-daily-pose" / "pose-format"
 MAX_LENGTH = 256
 NUM_BEAMS = 4
@@ -108,8 +117,8 @@ def extract_pose_subset() -> dict:
     }
 
 
-def build_pose_bundle(subset_info: dict) -> Path:
-    bundle = RUN_DIR / "pose_bundle"
+def build_pose_bundle(subset_info: dict, run_dir: Path) -> Path:
+    bundle = Path(run_dir) / "pose_bundle"
     bundle.mkdir(parents=True, exist_ok=True)
     manifest = json.loads((BASE_POSE_BUNDLE / "manifest.json").read_text(encoding="utf-8"))
     manifest.update({
@@ -182,14 +191,23 @@ def _fmt(value, digits=4) -> str:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Stage2 pose-subset equivalence check")
+    parser.add_argument("--mode", choices=("pilot", "full"), default="pilot")
     parser.add_argument("--iterations", type=int, default=1000)
     args = parser.parse_args(argv)
 
-    pilot = [row["sample_id"] for row in common.read_csv_rows(PILOT)]
-    RUN_DIR.mkdir(parents=True, exist_ok=True)
+    mode = args.mode
+    run_dir = RUN_DIRS[mode]
+    report = REPORTS[mode]
+    frozen_pred = FROZEN_PILOT_PRED if mode == "pilot" else FROZEN_1086_PRED
+    control_pred = FROZEN_CONTROL_PRED if mode == "pilot" else FROZEN_CONTROL_1086
+    if mode == "pilot":
+        samples = [row["sample_id"] for row in common.read_csv_rows(PILOT)]
+    else:
+        samples = [row["sample_id"] for row in common.read_jsonl(frozen_pred)]
+    run_dir.mkdir(parents=True, exist_ok=True)
     gpu_before = nvidia_smi()
     subset_info = extract_pose_subset()
-    bundle = build_pose_bundle(subset_info)
+    bundle = build_pose_bundle(subset_info, run_dir)
     bundle_manifest_sha = sha256(bundle / "manifest.json")
 
     # normal registry validation (pose-only architecture)
@@ -205,11 +223,11 @@ def main(argv: list[str] | None = None) -> int:
     load_ms = (time.perf_counter() - started) * 1000.0
     gpu_after_load = nvidia_smi()
     predictions = []
-    for index, sample in enumerate(pilot, 1):
+    for index, sample in enumerate(samples, 1):
         pose_window = pose_window_for_sample(sample)
         text, timings = runtime.infer(pose_window, num_beams=NUM_BEAMS, max_new_tokens=MAX_NEW_TOKENS)
         row = {
-            "run_id": RUN_DIR.name,
+            "run_id": run_dir.name,
             "system": "stage2_pose_subset",
             "sample_id": sample,
             "status": "ok" if text.strip() else "error",
@@ -222,7 +240,7 @@ def main(argv: list[str] | None = None) -> int:
             raise SystemExit(f"GT-free guard violated: {leaks}")
         assert_gt_clean(row, context=f"stage2_pose_subset/{sample}")
         predictions.append(row)
-        print(json.dumps({"event": "sample", "index": index, "n": len(pilot),
+        print(json.dumps({"event": "sample", "index": index, "n": len(samples),
                           "sample_id": sample, "text": text,
                           "model_total_ms": round(timings["model_total_ms"], 1)}, ensure_ascii=False))
     gpu_after = nvidia_smi()
@@ -231,27 +249,28 @@ def main(argv: list[str] | None = None) -> int:
     else:  # pragma: no cover
         runtime_info = {}
     runtime.close()
-    common.write_jsonl(RUN_DIR / "predictions_stage2_pose_subset.jsonl", predictions, guard=True)
+    common.write_jsonl(run_dir / "predictions_stage2_pose_subset.jsonl", predictions, guard=True)
 
-    frozen = load_texts(FROZEN_PILOT_PRED)
-    control = load_texts(FROZEN_CONTROL_PRED)
+    frozen = load_texts(frozen_pred)
+    control = load_texts(control_pred)
     candidates = load_candidates()
     gt = load_gt()
     generated = {row["sample_id"]: row["text"] for row in predictions}
     diffs = [{"sample_id": sample, "frozen": frozen.get(sample), "stage2": generated.get(sample)}
-             for sample in pilot if sample in frozen and frozen[sample] != generated.get(sample)]
-    exact = len(pilot) - len(diffs)
+             for sample in samples if sample in frozen and frozen[sample] != generated.get(sample)]
+    exact = len(samples) - len(diffs)
     metrics = {
         "stage2_pose_subset": corpus_metrics(generated, gt),
-        "legacy_rgb_pose": corpus_metrics({s: frozen[s] for s in pilot if s in frozen}, gt),
-        "A2": corpus_metrics({s: candidates[s].get("A2", "") for s in pilot if s in candidates}, gt),
-        "pose_control": corpus_metrics({s: control[s] for s in pilot if s in control}, gt),
+        "legacy_rgb_pose": corpus_metrics({s: frozen[s] for s in samples if s in frozen}, gt),
+        "A2": corpus_metrics({s: candidates[s].get("A2", "") for s in samples if s in candidates}, gt),
+        "pose_control": corpus_metrics({s: control[s] for s in samples if s in control}, gt),
     }
     payload = {
         "schema_version": 1,
         "kind": "stage2-pose-subset-equivalence",
         "created_at": common.utc_now(),
-        "run_dir": str(RUN_DIR),
+        "run_dir": str(run_dir),
+        "mode": mode,
         "subset_checkpoint": subset_info,
         "pose_bundle": str(bundle),
         "pose_bundle_manifest_sha256": bundle_manifest_sha,
@@ -263,27 +282,33 @@ def main(argv: list[str] | None = None) -> int:
         "gpu_after_load": gpu_after_load,
         "gpu_after": gpu_after,
         "load_ms": round(load_ms, 1),
-        "n_samples": len(pilot),
+        "n_samples": len(samples),
         "n_exact": exact,
-        "exact_rate": round(exact / len(pilot), 4),
+        "exact_rate": round(exact / len(samples), 4),
         "n_differences": len(diffs),
         "differences": diffs[:20],
         "metrics": metrics,
         "gt_eval_only": {"path": str(GT_PATH.relative_to(ROOT)), "eval_only": True},
     }
-    common.write_json(RUN_DIR / "stage2_pose_subset.json", payload)
+    timing_values = [row["model_total_ms"] for row in predictions]
+    payload["model_total_ms"] = {
+        "mean": round(sum(timing_values) / len(timing_values), 2),
+        "p50": round(sorted(timing_values)[len(timing_values) // 2], 2),
+        "p95": round(sorted(timing_values)[min(len(timing_values) - 1, int(len(timing_values) * 0.95))], 2),
+    }
+    common.write_json(run_dir / "stage2_pose_subset.json", payload)
 
-    lines = ["# Stage2 pose-subset 等价性验证（task-33 第三段）", ""]
+    lines = [f"# Stage2 pose-subset 等价性验证（task-33，{mode}）", ""]
     lines.append("- 目的：验证 gate 恒零的 RGB+pose checkpoint 与其 627 个 pose 键的纯 pose 架构**逐字等价**，"
                  "从而可抛弃 RGB 分支、保留 stage2 收益且降低延迟。")
-    lines.append(f"- 输入：pilot 50 条，官方 pose archive（与冻结基线同源）；pose-only adapter runtime（`TorchUniSignRuntime`，同一 `uni_sign_pose_slt` 架构）。")
+    lines.append(f"- 输入：{len(samples)} 条，官方 pose archive（与冻结基线同源）；pose-only adapter runtime（`TorchUniSignRuntime`，同一 `uni_sign_pose_slt` 架构）。")
     lines.append(f"- 子集 checkpoint：`{subset_info['path']}`（{subset_info['n_keys']} 键，{subset_info['bytes']} B，sha256 `{subset_info['sha256'][:16]}…`；"
                  f"pose-only 键集 {subset_info['pose_only_keys']}，rgb_pose 键集 {subset_info['rgb_pose_keys']}，缺失 0、形状不匹配 0）。")
-    lines.append(f"- run：`{RUN_DIR}`（GT-free predictions、stage2_pose_subset.json）；GPU 基线 `{gpu_before}`；load {round(load_ms,1)} ms。")
+    lines.append(f"- run：`{run_dir}`（GT-free predictions、stage2_pose_subset.json）；GPU 基线 `{gpu_before}`；load {round(load_ms,1)} ms；模型侧 P50 {payload['model_total_ms']['p50']} ms / mean {payload['model_total_ms']['mean']} ms。")
     lines.append("")
     lines.append("## 1. 逐条一致率")
     lines.append("")
-    lines.append(f"- 与冻结 legacy RGB+pose Pilot-50 预测逐字一致：**{exact}/{len(pilot)}（{payload['exact_rate']*100:.1f}%）**；差异 {len(diffs)} 条。")
+    lines.append(f"- 与冻结 legacy RGB+pose 预测（{mode}）逐字一致：**{exact}/{len(samples)}（{payload['exact_rate']*100:.1f}%）**；差异 {len(diffs)} 条。")
     if diffs:
         lines.append("- 前 5 条差异：")
         for item in diffs[:5]:
@@ -291,7 +316,7 @@ def main(argv: list[str] | None = None) -> int:
     else:
         lines.append("- 差异清单为空。")
     lines.append("")
-    lines.append("## 2. 指标（EVAL ONLY，pilot-50）")
+    lines.append(f"## 2. 指标（EVAL ONLY，{mode}，n={len(samples)}）")
     lines.append("")
     lines.append("| 系统 | BLEU-4 | chrF | char edit |")
     lines.append("|---|---:|---:|---:|")
@@ -304,7 +329,7 @@ def main(argv: list[str] | None = None) -> int:
     lines.append("")
     lines.append("## 3. 结论")
     lines.append("")
-    if exact == len(pilot):
+    if exact == len(samples):
         lines.append("- **逐条 100% 一致**：stage2 pose 子集 + 纯 pose 架构与 legacy RGB+pose 完全等价。")
         lines.append("- 因此 **RGB 分支可以完全去掉**：保留 stage2 的 pose/mT5 权重（+1.39 pilot / +0.66 1086 相对 A2/pose-only 的提升来自这里），"
                      "延迟按 pose-only 路径（~278 ms 量级）而非 RGB+pose（~370 ms）。")
@@ -313,15 +338,15 @@ def main(argv: list[str] | None = None) -> int:
         lines.append("- **未完全一致**：需逐条归因（pose-only 架构缺失键/形状、预处理数值差、tokenizer/精度）；"
                      "在归因前不得声称“可去掉 RGB 分支”。")
         lines.append(f"- 差异 {len(diffs)} 条（见 payload `stage2_pose_subset.json` 与上方前 5 条）。")
-    REPORT.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    report.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
     print(json.dumps({
-        "run_dir": str(RUN_DIR),
-        "report": str(REPORT),
+        "run_dir": str(run_dir),
+        "report": str(report),
         "subset_checkpoint": subset_info["path"],
         "subset_sha256": subset_info["sha256"],
         "n_exact": exact,
-        "n_samples": len(pilot),
+        "n_samples": len(samples),
         "exact_rate": payload["exact_rate"],
         "n_differences": len(diffs),
         "metrics": {key: {k: (entry or {}).get(k) for k in ("bleu4_13a", "chrf", "mean_char_edit_similarity")}

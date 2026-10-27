@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "kind": "adapter-regression-run",
+  "run_id": "adapter-regression-full1086-20261027",
+  "mode": "full",
+  "hand_conf_layout": "legacy",
+  "created_at": "2026-10-27T07:45:08+00:00",
+  "bundle": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\e01\\runs\\adapter-regression-full1086-20261027\\regression_bundle",
+  "bundle_manifest_sha256": "03666afb54dfcf5cef200a32be9a9cc9ef6452d7199369f8edaa4f2440ed9a64",
+  "bundle_manifest": {
+    "backend": "unisign_rgb_pose_slt",
+    "pose_source": "official_archive",
+    "pose_dir": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\cslnews-eval\\csl-daily-pose\\pose-format",
+    "alignment_dir": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\pose",
+    "video_dir": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\trimmed",
+    "checkpoint": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\csl_daily_rgb_pose_slt.pth",
+    "pose_only_checkpoint": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\csl_daily_pose_only_slt.pth",
+    "enable_rgb": true,
+    "fallback_to_pose_only": false,
+    "device": "cuda",
+    "dtype": "bfloat16",
+    "hand_conf_layout": "legacy",
+    "num_beams": 4,
+    "max_new_tokens": 100
+  },
+  "adapter_config": {
+    "pose_source": "official_archive",
+    "pose_dir": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\cslnews-eval\\csl-daily-pose\\pose-format",
+    "alignment_dir": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\pose",
+    "video_dir": "E:\\githubproject\\SignLanguage-Bridge\\artifacts\\csldaily-video-test-627-20261026\\trimmed",
+    "enable_rgb": true,
+    "fallback_to_pose_only": false,
+    "device": "cuda",
+    "dtype": "bfloat16",
+    "num_beams": 4,
+    "max_new_tokens": 100
+  },
+  "runtime_info": {
+    "backend": "pytorch_unisign_rgb_pose",
+    "protocol_id": "unisign-rgb-pose-v1",
+    "checkpoint_sha256": "c2ba5d7ae32f3fa40f7c6807b5004042be81fca192abe7d8ed7182c0d13470f6",
+    "source_commit": "eed438bcb49e30405cd6ccdfcccca330c134e830",
+    "pose_source": "official_archive",
+    "enable_rgb": true,
+    "fallback_to_pose_only": false,
+    "hand_conf_layout": "legacy",
+    "device": "cuda",
+    "dtype": "bfloat16",
+    "model_loaded": true,
+    "pose_only_loaded": false,
+    "rgb_failures": [],
+    "hand_frames_totals": {
+      "left": 0,
+      "right": 0,
+      "samples": 0
+    }
+  },
+  "capabilities": {
+    "model_id": "unisign_rgb_pose",
+    "model_version": "c411fe63c8d899f3e2b141a7807a78bbf5557826d5bbd00fbb33cd9cabbbdf94",
+    "sign_language": "csl",
+    "task_type": "text",
+    "inputs": [
+      {
+        "representation_id": "uni_sign_rgb_v1",
+        "shape": [
+          null,
+          null,
+          null,
+          3
+        ],
+        "dtype": "uint8",
+        "preprocessing_version": "f6e010a16f425cb2d17b974f3e1ef62a86febf82b5321c597bd90390c58885a8",
+        "input_kinds": [
+          "file"
+        ]
+      }
+    ],
+    "vocabulary": [],
+    "runtime": "pytorch_unisign_rgb_pose",
+    "devices": [
+      "cpu",
+      "cuda"
+    ],
+    "modes": [
+      "clip"
+    ],
+    "score_type": "uncalibrated_text"
+  },
+  "frozen_baseline": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\e01\\runs\\unisign-rgb-pose-1086-20261027\\predictions_rgb_pose.jsonl",
+  "frozen_baseline_sha256": "f335548822511bbc321b14b9a7830f1b59c9bced148e47d3fe0c72cd76b825d5",
+  "n_expected": 1086,
+  "n_predictions": 1086,
+  "n_failures": 0,
+  "failures": [],
+  "hand_frame_summary": null,
+  "gpu_before": "16311 MiB, 2051 MiB, 6 %",
+  "gpu_after_load": "16311 MiB, 4806 MiB, 61 %",
+  "gpu_after_inference": "16311 MiB, 2423 MiB, 27 %",
+  "elapsed_seconds": 429.7,
+  "predictions": "predictions_rgb_pose_adapter.jsonl",
+  "gt_free": true
+}

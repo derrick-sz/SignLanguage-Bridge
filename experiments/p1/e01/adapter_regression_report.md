@@ -119,3 +119,39 @@
 - GT 只在评测侧 join（EVAL ONLY）；两份 predictions 均 GT-free（0 GT-key leaks）。
 - 未改 `slbridge/` 生产代码（adapter 由 p0a 实现）；未改参考答案/评测协议；GPU 单进程串行、用前记基线；不 commit。
 - 遗留输入偏差（仍需保留）：RGB 帧来自本地近似 trimmed 视频（官方 sentence-crop 缺失）；帧映射偏移 median −1、min/max 见 1086 protocol（−170/+14）。
+
+## 6. 1086 全量（Lead 执行，2026-10-27）
+
+台账报告由 Lead 直接跑 `run_adapter_regression.py --mode full`（analyst 会话中断，GPU 空窗由 Lead 接管）。
+
+### 6.1 legacy adapter 1086（冻结基线忠实复现）
+
+| 项 | 值 |
+|---|---|
+| 命令 | `python -m experiments.p1.e01.run_adapter_regression --bundle models\external\uni_sign_rgb_pose\model_bundle --mode full --run-dir experiments\p1\e01\runs\adapter-regression-full1086-20261027 --hand-conf-layout legacy` |
+| run 目录 | `experiments/p1/e01/runs/adapter-regression-full1086-20261027/` |
+| 逐字一致 | **1086/1086（100%）**，差异 0 |
+| BLEU-4 | 冻结 26.3026 → adapter **26.3026**（Δ **0.0000**，容差内） |
+| chrF | 23.0005 → **23.0005**（Δ 0） |
+| char edit | 0.4358 → **0.4358**（Δ 0） |
+| 失败 | 0（1086/1086 成功） |
+| 耗时 | 429.7 s |
+
+### 6.2 stage2 pose-subset 1086（产品形态：纯 pose 架构 + stage2 权重）
+
+| 项 | 值 |
+|---|---|
+| 命令 | `python -m experiments.p1.e01.check_stage2_pose_subset --mode full --iterations 1000` |
+| run / 报告 | `experiments/p1/e01/runs/stage2-pose-subset-1086-20261027/`；`experiments/p1/e01/stage2_pose_subset_report_1086.md` |
+| 与 legacy 逐字一致 | **1086/1086（100%）**，差异 0 |
+| 指标 | BLEU-4 **26.3026** / chrF **23.0005** / edit **0.4358**（与 legacy 完全一致） |
+| 对照 | A2 25.5846 / pose 控制 25.6395 → **+0.66/+0.71** |
+| 单样本 model_total | 226.2–347.6 ms（pose-only 量级） |
+| 加载 | 11.8 s；GPU 基线 16311 MiB / 2301 MiB used / 7% |
+
+### 6.3 结论
+
+1. adapter 对冻结基线是**位级忠实**的（Pilot-50 与 1086 都是 100% 逐字一致、指标 Δ=0）。
+2. stage2 pose 子集在 1086 上同样 100% 等价于 legacy RGB+pose，且走纯 pose 架构 → **RGB 分支可完全去掉**。
+3. 用户给定的参考基线（BLEU-4 26.3026 / chrF 23.0005 / char edit 0.4358）在 adapter 路径上**逐值达成**。
+4. 但这一数字**不是论文 RGB+pose 复现**（gate 恒零，见 §4）；真实 RGB+pose 仍需作者提供非零 gate 权重。
