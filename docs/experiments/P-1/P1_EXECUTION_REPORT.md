@@ -307,7 +307,15 @@
 
 ### ADR-P1-012 `unisign_rgb_pose_slt` adapter 接入（候选，2026-10-27）
 - 状态：**ACCEPTED as CANDIDATE**（工程化接入完成；**不启用为生产默认**）；对应 P1-RGBPOSE-ADAPTER 立项。
-- 实现：`slbridge/uni_sign_rgb_pose.py`（推理核心与冻结脚本共用单一真源）+ `model_adapters.py` 懒注册；`hand_conf_layout: legacy（默认）/squeeze/auto`；metadata 记 `PROTOCOL_ID`/`checkpoint_sha256`/`source_commit`/`hand_conf_layout_effective`/`hand_frames_left|right`；`fallback_to_pose_only` 仅 rtmpose 模式生效，回归模式禁用。
-- 验收：legacy Pilot-50 与冻结基线 **50/50 逐字一致、指标 Δ=0**；单测 23 passed + 1 opt-in；双环境 967/15 与 1011/17 零退化；性能与 1086 回归见 task-33/task-34 报告。
+- 实现：`slbridge/uni_sign_rgb_pose.py`（推理核心与冻结脚本共用单一真源）+ `model_adapters.py` 懒注册；`hand_conf_layout: legacy（默认）/squeeze/auto`；metadata 记 `PROTOCOL_ID`/`checkpoint_sha256`/`source_commit`/`hand_conf_layout_effective`/`hand_frames_left|right`/`pose_normalization(+version)`；`fallback_to_pose_only` 仅 rtmpose 模式生效，回归模式禁用。
+- **验收结果（全部 PASS）**：
+  | 项 | 结果 |
+  |---|---|
+  | Pilot-50 逐条 | **50/50 逐字一致**，指标 Δ=0 |
+  | 1086 全量 | **1086/1086 逐字一致**；BLEU 26.3026 / chrF 23.0005 / edit 0.4358（Δ=0），430 s、0 失败 |
+  | 单测 | adapter 33 passed + 2 skipped；全量 `.conda-env` **977/16**、`.venv-libras` **1019/20** |
+  | 性能 | A vs stage2 子集：e2e P50 **+19 ms**、均值 **−56 ms**、显存 **+1.7 MB**、RTF +0.002 → 零代价 |
+  | rtmpose 生产模式 | **RUNNABLE**（GPU e2e 输出与冻结预测逐字一致；CUDA provider、无 CPU 回退、无联网下载） |
+- 同时修复两个生产缺陷：①pose-only adapter 的 checkpoint 校验从硬编码常量改为按 manifest 声明（`verify_file`），使替代 checkpoint 可加载；②rtmpose 路径 backend/cache/EOF/归一化四处（原路径任何真实视频都跑不通）。
 - 门：**Round-2 独立人评 + 部署泛化验收通过前保持候选**；生产默认仍为 A（视频）/A2（官方 pose）。
-- 边界：真实 RGB+pose 不可用（gate 恒零，见 ADR-P1-011 修正）；该 adapter 的实际价值是承载 1012 键的 pose 权重。
+- 边界：真实 RGB+pose 不可用（gate 恒零，见 ADR-P1-011 修正）；该 adapter 的实际价值是承载 1012 键的 stage2 pose 权重（627 键子集已在纯 pose 架构上 1086/1086 等价验证）。
