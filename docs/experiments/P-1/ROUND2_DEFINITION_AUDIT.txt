@@ -1,0 +1,25 @@
+=== 口径审计：严重语义错误 × 可用于交流（90 行）===
+  severe=否  usable=是  : 22 行 (24.4%)
+  severe=是  usable=否  : 10 行 (11.1%)
+  severe=是  usable=是  : 58 行 (64.4%)
+
+严重错误=是 的 68 行中，可用于交流=是 的有 58 行 = 85.3%
+可交流=是 的 80 行中，严重错误=是 的有 58 行 = 72.5%
+
+=== 评分 × 严重错误 / 可交流 交叉 ===
+  score=0: n=12  severe_yes=12 (100%)  usable_yes= 7 (58%)
+  score=1: n=37  severe_yes=37 (100%)  usable_yes=32 (86%)
+  score=2: n=19  severe_yes=19 (100%)  usable_yes=19 (100%)
+  score=3: n= 8  severe_yes= 0 (0%)  usable_yes= 8 (100%)
+  score=4: n=14  severe_yes= 0 (0%)  usable_yes=14 (100%)
+
+=== 流畅度 × 可交流 ===
+  fluency=2: n=10  usable_yes= 0  severe_yes=10
+  fluency=3: n=15  usable_yes=15  severe_yes=15
+  fluency=4: n=10  usable_yes=10  severe_yes=10
+  fluency=5: n=55  usable_yes=55  severe_yes=33
+
+=== 分候选：severe=是 且 usable=是 的比例（张力指标）===
+  A: 18/30 = 60.0%
+  A2: 20/30 = 66.7%
+  S2: 20/30 = 66.7%

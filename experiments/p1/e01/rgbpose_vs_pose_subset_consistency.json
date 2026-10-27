@@ -1,0 +1,24 @@
+{
+  "n_reference": 1086,
+  "comparisons": {
+    "adapter_legacy": {
+      "n_common": 1086,
+      "n_identical": 1086,
+      "identical_rate": 1.0,
+      "n_diff": 0,
+      "diff_samples": []
+    },
+    "s2_pose_subset": {
+      "n_common": 1086,
+      "n_identical": 1086,
+      "identical_rate": 1.0,
+      "n_diff": 0,
+      "diff_samples": []
+    }
+  },
+  "triple": {
+    "n_common": 1086,
+    "n_all_identical": 1086,
+    "rate": 1.0
+  }
+}

@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "package": "G2-round2-human-review-frozen",
+  "frozen_at": "2026-10-27",
+  "purpose": "freeze Round-2 (A/A2/S2) scores, rules and model revisions for auditability",
+  "source_review_file": {
+    "path": "outputs/01a17b59-e3b8-7590-b21b-250b3f41ca6f/round2/round2_review_ai_filled.xlsx",
+    "sha256": "8f500e30b314733409fc7cf06d90e17d8317c083adc672f82dd69246519bb9b6",
+    "rows": 90
+  },
+  "blind_map": {
+    "path": "experiments/p1/e06/human_review/round2/blind_map_EVAL_ONLY.csv",
+    "sha256": "b7bf45f0c2e4baeb728ad2e8532a0b1f24cbd0232f3fd00fc0e6f89bc89e0143"
+  },
+  "sampling_manifest": {
+    "path": "experiments/p1/e06/human_review/round2/sampling_manifest.json",
+    "sha256": "10b151a567eebc10aa0c53f887f6e0a770b88524fc820b3051754cbc842e0ca5"
+  },
+  "sampling": {
+    "n_samples": 30,
+    "n_rows": 90,
+    "candidates": [
+      "A",
+      "A2",
+      "S2"
+    ],
+    "seed_sampling": 20261030,
+    "seed_blind": 20261031,
+    "rule": "signer-stratified unbiased random, 3 per signer"
+  },
+  "review_protocol": {
+    "reviewer": "Codex-AI (AI-assisted) filled all 90 rows; user (betterway) confirmed quality",
+    "review_type": "AI-assisted single review, NOT independent double-blind",
+    "scale": {
+      "score": "0-4 semantic fidelity",
+      "slots": [
+        "人物",
+        "否定",
+        "数字",
+        "时间",
+        "动作",
+        "对象"
+      ],
+      "slot_values": [
+        "是",
+        "否",
+        "无法判断"
+      ],
+      "severe_semantic_error": [
+        "是",
+        "否"
+      ],
+      "fluency": "1-5",
+      "usable_for_communication": [
+        "是",
+        "否",
+        "无法判断"
+      ]
+    }
+  },
+  "model_revisions": {
+    "A": {
+      "model_id": "unisign_rgb_video",
+      "revision": "unisign-video-1086-paperrefs"
+    },
+    "A2": {
+      "model_id": "uni_sign_pose_slt_stage1",
+      "checkpoint_sha256": "73bea87a9603f719b4f4a481a3a1a5ed24e7e5f7b81afd14ef498c40469c1a6c"
+    },
+    "S2": {
+      "model_id": "uni_sign_pose_slt_stage2_subset",
+      "checkpoint_sha256": "951601a39fbbe19f633e0df9690df432056b4286609f75a3ee723c8f001fc2e3"
+    }
+  },
+  "results_doc_commit": "33eee43",
+  "aggregate": {
+    "A": {
+      "mean_score": 1.667,
+      "severe_rate": 0.733,
+      "fluency": 4.3,
+      "usable_yes": 0.867
+    },
+    "A2": {
+      "mean_score": 1.6,
+      "severe_rate": 0.8,
+      "fluency": 4.03,
+      "usable_yes": 0.867
+    },
+    "S2": {
+      "mean_score": 1.9,
+      "severe_rate": 0.733,
+      "fluency": 4.33,
+      "usable_yes": 0.933
+    },
+    "S2_vs_A2": {
+      "delta_mean_score": 0.3,
+      "ci95": [
+        -0.1,
+        0.733
+      ],
+      "corrections": 10,
+      "regressions": 2,
+      "severe_added": 1,
+      "severe_removed": 3,
+      "usable_gained": 2,
+      "usable_lost": 0
+    }
+  },
+  "known_rubric_conflict": {
+    "severe_yes_and_usable_yes_rows": 58,
+    "share_of_all_rows": 0.6444,
+    "score0_rows": 12,
+    "score0_rated_usable": 7,
+    "note": "severe-error and usable-for-communication are not orthogonal in this rubric; usable was effectively used as \"can get the gist\", not \"reliable communication\". Do not quote the usable rate as product readiness. Rubric v2 needed.",
+    "cross_tab": {
+      "severe=是|usable=是": 58,
+      "severe=否|usable=是": 22,
+      "severe=是|usable=否": 10
+    }
+  },
+  "frozen_scores_file": {
+    "path": "experiments/p1/e06/round2_tools/round2_frozen_scores_20261027.csv",
+    "sha256": "7cf9f524837f3659bad51df76b20eee6373bb4057c11e060f388258016478749",
+    "rows": 90
+  },
+  "gt_discipline": "frozen scores contain no reference text and no candidate text (only review ids + ratings)"
+}
