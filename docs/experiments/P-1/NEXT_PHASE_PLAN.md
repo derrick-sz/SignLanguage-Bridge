@@ -80,22 +80,19 @@
 - **选择性级联**（默认 A，E06 槽位冲突触发 28% 才调 E_v2）：BLEU **30.7487**（Δ −0.482 [−2.532,+1.061]，n.s.）、22,981 tokens、P50 8.62 s/P95 14.77 s（整批口径）；全调 D(v2) −2.644、全调 E(v2) −3.266（CI 不含 0）。结论：省钱但不增值。
 - **G2 结论（ADR-P1-010，2026-10-27）：FAIL（无质量增益证据）** → 融合不进主链路、保留可插拔接口、不扩 1086；人评维度仍未验证。详见 `G2_DECISION_MEMO.md`。
 
-### 2.6 P0-A 进展（阶段 3，与 G2 并行）
+## 3. 阶段 3：P0-A 后端基础（已收口，2026-10-27）
 
-- 缺口分析完成：`P0A_BACKEND_GAP_ANALYSIS.md`（逐层 V3.0 对照；ModelAdapter ~90% 可复用，E04 单卡串行与现有单容量租约一致；真正新建 = EvidenceCandidate 证据层、异步 job API、作业化视频管理、SignSystemRouter 显式化）。
-- 实施任务卡完成：`P0A_IMPLEMENTATION_TASKS.md`（9 张，A0→A5；A0 第一张为 `slbridge/evidence.py` + `prediction_log.py` + 2 测试文件，零改动现有文件）。
-- 说明：模型在不同子智能体间已按任务分配（见 §7 执行记录）；`update_bot` 对 teammate 无效，模型随 spawn/workflow override 决定。
+- **A0–A5 共 9 张任务卡全部 PASS**（详见 `P0A_IMPLEMENTATION_TASKS.md`「P0-A 收口总结」）：新增 `evidence.py`/`prediction_log.py`/`replay_adapter.py`/`api_contract_v1.py`/`job_runner.py`/`media_probe.py`/`fusion.py`，144 项新测试；回归 `.conda-env` 939/13、`.venv-libras` 990/13；v3 端点与已验证推理路径零改动。
+- 规范基线：V3.0 架构文档在 `docs/架构开发文件/`（已入库）；缺口分析 `P0A_BACKEND_GAP_ANALYSIS.md`（ModelAdapter ~90% 可复用，E04 单卡串行与现有单容量租约一致）。
+- 当前 API 面：`POST /v1/videos/infer`、`GET /v1/jobs/{id}`、`/v1/health/live|ready`、鉴权/413/幂等/错误码统一；推理由 `replay_jsonl_v1` 驱动（无 GPU 全链路验证）。
+- 纪律：不迁移 UI、不做微服务化、不动已验证推理路径；FusionController 只留接口（等 G2 重启条件）。
 
-- 接入**已真实复现**的 Uni-Sign 视频路径；统一模型调用协议、API、预测记录（JSONL）、视频管理、错误处理。
-- 现状：`slbridge` 已具备统一模型 API/适配器/会话/来源管理等大部分能力（见 `docs/experiments/P-1/P0A_BACKEND_GAP_ANALYSIS.md`）。
-- **缺口**：`SignLanguage_Bridge_后端架构设计_V3.0.md` 不在仓库内——P0-A 以 PLAN.md §2 的层次（视频管理 → SignSystemRouter → ModelAdapter/Worker → EvidenceNormalizer → FusionController → Rule/Jev/LLM → 字幕与日志）+ 现有 `slbridge` 契约为基线做缺口分析；**需要用户提供 V3.0 原文档做最终确认后再动大改**。
-- 纪律：不迁移 UI、不做微服务化、不动已验证推理路径；FusionController 只留接口（是否启用等 G2 结论，见阶段 5）。
-
-## 4. 阶段 4：性能优化对照（可与阶段 3 并行）
-
-- Uni-Sign：`pose_sample_only` / `pose_detect_stride` 已在其他数据域验收（CSL-News/CE-CSL），**需在 CSL-Daily 1086 上做配对照**（质量不退化为验收线）。
-- SLRT：逐窗 CPU 热力图预处理是 ~5.6 s/条 的主因（E04 实测）——批处理/向量化/降低窗口数的对照实验；同模型同数据前后对照。
-- E04 数字是**基线不是优化后**结果；任何优化必须重跑 E04 口径并对比。
+- **Uni-Sign 前端（CSL-Daily test，同 checkpoint/解码/帧采样，配对 signer bootstrap）**
+  - `pose_sample_only`：pilot-50 全部 ≤172 帧 → 0 跳帧、50/50 预测逐字相同（no-op）；全部 12 条 >256 帧片段上跳 13.2% 帧、**12/12 预测逐字相同**、e2e 7013→6271 ms（−10.6%）。→ **可安全开启**（零质量变化），但该域仅 1.1% 片段 >256 帧，不能宣称数据集级提速。
+  - `pose_detect_stride=5`：e2e −36.4%、pose −40%，但 BLEU −1.69、**Δedit −0.0205（CI [−0.0563,+0.0153]）**、仅 32/50 相同 → **质量门槛 FAIL，不建议默认开启**；CSL-News/CE-CSL 的"无显著差异"不能外推。
+  - 生产默认值未改；开启 sample_only 需同步更新姿态 protocol 身份。
+- **SLRT 逐窗预处理（数值等价缓存）**：定位 stride=1 下同帧 RGB+热力图重复计算 ~16×；内容 hash 帧缓存（原始函数 + cat）→ RGB/heatmap **max abs diff 0.0**、`torch.equal` True、Gloss **20/20 一致**、WER **0.27007 不变**；e2e P50 **5923→4836 ms（−18.4%）**、P95 −16.4%、prepare −70.3%。→ **建议合入生产**（纯工程收益），下一瓶颈 canonical_frame（28%）与 S3D（39.5%）。
+- 证据：`experiments/p1/e04/opt_unisign_frontend.md`、`opt_slrt_preprocess.md`、`opt-runs/`（3 run）、`hardware_report.md` §H。
 
 ## 5. 阶段 5：G2 决策规则（预先约定）
 

@@ -1,0 +1,201 @@
+{
+  "schema_version": 1,
+  "run_id": "unisign-frontend-20261027T111854Z",
+  "experiment": "E04-opt-frontend",
+  "run_status": "PASS",
+  "created_at": "2026-10-27T03:18:55+00:00",
+  "purpose": "CSL-Daily test paired comparison of Uni-Sign pose_sample_only / pose_detect_stride frontend switches (quality + latency + skips)",
+  "code": {
+    "repository": "SignLanguage-Bridge",
+    "git_sha": "bd2558925022ecbf8fad929bc31cdb8053f3a606",
+    "branch": "codex/model-contract-auto-captions",
+    "dirty_tree": true,
+    "dirty_path_count": 3
+  },
+  "host": {
+    "host_alias": "PC-HPVYVOTACGSS",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "cpu": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+    "cpu_count": 20,
+    "memory_total_gb": 31.84
+  },
+  "gpu_baseline": {
+    "sampled_at": "2026-10-27T03:18:54+00:00",
+    "devices": [
+      {
+        "index": 0,
+        "name": "NVIDIA GeForce RTX 5060 Ti",
+        "driver_version": "616.92",
+        "memory_total_mb": 16311.0,
+        "memory_used_mb": 2171.0,
+        "memory_free_mb": 13880.0,
+        "utilization_gpu_pct": 6.0
+      }
+    ]
+  },
+  "privacy": {
+    "no_gt_in_perf_artifacts": true,
+    "no_raw_media_export": true,
+    "no_credentials_in_logs": true
+  },
+  "model_assets": {
+    "unisign": {
+      "bundle": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\model_bundle",
+      "bundle_manifest_sha256": "462ea712c73ba0b0c7a91a4c6d5e596e8ff5bd58854dca53f8c73e03b8cdba7e",
+      "checkpoint": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\csl_daily_pose_only_slt.pth",
+      "checkpoint_bytes": 1186925112,
+      "checkpoint_sha256_declared": "73bea87a9603f719b4f4a481a3a1a5ed24e7e5f7b81afd14ef498c40469c1a6c",
+      "source_commit": "eed438bcb49e30405cd6ccdfcccca330c134e830",
+      "model_revision": "182913ca7a8b7dd9837d7d6f10717353f4408f80",
+      "max_frames": 256,
+      "num_beams": 4,
+      "license": "CC-BY-NC-4.0"
+    },
+    "slrt": {
+      "config": "E:\\githubproject\\SignLanguage-Bridge\\configs\\slrt-csl-hrnet-npz.example.json",
+      "config_sha256": "a9600cc3e5c44931623c0ad9e87818ca5111d976e83d219861c23ddd3b16deb9",
+      "checkpoint": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\EMNLP24_Online\\CSL-Daily\\ckpts\\cslr_best.ckpt",
+      "checkpoint_bytes": 499554423,
+      "checkpoint_sha256_declared": "e9fdd3a66d9667e7685c2b1437c67b8cbc9e45d2562730f04c0226717b7cbd4d",
+      "vocabulary": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\EMNLP24_Online\\CSL-Daily\\meta\\csl_iso_with_blank.vocab",
+      "window_size": 16,
+      "stride": 1,
+      "vote_size": 7
+    }
+  },
+  "environment": {
+    "python": "3.10.22",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "host_alias": "PC-HPVYVOTACGSS",
+    "cpu_count": 20,
+    "torch": "2.9.1+cu128",
+    "cuda_available": true,
+    "cuda_version": "12.8",
+    "gpu_name": "NVIDIA GeForce RTX 5060 Ti",
+    "gpu_total_vram_mb": 16283.4,
+    "gpu_capability": "12.0"
+  },
+  "ram": {
+    "total_gb": 31.84,
+    "available_gb": 6.38,
+    "used_percent": 80.0
+  },
+  "samples": [
+    "S000502_P0000_T00",
+    "S003181_P0001_T00",
+    "S002951_P0002_T00",
+    "S004204_P0003_T00",
+    "S000414_P0004_T00",
+    "S001656_P0005_T00",
+    "S005040_P0006_T00",
+    "S002092_P0007_T00",
+    "S000230_P0008_T00",
+    "S005276_P0009_T00",
+    "S001090_P0000_T00",
+    "S003605_P0001_T00",
+    "S003256_P0002_T00",
+    "S004459_P0003_T00",
+    "S000440_P0004_T00",
+    "S002086_P0005_T00",
+    "S005112_P0006_T00",
+    "S002143_P0007_T00",
+    "S001064_P0008_T00",
+    "S005306_P0009_T00",
+    "S003002_P0000_T00",
+    "S003747_P0001_T00",
+    "S003518_P0002_T00",
+    "S004752_P0003_T00",
+    "S000695_P0004_T00",
+    "S002128_P0005_T00",
+    "S005354_P0006_T00",
+    "S002199_P0007_T00",
+    "S001414_P0008_T00",
+    "S005607_P0009_T00",
+    "S003758_P0000_T00",
+    "S003987_P0001_T00",
+    "S003572_P0002_T00",
+    "S005011_P0003_T00",
+    "S000849_P0004_T00",
+    "S002199_P0005_T00",
+    "S005540_P0006_T00",
+    "S007175_P0007_T00",
+    "S004419_P0008_T00",
+    "S005664_P0009_T00",
+    "S004571_P0000_T00",
+    "S004029_P0001_T00",
+    "S003961_P0002_T00",
+    "S005113_P0003_T00",
+    "S001610_P0004_T00",
+    "S002240_P0005_T00",
+    "S006078_P0006_T00",
+    "S007211_P0007_T00",
+    "S004677_P0008_T00",
+    "S005694_P0009_T00"
+  ],
+  "sample_set": "pilot",
+  "min_frames": 256,
+  "signers": [
+    "P0000",
+    "P0001",
+    "P0002",
+    "P0003",
+    "P0004",
+    "P0005",
+    "P0006",
+    "P0007",
+    "P0008",
+    "P0009"
+  ],
+  "arms": {
+    "baseline": {
+      "pose_sample_only": false,
+      "pose_detect_stride": 1
+    },
+    "sample_only": {
+      "pose_sample_only": true,
+      "pose_detect_stride": 1
+    },
+    "detect_stride5": {
+      "pose_sample_only": false,
+      "pose_detect_stride": 5
+    },
+    "sample_only_stride5": {
+      "pose_sample_only": true,
+      "pose_detect_stride": 5
+    }
+  },
+  "references": {
+    "path": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign_source\\out\\eval_csl_daily_pose_only\\test_tmp_refs.txt",
+    "sha256": "042cd94c44f9652f9fa127134565877a7a1cd1c58d2a12776c6698bb65150aab",
+    "protocol": "upstream test_tmp_refs.txt; character-separated; BLEU via mt5-fix rewrite + 13a"
+  },
+  "held_fixed": {
+    "checkpoint": "csl_daily_pose_only_slt.pth",
+    "dtype": "bfloat16",
+    "num_beams": 4,
+    "max_new_tokens": 100,
+    "max_frames": 256,
+    "pose_normalization": "isotropic_short_side",
+    "pose_orientation": "preserve"
+  },
+  "quality_gate": {
+    "delta_edit_min": -0.005,
+    "ci_low_min": -0.01,
+    "note": "switch may be recommended off-by-default only if the gate passes"
+  },
+  "commands": [
+    "E:\\githubproject\\SignLanguage-Bridge\\.conda-env\\python.exe experiments\\p1\\e04\\opt_unisign_frontend.py run --run-dir experiments/p1/e04/opt-runs/unisign-frontend-pilot50-20261027T1126Z --samples 50 --sample-set pilot --arms baseline,sample_only,detect_stride5,sample_only_stride5 --bootstrap-iterations 1000 --max-foreign-vram-mb 4500"
+  ],
+  "finished_at": "2026-10-27T03:29:23+00:00",
+  "output_files": [
+    "manifest.json",
+    "metrics.json",
+    "predictions-baseline.jsonl",
+    "predictions-detect_stride5.jsonl",
+    "predictions-sample_only.jsonl",
+    "predictions-sample_only_stride5.jsonl"
+  ],
+  "report": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\e04\\opt_unisign_frontend.md",
+  "task": "task-12 phase 4 preprocessing optimisation",
+  "production_defaults_changed": false
+}

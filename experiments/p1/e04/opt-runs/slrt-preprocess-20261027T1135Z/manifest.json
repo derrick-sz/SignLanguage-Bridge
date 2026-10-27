@@ -1,0 +1,134 @@
+{
+  "schema_version": 1,
+  "run_id": "slrt-preprocess-20261027T113259Z",
+  "experiment": "E04-opt-slrt-preprocess",
+  "run_status": "PASS",
+  "created_at": "2026-10-27T03:33:00+00:00",
+  "purpose": "SLRT per-window preprocessing optimisation: per-frame RGB/heatmap cache with numerical equivalence, before/after latency and corpus WER",
+  "code": {
+    "repository": "SignLanguage-Bridge",
+    "git_sha": "6e820899b769f5de6243bf8e1b9944729bf24f2a",
+    "branch": "codex/model-contract-auto-captions",
+    "dirty_tree": true,
+    "dirty_path_count": 3
+  },
+  "host": {
+    "host_alias": "PC-HPVYVOTACGSS",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "cpu": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+    "cpu_count": 20,
+    "memory_total_gb": 31.84
+  },
+  "gpu_baseline": {
+    "sampled_at": "2026-10-27T03:32:59+00:00",
+    "devices": [
+      {
+        "index": 0,
+        "name": "NVIDIA GeForce RTX 5060 Ti",
+        "driver_version": "616.92",
+        "memory_total_mb": 16311.0,
+        "memory_used_mb": 2054.0,
+        "memory_free_mb": 13997.0,
+        "utilization_gpu_pct": 4.0
+      }
+    ]
+  },
+  "privacy": {
+    "no_gt_in_perf_artifacts": true,
+    "no_raw_media_export": true,
+    "no_credentials_in_logs": true
+  },
+  "model_assets": {
+    "unisign": {
+      "bundle": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\model_bundle",
+      "bundle_manifest_sha256": "462ea712c73ba0b0c7a91a4c6d5e596e8ff5bd58854dca53f8c73e03b8cdba7e",
+      "checkpoint": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\csl_daily_pose_only_slt.pth",
+      "checkpoint_bytes": 1186925112,
+      "checkpoint_sha256_declared": "73bea87a9603f719b4f4a481a3a1a5ed24e7e5f7b81afd14ef498c40469c1a6c",
+      "source_commit": "eed438bcb49e30405cd6ccdfcccca330c134e830",
+      "model_revision": "182913ca7a8b7dd9837d7d6f10717353f4408f80",
+      "max_frames": 256,
+      "num_beams": 4,
+      "license": "CC-BY-NC-4.0"
+    },
+    "slrt": {
+      "config": "E:\\githubproject\\SignLanguage-Bridge\\configs\\slrt-csl-hrnet-npz.example.json",
+      "config_sha256": "a9600cc3e5c44931623c0ad9e87818ca5111d976e83d219861c23ddd3b16deb9",
+      "checkpoint": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\EMNLP24_Online\\CSL-Daily\\ckpts\\cslr_best.ckpt",
+      "checkpoint_bytes": 499554423,
+      "checkpoint_sha256_declared": "e9fdd3a66d9667e7685c2b1437c67b8cbc9e45d2562730f04c0226717b7cbd4d",
+      "vocabulary": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\EMNLP24_Online\\CSL-Daily\\meta\\csl_iso_with_blank.vocab",
+      "window_size": 16,
+      "stride": 1,
+      "vote_size": 7
+    }
+  },
+  "environment": {
+    "python": "3.10.22",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "host_alias": "PC-HPVYVOTACGSS",
+    "cpu_count": 20,
+    "torch": "2.9.1+cu128",
+    "cuda_available": true,
+    "cuda_version": "12.8",
+    "gpu_name": "NVIDIA GeForce RTX 5060 Ti",
+    "gpu_total_vram_mb": 16283.4,
+    "gpu_capability": "12.0"
+  },
+  "ram": {
+    "total_gb": 31.84,
+    "available_gb": 10.25,
+    "used_percent": 67.8
+  },
+  "samples": [
+    "S000502_P0000_T00",
+    "S003181_P0001_T00",
+    "S002951_P0002_T00",
+    "S004204_P0003_T00",
+    "S000414_P0004_T00",
+    "S001656_P0005_T00",
+    "S005040_P0006_T00",
+    "S002092_P0007_T00",
+    "S000230_P0008_T00",
+    "S005276_P0009_T00",
+    "S001090_P0000_T00",
+    "S003605_P0001_T00",
+    "S003256_P0002_T00",
+    "S004459_P0003_T00",
+    "S000440_P0004_T00",
+    "S002086_P0005_T00",
+    "S005112_P0006_T00",
+    "S002143_P0007_T00",
+    "S001064_P0008_T00",
+    "S005306_P0009_T00"
+  ],
+  "signers": [
+    "P0000",
+    "P0001",
+    "P0002",
+    "P0003",
+    "P0004",
+    "P0005",
+    "P0006",
+    "P0007",
+    "P0008",
+    "P0009"
+  ],
+  "protocol": "hrnet-npz, window 16, stride 1, vote 7; same videos/keypoints both arms",
+  "gt_usage": "EVAL-ONLY gt_1086 gt_gloss joined after inference for corpus WER; never passed to the model",
+  "production_defaults_changed": false,
+  "commands": [
+    "E:\\githubproject\\SignLanguage-Bridge\\.conda-env\\python.exe experiments\\p1\\e04\\opt_slrt_preprocess.py run --run-dir experiments/p1/e04/opt-runs/slrt-preprocess-20261027T1135Z --samples 20 --max-foreign-vram-mb 4500"
+  ],
+  "finished_at": "2026-10-27T03:37:06+00:00",
+  "output_files": [
+    "equivalence.json",
+    "manifest.json",
+    "metrics.json",
+    "predictions-baseline.jsonl",
+    "predictions-optimized.jsonl",
+    "stage-profile.json"
+  ],
+  "report": "E:\\githubproject\\SignLanguage-Bridge\\experiments\\p1\\e04\\opt_slrt_preprocess.md",
+  "task": "task-12 phase 4 preprocessing optimisation"
+}

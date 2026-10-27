@@ -1,0 +1,186 @@
+{
+  "device": "cuda:0",
+  "max_rgb_abs_diff": 0.0,
+  "max_hm_abs_diff": 0.0,
+  "all_exact_equal": true,
+  "windows_checked": 8,
+  "records": [
+    {
+      "sample_id": "S000502_P0000_T00",
+      "window_start": 0,
+      "rgb_max_abs_diff": 0.0,
+      "hm_max_abs_diff": 0.0,
+      "rgb_exact_equal": true,
+      "hm_exact_equal": true,
+      "rgb_shape": [
+        1,
+        3,
+        16,
+        224,
+        224
+      ],
+      "hm_shape": [
+        1,
+        63,
+        16,
+        112,
+        112
+      ]
+    },
+    {
+      "sample_id": "S000502_P0000_T00",
+      "window_start": 5,
+      "rgb_max_abs_diff": 0.0,
+      "hm_max_abs_diff": 0.0,
+      "rgb_exact_equal": true,
+      "hm_exact_equal": true,
+      "rgb_shape": [
+        1,
+        3,
+        16,
+        224,
+        224
+      ],
+      "hm_shape": [
+        1,
+        63,
+        16,
+        112,
+        112
+      ]
+    },
+    {
+      "sample_id": "S000502_P0000_T00",
+      "window_start": 20,
+      "rgb_max_abs_diff": 0.0,
+      "hm_max_abs_diff": 0.0,
+      "rgb_exact_equal": true,
+      "hm_exact_equal": true,
+      "rgb_shape": [
+        1,
+        3,
+        16,
+        224,
+        224
+      ],
+      "hm_shape": [
+        1,
+        63,
+        16,
+        112,
+        112
+      ]
+    },
+    {
+      "sample_id": "S000502_P0000_T00",
+      "window_start": 40,
+      "rgb_max_abs_diff": 0.0,
+      "hm_max_abs_diff": 0.0,
+      "rgb_exact_equal": true,
+      "hm_exact_equal": true,
+      "rgb_shape": [
+        1,
+        3,
+        16,
+        224,
+        224
+      ],
+      "hm_shape": [
+        1,
+        63,
+        16,
+        112,
+        112
+      ]
+    },
+    {
+      "sample_id": "S003181_P0001_T00",
+      "window_start": 0,
+      "rgb_max_abs_diff": 0.0,
+      "hm_max_abs_diff": 0.0,
+      "rgb_exact_equal": true,
+      "hm_exact_equal": true,
+      "rgb_shape": [
+        1,
+        3,
+        16,
+        224,
+        224
+      ],
+      "hm_shape": [
+        1,
+        63,
+        16,
+        112,
+        112
+      ]
+    },
+    {
+      "sample_id": "S003181_P0001_T00",
+      "window_start": 5,
+      "rgb_max_abs_diff": 0.0,
+      "hm_max_abs_diff": 0.0,
+      "rgb_exact_equal": true,
+      "hm_exact_equal": true,
+      "rgb_shape": [
+        1,
+        3,
+        16,
+        224,
+        224
+      ],
+      "hm_shape": [
+        1,
+        63,
+        16,
+        112,
+        112
+      ]
+    },
+    {
+      "sample_id": "S003181_P0001_T00",
+      "window_start": 20,
+      "rgb_max_abs_diff": 0.0,
+      "hm_max_abs_diff": 0.0,
+      "rgb_exact_equal": true,
+      "hm_exact_equal": true,
+      "rgb_shape": [
+        1,
+        3,
+        16,
+        224,
+        224
+      ],
+      "hm_shape": [
+        1,
+        63,
+        16,
+        112,
+        112
+      ]
+    },
+    {
+      "sample_id": "S003181_P0001_T00",
+      "window_start": 40,
+      "rgb_max_abs_diff": 0.0,
+      "hm_max_abs_diff": 0.0,
+      "rgb_exact_equal": true,
+      "hm_exact_equal": true,
+      "rgb_shape": [
+        1,
+        3,
+        16,
+        224,
+        224
+      ],
+      "hm_shape": [
+        1,
+        63,
+        16,
+        112,
+        112
+      ]
+    }
+  ],
+  "note": "cached path calls the original unmodified prepare_inputs on one frame at a time and concatenates; this measures the exact numerical difference"
+}

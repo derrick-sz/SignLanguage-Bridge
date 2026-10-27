@@ -168,3 +168,40 @@ $run = 'e04-gpu-20261026T2202Z'; $dir = "experiments\p1\runs\$run"
 
 产物副本：本目录 `hardware_report.md`、`parallel_vs_serial.csv`、`perf_trace.jsonl`、
 `metrics.json`、`metrics_summary.md`、`device_samples.jsonl`（复制自 run 目录）。
+
+## H. 优化前后对照（task-12 阶段 4；详见 `opt_unisign_frontend.md`、`opt_slrt_preprocess.md`）
+
+> 生产默认值**未修改**；以下为实测证据与建议。run 目录均在
+> `experiments/p1/e04/opt-runs/`。
+
+### H.1 Uni-Sign 前端开关（CSL-Daily test，配对同模型/同解码/同帧采样）
+
+| arm | n | BLEU-4 | chrF | 平均 edit | Δedit（95% CI，signer bootstrap） | e2e P50 | pose P50 | 预测与 baseline 相同 | 门槛 |
+|---|---:|---:|---:|---:|---|---:|---:|---:|---|
+| baseline | 50 | 31.2308 | 27.1849 | 0.4831 | — | 3086 ms | 2753 ms | — | — |
+| sample_only（pilots ≤256 帧） | 50 | 31.2308 | 27.1849 | 0.4831 | 0.0 [0.0, 0.0] | 3029 ms | 2715 ms | 50/50 | PASS（本子集 0 跳帧，no-op） |
+| detect_stride5 | 50 | 29.5402 | 25.8317 | 0.4626 | **−0.0205 [−0.0563, +0.0153]** | **1964 ms（−36.4%）** | 1664 ms | 32/50 | **FAIL** |
+| sample_only_stride5 | 50 | 29.5402 | 25.8317 | 0.4626 | −0.0205 [−0.0563, +0.0153] | 1958 ms | 1636 ms | 32/50 | FAIL |
+| baseline（>256 帧 12 条） | 12 | 15.6037 | 15.2062 | 0.2856 | — | 7013 ms | 6517 ms | — | — |
+| **sample_only（>256 帧 12 条）** | 12 | **15.6037** | **15.2062** | **0.2856** | **0.0 [0.0, 0.0]** | **6271 ms（−10.6%）** | 5816 ms | **12/12** | **PASS**（跳 38.9 帧/条 = 13.2%） |
+
+结论：`pose_sample_only` 质量零变化（逐位设计 + 预测逐字相同），对 >256 帧片段
+−10.6% e2e；但 CSL-Daily test 仅 12/1086（1.1%）片段 >256 帧 → 域级收益 ~0.1%，
+不得宣称全数据集提速。`pose_detect_stride=5` 延迟 −36.4% 但质量门槛 FAIL
+（Δedit −0.0205、CI 下界 −0.0563、BLEU −1.69）→ **不建议默认开启**。
+
+### H.2 SLRT 逐窗预处理（数值等价缓存；20 条 pilot，2406 窗口）
+
+| 指标 | baseline | optimized（帧级缓存） | 变化 |
+|---|---:|---:|---:|
+| 等价性（RGB / 热力图，8 真实窗口 cuda:0） | — | max abs diff **0.0 / 0.0**，torch.equal **True / True** | 逐位相同 |
+| e2e P50 / P95 | 5923 / 8557 ms | **4836 / 7152 ms** | **−18.4% / −16.4%（1.225×）** |
+| prepare_inputs 有效总计 | 29,073 ms | 8,629 ms | −70.3% |
+| canonical_frame 总计（未优化） | 34,445 ms | 34,046 ms | 未变（新瓶颈：1.72 s/条，28% e2e） |
+| corpus WER（20 条，137 ref tokens） | 0.27007（S24/I5/D8） | 0.27007（S24/I5/D8） | **0.0**；Gloss 20/20 逐字相同 |
+
+结论：该优化可合入生产路径（WER 不变、e2e −18.4%）；实现建议与 protocol 更新要求见
+`opt_slrt_preprocess.md` §4。此前“~5.6 s/条 花在 CPU 热力图预处理”的措辞需修正：
+实测为 canonical_frame 1.72 s（28%）+ prepare_inputs 有效 1.45 s（23.6%，热力图在
+GPU 上算，约一半时间异步不可见于 CPU 计时）+ S3D 2.44 s（39.5%）+ 解码 0.29 s。
+

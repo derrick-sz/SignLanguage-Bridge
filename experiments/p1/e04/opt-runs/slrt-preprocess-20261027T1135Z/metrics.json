@@ -1,0 +1,185 @@
+{
+  "schema_version": 1,
+  "run_id": "slrt-preprocess-20261027T113259Z",
+  "created_at": "2026-10-27T03:37:06+00:00",
+  "samples": 20,
+  "baseline": {
+    "arm": "baseline",
+    "use_cache": false,
+    "attempted": 20,
+    "successful": 20,
+    "failed": 0,
+    "load_seconds": 0.85,
+    "wer": {
+      "n": 20,
+      "wer": 0.27007,
+      "substitutions": 24,
+      "insertions": 5,
+      "deletions": 8,
+      "reference_tokens": 137,
+      "correct_tokens": 100
+    },
+    "e2e_wall_ms": {
+      "p50": 5923.404500000001,
+      "p95": 8557.08565,
+      "mean": 6161.35,
+      "count": 20
+    },
+    "video_decode_ms": {
+      "p50": 279.5395,
+      "p95": 429.58395,
+      "mean": 289.08,
+      "count": 20
+    },
+    "sum_prepare_ms": {
+      "p50": 709.7465,
+      "p95": 964.1512000000001,
+      "mean": 724.73,
+      "count": 20
+    },
+    "sum_extract_ms": {
+      "p50": 4.1925,
+      "p95": 5.7227500000000004,
+      "mean": 4.38,
+      "count": 20
+    },
+    "sum_canonical_ms": {
+      "p50": 1649.3580000000002,
+      "p95": 2624.92405,
+      "mean": 1722.25,
+      "count": 20
+    },
+    "sum_feed_ms": {
+      "p50": 5352.428,
+      "p95": 7837.30785,
+      "mean": 5576.36,
+      "count": 20
+    },
+    "sum_predict_ms": {
+      "p50": 3815.1225,
+      "p95": 5166.356250000001,
+      "mean": 3892.56,
+      "count": 20
+    },
+    "sum_model_inference_ms": {
+      "p50": 2383.398,
+      "p95": 3229.87035,
+      "mean": 2437.88,
+      "count": 20
+    },
+    "windows_processed": {
+      "p50": 118.0,
+      "p95": 160.60000000000002,
+      "mean": 120.3,
+      "count": 20
+    }
+  },
+  "optimized": {
+    "arm": "optimized",
+    "use_cache": true,
+    "attempted": 20,
+    "successful": 20,
+    "failed": 0,
+    "load_seconds": 0.83,
+    "wer": {
+      "n": 20,
+      "wer": 0.27007,
+      "substitutions": 24,
+      "insertions": 5,
+      "deletions": 8,
+      "reference_tokens": 137,
+      "correct_tokens": 100
+    },
+    "e2e_wall_ms": {
+      "p50": 4835.727000000001,
+      "p95": 7152.38285,
+      "mean": 5040.59,
+      "count": 20
+    },
+    "video_decode_ms": {
+      "p50": 266.09450000000004,
+      "p95": 427.1574,
+      "mean": 281.71,
+      "count": 20
+    },
+    "sum_prepare_ms": {
+      "p50": 385.9225,
+      "p95": 532.79605,
+      "mean": 391.43,
+      "count": 20
+    },
+    "sum_extract_ms": {
+      "p50": 4.1345,
+      "p95": 5.597,
+      "mean": 4.23,
+      "count": 20
+    },
+    "sum_canonical_ms": {
+      "p50": 1632.2745,
+      "p95": 2634.23065,
+      "mean": 1702.32,
+      "count": 20
+    },
+    "sum_feed_ms": {
+      "p50": 4363.162,
+      "p95": 6523.101850000001,
+      "mean": 4555.91,
+      "count": 20
+    },
+    "sum_predict_ms": {
+      "p50": 2753.8465,
+      "p95": 3755.04075,
+      "mean": 2805.78,
+      "count": 20
+    },
+    "sum_model_inference_ms": {
+      "p50": 2333.8305,
+      "p95": 3170.15965,
+      "mean": 2375.53,
+      "count": 20
+    },
+    "windows_processed": {
+      "p50": 118.0,
+      "p95": 160.60000000000002,
+      "mean": 120.3,
+      "count": 20
+    }
+  },
+  "equivalence": {
+    "max_rgb_abs_diff": 0.0,
+    "max_hm_abs_diff": 0.0,
+    "all_exact_equal": true,
+    "windows_checked": 8
+  },
+  "comparison": {
+    "shared_samples": 20,
+    "identical_gloss_sequences": 20,
+    "wer_baseline": 0.27007,
+    "wer_optimized": 0.27007,
+    "wer_delta": 0.0,
+    "e2e_p50_speedup": 1.225,
+    "e2e_p50_baseline_ms": 5923.404500000001,
+    "e2e_p50_optimized_ms": 4835.727000000001,
+    "e2e_p95_baseline_ms": 8557.08565,
+    "e2e_p95_optimized_ms": 7152.38285,
+    "prepare_ms_baseline_p50": 709.7465,
+    "prepare_ms_optimized_p50": 385.9225,
+    "model_inference_ms_baseline_p50": 2383.398,
+    "model_inference_ms_optimized_p50": 2333.8305,
+    "claim": "numerically identical preprocessing (see equivalence); WER must not degrade; production defaults unchanged"
+  },
+  "gpu_baseline": {
+    "sampled_at": "2026-10-27T03:32:59+00:00",
+    "devices": [
+      {
+        "index": 0,
+        "name": "NVIDIA GeForce RTX 5060 Ti",
+        "driver_version": "616.92",
+        "memory_total_mb": 16311.0,
+        "memory_used_mb": 2054.0,
+        "memory_free_mb": 13997.0,
+        "utilization_gpu_pct": 4.0
+      }
+    ]
+  }
+}

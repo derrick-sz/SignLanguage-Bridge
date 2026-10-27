@@ -1,0 +1,683 @@
+{
+  "schema_version": 1,
+  "run_id": "unisign-frontend-20261027T111854Z",
+  "created_at": "2026-10-27T03:29:23+00:00",
+  "samples": 50,
+  "signers": [
+    "P0000",
+    "P0001",
+    "P0002",
+    "P0003",
+    "P0004",
+    "P0005",
+    "P0006",
+    "P0007",
+    "P0008",
+    "P0009"
+  ],
+  "arms": {
+    "baseline": {
+      "arm": "baseline",
+      "attempted": 50,
+      "successful": 50,
+      "failed": 0,
+      "quality": {
+        "n": 50,
+        "bleu4_13a": 31.2308,
+        "bleu4_precisions": [
+          63.78,
+          40.59,
+          28.84,
+          21.55
+        ],
+        "bp": 0.8769,
+        "chrf": 27.1849,
+        "mean_char_edit_similarity": 0.4831,
+        "exact_match_count": 2,
+        "empty_prediction_count": 0
+      },
+      "latency": {
+        "pose_ms": {
+          "p50": 2752.5935,
+          "p95": 4091.21435,
+          "mean": 2874.01,
+          "count": 50
+        },
+        "pose_extract_ms": {
+          "p50": 2751.958550012205,
+          "p95": 4090.287154976977,
+          "mean": 2873.26,
+          "count": 50
+        },
+        "model_total_ms": {
+          "p50": 316.6227000474464,
+          "p95": 539.3280499964021,
+          "mean": 345.15,
+          "count": 50
+        },
+        "adapter_total_ms": {
+          "p50": 3085.893599985866,
+          "p95": 4481.560229987372,
+          "mean": 3234.13,
+          "count": 50
+        },
+        "e2e_wall_ms": {
+          "p50": 3086.1859999999997,
+          "p95": 4481.85815,
+          "mean": 3234.42,
+          "count": 50
+        }
+      },
+      "pose_skips": {
+        "source_frames_mean": 115.34,
+        "sampled_frames_mean": 115.34,
+        "skipped_frames_mean": 0.0,
+        "skipped_frames_total": 0,
+        "extractor_calls_mean": 115.34
+      },
+      "load_seconds": 29.9,
+      "runtime_info": {
+        "backend": "pytorch_uni_sign",
+        "providers": [
+          "PyTorch CUDA"
+        ],
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "load_ms": 8842.935799970292,
+        "model_warmup_ms": 7696.016100002453,
+        "checkpoint": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\csl_daily_pose_only_slt.pth",
+        "checkpoint_sha256": "73bea87a9603f719b4f4a481a3a1a5ed24e7e5f7b81afd14ef498c40469c1a6c",
+        "mt5_dir": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\mt5-base",
+        "source_dir": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign_source",
+        "source_commit": "eed438bcb49e30405cd6ccdfcccca330c134e830",
+        "model_revision": "182913ca7a8b7dd9837d7d6f10717353f4408f80",
+        "license": "CC-BY-NC-4.0",
+        "source_license_status": "no-license-file-at-pinned-commit",
+        "pose_normalization": "isotropic_short_side",
+        "pose_orientation": "preserve",
+        "pose_mode": "lightweight",
+        "pose_sample_only": false,
+        "pose_detect_stride": 1,
+        "max_frames": 256,
+        "streaming": "sliding_window_over_complete_windows",
+        "pose_backend": "onnxruntime",
+        "pose_requested_device": "cuda",
+        "pose_device": "cuda",
+        "pose_detection_providers": [
+          "CUDAExecutionProvider",
+          "CPUExecutionProvider"
+        ],
+        "pose_estimation_providers": [
+          "CUDAExecutionProvider",
+          "CPUExecutionProvider"
+        ],
+        "pose_fallback_reason": null,
+        "pose_preload_failures": [],
+        "pose_warmup_error": null,
+        "pose_cache_dir": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\rtmlib-cache",
+        "pose_warmup_image": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign_source\\demo\\rtmlib-main\\demo.jpg",
+        "parameter_count": 587747368,
+        "gpu_allocated_mb": 1148.85009765625,
+        "gpu_reserved_mb": 2688.0,
+        "gpu_peak_allocated_mb": 1232.92529296875,
+        "gpu_peak_reserved_mb": 2744.0
+      }
+    },
+    "sample_only": {
+      "arm": "sample_only",
+      "attempted": 50,
+      "successful": 50,
+      "failed": 0,
+      "quality": {
+        "n": 50,
+        "bleu4_13a": 31.2308,
+        "bleu4_precisions": [
+          63.78,
+          40.59,
+          28.84,
+          21.55
+        ],
+        "bp": 0.8769,
+        "chrf": 27.1849,
+        "mean_char_edit_similarity": 0.4831,
+        "exact_match_count": 2,
+        "empty_prediction_count": 0
+      },
+      "latency": {
+        "pose_ms": {
+          "p50": 2715.2055,
+          "p95": 3708.2513499999995,
+          "mean": 2711.97,
+          "count": 50
+        },
+        "pose_extract_ms": {
+          "p50": 2714.4027500180528,
+          "p95": 3707.480745020439,
+          "mean": 2711.27,
+          "count": 50
+        },
+        "model_total_ms": {
+          "p50": 280.601000005845,
+          "p95": 454.63154501339886,
+          "mean": 303.84,
+          "count": 50
+        },
+        "adapter_total_ms": {
+          "p50": 3028.8468500075396,
+          "p95": 4007.1296750131296,
+          "mean": 3025.69,
+          "count": 50
+        },
+        "e2e_wall_ms": {
+          "p50": 3029.1895,
+          "p95": 4007.3791999999994,
+          "mean": 3025.97,
+          "count": 50
+        }
+      },
+      "pose_skips": {
+        "source_frames_mean": 115.34,
+        "sampled_frames_mean": 115.34,
+        "skipped_frames_mean": 0.0,
+        "skipped_frames_total": 0,
+        "extractor_calls_mean": 115.34
+      },
+      "load_seconds": 8.16,
+      "runtime_info": {
+        "backend": "pytorch_uni_sign",
+        "providers": [
+          "PyTorch CUDA"
+        ],
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "load_ms": 5018.079400004353,
+        "model_warmup_ms": 198.90829996438697,
+        "checkpoint": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\csl_daily_pose_only_slt.pth",
+        "checkpoint_sha256": "73bea87a9603f719b4f4a481a3a1a5ed24e7e5f7b81afd14ef498c40469c1a6c",
+        "mt5_dir": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\mt5-base",
+        "source_dir": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign_source",
+        "source_commit": "eed438bcb49e30405cd6ccdfcccca330c134e830",
+        "model_revision": "182913ca7a8b7dd9837d7d6f10717353f4408f80",
+        "license": "CC-BY-NC-4.0",
+        "source_license_status": "no-license-file-at-pinned-commit",
+        "pose_normalization": "isotropic_short_side",
+        "pose_orientation": "preserve",
+        "pose_mode": "lightweight",
+        "pose_sample_only": true,
+        "pose_detect_stride": 1,
+        "max_frames": 256,
+        "streaming": "sliding_window_over_complete_windows",
+        "pose_backend": "onnxruntime",
+        "pose_requested_device": "cuda",
+        "pose_device": "cuda",
+        "pose_detection_providers": [
+          "CUDAExecutionProvider",
+          "CPUExecutionProvider"
+        ],
+        "pose_estimation_providers": [
+          "CUDAExecutionProvider",
+          "CPUExecutionProvider"
+        ],
+        "pose_fallback_reason": null,
+        "pose_preload_failures": [],
+        "pose_warmup_error": null,
+        "pose_cache_dir": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\rtmlib-cache",
+        "pose_warmup_image": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign_source\\demo\\rtmlib-main\\demo.jpg",
+        "parameter_count": 587747368,
+        "gpu_allocated_mb": 1152.47509765625,
+        "gpu_reserved_mb": 2688.0,
+        "gpu_peak_allocated_mb": 1224.62646484375,
+        "gpu_peak_reserved_mb": 2744.0
+      }
+    },
+    "detect_stride5": {
+      "arm": "detect_stride5",
+      "attempted": 50,
+      "successful": 50,
+      "failed": 0,
+      "quality": {
+        "n": 50,
+        "bleu4_13a": 29.5402,
+        "bleu4_precisions": [
+          61.26,
+          38.8,
+          27.91,
+          20.6
+        ],
+        "bp": 0.864,
+        "chrf": 25.8317,
+        "mean_char_edit_similarity": 0.4626,
+        "exact_match_count": 3,
+        "empty_prediction_count": 0
+      },
+      "latency": {
+        "pose_ms": {
+          "p50": 1663.7534999999998,
+          "p95": 2352.54715,
+          "mean": 1641.92,
+          "count": 50
+        },
+        "pose_extract_ms": {
+          "p50": 1663.141050026752,
+          "p95": 2351.790705008898,
+          "mean": 1641.21,
+          "count": 50
+        },
+        "model_total_ms": {
+          "p50": 291.41735000303015,
+          "p95": 383.8113450241508,
+          "mean": 288.77,
+          "count": 50
+        },
+        "adapter_total_ms": {
+          "p50": 1963.815050025005,
+          "p95": 2642.0656449976377,
+          "mean": 1942.12,
+          "count": 50
+        },
+        "e2e_wall_ms": {
+          "p50": 1964.0790000000002,
+          "p95": 2642.33395,
+          "mean": 1942.4,
+          "count": 50
+        }
+      },
+      "pose_skips": {
+        "source_frames_mean": 115.34,
+        "sampled_frames_mean": 115.34,
+        "skipped_frames_mean": 0.0,
+        "skipped_frames_total": 0,
+        "extractor_calls_mean": 115.34
+      },
+      "load_seconds": 8.17,
+      "runtime_info": {
+        "backend": "pytorch_uni_sign",
+        "providers": [
+          "PyTorch CUDA"
+        ],
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "load_ms": 4972.83610003069,
+        "model_warmup_ms": 188.22730000829324,
+        "checkpoint": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\csl_daily_pose_only_slt.pth",
+        "checkpoint_sha256": "73bea87a9603f719b4f4a481a3a1a5ed24e7e5f7b81afd14ef498c40469c1a6c",
+        "mt5_dir": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\mt5-base",
+        "source_dir": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign_source",
+        "source_commit": "eed438bcb49e30405cd6ccdfcccca330c134e830",
+        "model_revision": "182913ca7a8b7dd9837d7d6f10717353f4408f80",
+        "license": "CC-BY-NC-4.0",
+        "source_license_status": "no-license-file-at-pinned-commit",
+        "pose_normalization": "isotropic_short_side",
+        "pose_orientation": "preserve",
+        "pose_mode": "lightweight",
+        "pose_sample_only": false,
+        "pose_detect_stride": 5,
+        "max_frames": 256,
+        "streaming": "sliding_window_over_complete_windows",
+        "pose_backend": "onnxruntime",
+        "pose_requested_device": "cuda",
+        "pose_device": "cuda",
+        "pose_detection_providers": [
+          "CUDAExecutionProvider",
+          "CPUExecutionProvider"
+        ],
+        "pose_estimation_providers": [
+          "CUDAExecutionProvider",
+          "CPUExecutionProvider"
+        ],
+        "pose_fallback_reason": null,
+        "pose_preload_failures": [],
+        "pose_warmup_error": null,
+        "pose_cache_dir": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\rtmlib-cache",
+        "pose_warmup_image": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign_source\\demo\\rtmlib-main\\demo.jpg",
+        "parameter_count": 587747368,
+        "gpu_allocated_mb": 1152.47509765625,
+        "gpu_reserved_mb": 2688.0,
+        "gpu_peak_allocated_mb": 1223.5830078125,
+        "gpu_peak_reserved_mb": 2744.0
+      }
+    },
+    "sample_only_stride5": {
+      "arm": "sample_only_stride5",
+      "attempted": 50,
+      "successful": 50,
+      "failed": 0,
+      "quality": {
+        "n": 50,
+        "bleu4_13a": 29.5402,
+        "bleu4_precisions": [
+          61.26,
+          38.8,
+          27.91,
+          20.6
+        ],
+        "bp": 0.864,
+        "chrf": 25.8317,
+        "mean_char_edit_similarity": 0.4626,
+        "exact_match_count": 3,
+        "empty_prediction_count": 0
+      },
+      "latency": {
+        "pose_ms": {
+          "p50": 1636.2125,
+          "p95": 2300.45825,
+          "mean": 1681.97,
+          "count": 50
+        },
+        "pose_extract_ms": {
+          "p50": 1635.5727500049397,
+          "p95": 2299.645895001595,
+          "mean": 1681.18,
+          "count": 50
+        },
+        "model_total_ms": {
+          "p50": 291.9685999804642,
+          "p95": 437.51755499106366,
+          "mean": 305.24,
+          "count": 50
+        },
+        "adapter_total_ms": {
+          "p50": 1957.2318500140682,
+          "p95": 2618.006114990567,
+          "mean": 1996.65,
+          "count": 50
+        },
+        "e2e_wall_ms": {
+          "p50": 1957.587,
+          "p95": 2618.26905,
+          "mean": 1996.95,
+          "count": 50
+        }
+      },
+      "pose_skips": {
+        "source_frames_mean": 115.34,
+        "sampled_frames_mean": 115.34,
+        "skipped_frames_mean": 0.0,
+        "skipped_frames_total": 0,
+        "extractor_calls_mean": 115.34
+      },
+      "load_seconds": 7.65,
+      "runtime_info": {
+        "backend": "pytorch_uni_sign",
+        "providers": [
+          "PyTorch CUDA"
+        ],
+        "device": "cuda",
+        "dtype": "bfloat16",
+        "load_ms": 4690.756700001657,
+        "model_warmup_ms": 217.11140003753826,
+        "checkpoint": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\csl_daily_pose_only_slt.pth",
+        "checkpoint_sha256": "73bea87a9603f719b4f4a481a3a1a5ed24e7e5f7b81afd14ef498c40469c1a6c",
+        "mt5_dir": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\mt5-base",
+        "source_dir": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign_source",
+        "source_commit": "eed438bcb49e30405cd6ccdfcccca330c134e830",
+        "model_revision": "182913ca7a8b7dd9837d7d6f10717353f4408f80",
+        "license": "CC-BY-NC-4.0",
+        "source_license_status": "no-license-file-at-pinned-commit",
+        "pose_normalization": "isotropic_short_side",
+        "pose_orientation": "preserve",
+        "pose_mode": "lightweight",
+        "pose_sample_only": true,
+        "pose_detect_stride": 5,
+        "max_frames": 256,
+        "streaming": "sliding_window_over_complete_windows",
+        "pose_backend": "onnxruntime",
+        "pose_requested_device": "cuda",
+        "pose_device": "cuda",
+        "pose_detection_providers": [
+          "CUDAExecutionProvider",
+          "CPUExecutionProvider"
+        ],
+        "pose_estimation_providers": [
+          "CUDAExecutionProvider",
+          "CPUExecutionProvider"
+        ],
+        "pose_fallback_reason": null,
+        "pose_preload_failures": [],
+        "pose_warmup_error": null,
+        "pose_cache_dir": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\rtmlib-cache",
+        "pose_warmup_image": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign_source\\demo\\rtmlib-main\\demo.jpg",
+        "parameter_count": 587747368,
+        "gpu_allocated_mb": 1152.47509765625,
+        "gpu_reserved_mb": 2688.0,
+        "gpu_peak_allocated_mb": 1223.5830078125,
+        "gpu_peak_reserved_mb": 2744.0
+      }
+    }
+  },
+  "comparisons_vs_baseline": {
+    "sample_only": {
+      "point": {
+        "delta_edit_similarity": 0.0,
+        "delta_bleu4": 0.0,
+        "delta_chrf": 0.0,
+        "delta_exact_match_count": 0,
+        "identical_predictions": 50,
+        "shared_samples": 50,
+        "baseline_scores": {
+          "n": 50,
+          "bleu4_13a": 31.2308,
+          "bleu4_precisions": [
+            63.78,
+            40.59,
+            28.84,
+            21.55
+          ],
+          "bp": 0.8769,
+          "chrf": 27.1849,
+          "mean_char_edit_similarity": 0.4831,
+          "exact_match_count": 2,
+          "empty_prediction_count": 0
+        },
+        "arm_scores": {
+          "n": 50,
+          "bleu4_13a": 31.2308,
+          "bleu4_precisions": [
+            63.78,
+            40.59,
+            28.84,
+            21.55
+          ],
+          "bp": 0.8769,
+          "chrf": 27.1849,
+          "mean_char_edit_similarity": 0.4831,
+          "exact_match_count": 2,
+          "empty_prediction_count": 0
+        }
+      },
+      "bootstrap": {
+        "available": true,
+        "iterations": 1000,
+        "signers": [
+          "P0000",
+          "P0001",
+          "P0002",
+          "P0003",
+          "P0004",
+          "P0005",
+          "P0006",
+          "P0007",
+          "P0008",
+          "P0009"
+        ],
+        "delta_edit_similarity": {
+          "mean": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0
+        },
+        "delta_bleu4": {
+          "mean": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.0
+        },
+        "delta_exact_match_count": {
+          "mean": 0.0,
+          "ci_low": 0,
+          "ci_high": 0
+        }
+      },
+      "quality_gate_pass": true,
+      "latency_delta_p50_ms": -57.0
+    },
+    "detect_stride5": {
+      "point": {
+        "delta_edit_similarity": -0.0205,
+        "delta_bleu4": -1.6906,
+        "delta_chrf": -1.3532,
+        "delta_exact_match_count": 1,
+        "identical_predictions": 32,
+        "shared_samples": 50,
+        "baseline_scores": {
+          "n": 50,
+          "bleu4_13a": 31.2308,
+          "bleu4_precisions": [
+            63.78,
+            40.59,
+            28.84,
+            21.55
+          ],
+          "bp": 0.8769,
+          "chrf": 27.1849,
+          "mean_char_edit_similarity": 0.4831,
+          "exact_match_count": 2,
+          "empty_prediction_count": 0
+        },
+        "arm_scores": {
+          "n": 50,
+          "bleu4_13a": 29.5402,
+          "bleu4_precisions": [
+            61.26,
+            38.8,
+            27.91,
+            20.6
+          ],
+          "bp": 0.864,
+          "chrf": 25.8317,
+          "mean_char_edit_similarity": 0.4626,
+          "exact_match_count": 3,
+          "empty_prediction_count": 0
+        }
+      },
+      "bootstrap": {
+        "available": true,
+        "iterations": 1000,
+        "signers": [
+          "P0000",
+          "P0001",
+          "P0002",
+          "P0003",
+          "P0004",
+          "P0005",
+          "P0006",
+          "P0007",
+          "P0008",
+          "P0009"
+        ],
+        "delta_edit_similarity": {
+          "mean": -0.01915,
+          "ci_low": -0.0563,
+          "ci_high": 0.0153
+        },
+        "delta_bleu4": {
+          "mean": -1.65739,
+          "ci_low": -4.9443,
+          "ci_high": 1.1913
+        },
+        "delta_exact_match_count": {
+          "mean": 0.995,
+          "ci_low": 0,
+          "ci_high": 3
+        }
+      },
+      "quality_gate_pass": false,
+      "latency_delta_p50_ms": -1122.1
+    },
+    "sample_only_stride5": {
+      "point": {
+        "delta_edit_similarity": -0.0205,
+        "delta_bleu4": -1.6906,
+        "delta_chrf": -1.3532,
+        "delta_exact_match_count": 1,
+        "identical_predictions": 32,
+        "shared_samples": 50,
+        "baseline_scores": {
+          "n": 50,
+          "bleu4_13a": 31.2308,
+          "bleu4_precisions": [
+            63.78,
+            40.59,
+            28.84,
+            21.55
+          ],
+          "bp": 0.8769,
+          "chrf": 27.1849,
+          "mean_char_edit_similarity": 0.4831,
+          "exact_match_count": 2,
+          "empty_prediction_count": 0
+        },
+        "arm_scores": {
+          "n": 50,
+          "bleu4_13a": 29.5402,
+          "bleu4_precisions": [
+            61.26,
+            38.8,
+            27.91,
+            20.6
+          ],
+          "bp": 0.864,
+          "chrf": 25.8317,
+          "mean_char_edit_similarity": 0.4626,
+          "exact_match_count": 3,
+          "empty_prediction_count": 0
+        }
+      },
+      "bootstrap": {
+        "available": true,
+        "iterations": 1000,
+        "signers": [
+          "P0000",
+          "P0001",
+          "P0002",
+          "P0003",
+          "P0004",
+          "P0005",
+          "P0006",
+          "P0007",
+          "P0008",
+          "P0009"
+        ],
+        "delta_edit_similarity": {
+          "mean": -0.01915,
+          "ci_low": -0.0563,
+          "ci_high": 0.0153
+        },
+        "delta_bleu4": {
+          "mean": -1.65739,
+          "ci_low": -4.9443,
+          "ci_high": 1.1913
+        },
+        "delta_exact_match_count": {
+          "mean": 0.995,
+          "ci_low": 0,
+          "ci_high": 3
+        }
+      },
+      "quality_gate_pass": false,
+      "latency_delta_p50_ms": -1128.6
+    }
+  },
+  "gpu_baseline": {
+    "sampled_at": "2026-10-27T03:18:54+00:00",
+    "devices": [
+      {
+        "index": 0,
+        "name": "NVIDIA GeForce RTX 5060 Ti",
+        "driver_version": "616.92",
+        "memory_total_mb": 16311.0,
+        "memory_used_mb": 2171.0,
+        "memory_free_mb": 13880.0,
+        "utilization_gpu_pct": 6.0
+      }
+    ]
+  }
+}
