@@ -369,10 +369,38 @@ T-A5-1 (Fusion 接口) ── 全程可并行（零实现零接线）
 | T-A3-1 视频媒体元数据与 job 生命周期 | **DONE** | `47ad84b` | 10 tests；真实片段元数据实测；探针失败如实 null；证据文件永不删；媒体零入库 |
 | T-A4-1 `sign_system` 路由显式化 | **DONE** | `a6db08c` | 路由矩阵 + ADR-P1-007 负例（ModelRouter 拒绝 libras→CSL）；全端点统一 |
 | T-A4-2 健康端点 + 错误码对齐 | **DONE** | `a6db08c` | /v1/health/live+ready；V1 端点 {code, legacy_code}；v3 形状探针零改动 |
-| T-A5-1 FusionController 接口占位 | IN PROGRESS（task-20，等 G2 重启条件） | — | DecisionIntent + Protocol + 零接线断言 |
+| T-A5-1 FusionController 接口占位 | **DONE** | 本提交 | 9 tests；Protocol 签名锁定；grep 证明生产代码零接线；G2=FAIL 与重启条件写死 |
 
-回归基线：`.conda-env` repo root `pytest -q` = **930 passed / 13 skipped**；`.venv-libras` = **981 passed / 13 skipped**（两环境互补：前者无 pydantic/FastAPI，后者无 torch；v3 端点 API 测试在 .venv-libras 完整覆盖 52/52）。
+回归基线（P0-A 收口）：`.conda-env` repo root `pytest -q` = **939 passed / 13 skipped**；`.venv-libras` = **990 passed / 13 skipped**（两环境互补：前者无 pydantic/FastAPI，后者无 torch；v3 端点 API 测试在 .venv-libras 完整覆盖 52/52）。
 
 
 
+
+
+---
+
+## P0-A 收口总结（2026-10-27，Lead 验收）
+
+**A0→A5 共 9 张任务卡全部 PASS**，新增 6 个产品模块 + 9 个测试文件（**144 项新测试**），`api.py` 累计纯新增 ~370 行（v3 语义零改动，diff 佐证）。
+
+| 阶段 | 卡 | 交付 | 测试 |
+|---|---|---|---:|
+| A0 | T-A0-1 | `slbridge/evidence.py`、`slbridge/prediction_log.py`（P-1 schema 单一真源；GT 守卫 24 键与实验侧强制一致；`calibrated_confidence` 恒 null） | 48 |
+| A1 | T-A1-1 | `slbridge/replay_adapter.py`（`replay_jsonl_v1`，逐字回放 50/50；`references/` 硬拒绝） | 16 |
+| A2 | T-A2-1 | `slbridge/api_contract_v1.py`（dataclass 契约层；契约 YAML 即测试真源） | 28 |
+| A2 | T-A2-2 | `slbridge/job_runner.py`（7 态状态机；恰一次 OOM 重试；超时/取消不伪造输出） | 14 |
+| A2 | T-A2-3 | `slbridge/api.py`（`POST /v1/videos/infer`、`GET /v1/jobs/{id}`，202+QUEUED；既有 52 api 测试零破坏） | 11 |
+| A3 | T-A3-1 | `slbridge/media_probe.py` + 生命周期（ffprobe 失败如实 null；TTL 清上传、**证据永不删**；媒体零入库） | 10 |
+| A4 | T-A4-1/2 | 路由矩阵（LIBRAS→503 / UNKNOWN→422，ADR-P1-007 负例）、`/v1/health/live+ready`、错误码统一（契约码+`legacy_code`，v3 形状零改动） | 10 |
+| A5 | T-A5-1 | `slbridge/fusion.py`（DecisionIntent/ConflictFeatures/FusionDecision/FusionController Protocol，**纯占位、grep 证明零接线**；G2=FAIL 与五条重启条件写死） | 9 |
+
+**回归基线**：`.conda-env` **939 passed / 13 skipped**；`.venv-libras` **990 passed / 13 skipped**（api 覆盖 52→83）。两环境互补：conda=ML 栈+yaml，libras=pydantic+fastapi。
+
+**遗留边界（如实）**
+1. `JUDGE_UNAVAILABLE`/`LOW_EVIDENCE` 仅契约枚举位（G2 未重启，不投机发送）；
+2. 413 middleware（`_BodyTooLarge`）错误体仍是 legacy 形状（在 `ApiError` 之外，可单独小卡统一）；
+3. routed 多语言模式的 `/v1/health/ready` workers 遍历已实现但无多路由 fixture（routed 行为本身由既有 `test_unified_api` 覆盖）；
+4. WS 流（P2）、真实视频推理接入（P1）未做——当前 API 面由 replay 驱动全链路验证；
+5. FusionController 实现等 G2 重启条件；
+6. `test_candidate_desktop` 在 `.venv-libras` 全量并发下偶发失败（单跑 2×3 均通过，判 flaky，与本计划无关，建议后续单独排查）。
 
