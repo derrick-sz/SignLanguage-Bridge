@@ -23,7 +23,9 @@ test("scrubbing and pausing publish a rendered frame even when RAF is throttled"
   assert.equal(updates.at(-1).playing, true);
   stage.pause();
   assert.equal(updates.at(-1).playing, false);
+  stage.tracks = { original: ["old frame"], improved: ["old frame"] };
   stage.stop();
   assert.equal(updates.at(-1).time, 0);
   assert.equal(updates.at(-1).duration, 0);
+  assert.equal(stage.tracks, null, "display switches must not restore a stopped clip");
 });

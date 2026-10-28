@@ -165,7 +165,11 @@ export class MotionStage {
   pause() { this.clock.pause(performance.now()); this.refresh(); }
   seek(time) { this.clock.seek(time, performance.now()); this.refresh(); }
   setSpeed(speed) { this.clock.setSpeed(speed, performance.now()); this.refresh(); }
-  stop() { this.clock.stop(); this.clock.duration = 0; this.track = null; this.rig?.reset(); this.refresh(); }
+  stop() {
+    this.clock.stop(); this.clock.duration = 0;
+    this.track = null; this.tracks = null; this.clip = null;
+    this.rig?.reset(); this.refresh();
+  }
   disposeModel() {
     this.model?.traverse(node => {
       if (!node.isMesh) return;
