@@ -5,8 +5,8 @@ from pathlib import Path
 import time
 
 import numpy as np
-from PySide6.QtCore import Qt, QTimer
-from PySide6.QtGui import QFont, QImage
+from PySide6.QtCore import Qt, QTimer, QUrl
+from PySide6.QtGui import QFont, QImage, QDesktopServices
 from PySide6.QtWidgets import (
     QCheckBox, QComboBox, QDialog, QFileDialog, QFormLayout,
     QFrame, QHBoxLayout, QLabel, QLayout, QListWidget, QListWidgetItem, QMainWindow,
@@ -78,6 +78,7 @@ class SignLanguageApp(QMainWindow):
         self._candidate_revision = None
         self.caption = None
         self._last_result = None
+        self._animation_origin = {}
         self._metadata_model = None
         self._metadata_catalog = None
         self._catalog_path = None
@@ -270,6 +271,9 @@ class SignLanguageApp(QMainWindow):
         result_layout.addStretch()
         self.notice_label = _label("识别后，中葡释义会显示在这里。", "notice")
         result_layout.addWidget(self.notice_label)
+        self.animation_button = _button("在动画工作台核对", self.open_animation)
+        self.animation_button.setToolTip("打开本机动画工作台；识别候选不会自动播放")
+        result_layout.addWidget(self.animation_button)
         self.details_button = _button("详细信息", lambda: self.open_settings(details=True), "info", "ghost")
         self.details_button.setProperty("size", "small")
         result_layout.addWidget(self.details_button, 0, Qt.AlignmentFlag.AlignRight)
@@ -874,9 +878,25 @@ class SignLanguageApp(QMainWindow):
         self.state_badge.setText(badge)
         self._refresh_details()
 
+    def open_animation(self):
+        import os
+        from .animation.handoff import handoff_url
+        try:
+            url = handoff_url(self._last_result, **self._animation_origin,
+                              base_url=os.environ.get("SLBRIDGE_ANIMATION_URL",
+                                                      "http://127.0.0.1:8874/animation/"))
+        except ValueError as exc:
+            self.status_label.setText(str(exc))
+            return
+        if QDesktopServices.openUrl(QUrl(url)):
+            self.status_label.setText("已打开动画工作台，请核对输入后预览；工作台服务需先启动。")
+        else:
+            self.status_label.setText("无法打开动画工作台，请先启动 slbridge-animation 服务。")
+
     def _display_result(self, result, request_id, epoch):
         self._continuous_update = None
         self._last_result = result
+        self._animation_origin = {"request_id": request_id, "source_epoch": epoch}
         self.caption = caption_from_result(result, self.catalog, request_id=request_id, epoch=epoch)
         presentation = describe_result(result, self.caption)
         self._result_details = presentation.details

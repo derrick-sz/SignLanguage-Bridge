@@ -33,6 +33,7 @@ def test_same_origin_catalog_motion_and_confirmation(tmp_path):
         assert client.get("/animation/vendor/model.glb").content == b"test-model"
         assert client.get("/animation/vendor/BUILD.json").status_code == 404
         assert client.get("/animation/vendor/jsm/loaders/GLTFLoader.js").status_code == 200
+        assert client.get("/animation/vendor/jsm/utils/BufferGeometryUtils.js").status_code == 200
         assert client.get("/animation/vendor/model.glb").headers["x-content-type-options"] == "nosniff"
 
 

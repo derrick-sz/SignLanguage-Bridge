@@ -15,6 +15,7 @@ _RESOURCES = {
     "model.glb": ("avatar/model.glb", "model/gltf-binary"),
     "three.module.js": ("avatar/three.module.js", "text/javascript"),
     "GLTFLoader.js": ("avatar/jsm/loaders/GLTFLoader.js", "text/javascript"),
+    "BufferGeometryUtils.js": ("avatar/jsm/utils/BufferGeometryUtils.js", "text/javascript"),
 }
 
 

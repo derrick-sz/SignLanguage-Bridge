@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>手语动画工作台 · SignLanguage Bridge</title>
+  <link rel="stylesheet" href="/animation/static/workspace.css">
+  <script type="module" src="/animation/static/workspace.js"></script>
+</head>
+<body>
+  <header class="app-header">
+    <a class="brand" href="/animation/"><span class="brand-symbol" aria-hidden="true">S</span><span>SignLanguage Bridge<small>手语动画工作台</small></span></a>
+    <div class="header-end"><span class="language-tag">中国手语 · CSL</span><span class="research-tag">研究预览</span><button id="recognition-toggle" class="text-button">接入识别结果</button></div>
+  </header>
+  <main class="workspace">
+    <aside class="input-pane">
+      <div class="pane-heading"><h1>想表达什么？</h1><span id="asset-count">正在读取动作</span></div>
+      <label class="field-label" for="input">输入文字，或从动作库选择完整表达</label>
+      <textarea id="input" maxlength="500" placeholder="例如：认识你很高兴" spellcheck="false"></textarea>
+      <div class="input-meta"><span id="origin-label">手动输入</span><span id="character-count">0 / 500</span></div>
+      <button id="play" class="primary-button">确认并预览 <span aria-hidden="true">▶</span></button>
+      <p id="status" role="status" aria-live="polite">加载角色与动作资源…</p>
+      <p class="review-note">动作质量审核与语言审核分开记录。当前资源用于研究预览。</p>
+      <section id="recognition-panel" class="recognition-panel" hidden>
+        <h2>从识别结果开始</h2>
+        <label class="field-label" for="model">现有识别模型</label>
+        <div class="model-row"><select id="model"><option value="">选择已登记模型</option></select><button id="load-model" class="small-button">加载</button></div>
+        <label class="field-label" for="video">选择视频或姿态文件</label>
+        <input id="video" type="file" accept=".mp4,.avi,.mov,.mkv,.npy,.npz">
+        <button id="recognize" class="small-button" disabled>识别文件</button>
+        <p id="recognition-status" class="subtle">结果将进入待确认输入，不会自动播放。</p>
+        <pre id="raw-result" hidden></pre>
+      </section>
+      <section class="library">
+        <div class="library-heading"><h2>动作库</h2><span id="visible-count"></span></div>
+        <label class="sr-only" for="search">搜索动作库</label>
+        <input id="search" type="search" placeholder="搜索完整短语或词条">
+        <div class="filter-row" role="group" aria-label="动作来源">
+          <button data-filter="all" class="filter active">全部</button><button data-filter="reference" class="filter">参考片段</button><button data-filter="fitted" class="filter">拟合动作</button><button data-filter="candidate" class="filter">候选</button>
+        </div>
+        <div id="asset-list" class="asset-list" aria-label="可选动作"></div>
+      </section>
+    </aside>
+    <section class="stage-pane" aria-label="动画预览">
+      <div class="stage-toolbar">
+        <div><span class="eyebrow">动画舞台</span><h2 id="motion-title">让表达清晰可见</h2></div>
+        <div class="profile-switch" role="group" aria-label="显示对照"><button id="improved" class="active">显示优化</button><button id="original">原始显示</button></div>
+      </div>
+      <div class="stage-wrap">
+        <div id="stage"></div>
+        <div class="stage-top"><span id="source-badge">等待选择动作</span><span id="playback-state">待机</span></div>
+        <div class="view-controls" role="group" aria-label="观察视角"><button data-view="front" class="active">正面</button><button data-view="side">侧面</button><button data-view="hands">近景</button></div>
+        <div class="stage-caption"><span id="subtitle">先选择一个完整表达</span><small id="language-state">语言含义待审核</small></div>
+      </div>
+      <div class="transport">
+        <label class="sr-only" for="timeline">动作时间轴</label><input id="timeline" type="range" min="0" max="1" step="0.01" value="0" disabled>
+        <div class="transport-row">
+          <div class="transport-actions"><button id="pause" disabled>暂停</button><button id="stop" disabled>停止</button><button id="replay" disabled>重播</button></div>
+          <output id="time">0:00 / 0:00</output>
+          <div class="speed-control"><label for="speed">速度</label><select id="speed"><option value="0.5">0.5×</option><option value="0.75">0.75×</option><option value="1" selected>1×</option><option value="1.25">1.25×</option></select></div>
+        </div>
+      </div>
+      <details class="provenance"><summary>动作来源与显示处理</summary><div id="provenance">原始动作保留；显示优化只改变画面与轻度尖峰稳定。</div><p>角色：Godette (Rigged) · zahlenmaler · CC BY 4.0。播放基础来自 SignBridge（MIT）。现有资源不代表自由文本生成模型。</p></details>
+    </section>
+  </main>
+</body>
+</html>

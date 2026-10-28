@@ -26,7 +26,8 @@ def make_archive(tmp_path, *, tamper=False, unsafe=False):
                      "motion_review_status": "approved_for_demo_motion", "human_approved": True}
              ]}).encode(), "avatar/model.glb": b"test-model",
              "avatar/three.module.js": b"export const test = 1;",
-             "avatar/jsm/loaders/GLTFLoader.js": b"export class GLTFLoader {}"}
+             "avatar/jsm/loaders/GLTFLoader.js": b"export class GLTFLoader {}",
+             "avatar/jsm/utils/BufferGeometryUtils.js": b"export const mergeVertices = () => {};"}
     manifest = {"files": {k: hashlib.sha256(v).hexdigest() for k, v in files.items()}}
     if tamper:
         files["avatar/model.glb"] = b"changed"

@@ -12,7 +12,8 @@ _WEB = Path(__file__).with_name("web")
 _STATIC = {"index.html", "workspace.js", "stage.js", "player-core.mjs", "workspace.css",
            "rig.js", "retarget.js", "stabilization.js"}
 _VENDOR = {"model.glb": "model.glb", "three.module.js": "three.module.js",
-           "jsm/loaders/GLTFLoader.js": "GLTFLoader.js"}
+           "jsm/loaders/GLTFLoader.js": "GLTFLoader.js",
+           "jsm/utils/BufferGeometryUtils.js": "BufferGeometryUtils.js"}
 
 
 class PlanInput(BaseModel):
