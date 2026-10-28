@@ -38,11 +38,21 @@ async function request(url, options = {}) {
 function invalidate() {
   gate.cancel(); controller?.abort(); controller = null;
   stage.stop(); controls(false); activePlan = null;
+  $("timeline").value = "0"; $("timeline").max = "0";
+  $("time").textContent = "0:00 / 0:00";
+  $("motion-title").textContent = "完整表达预览";
+  $("source-badge").textContent = "待选择动作";
+  $("provenance").textContent = "选择动作并确认后显示来源。";
   $("playback-state").textContent = "待确认";
   $("subtitle").textContent = "确认输入后预览";
 }
 function updateInput() {
   $("character-count").textContent = $("input").value.length + " / 500";
+  const labels = { typed: "手动输入", catalog: "动作库选择", recognition: "识别候选 · 请核对",
+    edited_recognition: "已编辑 · 原始输出保留", desktop_handoff: "桌面候选 · 请核对" };
+  $("origin-label").textContent = labels[origin.kind] || "输入候选 · 请核对";
+  $("raw-result").hidden = typeof origin.raw_text !== "string";
+  $("raw-result").textContent = typeof origin.raw_text === "string" ? "原始输出：" + origin.raw_text : "";
 }
 function renderLibrary() {
   const search = $("search").value.trim().toLocaleLowerCase();
@@ -82,6 +92,7 @@ async function preview() {
   controller = new AbortController();
   const currentController = controller;
   $("play").disabled = true;
+  $("stop").disabled = false;
   status("正在匹配完整表达…");
   try {
     const plan = await request("/v1/animation/plans", {
@@ -115,7 +126,7 @@ async function preview() {
   } catch (error) {
     if (error.name !== "AbortError" && gate.current(token)) status(String(error.message), true);
   } finally {
-    if (gate.current(token)) { $("play").disabled = false; controller = null; }
+    if (gate.current(token)) { $("play").disabled = false; $("stop").disabled = !loaded; controller = null; }
     else if (controller === currentController || controller === null) $("play").disabled = false;
   }
 }
@@ -134,7 +145,11 @@ $("pause").addEventListener("click", () => {
 });
 $("stop").addEventListener("click", () => { invalidate(); $("play").disabled = false; status("已停止。旧请求不会重新启动动作。"); });
 $("replay").addEventListener("click", () => { if (loaded) { stage.seek(0); stage.play(); status("重新预览当前片段。"); } });
-$("timeline").addEventListener("input", () => { if (loaded) { stage.pause(); stage.seek(Number($("timeline").value)); status("已定位，可继续播放。"); } });
+$("timeline").addEventListener("input", () => {
+  if (!loaded) return;
+  const requestedTime = Number($("timeline").value);
+  stage.pause(); stage.seek(requestedTime); status("已定位，可继续播放。");
+});
 $("speed").addEventListener("change", () => stage.setSpeed(Number($("speed").value)));
 for (const profile of ["original", "improved"]) $(profile).addEventListener("click", () => {
   stage.setProfile(profile);
@@ -194,8 +209,6 @@ $("recognize").addEventListener("click", async () => {
       model_id: body.model_id || result.model_id, model_generation: body.model_generation,
       source_epoch: body.source_epoch, session_id: body.session_id, task_type: result.task_type };
     $("input").value = text; selected = null; updateInput();
-    $("origin-label").textContent = "识别候选 · 待确认";
-    $("raw-result").hidden = false; $("raw-result").textContent = "原始输出：" + text;
     $("recognition-status").textContent = "识别完成。请核对或编辑输入，再确认预览。";
     status("识别结果尚未确认，没有自动播放。");
   } catch (error) {

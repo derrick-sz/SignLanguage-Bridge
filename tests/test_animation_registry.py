@@ -1,6 +1,7 @@
 """Motion content/provenance tests; no language-quality claim."""
 import hashlib
 import json
+import math
 import zipfile
 
 import pytest
@@ -9,13 +10,21 @@ from slbridge.animation.registry import MotionRegistry
 from slbridge.animation.planner import plan_motion
 
 
-def make_archive(tmp_path, *, tamper=False, unsafe=False):
+def make_archive(tmp_path, *, tamper=False, unsafe=False, approval=False, changed=None):
     def clip(identity, text):
         return {"id": identity, "text": text, "aliases": [text], "frames": 2, "fps": 25,
                 "poses": [[[0., 0., 0.] for _ in range(55)] for _ in range(2)]}
     rest = {"parents": [-1] + [0] * 54, "restJoints": [[0., float(i), 0.] for i in range(55)]}
     reference = {**rest, "clips": [clip("hello", "你好！"), clip("thanks", "谢谢")]}
     fitted = clip("fit-thanks", "谢谢")
+    fitted.update(source_sha256="a" * 64, fitted_sha256="b" * 64,
+                  motion_approval_id="review-1", human_approved=True)
+    pose_hash = hashlib.sha256(",".join(str(math.floor(v * 1e6 + 0.5))
+        for frame in fitted["poses"] for joint in frame for v in joint).encode()).hexdigest()
+    if changed == "poses":
+        fitted["poses"][0][0][0] = 0.5
+    if changed == "fit":
+        fitted["fitted_sha256"] = "c" * 64
     payload = json.dumps(fitted).encode()
     files = {"demo/t08-motion.json": json.dumps(reference).encode(),
              "demo/t08-candidates.json": json.dumps({**rest, "clips": []}).encode(),
@@ -28,6 +37,11 @@ def make_archive(tmp_path, *, tamper=False, unsafe=False):
              "avatar/three.module.js": b"export const test = 1;",
              "avatar/jsm/loaders/GLTFLoader.js": b"export class GLTFLoader {}",
              "avatar/jsm/utils/BufferGeometryUtils.js": b"export const mergeVertices = () => {};"}
+    if approval:
+        files["demo/experimental/motion-approval.json"] = json.dumps({
+            "id": "review-1", "scope": "motion_quality_only", "clips": [{
+                "id": "fit-thanks", "source_sha256": "a" * 64,
+                "fitted_sha256": "b" * 64, "poses_sha256": pose_hash}]}).encode()
     manifest = {"files": {k: hashlib.sha256(v).hexdigest() for k, v in files.items()}}
     if tamper:
         files["avatar/model.glb"] = b"changed"
@@ -44,6 +58,13 @@ def make_archive(tmp_path, *, tamper=False, unsafe=False):
 @pytest.fixture
 def registry(tmp_path):
     return MotionRegistry(make_archive(tmp_path))
+
+
+@pytest.mark.parametrize("changed", [None, "poses", "fit"])
+def test_review_is_bound_to_fitted_motion_not_only_source_video(tmp_path, changed):
+    registry = MotionRegistry(make_archive(tmp_path, approval=True, changed=changed))
+    asset = next(a for a in registry.catalog()["assets"] if a["id"] == "fit-thanks")
+    assert asset["motion_review"] == ("demo_motion_only" if changed is None else "unverified")
 
 
 def test_registry_preserves_motion_source_and_marks_language_unverified(registry):

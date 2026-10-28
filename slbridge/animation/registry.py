@@ -23,6 +23,13 @@ def _digest(value: bytes) -> str:
     return hashlib.sha256(value).hexdigest()
 
 
+def _pose_digest(poses) -> str:
+    # Upstream approval v1: quantize to 1e-6, ties toward +infinity.
+    values = (str(math.floor(float(v) * 1_000_000 + 0.5))
+              for frame in poses for joint in frame for v in joint)
+    return _digest(",".join(values).encode("ascii"))
+
+
 def _number(value) -> bool:
     return type(value) in (int, float) and math.isfinite(value)
 
@@ -102,10 +109,12 @@ class MotionRegistry:
             skeleton = _skeleton(index)
             approval_member = "demo/experimental/motion-approval.json"
             approvals = {}
+            approval_id = None
             if approval_member in names:
                 approval = json.loads(checked(approval_member))
                 if approval.get("scope") == "motion_quality_only":
                     approvals = {c["id"]: c for c in approval.get("clips", [])}
+                    approval_id = approval.get("id")
             for entry in index.get("clips", []):
                 member = "demo/" + entry["asset"]
                 payload = checked(member)
@@ -114,9 +123,15 @@ class MotionRegistry:
                 clip = json.loads(payload)
                 if any(clip.get(k) != entry.get(k) for k in ("id", "text", "frames", "fps")):
                     raise ValueError("Motion index identity mismatch")
-                approved = (entry.get("human_approved") is True and
-                            entry["id"] in approvals and approvals[entry["id"]].get("source_sha256")
-                            == entry.get("source_sha256"))
+                _validate_clip(clip)
+                reviewed = approvals.get(entry["id"], {})
+                approved = (entry.get("human_approved") is True and bool(approval_id) and
+                            entry.get("motion_approval_id") == clip.get("motion_approval_id") == approval_id and
+                            all(isinstance(reviewed.get(k), str) and
+                                re.fullmatch(r"[0-9a-f]{64}", reviewed[k]) and
+                                reviewed[k] == entry.get(k) == clip.get(k)
+                                for k in ("source_sha256", "fitted_sha256")) and
+                            reviewed.get("poses_sha256") == _pose_digest(clip["poses"]))
                 self._add("fitted", clip, skeleton, _digest(payload), approved=approved,
                           quality_warning=bool(entry.get("quality_warning")))
         if not self._assets:

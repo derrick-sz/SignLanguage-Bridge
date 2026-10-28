@@ -68,10 +68,7 @@ export class MotionStage {
     this.setView("front"); this.setProfile("improved"); this.resize();
     const render = now => {
       if (this.disposed) return;
-      const time = this.clock.time(now);
-      this.applyTime(time);
-      this.renderer.render(this.scene, this.camera);
-      this.onTick?.({ time, duration: this.clock.duration, playing: this.clock.playing });
+      this.refresh(now);
       this.raf = requestAnimationFrame(render);
     };
     this.raf = requestAnimationFrame(render);
@@ -92,6 +89,7 @@ export class MotionStage {
     this.camera.position.copy(center).add(offset);
     this.camera.lookAt(center);
     this.camera.updateProjectionMatrix();
+    this.refresh();
   }
   setProfile(profile) {
     this.profile = profile;
@@ -109,6 +107,7 @@ export class MotionStage {
       materials.forEach(m => { m.userData.quietPalette.value = improved ? 1 : 0; });
     });
     if (this.tracks) this.track = improved ? this.tracks.improved : this.tracks.original;
+    this.refresh();
   }
   async loadMotion(data, id, isCurrent = () => true) {
     await this.ready;
@@ -146,7 +145,7 @@ export class MotionStage {
     this.fps = data.clip.fps; this.clip = data.clip;
     this.bounds = tracks.bounds; this.setView(this.view);
     this.clock.load(data.clip.frames / data.clip.fps);
-    this.applyTime(0);
+    this.refresh();
     return true;
   }
   applyTime(time) {
@@ -155,11 +154,18 @@ export class MotionStage {
     const from = Math.floor(position), to = Math.min(from + 1, this.track.length - 1);
     this.rig.interpolate(this.track[from], this.track[to], position - from);
   }
-  play() { this.clock.play(performance.now()); }
-  pause() { this.clock.pause(performance.now()); }
-  seek(time) { this.clock.seek(time, performance.now()); this.applyTime(this.clock.position); }
-  setSpeed(speed) { this.clock.setSpeed(speed, performance.now()); }
-  stop() { this.clock.stop(); this.track = null; this.rig?.reset(); }
+  refresh(now = performance.now()) {
+    if (this.disposed || !this.renderer) return;
+    const time = this.clock.time(now);
+    this.applyTime(time);
+    this.renderer.render(this.scene, this.camera);
+    this.onTick?.({ time, duration: this.clock.duration, playing: this.clock.playing });
+  }
+  play() { this.clock.play(performance.now()); this.refresh(); }
+  pause() { this.clock.pause(performance.now()); this.refresh(); }
+  seek(time) { this.clock.seek(time, performance.now()); this.refresh(); }
+  setSpeed(speed) { this.clock.setSpeed(speed, performance.now()); this.refresh(); }
+  stop() { this.clock.stop(); this.clock.duration = 0; this.track = null; this.rig?.reset(); this.refresh(); }
   disposeModel() {
     this.model?.traverse(node => {
       if (!node.isMesh) return;
