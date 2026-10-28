@@ -1,0 +1,511 @@
+{
+  "schema_version": 1,
+  "audited_at": "2026-10-28T19:45:23.219769+08:00",
+  "scope": "read_only_static_resource_audit_no_inference",
+  "signlanguage_bridge_head": "782dee3f128f727373dcdd3e4c2590d7bdc987da",
+  "signbridge_local_head": "7ab6de3828aacf99aa758c68b5699089cb33ef75",
+  "motion_demo_archive": {
+    "path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+    "bytes": 40752631,
+    "sha256": "4d98380ac0fe08db90b042df63528ae9be5c96b93f492625ec27a015ea5edae5",
+    "expected_sha256": "4d98380ac0fe08db90b042df63528ae9be5c96b93f492625ec27a015ea5edae5",
+    "checksum_match": true,
+    "member_count": 161,
+    "crc_bad_member": null,
+    "unsafe_member_names": [],
+    "selected_members": [
+      {
+        "member": "demo/experimental/motion-approval.json",
+        "bytes": 31775,
+        "sha256": "1b197dabed49f0dbd05aa32942271f1ec63ad0b0e20879dae9bda38aca1b7193",
+        "json_type": "dict",
+        "top_level_keys": [
+          "schema",
+          "id",
+          "scope",
+          "declaration",
+          "basis",
+          "captured_at_utc",
+          "source_index_sha256",
+          "clips"
+        ],
+        "summary_fields": {
+          "schema": "signbridge-human-motion-approval-v1",
+          "id": "motion-approval-20261020-v1",
+          "scope": "motion_quality_only",
+          "declaration": "验证过了，现候选的83条实验拟合动作已获人工批准",
+          "basis": "explicit_user_statement_in_current_conversation",
+          "captured_at_utc": "2026-10-22T07:55:41.877Z",
+          "source_index_sha256": "3f55e347cceec0a2357d7ae7b45da8f71c11d9f00fcd8573563a76ef1a451646"
+        },
+        "list_counts": {
+          "clips": 83
+        },
+        "first_list_item_keys": [
+          "id",
+          "reviewed_asset_sha256",
+          "source_sha256",
+          "fitted_sha256",
+          "poses_sha256"
+        ],
+        "first_list_item": {
+          "id": "new-0ad6eaefc7647487-cap-0043",
+          "reviewed_asset_sha256": "a920124b8556bc6c019150b80f6fbe94d7a7204ba843f5d725c5bbb859cdf606",
+          "source_sha256": "0ad6eaefc764748726222bfe0caa950b9b7e3d5f9d240459191777f4c793337b",
+          "fitted_sha256": "adfbabf610a3d42bcc3cba09c5b63845676e5d1a6622d0b108efad7f7572efee",
+          "poses_sha256": "9bb80b8a20f910676fcbb1ad49e2b8bda3ed0bdb837d672f6bbb08349ae35cee"
+        }
+      },
+      {
+        "member": "demo/experimental-index.json",
+        "bytes": 91417,
+        "sha256": "f5562119984e80f53af567c894631a72fc7e9e8ea34538bd842d758eaca08083",
+        "json_type": "dict",
+        "top_level_keys": [
+          "schema",
+          "representation",
+          "smplx_rest_model_sha256",
+          "training_weights_updated",
+          "text_to_sign_trained",
+          "training_ready",
+          "model_training_ready",
+          "research_only",
+          "parents",
+          "restJoints",
+          "clips",
+          "source_manifest_sha256",
+          "source_audit_sha256",
+          "export_tool_sha256",
+          "input_sequences",
+          "duplicates",
+          "incomplete_excluded",
+          "provenance_limitations",
+          "presentation",
+          "motion_approval"
+        ],
+        "summary_fields": {
+          "schema": "signbridge-experimental-motion-index-v1",
+          "representation": "effective-smplx-55-axis-angle",
+          "smplx_rest_model_sha256": "376021446ddc86e99acacd795182bbef903e61d33b76b9d8b359c2b0865bd992",
+          "training_weights_updated": false,
+          "text_to_sign_trained": false,
+          "training_ready": false,
+          "model_training_ready": false,
+          "research_only": true,
+          "source_manifest_sha256": "1d42a55fff2205b20d338089da9dcf1e0bf67114794a6af2f7a2a33a863860c2",
+          "source_audit_sha256": "17ba2e06092da577b13c18d2e34e0c4a1eae4b893c86281cf4e3a3f1db6e342d",
+          "export_tool_sha256": "15705164318bcc745668d8894b38421c3a6d90335bd0f145f741f078372cd416",
+          "input_sequences": 91,
+          "presentation": "Native upper-body/hand fits; root, lower body and spine at rest; hand mean added once. No interpolation of missing detections."
+        },
+        "list_counts": {
+          "parents": 55,
+          "restJoints": 55,
+          "clips": 83,
+          "duplicates": 8,
+          "incomplete_excluded": 2,
+          "provenance_limitations": 2
+        },
+        "first_list_item_keys": [
+          "id",
+          "text",
+          "aliases",
+          "fps",
+          "frames",
+          "experimental",
+          "model_output",
+          "source_sha256",
+          "feature_sha256",
+          "fitted_sha256",
+          "source_id",
+          "training_data_member",
+          "training_ready",
+          "model_training_ready",
+          "human_approved",
+          "motion_review_status",
+          "mirror_status",
+          "signer_id",
+          "quality_warning",
+          "max_adjacent_rotation_degrees",
+          "review_attestation_sha256",
+          "asset",
+          "sha256",
+          "motion_approval_id"
+        ],
+        "first_list_item": {
+          "id": "new-0ad6eaefc7647487-cap-0043",
+          "text": "通知",
+          "fps": 25.0,
+          "frames": 350,
+          "experimental": true,
+          "model_output": "smplx_fit_demo",
+          "source_sha256": "0ad6eaefc764748726222bfe0caa950b9b7e3d5f9d240459191777f4c793337b",
+          "feature_sha256": "13c0f552a36a1febef0f7dae52c9ec442615788c94d2edd6a96166f641786828",
+          "fitted_sha256": "adfbabf610a3d42bcc3cba09c5b63845676e5d1a6622d0b108efad7f7572efee",
+          "source_id": "source-0ad6eaefc7647487",
+          "training_data_member": false,
+          "training_ready": false,
+          "model_training_ready": false,
+          "human_approved": true,
+          "motion_review_status": "approved_for_demo_motion",
+          "mirror_status": "unknown",
+          "signer_id": "unconfirmed",
+          "quality_warning": false,
+          "max_adjacent_rotation_degrees": 57.821731490913095,
+          "review_attestation_sha256": "09da771b6fd0132c574100188ecbadcd9bc17ccd023bb8314bcab83307793b67",
+          "asset": "experimental/new-0ad6eaefc7647487-cap-0043.json",
+          "sha256": "4514de1548f987900fc1b346dee13e5f9ffe6f03f6b5017bdc3e5ae91651ef8d",
+          "motion_approval_id": "motion-approval-20261020-v1"
+        }
+      },
+      {
+        "member": "demo/t08-motion.json",
+        "bytes": 7571295,
+        "sha256": "0087d5024d320ea2564640f538e4cc7a8ff06f36898f9875c32d9add94ed8a6f",
+        "json_type": "dict",
+        "top_level_keys": [
+          "schema",
+          "checkpoint_sha256",
+          "checkpoint_step",
+          "soke_commit",
+          "smplx_rest_model_sha256",
+          "representation",
+          "restJoints",
+          "parents",
+          "clips",
+          "research_only",
+          "text_to_sign_trained",
+          "runtime",
+          "heldout_accuracy_available",
+          "unmodeled_joints",
+          "export_tool_sha256"
+        ],
+        "summary_fields": {
+          "schema": "signbridge-t08-demo-v1",
+          "checkpoint_sha256": "438cbe537ad1b5bf14c795375209eb00d87cea5c3e97ed06f880f9764e8f9a5b",
+          "checkpoint_step": 1000,
+          "soke_commit": "5cbc55d84b5a7cbf05a9cf020c468052e8d94d00",
+          "smplx_rest_model_sha256": "376021446ddc86e99acacd795182bbef903e61d33b76b9d8b359c2b0865bd992",
+          "representation": "effective-smplx-55-axis-angle",
+          "research_only": true,
+          "text_to_sign_trained": false,
+          "runtime": "precomputed_cpu_token_decode",
+          "heldout_accuracy_available": false,
+          "unmodeled_joints": "Root, lower body and torso outside 133D held at zero; eyes at rest. Facial coefficients not retargeted.",
+          "export_tool_sha256": "793cf2f44c4b43df21fec5a75c4cbc8023f96c8fdd072d2816eb58138db45b0e"
+        },
+        "list_counts": {
+          "restJoints": 55,
+          "parents": 55,
+          "clips": 14
+        },
+        "first_list_item_keys": [
+          "id",
+          "text",
+          "aliases",
+          "fps",
+          "frames",
+          "duration",
+          "tokens",
+          "poses",
+          "feature_sha256",
+          "token_decode_parity_max",
+          "source_id",
+          "source_sha256",
+          "model_output",
+          "text_to_sign_generated",
+          "human_motion_quality_approved"
+        ],
+        "first_list_item": {
+          "id": "pilot-greeting-answer-002",
+          "text": "是啊，你过得好不好？",
+          "fps": 25.0,
+          "frames": 174,
+          "duration": 6.96,
+          "feature_sha256": "df44070057f7f414fac354364b7d53f503324bd772f444b262ef962da7ca9ff5",
+          "token_decode_parity_max": 1.430511474609375e-06,
+          "source_id": "source-23efbaded8944f2f",
+          "source_sha256": "86d7d13f742cb4cfbc441a3917118d8f7a2e4ad5d8470d3174883fe35a28f8a8",
+          "model_output": "token_decode",
+          "text_to_sign_generated": false,
+          "human_motion_quality_approved": false
+        }
+      },
+      {
+        "member": ".signbridge-build.json",
+        "bytes": 121,
+        "sha256": "10dcae52fc1b5b7a90cbd838b883cc99dd80f1a7b6b00690bed7fea7bfbcd8e7",
+        "json_type": "dict",
+        "top_level_keys": [
+          "schema",
+          "identity"
+        ],
+        "summary_fields": {
+          "schema": "signbridge-build-directory-v1",
+          "identity": "bd804662241458131960e2e38c17eed0b664189a1e192738544d029c0a50311e"
+        }
+      },
+      {
+        "member": "avatar/t08-index.json",
+        "bytes": 3148,
+        "sha256": "640409c4b8cbac4ba4baa93722a0f830621daa569348315c1fc66491fae6d9fa",
+        "json_type": "dict",
+        "top_level_keys": [
+          "schema",
+          "checkpoint_sha256",
+          "clips"
+        ],
+        "summary_fields": {
+          "schema": "signbridge-t08-runtime-index-v1",
+          "checkpoint_sha256": "438cbe537ad1b5bf14c795375209eb00d87cea5c3e97ed06f880f9764e8f9a5b"
+        },
+        "list_counts": {
+          "clips": 17
+        },
+        "first_list_item_keys": [
+          "id",
+          "text",
+          "aliases",
+          "fps",
+          "frames",
+          "runtime_candidate"
+        ],
+        "first_list_item": {
+          "id": "pilot-greeting-answer-002",
+          "text": "是啊，你过得好不好？",
+          "fps": 25,
+          "frames": 174,
+          "runtime_candidate": false
+        }
+      },
+      {
+        "member": "manifest.json",
+        "bytes": 1637,
+        "sha256": "68f1ea904b4c3c4107e5363a2e637d66a585b54c4fae53ae6fa56dd6dd0a43fb",
+        "json_type": "dict",
+        "top_level_keys": [
+          "manifest_version",
+          "minimum_chrome_version",
+          "name",
+          "version",
+          "description",
+          "homepage_url",
+          "author",
+          "icons",
+          "permissions",
+          "optional_host_permissions",
+          "action",
+          "background",
+          "options_page",
+          "content_scripts",
+          "web_accessible_resources",
+          "content_security_policy"
+        ],
+        "summary_fields": {
+          "manifest_version": 3,
+          "minimum_chrome_version": "116",
+          "name": "SignBridge",
+          "version": "1.0.5",
+          "description": "将网页视频字幕和标签页声音实时转换为3D中国手语动画，支持浏览器内Whisper",
+          "homepage_url": "https://github.com/feifei9126/signbridge",
+          "author": "SignBridge Team",
+          "options_page": "options/asr-settings.html"
+        },
+        "list_counts": {
+          "permissions": 4,
+          "optional_host_permissions": 2,
+          "content_scripts": 1,
+          "web_accessible_resources": 1
+        }
+      },
+      {
+        "member": "BUILD.json",
+        "bytes": 17021,
+        "sha256": "c2739561f18d6da096ebf6ce6a897a32c97f418a28b92cb8ddc6191d24a145e0",
+        "json_type": "dict",
+        "top_level_keys": [
+          "schema",
+          "profile",
+          "source_sha256",
+          "authored_dictionary_included",
+          "research_assets_included",
+          "research_asset_manifest_sha256",
+          "training_ready",
+          "csl_translation_trained",
+          "files"
+        ],
+        "summary_fields": {
+          "schema": "signbridge-build-v1",
+          "profile": "local-research",
+          "source_sha256": "320c84d7bc99614dc2a25c1b08f140a3d7e1b04604b077a6827805143754a19e",
+          "authored_dictionary_included": true,
+          "research_assets_included": true,
+          "research_asset_manifest_sha256": "a1a57a92a1bf42fd92d3f7fd2e1fd0ec91102e51cb27d445a9dc263a362401ee",
+          "training_ready": false,
+          "csl_translation_trained": false
+        }
+      }
+    ],
+    "experimental_payload_members": 83,
+    "build_manifest_verification": {
+      "declared_files": 143,
+      "mismatches": []
+    },
+    "pose_audit": {
+      "clips": 100,
+      "structure_finiteness_pass": 100,
+      "errors": [],
+      "groups": {
+        "smplx_fit": 83,
+        "t08_candidate": 3,
+        "t08_reference": 14
+      },
+      "unique_text_labels": 100,
+      "language_comprehension": "NOT_RUN"
+    }
+  },
+  "recognition_models": [
+    {
+      "model_id": "unisign_pose_stage1",
+      "manifest": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\model_bundle\\manifest.json",
+      "manifest_sha256": "462ea712c73ba0b0c7a91a4c6d5e596e8ff5bd58854dca53f8c73e03b8cdba7e",
+      "task_type": "text",
+      "backend": "uni_sign_pose_slt",
+      "sign_language": "csl",
+      "checkpoint": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\csl_daily_pose_only_slt.pth",
+      "exists": true,
+      "expected_bytes": 1186925112,
+      "expected_sha256": "73bea87a9603f719b4f4a481a3a1a5ed24e7e5f7b81afd14ef498c40469c1a6c",
+      "bytes": 1186925112,
+      "sha256": "73bea87a9603f719b4f4a481a3a1a5ed24e7e5f7b81afd14ef498c40469c1a6c",
+      "bytes_match": true,
+      "hash_match": true
+    },
+    {
+      "model_id": "unisign_stage2_pose",
+      "manifest": "E:\\githubproject\\SignLanguage-Bridge\\configs\\bundles\\unisign_stage2_pose\\manifest.json",
+      "manifest_sha256": "fc9c92f38087210cd4faccf02022850ecb78580da18a65f784e755dc24f7b998",
+      "task_type": "text",
+      "backend": "uni_sign_pose_slt",
+      "sign_language": "csl",
+      "checkpoint": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\uni_sign\\csl_daily_stage2_pose_subset.pth",
+      "exists": true,
+      "expected_bytes": 1947137670,
+      "expected_sha256": "951601a39fbbe19f633e0df9690df432056b4286609f75a3ee723c8f001fc2e3",
+      "bytes": 1947137670,
+      "sha256": "951601a39fbbe19f633e0df9690df432056b4286609f75a3ee723c8f001fc2e3",
+      "bytes_match": true,
+      "hash_match": true
+    },
+    {
+      "model_id": "slrt_csl",
+      "manifest": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\slrt_csl_bundle\\manifest.json",
+      "manifest_sha256": "19dd9db554f4e03ed4b099fbc09e7d7e85bf029077e542fdfec828c1d49c33d6",
+      "task_type": null,
+      "backend": "slrt_online_csl",
+      "sign_language": "csl",
+      "manifest_fields": {
+        "checkpoint_sha256": "e9fdd3a66d9667e7685c2b1437c67b8cbc9e45d2562730f04c0226717b7cbd4d"
+      },
+      "resource_dir": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\EMNLP24_Online\\CSL-Daily",
+      "candidate_resource_files": [
+        {
+          "path": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\EMNLP24_Online\\CSL-Daily\\ckpts\\cslr_best.ckpt",
+          "bytes": 499554423
+        },
+        {
+          "path": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\EMNLP24_Online\\CSL-Daily\\meta\\csl_iso_with_blank.vocab",
+          "bytes": 28821
+        }
+      ],
+      "checkpoint": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\EMNLP24_Online\\CSL-Daily\\ckpts\\cslr_best.ckpt",
+      "exists": true,
+      "bytes": 499554423,
+      "sha256": "e9fdd3a66d9667e7685c2b1437c67b8cbc9e45d2562730f04c0226717b7cbd4d",
+      "expected_sha256": "e9fdd3a66d9667e7685c2b1437c67b8cbc9e45d2562730f04c0226717b7cbd4d",
+      "resolved_by": "slbridge/slrt/assets.py::SLRTConfig.checkpoint_path resource_dir/ckpts/cslr_best.ckpt",
+      "hash_match": true,
+      "vocabulary": {
+        "path": "E:\\githubproject\\SignLanguage-Bridge\\models\\external\\EMNLP24_Online\\CSL-Daily\\meta\\csl_iso_with_blank.vocab",
+        "bytes": 28821,
+        "sha256": "0c4984f0dd3e7897b8c8d9e6e99a848b60814a5d9cf7a49baf7cc9b9cd124c76",
+        "expected_sha256": "0c4984f0dd3e7897b8c8d9e6e99a848b60814a5d9cf7a49baf7cc9b9cd124c76",
+        "hash_match": true
+      }
+    },
+    {
+      "model_id": "cecsl_tfnet_source_checkpoint",
+      "checkpoint": "G:/Archive/Zenodo/CE-CSL/TFNet-CE-CSL-CSLDaily-32.46.pth",
+      "bytes": 879605267,
+      "sha256": "160d35a42d9f8f52a090d0131586df1631d2fcf8c9f41ee94729cae1fb6b0386",
+      "hash_match": true,
+      "expected_hash_source": "artifacts/models/cecsl-tfnet-onnx-20261009/manifest.json provenance checkpoint_sha256",
+      "measurement_evidence": "docs/research/gdrive-zenodo-reuse-audit-2026-10-28.md",
+      "task_type": "gloss_sequence",
+      "inference_in_this_audit": "NOT_RUN"
+    }
+  ],
+  "temp_feture": {
+    "path": "G:\\ML\\temp_feture",
+    "file_count": 1975,
+    "extensions": {
+      ".json": 1114,
+      ".pt": 765,
+      ".npz": 90,
+      ".pre-fix": 4,
+      ".old": 2
+    },
+    "top_level_directories": [
+      "ps2_matrix"
+    ],
+    "evidence_manifest": "G:\\ML\\temp_feture\\ps2_matrix\\tcn\\w40\\d32\\tcn_w40_d32_checkpoint_manifest_v2.json",
+    "classification": "ps2_matrix_industrial_process_experiment_not_sign_language"
+  },
+  "local_signbridge_missing_paths": [
+    "E:\\githubproject\\signbridge\\local-data",
+    "E:\\githubproject\\signbridge\\SOKE",
+    "E:\\githubproject\\signbridge\\SMPLer-X",
+    "E:\\githubproject\\signbridge\\signbridge\\assets\\public-motion-v1"
+  ],
+  "path_locator": {
+    "runtime_integration": "NOT_IMPLEMENTED_AUDIT_ONLY",
+    "frozen_evidence_modified": false,
+    "mappings": [
+      {
+        "historical_root": "D:/Zenodo/CE-CSL/CE-CSL",
+        "current_root": "G:/Archive/Zenodo/CE-CSL/CE-CSL",
+        "historical_root_exists": false,
+        "current_root_exists": true
+      },
+      {
+        "historical_root": "D:/Zenodo/csl-daliy",
+        "current_root": "G:/Archive/Zenodo/csl-daliy",
+        "historical_root_exists": false,
+        "current_root_exists": true
+      },
+      {
+        "historical_root": "D:/Zenodo/Libras-EQT-UECE",
+        "current_root": "G:/Archive/Zenodo/Libras-EQT-UECE",
+        "historical_root_exists": false,
+        "current_root_exists": true
+      }
+    ],
+    "temp_feture_legacy_path": {
+      "path": "D:/temp_feture",
+      "junction_target": "G:/ML/temp_feture",
+      "verified_with": "PowerShell Get-Item LinkType/Target"
+    }
+  },
+  "gdrive_data_audit": {
+    "evidence_report": "docs/research/gdrive-zenodo-reuse-audit-2026-10-28.md",
+    "cecsl_expected_videos": 5988,
+    "cecsl_expected_paths_present": 5988,
+    "csldaily_mp4": 19528,
+    "p1_1086_sample_paths_present": 1086,
+    "raw_video_full_migration_content_verification": "NOT_VERIFIED",
+    "libras_hand_npy": 5347,
+    "libras_full_npy": 5335,
+    "libras_raw_mp4_in_expanded_directory": 0,
+    "smplx_or_soke_motion_in_expanded_directory": "NOT_FOUND"
+  }
+}
