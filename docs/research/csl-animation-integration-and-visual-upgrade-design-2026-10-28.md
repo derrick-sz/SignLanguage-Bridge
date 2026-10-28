@@ -1,5 +1,7 @@
 # 手语动画集成与画面/动作升级：方案草案
 
+后续状态：用户确认后已完成第一期工程实施，见[实施与验收报告](../reports/csl-animation-workspace-acceptance-2026-10-28.md)与[启动说明](../csl-animation-workspace.md)。下文保留方案写作时的核验状态；不代表最新运行结果。
+
 日期：2026-10-28（Asia/Taipei）。状态：**供范围评审的设计草案，尚未实施**。用户已明确同时改善“动作与人物画面”。本轮检查了现有工程入口、GLB/蒙皮、完整动作包，并在浏览器实际打开旧演示、选择并播放参考/拟合片段、暂停拟合片段；未修改产品运行时代码或制作新角色。
 
 关联：[原路线评审](csl-3d-animation-route-review-2026-10-28.md)、[现有资产复用](csl-animation-existing-assets-reuse-2026-10-28.md)、[本轮集成代码审计](csl-animation-integration-code-audit-2026-10-28.md)。
