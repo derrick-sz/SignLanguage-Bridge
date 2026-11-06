@@ -1,0 +1,339 @@
+{
+  "schema_version": 1,
+  "scope": "Local functional GPU pilot; language/motion quality not accepted",
+  "source_commit": "916402d0ecd6322fb4a9e5f513229a94a57bf4b6",
+  "model_revision": "b907f25f9bb9f5a0adcaf131a23a155dc471d9a8",
+  "requests": [
+    {
+      "text": "明天下午我去医院看朋友。",
+      "frames": 128,
+      "steps": 50,
+      "seed": 123
+    },
+    {
+      "text": "今天我在家休息。",
+      "frames": 128,
+      "steps": 50,
+      "seed": 123
+    }
+  ],
+  "frames_total": 256,
+  "checkpoint_loads": {
+    "body": {
+      "sha256": "bf95bb02802b1c46f40afb4424f8f521be6c8641ad8acfe406a666b463e3a380",
+      "bytes": 5580532361,
+      "assign": true,
+      "mmap": true,
+      "tensors": 859,
+      "missing_keys": [],
+      "unexpected_keys": [],
+      "seconds": 55.0940000000046,
+      "peak_allocated_bytes": 5794556928
+    },
+    "hand": {
+      "sha256": "5bb8e407ba2c106a22c3b0c16fd1b0fc0f412a58d235143325fdb67efe5916c2",
+      "bytes": 5581699849,
+      "assign": true,
+      "mmap": true,
+      "tensors": 859,
+      "missing_keys": [],
+      "unexpected_keys": [],
+      "seconds": 37.53199999999924,
+      "peak_allocated_bytes": 5795846656
+    },
+    "face": {
+      "sha256": "841e6ce5c929b142ad8ea3cc152fa67f57e7a8841954bf068df42a5d986ead53",
+      "bytes": 5580376713,
+      "assign": true,
+      "mmap": true,
+      "tensors": 859,
+      "missing_keys": [],
+      "unexpected_keys": [],
+      "seconds": 31.8440000000046,
+      "peak_allocated_bytes": 5794535936
+    }
+  },
+  "masked_observation_control_max_difference": 0.0,
+  "different_text_body_max_difference": 0.40229561924934387,
+  "target_motion": null,
+  "observed_keyframes": 0,
+  "raw_streams": [
+    {
+      "path": "raw-stream-0-body.npz",
+      "request_index": 0,
+      "role": "body",
+      "shape": [
+        128,
+        60
+      ],
+      "dtype": "float32",
+      "sha256": "9811d51a6296d773693acadb01e8bf40b58074d60ddb7927e20cd2916fded146"
+    },
+    {
+      "path": "raw-stream-1-body.npz",
+      "request_index": 1,
+      "role": "body",
+      "shape": [
+        128,
+        60
+      ],
+      "dtype": "float32",
+      "sha256": "4e0723f701ba785c5157ccd229c71733390e2b85fffd027dae7735c9bd116a4c"
+    },
+    {
+      "path": "raw-stream-0-left.npz",
+      "request_index": 0,
+      "role": "left",
+      "shape": [
+        128,
+        90
+      ],
+      "dtype": "float32",
+      "sha256": "a22494a4d70081ef749aa1275e0434e709842aae0f6f8cc3d38d1814e3578798"
+    },
+    {
+      "path": "raw-stream-1-left.npz",
+      "request_index": 1,
+      "role": "left",
+      "shape": [
+        128,
+        90
+      ],
+      "dtype": "float32",
+      "sha256": "e8b7f6d72a5fa1238a0d57dcd7eba1079cabb90f8f32a9ad0d89abfffdd318ec"
+    },
+    {
+      "path": "raw-stream-0-right.npz",
+      "request_index": 0,
+      "role": "right",
+      "shape": [
+        128,
+        90
+      ],
+      "dtype": "float32",
+      "sha256": "ed8f4c55c57b8cc1d929b17efd0e92ba2f3cd4db1a203bf48d59d06907e3ddb9"
+    },
+    {
+      "path": "raw-stream-1-right.npz",
+      "request_index": 1,
+      "role": "right",
+      "shape": [
+        128,
+        90
+      ],
+      "dtype": "float32",
+      "sha256": "0a62f5bdf83e7e2d7df1d46820641f6ea679b90f7b39fd7acc614bffb69a06cc"
+    },
+    {
+      "path": "raw-stream-0-face.npz",
+      "request_index": 0,
+      "role": "face",
+      "shape": [
+        128,
+        56
+      ],
+      "dtype": "float32",
+      "sha256": "5ffafe9c011cd62ad10e64ab458fd7f8e71f16f94ee57a43b23e5361d8b0fa4b"
+    },
+    {
+      "path": "raw-stream-1-face.npz",
+      "request_index": 1,
+      "role": "face",
+      "shape": [
+        128,
+        56
+      ],
+      "dtype": "float32",
+      "sha256": "118e4db88ba514d6cc801ea26cb57fbf1989c034377df0efd0f77cbdeca2f3cc"
+    }
+  ],
+  "parameter_initialization": "accelerate-meta-parameters-cpu-buffers-v1",
+  "max_process_peak_rss_bytes": 7480819712,
+  "system_commit_limit_changed_during_run": true,
+  "run02_manifest_sha256": "9a2d2f597859c464bc88f93e25209a05c1e039d054a27df66fedac6335f22d3d",
+  "preview_manifest_sha256": "e4fcdb5b1ec72e197ea48ab34fce42ea9d8463fa24740c45dad9b85bbc908ab1",
+  "candidate_archive_sha256": "df2b2773d7f50dd811aead5295d67328c8e032d5e4fbce44f8d33d317eeacbff",
+  "final_artifact_audit_status": "PASS",
+  "final_artifact_audit_sha256": "e86d71352de7dfbe76ee6eedd91aa95dbff4e8d97967f1611b8dffd8682019fe",
+  "comparison_with_failed_run01": {
+    "body_left_right_all_bitwise_equal": true,
+    "face": "NOT_COMPARED"
+  },
+  "quality_diagnostics": [
+    {
+      "id": "generated-csl-742e48d1a34e4920",
+      "codec_max_abs_difference": 0.0,
+      "quality": {
+        "actual_after": {
+          "mapped_max_step_degrees": 37.599287120028606,
+          "body_max_step_degrees": 37.599287120028606,
+          "hand_max_step_degrees": 23.78942406908595,
+          "mapped_step_p95_degrees": 7.412450488371619,
+          "mapped_step_events_over30": 2,
+          "mapped_step_events_over60": 0
+        },
+        "expected_quality_warning": true,
+        "clip_quality_warning_present": true,
+        "clip_quality_warning": true,
+        "registry_quality_warning": true
+      }
+    },
+    {
+      "id": "generated-csl-06f9649dad2209a1",
+      "codec_max_abs_difference": 0.0,
+      "quality": {
+        "actual_after": {
+          "mapped_max_step_degrees": 40.90055004330093,
+          "body_max_step_degrees": 40.90055004330093,
+          "hand_max_step_degrees": 22.215488453121885,
+          "mapped_step_p95_degrees": 8.042665712834385,
+          "mapped_step_events_over30": 1,
+          "mapped_step_events_over60": 0
+        },
+        "expected_quality_warning": true,
+        "clip_quality_warning_present": true,
+        "clip_quality_warning": true,
+        "registry_quality_warning": true
+      }
+    }
+  ],
+  "language_review": "NOT_RUN",
+  "motion_quality_review": "NOT_RUN",
+  "expression50_target_mapping": "NOT_IMPLEMENTED",
+  "mouth_glb_export_supported": false,
+  "browser": {
+    "preview_url": "http://127.0.0.1:8878/animation/",
+    "two_sentences_played": true,
+    "same_clock_raw_refined_comparison": true,
+    "generated_jaw_toggle": true,
+    "generated_source_badge": true,
+    "jump_warning_visible_both": true,
+    "glb_download_hidden": true,
+    "console_warnings_errors": 0,
+    "reviews": {
+      "hospital": {
+        "schema_version": 1,
+        "asset_id": "generated-csl-742e48d1a34e4920",
+        "source_motion_sha256": "e31df8d82e387410eb73158199955667170db3d90b155871a272df65e843a34e",
+        "avatar_sha256": "b42c21dacb5d07617790c40c69f68a074aca58d74d76b898f2cb98bbbf96862c",
+        "processing_version": "signspark-avatar-jaw-candidate-v1",
+        "temporal_profile": "soke-gesture-refinement-v1",
+        "display_profile": "improved",
+        "comparison": false,
+        "time": 2.15,
+        "expression": {},
+        "expression_review": "unverified",
+        "nonmanual": {
+          "available": true,
+          "enabled": true,
+          "manual_override": false,
+          "angle_radians": 0.020843642204683682,
+          "profile": "smplx-jaw-godette-calibrated-v1",
+          "source_joint": 22,
+          "source_template_sha256": "376021446ddc86e99acacd795182bbef903e61d33b76b9d8b359c2b0865bd992",
+          "target_avatar_sha256": "b42c21dacb5d07617790c40c69f68a074aca58d74d76b898f2cb98bbbf96862c",
+          "diagnostics": {
+            "rejected_frames": 0,
+            "clamped_frames": 0,
+            "source_joint": 22,
+            "max_angle_radians": 0.16,
+            "max_speed_radians_per_second": 0.6
+          },
+          "status": "research_candidate",
+          "language_review": "NOT_RUN",
+          "export_supported": false
+        },
+        "diagnostics": {
+          "strategy": "source-wrist-ik-v1",
+          "samples": 256,
+          "clamped": 0,
+          "wrist_error_before_mean": 0.027159902569214685,
+          "wrist_error_after_mean": 4.0136334898246336e-08
+        },
+        "language_review": "NOT_RUN"
+      },
+      "comparison": {
+        "schema_version": 1,
+        "asset_id": "generated-csl-742e48d1a34e4920",
+        "source_motion_sha256": "e31df8d82e387410eb73158199955667170db3d90b155871a272df65e843a34e",
+        "avatar_sha256": "b42c21dacb5d07617790c40c69f68a074aca58d74d76b898f2cb98bbbf96862c",
+        "processing_version": "signspark-avatar-jaw-candidate-v1",
+        "temporal_profile": "soke-gesture-refinement-v1",
+        "display_profile": "improved",
+        "comparison": true,
+        "time": 2.15,
+        "expression": {},
+        "expression_review": "unverified",
+        "nonmanual": {
+          "available": true,
+          "enabled": true,
+          "manual_override": false,
+          "angle_radians": 0.020843642204683682,
+          "profile": "smplx-jaw-godette-calibrated-v1",
+          "source_joint": 22,
+          "source_template_sha256": "376021446ddc86e99acacd795182bbef903e61d33b76b9d8b359c2b0865bd992",
+          "target_avatar_sha256": "b42c21dacb5d07617790c40c69f68a074aca58d74d76b898f2cb98bbbf96862c",
+          "diagnostics": {
+            "rejected_frames": 0,
+            "clamped_frames": 0,
+            "source_joint": 22,
+            "max_angle_radians": 0.16,
+            "max_speed_radians_per_second": 0.6
+          },
+          "status": "research_candidate",
+          "language_review": "NOT_RUN",
+          "export_supported": false
+        },
+        "diagnostics": {
+          "strategy": "source-wrist-ik-v1",
+          "samples": 256,
+          "clamped": 0,
+          "wrist_error_before_mean": 0.027159902569214685,
+          "wrist_error_after_mean": 4.0136334898246336e-08
+        },
+        "language_review": "NOT_RUN"
+      },
+      "rest": {
+        "schema_version": 1,
+        "asset_id": "generated-csl-06f9649dad2209a1",
+        "source_motion_sha256": "1819c9c14e0626d2a365b6b2b3c6e50bc36928e5e892e7bba40c822d747038e6",
+        "avatar_sha256": "b42c21dacb5d07617790c40c69f68a074aca58d74d76b898f2cb98bbbf96862c",
+        "processing_version": "signspark-avatar-jaw-candidate-v1",
+        "temporal_profile": "soke-gesture-refinement-v1",
+        "display_profile": "improved",
+        "comparison": false,
+        "time": 2.15,
+        "expression": {},
+        "expression_review": "unverified",
+        "nonmanual": {
+          "available": true,
+          "enabled": true,
+          "manual_override": false,
+          "angle_radians": 0.01882553283939793,
+          "profile": "smplx-jaw-godette-calibrated-v1",
+          "source_joint": 22,
+          "source_template_sha256": "376021446ddc86e99acacd795182bbef903e61d33b76b9d8b359c2b0865bd992",
+          "target_avatar_sha256": "b42c21dacb5d07617790c40c69f68a074aca58d74d76b898f2cb98bbbf96862c",
+          "diagnostics": {
+            "rejected_frames": 0,
+            "clamped_frames": 0,
+            "source_joint": 22,
+            "max_angle_radians": 0.16,
+            "max_speed_radians_per_second": 0.6
+          },
+          "status": "research_candidate",
+          "language_review": "NOT_RUN",
+          "export_supported": false
+        },
+        "diagnostics": {
+          "strategy": "source-wrist-ik-v1",
+          "samples": 256,
+          "clamped": 0,
+          "wrist_error_before_mean": 0.027823977592609607,
+          "wrist_error_after_mean": 3.488399948171525e-08
+        },
+        "language_review": "NOT_RUN"
+      }
+    }
+  }
+}

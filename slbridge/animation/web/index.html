@@ -4,6 +4,12 @@
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <title>手语动画工作台 · SignLanguage Bridge</title>
   <link rel="stylesheet" href="/animation/static/workspace.css">
+  <style>
+    .library-view:not([hidden]) { display:flex; flex:1; flex-direction:column; min-height:0; }
+    .library-view[hidden] { display:none; }
+    .library-view .asset-list { flex:1; }
+    .library input[type=checkbox] { width:auto; padding:0; }
+  </style>
   <script type="module" src="/animation/static/workspace.js"></script>
 </head>
 <body>
@@ -37,12 +43,30 @@
       </section>
       <section class="library">
         <div class="library-heading"><h2>动作库</h2><span id="visible-count"></span></div>
+        <div class="filter-row" role="group" aria-label="选择动作库">
+          <button id="library-demo" class="filter active">原有动作</button><button id="library-corpus" class="filter" disabled>全量语料</button>
+        </div>
+        <div id="demo-library" class="library-view">
         <label class="sr-only" for="search">搜索动作库</label>
         <input id="search" type="search" placeholder="搜索完整短语或词条">
         <div class="filter-row" role="group" aria-label="动作来源">
           <button data-filter="all" class="filter active">全部</button><button data-filter="reference" class="filter">参考片段</button><button data-filter="fitted" class="filter">拟合动作</button><button data-filter="candidate" class="filter">候选</button>
         </div>
         <div id="asset-list" class="asset-list" aria-label="可选动作"></div>
+        </div>
+        <div id="corpus-library" class="library-view" hidden>
+          <p id="corpus-summary" class="subtle">未连接全量参数库。</p>
+          <label class="sr-only" for="corpus-search">搜索全量语料</label>
+          <input id="corpus-search" type="search" maxlength="500" placeholder="搜索句子、Gloss 或样本编号">
+          <div class="model-row">
+            <label for="corpus-split">划分</label><select id="corpus-split"><option value="">全部</option><option value="train">训练集</option><option value="val">验证集</option><option value="test">测试集</option></select>
+            <label for="corpus-quality">数值线索</label><select id="corpus-quality"><option value="all">全部</option><option value="warning">有跳变线索</option><option value="quiet">未见大跳变</option></select>
+          </div>
+          <label class="subtle"><input id="corpus-state" type="checkbox">包含未转换／缺帧索引</label>
+          <div id="corpus-list" class="asset-list" aria-label="全量语料候选"></div>
+          <p id="corpus-page-status" class="subtle" role="status" aria-live="polite"></p>
+          <div class="transport-actions"><button id="corpus-prev" disabled>上一页</button><button id="corpus-next" disabled>下一页</button></div>
+        </div>
       </section>
     </aside>
     <section class="stage-pane" aria-label="动画预览">
@@ -65,14 +89,15 @@
         <div class="stage-caption"><span id="subtitle">先选择一个完整表达</span><small id="language-state">语言含义待审核</small></div>
       </div>
       <details class="expression-panel">
-        <summary>手动检查面部绑定</summary>
+        <summary>嘴部候选与面部检查</summary>
         <div class="expression-controls">
+          <label><input id="nonmanual-jaw" type="checkbox" disabled>源数据嘴部候选</label>
           <label>眉部<input id="face-brow" type="range" min="0" max="1" step="0.05" value="0"></label>
           <label>眼睑<input id="face-blink" type="range" min="0" max="1" step="0.05" value="0"></label>
           <label>下颌<input id="face-jaw" type="range" min="0" max="1" step="0.05" value="0"></label>
-          <button id="face-reset">恢复中立</button>
+          <button id="face-reset">恢复自动／中立</button>
         </div>
-        <p>手动试调仅用于检查变形，尚未审核为手语表情。新片段恢复中立。</p>
+        <p id="nonmanual-state">当前片段无已校准嘴部候选。手动试调仅检查变形，尚未审核为手语表情。</p>
       </details>
       <div class="transport">
         <label class="sr-only" for="timeline">动作时间轴</label><input id="timeline" type="range" min="0" max="1" step="0.01" value="0" disabled>

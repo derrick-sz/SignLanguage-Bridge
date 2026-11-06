@@ -25,6 +25,20 @@ function rotate(v, q) {
 }
 
 export const SOURCE_TEMPORAL_PROFILE = 'source-quaternion-temporal-v1';
+export const GESTURE_REFINEMENT_PROFILE = 'soke-gesture-refinement-v1';
+export function selectSourcePoses(clip,{stabilize,profile}) {
+  if(!stabilize)return clip.poses;
+  if(profile===SOURCE_TEMPORAL_PROFILE)return stabilizeSourcePoses(clip.poses,clip.fps);
+  if(profile!==GESTURE_REFINEMENT_PROFILE)return clip.poses;
+  const poses=clip.refined_poses;
+  if(clip.gesture_refinement?.profile!==GESTURE_REFINEMENT_PROFILE || !Array.isArray(poses) || poses.length!==clip.poses.length)
+    throw new Error('Invalid refined gesture source');
+  for(const pose of poses){
+    if(!Array.isArray(pose)||pose.length!==55)throw new Error('Invalid refined gesture source');
+    for(const v of pose)vector(v);
+  }
+  return poses;
+}
 function slerp(a, b, amount) {
   let cosine = dot(a, b), target = b;
   if (cosine < 0) {cosine = -cosine;target = mul(b,-1);}

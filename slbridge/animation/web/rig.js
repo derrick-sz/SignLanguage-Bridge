@@ -1,4 +1,5 @@
 import { validateRigProfile } from "./expression.mjs";
+import { JAW_AVATAR_SHA256, MAX_JAW_ANGLE } from "./nonmanual.mjs";
 
 const HUMANOID_BONES = Object.freeze([
   "root",
@@ -227,7 +228,7 @@ function resolveProfileBones(root, profile = GODETTE_PROFILE) {
   return { bones, skeletons: index.skeletons };
 }
 
-function createHumanoidRig(root, profile = GODETTE_PROFILE) {
+function createHumanoidRig(root, profile = GODETTE_PROFILE, {avatarSha256=null} = {}) {
   validateRigProfile(profile);
   const { bones, skeletons } = resolveProfileBones(root, profile);
   const rest = {};
@@ -276,8 +277,27 @@ function createHumanoidRig(root, profile = GODETTE_PROFILE) {
     offset.applyQuaternion(bone.parent.getWorldQuaternion(bone.quaternion.clone()).invert());
     faceControls.push({bone,kind:brow?'brow':'eyelid',offset});
   });
+  // The exported lower-lip/teeth group is a sibling of Jaw_4, not its child.
+  // Only the measured avatar may use this calibration; names alone prove nothing.
+  const lowerLipGroup=root.getObjectByName?.('Lips_Lower_13');
+  const jawCalibrationAvailable=Boolean(avatarSha256===JAW_AVATAR_SHA256 && bones.jaw?.name==='Jaw_4' &&
+    lowerLipGroup?.isBone && lowerLipGroup.parent===bones.jaw.parent);
+  if(jawCalibrationAvailable)facialRest.set(lowerLipGroup,{position:lowerLipGroup.position.clone(),quaternion:lowerLipGroup.quaternion.clone()});
   function resetExpression() {
     for (const [bone,base] of facialRest) {bone.position.copy(base.position);bone.quaternion.copy(base.quaternion);}
+  }
+  function applyCalibratedJaw(angle) {
+    if(!Number.isFinite(angle) || angle<0 || angle>MAX_JAW_ANGLE)throw new Error('Invalid calibrated jaw angle');
+    if(!jawCalibrationAvailable)return false;
+    const base=rest.jaw,lip=facialRest.get(lowerLipGroup);
+    const axis=base.position.clone().set(1,0,0);
+    const delta=base.quaternion.clone().setFromAxisAngle(axis,angle);
+    const parentBase=base.quaternion.clone().normalize();
+    const parentDelta=parentBase.clone().multiply(delta).multiply(parentBase.clone().invert());
+    bones.jaw.quaternion.copy(base.quaternion).multiply(delta);
+    lowerLipGroup.position.copy(lip.position).sub(base.position).applyQuaternion(parentDelta).add(base.position);
+    lowerLipGroup.quaternion.copy(parentDelta).multiply(lip.quaternion);
+    return true;
   }
 
   function update() {
@@ -367,6 +387,8 @@ function createHumanoidRig(root, profile = GODETTE_PROFILE) {
     applyPose,
     reset,
     resetExpression,
+    jawCalibrationAvailable,
+    applyCalibratedJaw,
     faceControls,
     update,
   };

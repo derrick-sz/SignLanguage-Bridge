@@ -55,6 +55,14 @@ def _validate_clip(clip):
                    any(not isinstance(j, list) or len(j) != 3 or not all(map(_number, j)) for j in f)
                    for f in poses)):
         raise ValueError("Invalid motion clip")
+    if 'refined_poses' in clip or 'gesture_refinement' in clip:
+        refined=clip.get('refined_poses');profile=clip.get('gesture_refinement')
+        if (not isinstance(profile,dict) or profile.get('profile')!='soke-gesture-refinement-v1'
+                or not isinstance(refined,list) or len(refined)!=frames
+                or any(not isinstance(f,list) or len(f)!=55 or
+                       any(not isinstance(j,list) or len(j)!=3 or not all(map(_number,j)) for j in f)
+                       for f in refined)):
+            raise ValueError('Invalid refined gesture track')
     aliases = clip.get("aliases", [])
     if (not isinstance(aliases, list) or len(aliases) > 50
             or any(not isinstance(a, str) or not 0 < len(a) <= 500 for a in aliases)):
@@ -85,6 +93,9 @@ class MotionRegistry:
                         or entry.file_size > 32 * 1024 * 1024):
                     raise ValueError("Unsafe archive member")
             manifest = json.loads(z.read("BUILD.json"))
+            self._motion_attribution = manifest.get("motion_attribution", "Source archive approvals apply to motion quality only; language unverified.")
+            if not isinstance(self._motion_attribution, str) or not 0 < len(self._motion_attribution) <= 2000:
+                raise ValueError("Invalid motion attribution")
             files = manifest.get("files")
             if not isinstance(files, dict) or not files:
                 raise ValueError("Missing archive file manifest")
@@ -125,14 +136,15 @@ class MotionRegistry:
                     raise ValueError("Motion index identity mismatch")
                 _validate_clip(clip)
                 reviewed = approvals.get(entry["id"], {})
-                approved = (entry.get("human_approved") is True and bool(approval_id) and
+                approved = ('refined_poses' not in clip and entry.get("human_approved") is True and bool(approval_id) and
                             entry.get("motion_approval_id") == clip.get("motion_approval_id") == approval_id and
                             all(isinstance(reviewed.get(k), str) and
                                 re.fullmatch(r"[0-9a-f]{64}", reviewed[k]) and
                                 reviewed[k] == entry.get(k) == clip.get(k)
                                 for k in ("source_sha256", "fitted_sha256")) and
                             reviewed.get("poses_sha256") == _pose_digest(clip["poses"]))
-                self._add("fitted", clip, skeleton, _digest(payload), approved=approved,
+                generated=clip.get('source_kind')=='pretrained_text_conditioned_generation'
+                self._add("generated" if generated else "fitted", clip, skeleton, _digest(payload), approved=approved and not generated,
                           quality_warning=bool(entry.get("quality_warning")))
         if not self._assets:
             raise ValueError("Motion archive has no assets")
@@ -156,7 +168,7 @@ class MotionRegistry:
                 "assets": deepcopy(self._assets),
                 "attribution": {"code": "SignBridge / MIT", "avatar": "Godette (Rigged), zahlenmaler / CC BY 4.0",
                                 "avatar_source": "https://sketchfab.com/3d-models/godette-rigged-dd05b69799a2438e97c90d166f6e416a",
-                                "motion": "Source archive approvals apply to motion quality only; language unverified."}}
+                                "motion": self._motion_attribution}}
 
     def motion(self, asset_id: str) -> dict:
         return deepcopy(self._clips[asset_id])

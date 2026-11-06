@@ -8,7 +8,7 @@ const out = path.resolve(input.output), runtime = path.join(out, 'runtime');
 await fs.mkdir(runtime, {recursive:true});
 const web = fileURLToPath(new URL('../../slbridge/animation/web/', import.meta.url));
 await fs.copyFile(input.three, path.join(runtime,'three.mjs'));
-for (const name of ['rig.js','retarget.js','stabilization.js','expression.mjs','motion-geometry.mjs']) {
+for (const name of ['rig.js','retarget.js','stabilization.js','expression.mjs','motion-geometry.mjs','nonmanual.mjs']) {
   let source = await fs.readFile(path.join(web,name),'utf8');
   source = source.replaceAll('/animation/vendor/three.module.js','./three.mjs').replaceAll('./stabilization.js','./stabilization.mjs');
   await fs.writeFile(path.join(runtime,name.replace(/\.js$/,'.mjs')),source);
@@ -49,7 +49,7 @@ for(const pilot of input.pilots){
   const data=JSON.parse(await fs.readFile(pilot.motion,'utf8'));
   const retarget=createT08Retarget(rig,root,data);
   const original=retarget.compile(data.clip,{stabilize:false});
-  const temporalProfile=pilot.temporal_profile||'quaternion-temporal-adaptive-v1';
+  const temporalProfile=pilot.temporal_profile||data.clip.gesture_refinement?.profile||'quaternion-temporal-adaptive-v1';
   const frames=retarget.compile(data.clip,{stabilize:true,stabilizationProfile:temporalProfile,positionConstraints:true});
   let maxFingerDelta=0,maxBoneLengthError=0;
   const restLengths=Object.fromEntries(Object.entries(rig.bones).map(([name,bone])=>[name,bone.position.length()]));
@@ -62,7 +62,8 @@ for(const pilot of input.pilots){
     for(const [name,bone] of Object.entries(rig.bones))maxBoneLengthError=Math.max(maxBoneLengthError,Math.abs(bone.position.length()-restLengths[name]));
     return Object.fromEntries(Object.keys(frame).map(name=>[name,rig.bones[name].matrixWorld.toArray()]));
   });
-  const fingerLimit=temporalProfile==='source-quaternion-temporal-v1'?Math.PI/6:Math.PI/60;
+  const fingerLimit=temporalProfile==='soke-gesture-refinement-v1'?Math.PI:
+    temporalProfile==='source-quaternion-temporal-v1'?Math.PI/6:Math.PI/60;
   if(maxBoneLengthError>1e-8 || maxFingerDelta>fingerLimit+1e-6)throw new Error('Retarget preservation failed: '+JSON.stringify({asset:pilot.asset_id,maxBoneLengthError,maxFingerDeltaDegrees:maxFingerDelta*180/Math.PI}));
   const report={asset_id:pilot.asset_id,frames:frames.length,fps:data.clip.fps,source_motion_sha256:pilot.source_motion_sha256,
     ...retarget.diagnostics,temporal_profile:temporalProfile,max_finger_change_degrees:maxFingerDelta*180/Math.PI,max_bone_length_change:maxBoneLengthError,language_review:'NOT_RUN'};

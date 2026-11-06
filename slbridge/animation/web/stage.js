@@ -3,6 +3,7 @@ import { GLTFLoader } from "/animation/vendor/jsm/loaders/GLTFLoader.js";
 import { createHumanoidRig } from "./rig.js";
 import { createT08Retarget } from "./retarget.js";
 import { applyExpression } from "./expression.mjs";
+import { jawCandidateForClip, sampleJawCandidate, MAX_JAW_ANGLE } from "./nonmanual.mjs";
 import { PlaybackClock, signingCamera, comparisonViewports } from "./player-core.mjs";
 
 export class MotionStage {
@@ -10,6 +11,7 @@ export class MotionStage {
     this.container=container; this.onTick=onTick; this.clock=new PlaybackClock();
     this.profile="improved"; this.view="front"; this.comparison=false;
     this.cache=new Map(); this.disposed=false; this.expression={}; this.skeletonEnabled=false;
+    this.jawTrack=null;this.nonmanualEnabled=false;
     this.ready=this.init();
   }
   async init() {
@@ -40,7 +42,7 @@ export class MotionStage {
       model.traverse(node=>{if(node.isMesh){node.castShadow=true;node.receiveShadow=true;node.frustumCulled=false;}});
       this.scene.add(model);
     }
-    this.originalRig=createHumanoidRig(this.originalModel); this.rig=createHumanoidRig(this.model,this.presentation?.rig_profile||undefined);
+    this.originalRig=createHumanoidRig(this.originalModel); this.rig=createHumanoidRig(this.model,this.presentation?.rig_profile||undefined,{avatarSha256:this.presentation?.avatar_sha256});
     if(!this.originalRig.isSigningReady || !this.rig.isSigningReady)throw new Error("角色骨架缺少必要手语关节");
     this.sourceLine=new THREE.LineSegments(new THREE.BufferGeometry(),new THREE.LineBasicMaterial({color:0x007c91,transparent:true,opacity:0.8,depthTest:false}));
     this.sourceLine.visible=false;this.sourceLine.renderOrder=3;this.scene.add(this.sourceLine);
@@ -77,14 +79,23 @@ export class MotionStage {
   setProfile(profile){if(!["original","improved"].includes(profile))throw new Error("未知显示版本");this.profile=profile;this.track=this.tracks?.[profile];this.refresh();}
   setComparison(value){this.comparison=Boolean(value);this.refresh();}
   setSkeletonVisible(value){this.skeletonEnabled=Boolean(value);this.refresh();}
-  setExpression(channels){if(this.rig)applyExpression(this.rig,channels);this.expression={...channels};this.refresh();}
+  setExpression(channels){
+    const next=Object.keys(channels).length?{...this.expression,...channels}:{};
+    if(this.rig)applyExpression(this.rig,next);this.expression=next;this.refresh();
+  }
+  get nonmanualAvailable(){return Boolean(this.jawTrack&&this.rig?.jawCalibrationAvailable);}
+  setNonmanualEnabled(value){this.nonmanualEnabled=Boolean(value)&&this.nonmanualAvailable;this.refresh();}
+  jawAngle(time){
+    if(Object.hasOwn(this.expression,'jawOpen'))return this.expression.jawOpen*MAX_JAW_ANGLE;
+    return this.nonmanualEnabled?sampleJawCandidate(this.jawTrack,time):0;
+  }
   async loadMotion(data,id,isCurrent=()=>true,sourceSha=null){
     await this.ready;if(this.disposed||!isCurrent())return false;
     let tracks=this.cache.get(id);
     if(!tracks){
       const raw=createT08Retarget(this.originalRig,this.originalModel,data);
       const corrected=createT08Retarget(this.rig,this.model,data);
-      const temporalProfile=this.presentation?.pilots?.find(p=>p.asset_id===id)?.temporal_profile||"quaternion-temporal-adaptive-v1";
+      const temporalProfile=this.presentation?.pilots?.find(p=>p.asset_id===id)?.temporal_profile||data.clip.gesture_refinement?.profile||"quaternion-temporal-adaptive-v1";
       const original=raw.compile(data.clip,{stabilize:false});
       const improved=corrected.compile(data.clip,{stabilize:true,stabilizationProfile:temporalProfile,positionConstraints:true});
       let changed=0;
@@ -109,6 +120,9 @@ export class MotionStage {
     if(!isCurrent())return false;
     this.tracks=tracks;this.track=tracks[this.profile];this.clip=data.clip;this.parents=data.parents;
     this.assetId=id;this.sourceSha=sourceSha;this.fps=data.clip.fps;this.expression={};
+    const baked=Boolean(this.presentation?.pilots?.find(p=>p.asset_id===id)?.export_file);
+    this.jawTrack=this.rig.jawCalibrationAvailable?jawCandidateForClip(data.clip,this.presentation?.avatar_sha256,baked):null;
+    this.nonmanualEnabled=this.nonmanualAvailable;
     this.bounds=tracks.bounds;this.handBounds=tracks.hands;this.clock.load(data.clip.frames/data.clip.fps);
     this.refresh();return true;
   }
@@ -117,7 +131,8 @@ export class MotionStage {
     const position=Math.min(time*this.fps,this.tracks.original.length-1);
     const from=Math.floor(position),to=Math.min(from+1,this.tracks.original.length-1),amount=position-from;
     this.originalRig.interpolate(this.tracks.original[from],this.tracks.original[to],amount);
-    this.rig.interpolate(this.tracks.improved[from],this.tracks.improved[to],amount);applyExpression(this.rig,this.expression);
+    this.rig.interpolate(this.tracks.improved[from],this.tracks.improved[to],amount);
+    applyExpression(this.rig,this.expression,{jawRadians:this.jawAngle(time)});
     this.originalModel.updateMatrixWorld(true);this.model.updateMatrixWorld(true);
     if(this.skeletonEnabled){
       const a=this.tracks.mapper.sourcePositions(this.clip.poses[from]),b=this.tracks.mapper.sourcePositions(this.clip.poses[to]);
@@ -157,6 +172,7 @@ export class MotionStage {
   setSpeed(speed){this.clock.setSpeed(speed,performance.now());this.refresh();}
   stop(){
     this.clock.stop();this.clock.duration=0;this.track=null;this.tracks=null;this.clip=null;this.expression={};
+    this.jawTrack=null;this.nonmanualEnabled=false;
     this.rig?.reset();this.originalRig?.reset();this.refresh();
     if(this.model && this.originalModel){this.poseNeutral();this.refresh();}
   }
@@ -166,6 +182,11 @@ export class MotionStage {
       temporal_profile:this.tracks?.temporalProfile||null,
       display_profile:this.profile,comparison:Boolean(this.comparison),
       time:this.clock.time(performance.now()),expression:{...this.expression},expression_review:"unverified",
+      nonmanual:{available:this.nonmanualAvailable,enabled:Boolean(this.nonmanualEnabled),
+        manual_override:Object.hasOwn(this.expression,'jawOpen'),angle_radians:this.jawAngle(this.clock.time(performance.now())),
+        profile:this.jawTrack?.profile||null,source_joint:22,source_template_sha256:this.clip?.nonmanual_candidate?.source_template_sha256||null,
+        target_avatar_sha256:this.presentation?.avatar_sha256||null,diagnostics:this.jawTrack?.diagnostics||null,
+        status:"research_candidate",language_review:"NOT_RUN",export_supported:false},
       diagnostics:this.tracks?.diagnostics||null,language_review:"NOT_RUN"};
   }
   disposeModel(model){

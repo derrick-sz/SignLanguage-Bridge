@@ -2,7 +2,9 @@
 
 rig.js, retarget.js and stabilization.js are adapted from feifei9126/signbridge,
 local revision 7ab6de3828aacf99aa758c68b5699089cb33ef75 (MIT).
-Only module import paths are adapted. Original source motion data is unchanged.
+The bridge additionally applies reversible source-space gesture/temporal
+candidates, wrist retargeting, and calibrated jaw/lip driving. Original source
+motion parameters are retained separately from those derived candidates.
 
 MIT License
 

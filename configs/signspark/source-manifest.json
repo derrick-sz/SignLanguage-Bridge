@@ -1,0 +1,207 @@
+{
+  "schema_version": 1,
+  "repository": "JianHe0628/SignSparK",
+  "commit": "916402d0ecd6322fb4a9e5f513229a94a57bf4b6",
+  "files": [
+    {
+      "path": "DATA.md",
+      "blob_sha": "ec99c040c3f3b5f98f3450dc6bbd168e74e4c900",
+      "size": 3874
+    },
+    {
+      "path": "LICENSE",
+      "blob_sha": "ae95cc02e34465a9e9b0bccf053b4be24480f358",
+      "size": 11370
+    },
+    {
+      "path": "README.md",
+      "blob_sha": "76cc50eecd4bb69fcf289194919c4c2ae971ff0c",
+      "size": 12512
+    },
+    {
+      "path": ".env.example",
+      "blob_sha": "6a6aec54a9e173e3679f571fae2e01c3e53e71f2",
+      "size": 667
+    },
+    {
+      "path": "VISUALIZATION.md",
+      "blob_sha": "26d23e058f033a5aa150d29d145fae3a16e08a7b",
+      "size": 3199
+    },
+    {
+      "path": "basic_utils.py",
+      "blob_sha": "2023e9da6637bbc9d47b93b78eb119d83f7ba811",
+      "size": 5252
+    },
+    {
+      "path": "classifier_free.py",
+      "blob_sha": "5f704fdb3f5d012e927b0d256300ec9813a34b78",
+      "size": 1107
+    },
+    {
+      "path": "configs/data_v2/body.yaml",
+      "blob_sha": "1b51e6c016431d4d6c901e87a76247611a6a9972",
+      "size": 478
+    },
+    {
+      "path": "configs/data_v2/common/train.yaml",
+      "blob_sha": "e11321d8e00ea69bbdbb34c42352a8d60d5a93dd",
+      "size": 1343
+    },
+    {
+      "path": "configs/data_v2/face.yaml",
+      "blob_sha": "44af5e41cf437e7cad2eae2b4c6039229b4e47d4",
+      "size": 478
+    },
+    {
+      "path": "configs/data_v2/full.yaml",
+      "blob_sha": "f83f53f3d075c9b88811f3a025ddb4762d1f2bc6",
+      "size": 478
+    },
+    {
+      "path": "configs/data_v2/common/inference.yaml",
+      "blob_sha": "201835db204764447dbc591ae66c258782c602df",
+      "size": 1333
+    },
+    {
+      "path": "configs/data_v2/hand.yaml",
+      "blob_sha": "6f0688f45a1afd934957824f8231b103a46efe77",
+      "size": 478
+    },
+    {
+      "path": "configs/data_v2/splits/split.yaml",
+      "blob_sha": "9b8ada0cd0ab6249c5641d9c70c2341b57e7e957",
+      "size": 496
+    },
+    {
+      "path": "configs/default.yaml",
+      "blob_sha": "2a2e3d216dc6a0defe11b17552e478b69e0fb3c3",
+      "size": 217
+    },
+    {
+      "path": "environment.yml",
+      "blob_sha": "e42096a6db9878b629a3f0b1757d66a18881141b",
+      "size": 726
+    },
+    {
+      "path": "fast/README.md",
+      "blob_sha": "e496a1c2e10301402316a44f9bfba25c90ccb0bb",
+      "size": 4254
+    },
+    {
+      "path": "fast/visualize.py",
+      "blob_sha": "10acf1fa2167c811f8780889445a04c1bdd2e507",
+      "size": 8602
+    },
+    {
+      "path": "fast/segment.py",
+      "blob_sha": "b7a042cf7f5a25a5cca78f1dbfe1d213626c0f25",
+      "size": 4907
+    },
+    {
+      "path": "flow_train_util.py",
+      "blob_sha": "ce751e0aea6c1be6a0f8735f4fb2104bc40a082b",
+      "size": 14790
+    },
+    {
+      "path": "requirements.txt",
+      "blob_sha": "466b8f4d9a468b9ad57e682180cdd9067f9e8b61",
+      "size": 790
+    },
+    {
+      "path": "sample.py",
+      "blob_sha": "a8ec894e8e58080c89e78f0b5389a44f2e454f75",
+      "size": 8272
+    },
+    {
+      "path": "sample_all.py",
+      "blob_sha": "5a59962edda11bddecc708fd12d6622a285672e7",
+      "size": 2196
+    },
+    {
+      "path": "signspark/__init__.py",
+      "blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "size": 0
+    },
+    {
+      "path": "signspark/helper.py",
+      "blob_sha": "e3265ea1fc8f07ab20ee4b57116d0c93988223e9",
+      "size": 2114
+    },
+    {
+      "path": "signspark/keyframes.py",
+      "blob_sha": "102e10eceec9b3091cee09729fc9191ea26f7bb8",
+      "size": 1205
+    },
+    {
+      "path": "signspark/pose_datasets_lmdb.py",
+      "blob_sha": "894522d270e0853b8205aa139b097510d5e3d2eb",
+      "size": 14261
+    },
+    {
+      "path": "signspark/rflow.py",
+      "blob_sha": "4e91fbf03763c69dc277c01a453d58f0bc5c5f9f",
+      "size": 13050
+    },
+    {
+      "path": "signspark/sampling_rflow.py",
+      "blob_sha": "a4a59d0a4c72118fa9ec80d42375dc27f01d5b19",
+      "size": 5781
+    },
+    {
+      "path": "signspark/unet_model.py",
+      "blob_sha": "315b517b5a3e8d10f5f186ba07e400188cc9453f",
+      "size": 10668
+    },
+    {
+      "path": "signspark/utils/__init__.py",
+      "blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "size": 0
+    },
+    {
+      "path": "signspark/unet_model_large.py",
+      "blob_sha": "25d78f3af57e24c7a545f353000d3da22a59a995",
+      "size": 20242
+    },
+    {
+      "path": "signspark/utils/dist_util.py",
+      "blob_sha": "c0921cc42dff386a92a233ca86d388023717d988",
+      "size": 1968
+    },
+    {
+      "path": "signspark/utils/logger.py",
+      "blob_sha": "22de766761a97a87e9c9addf785768fd8019f96e",
+      "size": 14117
+    },
+    {
+      "path": "tools/download_data.py",
+      "blob_sha": "47e15a66c81a20b6494fe60c6515e47c80c4b349",
+      "size": 1609
+    },
+    {
+      "path": "signspark/utils/nn.py",
+      "blob_sha": "40506df89f2166d06489b22215cecf40628c5d36",
+      "size": 2840
+    },
+    {
+      "path": "tools/inspect_lmdb.py",
+      "blob_sha": "b5b46d4b7a8b2ad4679325dc7639d3a6e5717297",
+      "size": 1846
+    },
+    {
+      "path": "train.py",
+      "blob_sha": "452315ce29da949f10917ec7739692f935438301",
+      "size": 4365
+    },
+    {
+      "path": "tools/download_models.py",
+      "blob_sha": "a1d1204fb8caa047293cc2b4e3ea211bd369c7fd",
+      "size": 1067
+    },
+    {
+      "path": "tools/visualize.py",
+      "blob_sha": "ef540d94d9190e6cb8b366c2ce29ca810a3ecbeb",
+      "size": 11615
+    }
+  ]
+}

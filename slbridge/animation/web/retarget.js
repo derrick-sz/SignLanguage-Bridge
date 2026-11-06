@@ -1,6 +1,6 @@
 import * as THREE from "/animation/vendor/three.module.js";
 import { stabilizeQuaternionTrack } from "./stabilization.js";
-import { forwardKinematics, solveTwoBone, stabilizeSourcePoses, SOURCE_TEMPORAL_PROFILE } from "./motion-geometry.mjs";
+import { forwardKinematics, solveTwoBone, selectSourcePoses, SOURCE_TEMPORAL_PROFILE, GESTURE_REFINEMENT_PROFILE } from "./motion-geometry.mjs";
 export function axisAngleQuaternion(vector) {
   if (vector?.length !== 3 || !vector.every(Number.isFinite))
     throw new Error("demoInvalidRotation");
@@ -235,14 +235,14 @@ export function createT08Retarget(rig, modelRoot, bundle) {
     clip,
     {
       stabilize = clip.experimental === true,
-      stabilizationProfile = clip.display_stabilization_profile,
+      stabilizationProfile = clip.gesture_refinement?.profile || clip.display_stabilization_profile,
       positionConstraints = false,
     } = {},
   ) {
     const snapshot = rig.capture();
     try {
-      const sourceSpace = stabilize && stabilizationProfile === SOURCE_TEMPORAL_PROFILE;
-      const poses = sourceSpace ? stabilizeSourcePoses(clip.poses,clip.fps) : clip.poses;
+      const sourceSpace = stabilize && [SOURCE_TEMPORAL_PROFILE,GESTURE_REFINEMENT_PROFILE].includes(stabilizationProfile);
+      const poses = selectSourcePoses(clip,{stabilize,profile:stabilizationProfile});
       const raw = poses.map((p) => poseTargets(p));
       const frames = stabilize && !sourceSpace
         ? stabilizeQuaternionTrack(raw, clip.fps, stabilizationProfile)

@@ -37,13 +37,14 @@ export function validateRigProfile(profile) {
   }
   return profile;
 }
-export function applyExpression(rig, input = {}) {
+export function applyExpression(rig, input = {}, {jawRadians=null} = {}) {
   const values = channels(input);
   rig.resetExpression();
   for (const control of rig.faceControls || []) {
     const amount = control.kind === 'brow' ? values.browRaise - values.browLower*0.6 : values.blink;
     control.bone.position.addScaledVector(control.offset, amount);
   }
-  if (rig.bones.jaw) rig.bones.jaw.rotateX(-values.jawOpen * 0.16);
+  if(rig.jawCalibrationAvailable)rig.applyCalibratedJaw(jawRadians??values.jawOpen*0.16);
+  else if (rig.bones.jaw) rig.bones.jaw.rotateX(-values.jawOpen * 0.16);
   return values;
 }

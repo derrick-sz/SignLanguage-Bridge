@@ -8,6 +8,8 @@ from pathlib import Path
 import re
 import struct
 
+MAX_PRESENTATION_BYTES=256*1024*1024
+MAX_PRESENTATION_PILOTS=100
 
 class PresentationBundle:
     def __init__(self, path: str | Path, assets: list[dict]):
@@ -18,9 +20,9 @@ class PresentationBundle:
         manifest = json.loads(raw)
         files = manifest.get('files')
         if (manifest.get('schema_version') != 1 or not isinstance(files, dict)
-                or not 1 <= len(files) <= 32 or manifest.get('avatar') not in files):
+                or not 1 <= len(files) <= 128 or manifest.get('avatar') not in files):
             raise ValueError('Invalid presentation manifest')
-        self._resources = {}
+        self._resources = {};total_bytes=0
         for name, digest in files.items():
             if (not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.-]{0,127}', name)
                     or '..' in name or not name.endswith(('.glb', '.json'))
@@ -29,13 +31,17 @@ class PresentationBundle:
             target = (root / name).resolve()
             if target.parent != root or target.stat().st_size > 32 * 1024 * 1024:
                 raise ValueError('Invalid presentation resource path or size')
+            if total_bytes+target.stat().st_size>MAX_PRESENTATION_BYTES:
+                raise ValueError('Presentation resource budget exceeded')
             data = target.read_bytes()
+            total_bytes+=len(data)
+            if total_bytes>MAX_PRESENTATION_BYTES:raise ValueError('Presentation resource budget exceeded')
             if hashlib.sha256(data).hexdigest() != digest:
                 raise ValueError('Presentation resource checksum mismatch')
             self._resources[name] = (data, 'model/gltf-binary' if name.endswith('.glb') else 'application/json')
         sources = {item['id']: item['sha256'] for item in assets}
         pilots = manifest.get('pilots', [])
-        if not isinstance(pilots, list) or len(pilots) > 20:
+        if not isinstance(pilots, list) or len(pilots) > MAX_PRESENTATION_PILOTS:
             raise ValueError('Invalid presentation pilots')
         ids = set()
         public_pilots=[]
@@ -50,7 +56,7 @@ class PresentationBundle:
                 raise ValueError('Presentation pilot source mismatch')
             ids.add(identity)
             temporal_profile=pilot.get('temporal_profile')
-            if temporal_profile is not None and temporal_profile!='source-quaternion-temporal-v1':
+            if temporal_profile is not None and temporal_profile not in ('source-quaternion-temporal-v1','soke-gesture-refinement-v1'):
                 raise ValueError('Unknown presentation temporal profile')
             if pilot.get('export_file') is not None and pilot['export_file'] not in files:
                 raise ValueError('Unknown presentation pilot export')

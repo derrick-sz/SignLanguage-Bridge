@@ -79,6 +79,43 @@ def test_registry_preserves_motion_source_and_marks_language_unverified(registry
     assert registry.motion("hello")["clip"]["poses"][0][0][0] == 0
 
 
+def test_pretrained_new_text_candidate_is_labelled_generated_not_fitted(tmp_path):
+    from slbridge.animation.soke import write_candidate_archive
+    source=make_archive(tmp_path)
+    candidate={'id':'generated-csl-case','text':'明天下午我去医院。','aliases':[],
+               'frames':2,'fps':30,'poses':[[[0.,0.,0.] for _ in range(55)] for _ in range(2)],
+               'source_kind':'pretrained_text_conditioned_generation','human_approved':True}
+    target=tmp_path/'generated.zip'
+    write_candidate_archive(target,source,[candidate],'Pretrained custom text candidates')
+    registry=MotionRegistry(target)
+    asset=registry.catalog()['assets'][0]
+    assert asset['group']=='generated'
+    assert asset['motion_review']==asset['language_review']=='unverified'
+    assert registry.motion(asset['id'])['clip']['human_approved'] is False
+
+
+def test_refined_gesture_cannot_inherit_original_motion_approval(tmp_path):
+    from copy import deepcopy
+    source=make_archive(tmp_path,approval=True)
+    with zipfile.ZipFile(source) as archive:
+        files={name:archive.read(name) for name in archive.namelist() if name!='BUILD.json'}
+    name='demo/experimental/fitted.json';clip=json.loads(files[name])
+    clip['refined_poses']=deepcopy(clip['poses']);clip['refined_poses'][0][25][0]=2.5
+    clip['gesture_refinement']={'profile':'soke-gesture-refinement-v1'};clip['experimental']=True
+    files[name]=json.dumps(clip).encode()
+    index=json.loads(files['demo/experimental-index.json']);index['clips'][0]['sha256']=hashlib.sha256(files[name]).hexdigest()
+    files['demo/experimental-index.json']=json.dumps(index).encode()
+    manifest={'files':{key:hashlib.sha256(value).hexdigest() for key,value in files.items()}}
+    target=tmp_path/'with-refined.zip'
+    with zipfile.ZipFile(target,'w') as archive:
+        for name,data in files.items():archive.writestr(name,data)
+        archive.writestr('BUILD.json',json.dumps(manifest))
+    loaded=MotionRegistry(target)
+    asset=next(a for a in loaded.catalog()['assets'] if a['id']=='fit-thanks')
+    assert asset['motion_review']=='unverified'
+    assert asset['language_review']=='unverified'
+
+
 def test_exact_full_phrase_requires_confirmation_and_research_preview(registry):
     result = plan_motion(registry, "你好")
     assert result["status"] == "needs_confirmation"

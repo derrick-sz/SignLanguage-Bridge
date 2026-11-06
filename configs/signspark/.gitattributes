@@ -1,0 +1,2 @@
+# These exact authenticated JSON bytes must stay LF on Windows checkouts too.
+*.json text eol=lf
