@@ -49,6 +49,7 @@ slbridge = "slbridge.cli:main"
 slbridge-desktop = "slbridge.desktop_cli:main"
 slbridge-keypoints = "slbridge.keypoint_cli:main"
 slbridge-api = "slbridge.api_cli:main"
+slbridge-animation = "slbridge.animation.cli:main"
 slbridge-cecsl = "slbridge.cecsl_cli:main"
 slbridge-slrt = "slbridge.slrt.cli:main"
 
@@ -58,6 +59,7 @@ include = ["slbridge*"]
 [tool.setuptools.package-data]
 slbridge = ["resources/*.json"]
 "slbridge.slrt" = ["NOTICE.md"]
+"slbridge.animation" = ["web/*.html", "web/*.css", "web/*.js", "web/*.mjs", "web/NOTICE.md"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

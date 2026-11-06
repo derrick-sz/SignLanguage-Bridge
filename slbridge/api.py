@@ -307,6 +307,7 @@ def create_app(
     job_runner_factory: Any = None,
     job_upload_ttl_seconds: float | None = 300.,
     job_media_probe: Any = None,
+    animation_registry: Any = None,
 ) -> FastAPI:
     """Create an app owning a manager or independent language runtimes.
 
@@ -1128,4 +1129,7 @@ def create_app(
         }
         return JSONResponse(status_code=200, content=body)
 
+    if animation_registry is not None:
+        from .animation.api import install_animation_routes
+        install_animation_routes(app, animation_registry)
     return app

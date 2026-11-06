@@ -1,6 +1,6 @@
 # 项目记忆：模型、评测与实时链路的坑
 
-最近核验：**2026-10-26**。适用于当前 SignLanguage-Bridge 工作区。这里保存易重复踩到的原因与处理规则；运行命令见[集成说明](../uni-sign-integration.md)，逐条证据见文末索引。复用结论前核对当前源码、manifest、运行协议和产物；缺失的本地证据标为缺失。
+最近核验：**2026-10-28**（补充三维路线与首期工作台工程验证；既有实验仍以各节日期为准）。适用于当前 SignLanguage-Bridge 工作区。这里保存易重复踩到的原因与处理规则；运行命令见[集成说明](../uni-sign-integration.md)，逐条证据见文末索引。复用结论前核对当前源码、manifest、运行协议和产物；缺失的本地证据标为缺失。
 
 ## 1. 任务和指标先对齐
 
@@ -162,7 +162,33 @@
 - **状态：已修复（2026-10-27 修正 `arbitration_rows` 为协议口径，并同时输出 `material_disagreement_rows`；Round-3 双评已实跑：协议口径 36/90=40%、实质分歧 8/90=8.9%）。** 触发条件：Round-3 的 A/B 两位评审评分仅差 1 分，且严重语义错误判断相同。[Round-3 README](../../experiments/p1/e06/human_review/round3/README.md) 和模板填写说明要求对评分或严重错误的任意分歧仲裁，但 [`make_round3_package.py`](../../experiments/p1/e06/human_review/round3/make_round3_package.py) 的 `agreement.arbitration_rows` 仅筛选 `abs(score_A-score_B) >= 2` 或严重错误不同，因而会漏掉该类 1 分分歧。本次只完成 AI 评审人 A，未读取 B 评审意见，不能据此声称一致性或仲裁已通过。
 - 避免办法：B 到齐后，按协议额外以“评分不同或严重错误不同”逐行扫描，并由第三人或用户裁定；不能把现有 `arbitration_rows` 当成全部协议分歧。独立记录 AI/人工身份、量表版本与已读历史文本，不能将同一 AI 的两次输出计为两名独立人工评审。当前单 A 结果与边界见 [Round-3 AI A 评审摘要](../../outputs/01a17b59-e3b8-7590-b21b-250b3f41ca6f/round3/round3_reviewer_A_ai_summary.md)。
 
+## 15. 三维动画生成路线的能力边界（2026-10-28）
+
+- **待验证：动作质量批准不等于语言认证。** 触发：将上游 SignBridge 的资源启用/审批当成“已审核标准 CSL 词库”。证据：固定 SHA `3503ff7802bc991ccf5e0753c2fe41b79689b860` 的 100 段公开快照中，83 段拟合资产的批准为 `motion_quality_only`，manifest 明示 `semantic_accuracy_certified=false`；片段数也不是标准词条数。避免：分别记录语言、动作与来源审核，绑定具体资产和重定向版本；语言验收 **NOT_RUN**。[R20]
+- **待验证：SMPL-X 重定向已有原型，但非手控表达未完整实现。** 触发：把上游播放器可播放理解成完整 CSL 连续生成。证据：上游已有 40 骨骼映射，但 jaw/eyes 静止、表情系数未重定向；片段顺播和四元数插值没有证明词间接触、空间指代与语法正确。避免：完整短语优先，单词与新拼接句分别验收；不把源码审计写成运行通过。[R20]
+- **待验证：同为 133 的协议不可互换。** 触发：复用 Uni-Sign 的 RTMPose 数据来直接驱动 SOKE/SMPL-X。证据：前者为 `T×133×3` 的二维点与 confidence；SOKE 论文的 133 维是人体动作参数表示。避免：显式绑定 feature schema、旋转/坐标/时基与重定向配置，禁止凭维度 reshape 或把置信度当深度。[R20]
+- **待验证：生成候选与跨语言资源须另行审核。** 触发：把 SignAvatars、VLibras 或 SOKE 的公开资料视为通用 CSL/Libras 动作授权与语言保证。证据：各自语种、数据和许可不同；SOKE 的任务 checkpoint 完整性、MVSign 的受限访问以及本地运行均未验证。避免：保留独立语法/词典和原始识别证据，未知词/否定缺项不能静默跳过后自动播放。以上为调研约束，没有新增实验成绩或验收通过结论。[R20]
+- **已核验结构，驱动效果待验证（2026-10-28）：脸部静止不能直接归因于模型没有表情结构。** 本机 Godette GLB 没有 morph targets，但包含带非零顶点权重的嘴/眼睑/眉部骨骼；当前重定向只取约 40 根头颈/上肢/双手骨骼，脸部保持静止。先验证现有骨骼驱动和局部变形，再决定用 Blender 修权重、补 Shape Keys 或换角色。骨骼/权重存在不等于表情控制或 CSL 非手控语法通过；本轮只抽查旧演示两个片段的浏览器播放和一个暂停帧。[R22]
+- **待实现（2026-10-28）：动画确认不能复用程序终态冒充人工批准。** `CaptionLedger.committed` 与 job `subtitle.final` 是程序提交/任务终态；当前没有人工 confirm/play 操作。动画计划需另存明确输入确认、来源会话与播放代次，识别取消/来源失效不等于已有 Three.js 播放器会自动停止。集成方案已另写草案，本轮未新增这些产品能力。[R22]
+
+- **已修复导出链路（2026-11-06）：GLB 默认节点姿态不等于 skin 绑定姿态。** 触发：把 Godette 默认节点世界矩阵当作 Blender 的绑定矩阵直接烘焙。证据：首次导出关节偏移约 0.6 模型坐标单位；原右手默认位置与 inverse-bind 反算位置明显不同。避免：先制作目标人物，再对该人物编译，以 inverse-bind 计算骨轴转换；统一第 0 帧起点，使用实际导出 GLB 对比目标轨。本轮五段 838 帧导出一致性通过，不代表语义/接触/碰撞通过。[R24]
+- **已修复驱动选择，语言效果待验证（2026-11-06）：编辑器眼睑控制器不一定有导出权重。** 触发：转动 Eyelid_Control 仍无眼睑变化。证据：实际 GLB 权重扫描表明相关编辑器控制器未影响顶点；本轮改用加权变形骨骼并在浏览器看见眉/眼睑变化。避免：先检查蒙皮影响和实际变形，再设计面部轨；无参考表情默认中立，手动试调不当作 CSL 非手控语法认证。[R24]
+- **已修复制作包身份检查（2026-11-06）：文件摘要匹配不等于动作身份正确。** 触发：未知动作和清单同时缺失源摘要，或交换动画文件后重算文件摘要。证据：独立审查的负例测试先失败；现要求已登记 asset_id、非空且匹配的源 SHA，并核对 GLB 内部动作/源/人物/处理版本绑定。避免：身份和完整性分别检查；逐段审核状态重置，不继承源资产批准。[R24]
+- **已修复加载期间控制（2026-11-06）：页面控制可能早于人物加载完成。** 触发：异步人物加载尚未结束即操作对照、面部或取景。证据：真实 Stage 延迟初始化回归先抛异常，加入场景就绪判断后通过。避免：时钟状态照常发布，绘制等待依赖齐备，并保留停止后的代次所有权。[R24]
+- **验收未通过：时间连续性仍待修复（2026-11-06）。** 触发：用户反馈残留抽搐；全库 100 段/28,082 帧四阶段扫描发现，“认识你很高兴”6.88 s 右食指源相邻帧约 66.4° 跳变，当前处理后仍保留。最多 3° 的孤立尖峰处理不能修复大幅或连续拟合噪声；导出一致性与播放结束也不证明无抽搐。避免：回溯对应原视频和置信度，进行整段拟合/手形约束复核；角度阈值仅定位候选，不计为错误率。[R25]
+- **待实现：识别权重不能反向导出动作语料（2026-11-06）。** 触发：以 Uni-Sign/SLRT 的词汇或已下载识别权重推定有相同数量的可播放动作。证据：本机 manifest 为 pose/video→text/Gloss，当前另有 CSL-Daily 19,528、CE-CSL 5,988 原视频，但三维拟合/生成资源未确认齐备。避免：视频/标注→对齐→三维拟合→质检→动作库分别记录；句级 Gloss 不当作词级时间边界，2D confidence 不当 z；T2G 包不当三维生成器。[R25]
+- **已提供单段修复候选，语言待验收（2026-11-06）：时序处理和 IK 必须使用同一源轨。** 触发：对目标旋转平滑后，IK 仍取原始源姿态，“我去开会汇报抽样调查落实的情况”4.08–4.16 s 有反复抬臂；增大下游平滑反而放大手腕跳变。证据：改为源空间处理后同轨重定向/FK/IK，该段手臂最大帧间转角约 38.0°→10.0°；300 帧候选及六段包共 1138 帧导出核对通过，浏览器复核关键帧及完整播放。避免：通过绑定到动作 ID 的配置启用，保留原轨；当前仅该段处理，仍有手指复核候选，不宣称原视频重拟合或语言批准。[R26]
+- **待验证复用（2026-11-06）：发布的三维拟合数据既不是生成权重，也不是审核词典。** 触发：因本机缺少完整生成/拟合权重组而准备重建全部视频，或将公开拟合片段直接算作标准词条。证据：已下载 SOKE CSL-Daily 训练索引，并抽查一个含身体/双手/表情字段的逐帧 SMPL-X 文件；17,438 个训练样本 ID 能匹配本机视频文件名，整段转换和词义仍未验收。避免：先核对 sample ID、原片/帧范围、姿态协议及来源条件，再做词级边界和含义审核；含义词条、多个动作实例与目标角色版本分别关联。仓库标 CC BY-NC-ND 4.0，不能把公共下载入口当作可任意发布的许可。[R27]、[R30]
+- **待验证容量与导入（2026-11-06）：小压缩包可含海量逐帧小文件。** 触发：把 SOKE 约 2.69 GiB ZIP 的下载体积直接当作 Windows 全量解压预算，或按 ZIP 目录顺序播放帧。证据：ZIP64 声明 2,481,971 个目录项，目录片段可见逐帧 pkl 且帧号无序；本轮仅抽查目录片段和一帧，不是 248 万句或全库通过。避免：按样本选择、数字帧号排序并合并序列，另测 IO/磁盘和完整序列质量。[R30]
+- **已验证 GPU 基础，三维拟合链待配置（2026-11-06）。** 触发：将已有 SLRT/OpenMMLab 环境或旧 CUDA 11.3 安装命令直接用于 RTX5060 Ti。证据：当前 .conda-env 为 torch 2.9.1+cu128，sm_120 实际 CUDA 小矩阵运算通过；slrt-legacy 却是 torch 1.13.1+cpu；四个已查环境均无 smplx，限定模型目录未确认完整人体/手部模板与重建权重。避免：单独核验拟合依赖、GPU 架构与资产；GPU 算子成功不当作三维重建通过。当前 WSL2 仅确认 docker-desktop 运行，不当作拟合环境已配置。[R28]
+- **规划预算待标定（2026-11-06）：已有动作导出时间不能当作视频三维重建时间。** 触发：用六段 1138 帧 Blender 日志约 59 s 或论文 V100 FPS 推算 RTX5060 Ti 的全库重建。避免：分开记录导出实测、重建帧率假设、人工修订/审核和经过工期；首批 50 词/20 短语按假设约 1.4 万候选帧估算，重建 4–20 h GPU 作业是预算而非本机性能成绩，先用三段实测更新。[R29]
+
 ## 截至核验日期的证据锚点
+
+三维与路径补充（2026-10-28，原实验成绩不变）：
+
+- **已核验定位，运行接线待验证：** `D:\Zenodo` 已不存在，实际数据根是 `G:\Archive\Zenodo`；CE-CSL 5,988 条预期视频路径全存在，CSL-Daily 原 1,086 样本在新根有同名文件。TFNet 来源权重与一个代表视频的 SHA256 匹配旧证据，但没有整库迁移内容认证。新运行显式解析 G 盘路径，保留冻结 manifest 中的历史路径与裁剪视频摘要，不能全仓替换 D 路径或把同名原片当作已匹配裁剪哈希。`G:\ML\temp_feture\ps2_matrix` 属工业过程实验，不能按其中模型名推断为手语权重。[R21]
+- **已核验资源，播放/语言验收待验证：** 本机 SignBridge HEAD `7ab6de38…` 的普通 dist 研究资源是 `unavailable` 占位；但 `docs/assets/signbridge-chrome-extension-motion-demo-20261022.zip` 保存完整 100 段动作。归档 SHA/CRC、143 文件清单、100 段姿态结构/有限值与 83 段资源摘要通过本轮静态核验；这不代表现场播放或语义正确。优先从完整包验证现有动作，避免仅因 dist 为空重复训练/重建；本机未找到上游文档引用的私有 `local-data/`、SOKE/SMPLer-X 依赖或完整训练产物。不要把远端源码能力、旧训练报告和本机可用文件混写。[R21]
 
 以下是历史运行记录，不是后续任务可直接复用的“当前通过”声明。
 
@@ -178,6 +204,22 @@
 | CSL-News 延迟（2026-10-25） | 端到端 5.54 s/条（P50 5.27、P95 9.42），RTF 0.643，10.78 条/分、47 帧/秒；姿态来自磁盘时 0.409 s/条 | 单进程独占 GPU、bf16、beam=4；并发、多实例与摄像头路径未测 |
 | CSL-Daily 本地 test 视频 1,086 条（2026-10-26） | Uni-Sign 视频端到端 BLEU-4 24.8157 / chrF 21.80 / 编辑相似度 0.4157 / exact 15（627 基线 24.9485 / 8）；同一批官方 pose BLEU-4 25.5846 / exact 18；SLRT corpus WER 0.3018（S1,154/D805/I522），对齐 mean 7.23 px | 1,086/1,176 子集（缺 90 条偏长句视频）；SLRT 为近似句段裁剪；Uni-Sign 视频路径非论文协议；统一上游参考打分，标注参考版本仅审计 |
 | P-1 执行（2026-10-26） | E00–E06 全部落地：E01 三路 50/50 逐字复现；E02 A/A2/B0 BLEU 24.8157/25.5846/12.2183、A/A2 oracle 26.598；E03 SLRT 风险 AUC 0.745 / raw ECE 0.304；E06 规则级联 +0.17 BLEU、A2 调用率 38.1%、错停优胜 5.2% | 1,086 为 retrospective_seen；E02/E03/E06 模型文本 imported；路由/校准 offline；人评 NOT_RUN；LLM/Jev BLOCKED；SLT/G2T 权重缺失 |
+
+## 动画工作台实施后的新坑（2026-10-28）
+
+- **待验证：同名 `pytorch_model.bin` 不是同一模型。** `models/external/SLRT_Online/pretrained_models/mBart/` 和 `mBART_zh_fullvocab/` 指向同一 250027 词表的全量 mBART 文件；作者 Text2Gloss 包配置为 6308 词表。不能仅凭文件名复制替换或宣称任务检查点存在。[核验记录](../research/spoken2sign-reuse-audit-2026-10-28.md)。
+
+- **更正：Text2Gloss 嵌入本机已有（2026-10-28，用户指出）。** `E:/githubproject/SignLanguage-Bridge/artifacts/slrt-gdrive-20261025/mBart_zh_t2g/` 含 gloss/text embeddings，两文件大小和 CRC32 与作者 ZIP 一致；之前只搜索 F/G 造成遗漏。该目录未见基础 `pytorch_model.bin` 与任务 checkpoint；其他小文件已另行取得，任务 checkpoint 仍待核实。详见[复用核验更正](../research/spoken2sign-reuse-audit-2026-10-28.md)。
+
+- **待验证：Text2Gloss 基础包不能冒充任务检查点。** 本次取得上游 Spoken2Sign 源码及作者 ZIP 的中央目录，包内有基础 mBART 和词表/嵌入，上游推理另查 `{dataset}_best.ckpt`，缺失时只记录后继续。必须显式检查检查点加载及任务身份，不能将未加载任务权重的运行当作有效翻译。[获取记录](../research/spoken2sign-reuse-audit-2026-10-28.md)。
+
+- **待验证：Spoken2Sign Text2Gloss 与 3D 词典不等于本地已可用。** 既往作者 `mBart_zh_t2g.zip` 仅有历史词表资产核对，本次定向搜索未找到可确认任务检查点、3D 词典与 connector 权重。上游 `motion_gen.py` 默认含 Phoenix 路径、缺词会静默跳过，且文件含 MPG 许可声明；不能直接照搬或宣称 CSL 端到端可用。需逐项核对任务权重、字典、许可并验证缺失处理。[免训练复用核验](../research/spoken2sign-reuse-audit-2026-10-28.md)。
+
+- **已修复：审核不能只绑定来源视频。** 同一 source_sha256 的重新拟合/改姿态新包，完整性校验可以合法通过，但旧动作批准不能继承。独立复核及负对照复现后，registry 绑定批准 ID、entry/clip 的 source/fitted 摘要和上游 1e-6 规范化姿态摘要。真实归档 83 段仍匹配；改姿态/fit 回归阻止继承。不能把 motion-only 批准升级为语言认证。[R23]
+- **已修复：取消必须覆盖加载阶段。** 原工作台在 fetch 期间禁用 Stop；迟到计划/动作可继续启动。现在请求期间 Stop 可用，AbortController 与代次门共同兜底。回归故意让 transport 忽略 abort，确认迟到响应仍不播放。[R23]
+- **已修复：控制操作不能依赖下一次 RAF。** 后台/节流环境下，暂停、定位和显示切换的时间或画面可能滞后；现在同步发布并绘制。先读取滑杆目标，再暂停，避免暂停回调覆盖用户定位值。隐藏 IAB 的截图本身也可能滞后，交付截图使用可见窗口核对。[R23]
+- **环境条件：隔离工作区不复制被忽略的配置。** 缺少 `configs/model_defaults.json` 触发历史路径回退，既有环境默认模型测试 4 项失败。核对并复制主目录相同的本地配置后通过；生产默认选择逻辑没有改动。记录配置差异，不要为让测试通过而切换模型或改写实验基线。[R23]
+- **待语言验收：工程闭环不是自由文本手语生成。** 100 段已注册和单条真实 Uni-Sign 视频请求/浏览器输入通过；未覆盖整句被阻止。手动改成另一个库内短语后的成功预览只证明编辑机制，不能称原识别句的正确生成。CSL 理解、人评、全部片段逐帧与稳定性能仍未验收。[R23]
 
 ## 证据索引与维护方式
 
@@ -201,6 +243,19 @@
 - [R18：CSL-Daily 视频补充测试（1,086 条）与参考口径更正](../reports/csldaily-video-slrt-unisign-full-1086-2026-10-26.md)：视频扩到 19,528 条、test 覆盖 1,086；新增 459 条补跑；统一上游参考下视频 24.82 vs 官方 pose 25.58（−0.77）、SLRT WER 30.18%；记录全角/半角参考文本造成的 ~2.8 BLEU 陷阱。
 - [R19：P-1 实验计划执行（E00–E06，2026-10-26）](../reports/p1-experiments-2026-10-26.md)：Pilot-50 三路 100% 复现、E02 同任务基线/oracle、E03 SLRT 校准、E04 GPU 性能、E05 前缀与未来帧审计、E06 Rule-only 级联；G0–G4 与 ADR。详细版：`docs/experiments/P-1/P1_EXECUTION_REPORT.md`，基础设施与证据：`experiments/p1/`。
 
+- [R20：CSL 三维动画路线评审与一手来源调研（2026-10-28）](../research/csl-3d-animation-route-review-2026-10-28.md)：SignBridge 固定源码/100 段资源边界、VLibras 分层、SOKE/SignAvatars/SGNify/MVSign、动作协议、许可标识、阶段与语言验收设计；运行/真人理解/端到端集成均 NOT_RUN。附 [SignBridge/VLibras 源码审计](../research/csl-animation-source-audit-2026-10-28.md)。
+- [R21：现有成果与 G 盘复用核验（2026-10-28）](../research/csl-animation-existing-assets-reuse-2026-10-28.md)：本机完整动作归档、候选资源目录、识别权重与数据迁移身份、D/G 路径边界；附 G 盘详细盘点和机器可读资源清单。本轮仅静态核验，模型推理/动作播放/语言理解均 NOT_RUN。
+- [R22：动画集成与画面/动作升级设计草案（2026-10-28）](../research/csl-animation-integration-and-visual-upgrade-design-2026-10-28.md)：本机 GLB/蒙皮、旧版少量实际浏览器播放、Blender 离线职责与三条工程路线；附集成代码审计。旧版能显示和播放不代表新集成、所有片段、性能或语义验收通过。
+
+- [R23：首期动画工作台工程验收](../reports/csl-animation-workspace-acceptance-2026-10-28.md)：100 段注册、83 motion-only 批准摘要、1067 Python/10 Node 通过、真实视频 API 与浏览器流程、审查修复和语言/Blender 未测边界。
+- [R24：动作与人物第一轮升级](../reports/animation-quality-upgrade-2026-11-06.md)：五段 Blender 烘焙、838 帧导出一致性、1079 Python/21 Node 通过、真实浏览器对照与下载及三项审查修复；语言理解、审美和通用接触/碰撞未验收。
+- [R25：残留抽搐与语料扩充核查](../reports/animation-jitter-and-corpus-expansion-2026-11-06.md)：100 段四阶段数值诊断、源跳变定位、当前视频/关键点/权重重盘点与视频到动作路线；抽搐质量未验收、未修改算法或批量生成新动作。
+- [R26：指定片段时序修复候选](../reports/targeted-animation-temporal-repair-2026-11-06.md)：用户指定片段、同轨源空间时序处理与 FK/IK、六段 1138 帧导出核验、1084 Python/26 Node、真实浏览器播放/下载；手形及语言待复核。
+- [R27：中国手语三维词典建设建议](../research/csl-3d-dictionary-construction-2026-11-06.md)：含义/实例/角色三层结构、公开三维姿态入口、视频对齐制作与独立审核、首批规模和工程接入建议；未实施新的词典或批量生成。
+- [R28：本机三维词典制作条件核查](../reports/local-csl-dictionary-readiness-2026-11-06.md)：硬件、四个 Python 环境、CUDA 算子、Blender/FFmpeg/WSL2 与限定资产搜索；支持工程试产，完整视频重建链尚未配置/实跑。
+- [R29：词典时间与资源估算](../reports/csl-dictionary-resource-estimate-2026-11-06.md)：首批 50 词/20 短语的两路线人工/机时/磁盘预算、实测导出与假设重建的区别；估算未替代单段实跑或语言验收。
+- [R30：中国手语三维可复用资源核查](../research/csl-reusable-resources-2026-11-06.md)：SOKE 公共目录、训练索引/本地编号匹配、ZIP 分段目录及单帧参数抽查；MVSign 访问/体积和不同语种资源边界。未下载完整三维包，未完成角色转换或语言验收。
+
 后续维护时在对应主题更新“触发条件 → 证据 → 避免办法”，给已解决项保留回归入口。新运行结果写新报告并在这里更新日期和索引；保留旧产物。完成条件是相关源码事实与证据边界都已核验，文档链接可用，未知事项有明确状态。
 
 [R1]: ../reports/unisign-cecsl-gap-diagnosis-2026-10-24.md
@@ -221,6 +276,17 @@
 [R17]: ../reports/csldaily-video-slrt-unisign-2026-10-26.md
 [R18]: ../reports/csldaily-video-slrt-unisign-full-1086-2026-10-26.md
 [R19]: ../reports/p1-experiments-2026-10-26.md
+[R20]: ../research/csl-3d-animation-route-review-2026-10-28.md
+[R21]: ../research/csl-animation-existing-assets-reuse-2026-10-28.md
+[R22]: ../research/csl-animation-integration-and-visual-upgrade-design-2026-10-28.md
+[R23]: ../reports/csl-animation-workspace-acceptance-2026-10-28.md
+[R24]: ../reports/animation-quality-upgrade-2026-11-06.md
+[R25]: ../reports/animation-jitter-and-corpus-expansion-2026-11-06.md
+[R26]: ../reports/targeted-animation-temporal-repair-2026-11-06.md
+[R27]: ../research/csl-3d-dictionary-construction-2026-11-06.md
+[R28]: ../reports/local-csl-dictionary-readiness-2026-11-06.md
+[R29]: ../reports/csl-dictionary-resource-estimate-2026-11-06.md
+[R30]: ../research/csl-reusable-resources-2026-11-06.md
 
 
 
