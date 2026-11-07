@@ -1,0 +1,58 @@
+{
+  "neutral_sha256": "a7942f7a69e8fb078d50767e85944c0e59b47dc20b40479ab86d8c16513717c4",
+  "original_expression_sha256": "a945082a790f0168fd5e44f25249d46d4cc678becb5a4d164db6e8d9cf22da0b",
+  "actual_glb_structural_binary_invariants_pass": true,
+  "joint_count": 227,
+  "skin_count": 1,
+  "skinned_mesh_count": 74,
+  "animation_count": 0,
+  "inverse_binds_bit_exact": true,
+  "source_binary_bytes_preserved_outside_authorized_ranges": true,
+  "original_neutral_difference_only_16_node_translations": true,
+  "topology": [
+    {
+      "object": "Godette continuous trousers - pelvis crotch legs",
+      "welded_vertices": 21350,
+      "triangles": 42434,
+      "edges": 63785,
+      "components": 1,
+      "boundary_loops": [
+        140,
+        64,
+        64
+      ],
+      "boundary_degrees_two": true,
+      "edges_more_than_two_faces": 0,
+      "euler_characteristic": -1,
+      "zero_area_triangles": 0,
+      "signed_volume_m3": 0.010045131668448448
+    },
+    {
+      "object": "Closed outsole plate -1",
+      "welded_vertices": 128,
+      "triangles": 252,
+      "edges": 378,
+      "components": 1,
+      "boundary_loops": [],
+      "boundary_degrees_two": true,
+      "edges_more_than_two_faces": 0,
+      "euler_characteristic": 2,
+      "zero_area_triangles": 0,
+      "signed_volume_m3": 8.214269473683089e-05
+    },
+    {
+      "object": "Closed outsole plate 1",
+      "welded_vertices": 128,
+      "triangles": 252,
+      "edges": 378,
+      "components": 1,
+      "boundary_loops": [],
+      "boundary_degrees_two": true,
+      "edges_more_than_two_faces": 0,
+      "euler_characteristic": 2,
+      "zero_area_triangles": 0,
+      "signed_volume_m3": 8.214267290895805e-05
+    }
+  ],
+  "pass": true
+}

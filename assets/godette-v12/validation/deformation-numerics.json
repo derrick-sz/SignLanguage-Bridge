@@ -1,0 +1,715 @@
+{
+  "candidate_blend_sha256": "38666f464943ce2e5e9498ce6d461130e689aafce1c92304ea91a568de0420e4",
+  "neutral_glb_sha256": "a7942f7a69e8fb078d50767e85944c0e59b47dc20b40479ab86d8c16513717c4",
+  "method": "CPU glTF linear blend skinning with hierarchy, preserved inverse binds, all influence sets; mapped every primitive using source modifier-evaluated unskinned positions, compared to Blender native default evaluated vertices. Native default is intentionally changed at 16 Lip translations only.",
+  "meshes": 74,
+  "primitives": 78,
+  "exported_vertices_including_splits": 300447,
+  "maximum_world_error_m": 1.2177949916659917e-06,
+  "tolerance_m": 3e-06,
+  "pass": true,
+  "results": [
+    {
+      "name": "Object_7",
+      "primitive": 0,
+      "vertices": 1978,
+      "glb_vs_blend_default_max_error_m": 7.982342246308976e-07,
+      "glb_vs_blend_default_rms_m": 3.253604535645654e-07,
+      "source_to_glb_mapping_max_error_m": 5.569200027558878e-08,
+      "weight_sum_max_error": 1.1175870895385742e-07
+    },
+    {
+      "name": "Object_7",
+      "primitive": 1,
+      "vertices": 2530,
+      "glb_vs_blend_default_max_error_m": 1.2177949916659917e-06,
+      "glb_vs_blend_default_rms_m": 6.059521878167422e-07,
+      "source_to_glb_mapping_max_error_m": 6.115211426552713e-08,
+      "weight_sum_max_error": 8.940696716308594e-08
+    },
+    {
+      "name": "Object_7",
+      "primitive": 2,
+      "vertices": 48,
+      "glb_vs_blend_default_max_error_m": 4.848340562271139e-07,
+      "glb_vs_blend_default_rms_m": 3.2208955276185755e-07,
+      "source_to_glb_mapping_max_error_m": 5.242792100295154e-08,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "Object_7",
+      "primitive": 3,
+      "vertices": 106,
+      "glb_vs_blend_default_max_error_m": 8.278120516138634e-07,
+      "glb_vs_blend_default_rms_m": 5.316045420151177e-07,
+      "source_to_glb_mapping_max_error_m": 5.535433961893402e-08,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "Object_7",
+      "primitive": 4,
+      "vertices": 184,
+      "glb_vs_blend_default_max_error_m": 5.067076438808779e-07,
+      "glb_vs_blend_default_rms_m": 3.2221601512686873e-07,
+      "source_to_glb_mapping_max_error_m": 5.458031081846533e-08,
+      "weight_sum_max_error": 2.9802322387695312e-08
+    },
+    {
+      "name": "Clean ankle -1",
+      "primitive": 0,
+      "vertices": 336,
+      "glb_vs_blend_default_max_error_m": 4.3082428482714204e-07,
+      "glb_vs_blend_default_rms_m": 4.137187957969705e-07,
+      "source_to_glb_mapping_max_error_m": 7.259232185352891e-09,
+      "weight_sum_max_error": 2.7939677238464355e-08
+    },
+    {
+      "name": "Clean ankle 1",
+      "primitive": 0,
+      "vertices": 336,
+      "glb_vs_blend_default_max_error_m": 4.708983187477332e-07,
+      "glb_vs_blend_default_rms_m": 4.0249638300755804e-07,
+      "source_to_glb_mapping_max_error_m": 7.259232185352891e-09,
+      "weight_sum_max_error": 2.7939677238464355e-08
+    },
+    {
+      "name": "Clean instep -1",
+      "primitive": 0,
+      "vertices": 323,
+      "glb_vs_blend_default_max_error_m": 4.3796927474727376e-07,
+      "glb_vs_blend_default_rms_m": 4.188758134477415e-07,
+      "source_to_glb_mapping_max_error_m": 5.727596645978468e-09,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "Clean instep 1",
+      "primitive": 0,
+      "vertices": 323,
+      "glb_vs_blend_default_max_error_m": 4.928919161852243e-07,
+      "glb_vs_blend_default_rms_m": 4.462682379734053e-07,
+      "source_to_glb_mapping_max_error_m": 5.213362480865497e-09,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "Dark cloth flat -1",
+      "primitive": 0,
+      "vertices": 8704,
+      "glb_vs_blend_default_max_error_m": 4.571331902049824e-07,
+      "glb_vs_blend_default_rms_m": 4.193814289948656e-07,
+      "source_to_glb_mapping_max_error_m": 9.720307250575187e-09,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "Dark cloth flat 1",
+      "primitive": 0,
+      "vertices": 8704,
+      "glb_vs_blend_default_max_error_m": 5.050656081838472e-07,
+      "glb_vs_blend_default_rms_m": 4.4666966900350897e-07,
+      "source_to_glb_mapping_max_error_m": 9.638978548999997e-09,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "Flat thin sole -1",
+      "primitive": 0,
+      "vertices": 11275,
+      "glb_vs_blend_default_max_error_m": 4.5512388096240853e-07,
+      "glb_vs_blend_default_rms_m": 4.217097969983187e-07,
+      "source_to_glb_mapping_max_error_m": 9.24221732276071e-09,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "Flat thin sole 1",
+      "primitive": 0,
+      "vertices": 11275,
+      "glb_vs_blend_default_max_error_m": 5.217856927754605e-07,
+      "glb_vs_blend_default_rms_m": 4.4993021186956337e-07,
+      "source_to_glb_mapping_max_error_m": 9.568442659998095e-09,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "Frog closure loop",
+      "primitive": 0,
+      "vertices": 4235,
+      "glb_vs_blend_default_max_error_m": 4.34454031624946e-07,
+      "glb_vs_blend_default_rms_m": 3.258983202834597e-07,
+      "source_to_glb_mapping_max_error_m": 5.5189530328014305e-08,
+      "weight_sum_max_error": 2.9802322387695312e-08
+    },
+    {
+      "name": "Frog closure loop.001",
+      "primitive": 0,
+      "vertices": 4235,
+      "glb_vs_blend_default_max_error_m": 4.364743898791062e-07,
+      "glb_vs_blend_default_rms_m": 3.212536660351365e-07,
+      "source_to_glb_mapping_max_error_m": 5.5189530328014305e-08,
+      "weight_sum_max_error": 2.9802322387695312e-08
+    },
+    {
+      "name": "Frog closure loop.002",
+      "primitive": 0,
+      "vertices": 4235,
+      "glb_vs_blend_default_max_error_m": 3.437727958987173e-07,
+      "glb_vs_blend_default_rms_m": 2.9676072389693186e-07,
+      "source_to_glb_mapping_max_error_m": 5.538508515552151e-08,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "Frog closure loop.003",
+      "primitive": 0,
+      "vertices": 4235,
+      "glb_vs_blend_default_max_error_m": 3.3991442790810905e-07,
+      "glb_vs_blend_default_rms_m": 2.9719863207898117e-07,
+      "source_to_glb_mapping_max_error_m": 5.538508515552151e-08,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "Godette bare wrist bridge -1",
+      "primitive": 0,
+      "vertices": 336,
+      "glb_vs_blend_default_max_error_m": 4.727457042386506e-07,
+      "glb_vs_blend_default_rms_m": 3.353021789625598e-07,
+      "source_to_glb_mapping_max_error_m": 5.96399343325369e-08,
+      "weight_sum_max_error": 2.9802322387695312e-08
+    },
+    {
+      "name": "Godette bare wrist bridge 1",
+      "primitive": 0,
+      "vertices": 336,
+      "glb_vs_blend_default_max_error_m": 7.178730295530274e-07,
+      "glb_vs_blend_default_rms_m": 5.651162585468864e-07,
+      "source_to_glb_mapping_max_error_m": 5.987628794042718e-08,
+      "weight_sum_max_error": 2.9802322387695312e-08
+    },
+    {
+      "name": "Godette continuous trousers - pelvis crotch legs",
+      "primitive": 0,
+      "vertices": 21350,
+      "glb_vs_blend_default_max_error_m": 4.5170101810830755e-07,
+      "glb_vs_blend_default_rms_m": 3.1535906442307107e-07,
+      "source_to_glb_mapping_max_error_m": 5.5511621267855054e-08,
+      "weight_sum_max_error": 1.1426720902818488e-07
+    },
+    {
+      "name": "Gold cloud Chest",
+      "primitive": 0,
+      "vertices": 9515,
+      "glb_vs_blend_default_max_error_m": 5.285048037629496e-07,
+      "glb_vs_blend_default_rms_m": 3.2851537282359705e-07,
+      "source_to_glb_mapping_max_error_m": 5.560022964389437e-08,
+      "weight_sum_max_error": 1.1827796697616577e-07
+    },
+    {
+      "name": "Gold cloud Chest.001",
+      "primitive": 0,
+      "vertices": 9515,
+      "glb_vs_blend_default_max_error_m": 5.994555065560933e-07,
+      "glb_vs_blend_default_rms_m": 3.8007521131097554e-07,
+      "source_to_glb_mapping_max_error_m": 5.541285436527039e-08,
+      "weight_sum_max_error": 1.2014061212539673e-07
+    },
+    {
+      "name": "Gold cloud Chest.002",
+      "primitive": 0,
+      "vertices": 9515,
+      "glb_vs_blend_default_max_error_m": 4.1989646532746636e-07,
+      "glb_vs_blend_default_rms_m": 3.141026043481961e-07,
+      "source_to_glb_mapping_max_error_m": 5.566393150129342e-08,
+      "weight_sum_max_error": 2.9802322387695312e-08
+    },
+    {
+      "name": "Gold cloud Hem",
+      "primitive": 0,
+      "vertices": 9515,
+      "glb_vs_blend_default_max_error_m": 3.835747001616359e-07,
+      "glb_vs_blend_default_rms_m": 2.672412575332084e-07,
+      "source_to_glb_mapping_max_error_m": 5.568114293628066e-08,
+      "weight_sum_max_error": 6.565824151039124e-08
+    },
+    {
+      "name": "Gold cloud Hem.001",
+      "primitive": 0,
+      "vertices": 9515,
+      "glb_vs_blend_default_max_error_m": 3.693537283966901e-07,
+      "glb_vs_blend_default_rms_m": 2.680742686187009e-07,
+      "source_to_glb_mapping_max_error_m": 5.584491105703707e-08,
+      "weight_sum_max_error": 9.685754776000977e-08
+    },
+    {
+      "name": "Gold cloud Hem.002",
+      "primitive": 0,
+      "vertices": 9515,
+      "glb_vs_blend_default_max_error_m": 3.708211001793102e-07,
+      "glb_vs_blend_default_rms_m": 2.7134506136393055e-07,
+      "source_to_glb_mapping_max_error_m": 5.5680167057475014e-08,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "Gold cloud tail Chest",
+      "primitive": 0,
+      "vertices": 715,
+      "glb_vs_blend_default_max_error_m": 4.1478782019942597e-07,
+      "glb_vs_blend_default_rms_m": 3.2702915788535536e-07,
+      "source_to_glb_mapping_max_error_m": 5.546776135944365e-08,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "Gold cloud tail Hem",
+      "primitive": 0,
+      "vertices": 715,
+      "glb_vs_blend_default_max_error_m": 3.5524488085953406e-07,
+      "glb_vs_blend_default_rms_m": 2.705380466689731e-07,
+      "source_to_glb_mapping_max_error_m": 5.547919892112626e-08,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "HR_EarBackWisp_L",
+      "primitive": 0,
+      "vertices": 742,
+      "glb_vs_blend_default_max_error_m": 4.4617132012136055e-07,
+      "glb_vs_blend_default_rms_m": 2.623382920467574e-07,
+      "source_to_glb_mapping_max_error_m": 5.5302342260826886e-08,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "HR_EarBackWisp_R",
+      "primitive": 0,
+      "vertices": 742,
+      "glb_vs_blend_default_max_error_m": 4.1399050682090066e-07,
+      "glb_vs_blend_default_rms_m": 2.5268770839915974e-07,
+      "source_to_glb_mapping_max_error_m": 5.538040152153808e-08,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "HR_EarFrontFineLock_L",
+      "primitive": 0,
+      "vertices": 982,
+      "glb_vs_blend_default_max_error_m": 4.4614138297263727e-07,
+      "glb_vs_blend_default_rms_m": 2.646279533060354e-07,
+      "source_to_glb_mapping_max_error_m": 5.537729361668701e-08,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "HR_EarFrontFineLock_R",
+      "primitive": 0,
+      "vertices": 982,
+      "glb_vs_blend_default_max_error_m": 4.279825025031456e-07,
+      "glb_vs_blend_default_rms_m": 2.557517000997039e-07,
+      "source_to_glb_mapping_max_error_m": 5.528767725308401e-08,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "HR_GatheredSide_L_00",
+      "primitive": 0,
+      "vertices": 1222,
+      "glb_vs_blend_default_max_error_m": 4.2387381286786234e-07,
+      "glb_vs_blend_default_rms_m": 2.637745269274991e-07,
+      "source_to_glb_mapping_max_error_m": 5.519540708347891e-08,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "HR_GatheredSide_L_01",
+      "primitive": 0,
+      "vertices": 1222,
+      "glb_vs_blend_default_max_error_m": 4.618865031302752e-07,
+      "glb_vs_blend_default_rms_m": 2.649519328253865e-07,
+      "source_to_glb_mapping_max_error_m": 5.5218404108788334e-08,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "HR_GatheredSide_L_02",
+      "primitive": 0,
+      "vertices": 1222,
+      "glb_vs_blend_default_max_error_m": 4.3854395835067457e-07,
+      "glb_vs_blend_default_rms_m": 2.6743129208856215e-07,
+      "source_to_glb_mapping_max_error_m": 5.536790763445403e-08,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "HR_GatheredSide_L_03",
+      "primitive": 0,
+      "vertices": 1222,
+      "glb_vs_blend_default_max_error_m": 4.7211594802324855e-07,
+      "glb_vs_blend_default_rms_m": 2.713577446530495e-07,
+      "source_to_glb_mapping_max_error_m": 5.5318863968034416e-08,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "HR_GatheredSide_L_04",
+      "primitive": 0,
+      "vertices": 1222,
+      "glb_vs_blend_default_max_error_m": 4.551278158041792e-07,
+      "glb_vs_blend_default_rms_m": 2.7292940636822244e-07,
+      "source_to_glb_mapping_max_error_m": 5.523796498974828e-08,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "HR_GatheredSide_R_00",
+      "primitive": 0,
+      "vertices": 1222,
+      "glb_vs_blend_default_max_error_m": 4.407000581203324e-07,
+      "glb_vs_blend_default_rms_m": 2.6480971727291315e-07,
+      "source_to_glb_mapping_max_error_m": 5.518730661494945e-08,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "HR_GatheredSide_R_01",
+      "primitive": 0,
+      "vertices": 1222,
+      "glb_vs_blend_default_max_error_m": 4.4438425602902845e-07,
+      "glb_vs_blend_default_rms_m": 2.6587936190818524e-07,
+      "source_to_glb_mapping_max_error_m": 5.5218404108788334e-08,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "HR_GatheredSide_R_02",
+      "primitive": 0,
+      "vertices": 1222,
+      "glb_vs_blend_default_max_error_m": 4.364101148563218e-07,
+      "glb_vs_blend_default_rms_m": 2.6737945926427894e-07,
+      "source_to_glb_mapping_max_error_m": 5.524038151949386e-08,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "HR_GatheredSide_R_03",
+      "primitive": 0,
+      "vertices": 1222,
+      "glb_vs_blend_default_max_error_m": 4.107458615268187e-07,
+      "glb_vs_blend_default_rms_m": 2.701098429596009e-07,
+      "source_to_glb_mapping_max_error_m": 5.536128933087302e-08,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "HR_GatheredSide_R_04",
+      "primitive": 0,
+      "vertices": 1222,
+      "glb_vs_blend_default_max_error_m": 4.5591693858666167e-07,
+      "glb_vs_blend_default_rms_m": 2.7415954197585675e-07,
+      "source_to_glb_mapping_max_error_m": 5.505649979002081e-08,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "HR_LongPony_BackSheen",
+      "primitive": 0,
+      "vertices": 2714,
+      "glb_vs_blend_default_max_error_m": 5.409858196455328e-07,
+      "glb_vs_blend_default_rms_m": 3.1592946678497346e-07,
+      "source_to_glb_mapping_max_error_m": 5.542620621771823e-08,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "HR_LongPony_Center",
+      "primitive": 0,
+      "vertices": 2714,
+      "glb_vs_blend_default_max_error_m": 5.151437966666188e-07,
+      "glb_vs_blend_default_rms_m": 3.094663726772403e-07,
+      "source_to_glb_mapping_max_error_m": 5.5319596826075974e-08,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "HR_LongPony_InwardCurl",
+      "primitive": 0,
+      "vertices": 2330,
+      "glb_vs_blend_default_max_error_m": 5.019023476789263e-07,
+      "glb_vs_blend_default_rms_m": 3.052679831372989e-07,
+      "source_to_glb_mapping_max_error_m": 5.544301179553357e-08,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "HR_LongPony_Left",
+      "primitive": 0,
+      "vertices": 2714,
+      "glb_vs_blend_default_max_error_m": 5.228977500229583e-07,
+      "glb_vs_blend_default_rms_m": 3.06525280483887e-07,
+      "source_to_glb_mapping_max_error_m": 5.5387850044077025e-08,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "HR_LongPony_LeftOuter",
+      "primitive": 0,
+      "vertices": 2330,
+      "glb_vs_blend_default_max_error_m": 5.039181858342214e-07,
+      "glb_vs_blend_default_rms_m": 3.0922442645388586e-07,
+      "source_to_glb_mapping_max_error_m": 5.560731832834992e-08,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "HR_LongPony_Right",
+      "primitive": 0,
+      "vertices": 2714,
+      "glb_vs_blend_default_max_error_m": 5.234198684094554e-07,
+      "glb_vs_blend_default_rms_m": 3.091762727998624e-07,
+      "source_to_glb_mapping_max_error_m": 5.563418478945241e-08,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "HR_LongPony_RightOuter",
+      "primitive": 0,
+      "vertices": 2330,
+      "glb_vs_blend_default_max_error_m": 5.378020434942537e-07,
+      "glb_vs_blend_default_rms_m": 3.096767882855289e-07,
+      "source_to_glb_mapping_max_error_m": 5.5423277380901225e-08,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "HR_PartReturn_00",
+      "primitive": 0,
+      "vertices": 982,
+      "glb_vs_blend_default_max_error_m": 4.0896234720329036e-07,
+      "glb_vs_blend_default_rms_m": 2.3683027918725007e-07,
+      "source_to_glb_mapping_max_error_m": 5.5296731886467425e-08,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "HR_PartReturn_01",
+      "primitive": 0,
+      "vertices": 982,
+      "glb_vs_blend_default_max_error_m": 4.0363826983029653e-07,
+      "glb_vs_blend_default_rms_m": 2.481547454067013e-07,
+      "source_to_glb_mapping_max_error_m": 5.528739183917204e-08,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "HR_PonyFlowAccent_L",
+      "primitive": 0,
+      "vertices": 1138,
+      "glb_vs_blend_default_max_error_m": 4.883792654273226e-07,
+      "glb_vs_blend_default_rms_m": 3.151781887471965e-07,
+      "source_to_glb_mapping_max_error_m": 5.527764066195717e-08,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "HR_PonyFlowAccent_R",
+      "primitive": 0,
+      "vertices": 1138,
+      "glb_vs_blend_default_max_error_m": 4.896476768991604e-07,
+      "glb_vs_blend_default_rms_m": 3.15496871622503e-07,
+      "source_to_glb_mapping_max_error_m": 5.5408417245655264e-08,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "HR_PonyRoot_DarkBand",
+      "primitive": 0,
+      "vertices": 1792,
+      "glb_vs_blend_default_max_error_m": 4.756515761745268e-07,
+      "glb_vs_blend_default_rms_m": 2.979124880300131e-07,
+      "source_to_glb_mapping_max_error_m": 5.526749516128322e-08,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "HR_PonyRoot_Gather",
+      "primitive": 0,
+      "vertices": 862,
+      "glb_vs_blend_default_max_error_m": 4.826470852572937e-07,
+      "glb_vs_blend_default_rms_m": 2.9259414620477636e-07,
+      "source_to_glb_mapping_max_error_m": 5.52452822496374e-08,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "HR_SideSweep_Fringe_00",
+      "primitive": 0,
+      "vertices": 982,
+      "glb_vs_blend_default_max_error_m": 4.1147148847661974e-07,
+      "glb_vs_blend_default_rms_m": 2.2358110830515536e-07,
+      "source_to_glb_mapping_max_error_m": 5.5357611235847924e-08,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "HR_SideSweep_Fringe_01",
+      "primitive": 0,
+      "vertices": 982,
+      "glb_vs_blend_default_max_error_m": 4.106762635351025e-07,
+      "glb_vs_blend_default_rms_m": 2.308824890128648e-07,
+      "source_to_glb_mapping_max_error_m": 5.5393659605164575e-08,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "HR_SideSweep_Fringe_02",
+      "primitive": 0,
+      "vertices": 982,
+      "glb_vs_blend_default_max_error_m": 4.390435541144895e-07,
+      "glb_vs_blend_default_rms_m": 2.39880509363791e-07,
+      "source_to_glb_mapping_max_error_m": 5.5480684433081756e-08,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "HR_SideSweep_Fringe_03",
+      "primitive": 0,
+      "vertices": 982,
+      "glb_vs_blend_default_max_error_m": 3.6484040153793115e-07,
+      "glb_vs_blend_default_rms_m": 2.2111834690511762e-07,
+      "source_to_glb_mapping_max_error_m": 5.5529196297939356e-08,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "HR_SweptScalp_Cap",
+      "primitive": 0,
+      "vertices": 22800,
+      "glb_vs_blend_default_max_error_m": 4.995393205534444e-07,
+      "glb_vs_blend_default_rms_m": 2.66867639613339e-07,
+      "source_to_glb_mapping_max_error_m": 5.538299418374906e-08,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "HR_TempleWisp_L",
+      "primitive": 0,
+      "vertices": 982,
+      "glb_vs_blend_default_max_error_m": 4.223179626240385e-07,
+      "glb_vs_blend_default_rms_m": 2.414769623360255e-07,
+      "source_to_glb_mapping_max_error_m": 5.569185410468016e-08,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "HR_TempleWisp_R",
+      "primitive": 0,
+      "vertices": 982,
+      "glb_vs_blend_default_max_error_m": 3.796839335513825e-07,
+      "glb_vs_blend_default_rms_m": 2.3507956501396955e-07,
+      "source_to_glb_mapping_max_error_m": 5.532092844745146e-08,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "Ivory inner panel",
+      "primitive": 0,
+      "vertices": 57,
+      "glb_vs_blend_default_max_error_m": 4.3159329170934545e-07,
+      "glb_vs_blend_default_rms_m": 2.9462716852662006e-07,
+      "source_to_glb_mapping_max_error_m": 5.1610235699412895e-08,
+      "weight_sum_max_error": 6.984919309616089e-08
+    },
+    {
+      "name": "Jade collar edge",
+      "primitive": 0,
+      "vertices": 14091,
+      "glb_vs_blend_default_max_error_m": 4.832847199489344e-07,
+      "glb_vs_blend_default_rms_m": 3.570674246425712e-07,
+      "source_to_glb_mapping_max_error_m": 4.498899767247473e-08,
+      "weight_sum_max_error": 1.4901161193847656e-07
+    },
+    {
+      "name": "Jade cuff -1",
+      "primitive": 0,
+      "vertices": 896,
+      "glb_vs_blend_default_max_error_m": 6.667968052174177e-07,
+      "glb_vs_blend_default_rms_m": 5.18110787795371e-07,
+      "source_to_glb_mapping_max_error_m": 5.640777437453761e-08,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "Jade cuff 1",
+      "primitive": 0,
+      "vertices": 896,
+      "glb_vs_blend_default_max_error_m": 8.180793577977442e-07,
+      "glb_vs_blend_default_rms_m": 6.782096138442065e-07,
+      "source_to_glb_mapping_max_error_m": 5.638303188257425e-08,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "Jade frog closure",
+      "primitive": 0,
+      "vertices": 715,
+      "glb_vs_blend_default_max_error_m": 4.1784145902037446e-07,
+      "glb_vs_blend_default_rms_m": 3.282174094458944e-07,
+      "source_to_glb_mapping_max_error_m": 5.03081268935921e-08,
+      "weight_sum_max_error": 2.9802322387695312e-08
+    },
+    {
+      "name": "Jade frog closure.001",
+      "primitive": 0,
+      "vertices": 715,
+      "glb_vs_blend_default_max_error_m": 3.3843391548408855e-07,
+      "glb_vs_blend_default_rms_m": 2.937969850853228e-07,
+      "source_to_glb_mapping_max_error_m": 5.410081062519699e-08,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "Jade front piping",
+      "primitive": 0,
+      "vertices": 2299,
+      "glb_vs_blend_default_max_error_m": 4.4348710887844696e-07,
+      "glb_vs_blend_default_rms_m": 3.0134817140027936e-07,
+      "source_to_glb_mapping_max_error_m": 5.537455920834147e-08,
+      "weight_sum_max_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Jade front piping.001",
+      "primitive": 0,
+      "vertices": 2299,
+      "glb_vs_blend_default_max_error_m": 4.382289573782074e-07,
+      "glb_vs_blend_default_rms_m": 3.0045990776296695e-07,
+      "source_to_glb_mapping_max_error_m": 5.537455920834147e-08,
+      "weight_sum_max_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Jade hem binding",
+      "primitive": 0,
+      "vertices": 14091,
+      "glb_vs_blend_default_max_error_m": 3.4695672902311465e-07,
+      "glb_vs_blend_default_rms_m": 2.5384905275954986e-07,
+      "source_to_glb_mapping_max_error_m": 2.8421291035278966e-08,
+      "weight_sum_max_error": 2.9802322387695312e-08
+    },
+    {
+      "name": "Mandarin jacket - front and back",
+      "primitive": 0,
+      "vertices": 34026,
+      "glb_vs_blend_default_max_error_m": 9.737303793559945e-07,
+      "glb_vs_blend_default_rms_m": 3.43879304174361e-07,
+      "source_to_glb_mapping_max_error_m": 5.554637150911902e-08,
+      "weight_sum_max_error": 1.5087425708770752e-07
+    },
+    {
+      "name": "Seven-eighth sleeve -1",
+      "primitive": 0,
+      "vertices": 7554,
+      "glb_vs_blend_default_max_error_m": 6.721071990690278e-07,
+      "glb_vs_blend_default_rms_m": 4.34048140498134e-07,
+      "source_to_glb_mapping_max_error_m": 5.6876280632039854e-08,
+      "weight_sum_max_error": 2.9802322387695312e-08
+    },
+    {
+      "name": "Seven-eighth sleeve 1",
+      "primitive": 0,
+      "vertices": 7554,
+      "glb_vs_blend_default_max_error_m": 1.0164847936108246e-06,
+      "glb_vs_blend_default_rms_m": 7.083597050721592e-07,
+      "source_to_glb_mapping_max_error_m": 5.68786422700583e-08,
+      "weight_sum_max_error": 2.9802322387695312e-08
+    },
+    {
+      "name": "Tailored princess seam -1",
+      "primitive": 0,
+      "vertices": 891,
+      "glb_vs_blend_default_max_error_m": 4.4631907099385897e-07,
+      "glb_vs_blend_default_rms_m": 2.7806224151981964e-07,
+      "source_to_glb_mapping_max_error_m": 5.54260491803523e-08,
+      "weight_sum_max_error": 1.0523945093154907e-07
+    },
+    {
+      "name": "Tailored princess seam 1",
+      "primitive": 0,
+      "vertices": 891,
+      "glb_vs_blend_default_max_error_m": 5.69023392594298e-07,
+      "glb_vs_blend_default_rms_m": 2.831760733198608e-07,
+      "source_to_glb_mapping_max_error_m": 5.54260491803523e-08,
+      "weight_sum_max_error": 1.0523945093154907e-07
+    },
+    {
+      "name": "Closed outsole plate -1",
+      "primitive": 0,
+      "vertices": 384,
+      "glb_vs_blend_default_max_error_m": 4.4233499288166433e-07,
+      "glb_vs_blend_default_rms_m": 4.2182339292351496e-07,
+      "source_to_glb_mapping_max_error_m": 7.0840666121425305e-09,
+      "weight_sum_max_error": 0.0
+    },
+    {
+      "name": "Closed outsole plate 1",
+      "primitive": 0,
+      "vertices": 384,
+      "glb_vs_blend_default_max_error_m": 4.887416965068614e-07,
+      "glb_vs_blend_default_rms_m": 4.504067114467728e-07,
+      "source_to_glb_mapping_max_error_m": 8.159273966515218e-09,
+      "weight_sum_max_error": 0.0
+    }
+  ]
+}

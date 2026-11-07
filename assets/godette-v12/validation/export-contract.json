@@ -1,0 +1,171 @@
+{
+  "schema": "godette-v12-export-contract-v2",
+  "source_glb_sha256": "e4a5766d98ab53871415da3ef4609c4848386c8b4de2958d5e420a8d7524d476",
+  "source_blend_sha256": "b03224d8683604848b1a241c4a2178bc669124abb1ae005bc92b99495b0b0f77",
+  "candidate_blend_sha256": "38666f464943ce2e5e9498ce6d461130e689aafce1c92304ea91a568de0420e4",
+  "preset_sha256": "0901d9e1fee59872989002eb4856768778636cb7f9cb36059359360dd2dbb9c2",
+  "original_expression_glb_sha256": "a945082a790f0168fd5e44f25249d46d4cc678becb5a4d164db6e8d9cf22da0b",
+  "neutral_glb_sha256": "a7942f7a69e8fb078d50767e85944c0e59b47dc20b40479ab86d8c16513717c4",
+  "geometry_changed_objects": [
+    "Clean ankle -1",
+    "Clean ankle 1",
+    "Dark cloth flat -1",
+    "Dark cloth flat 1",
+    "Flat thin sole -1",
+    "Flat thin sole 1",
+    "Godette continuous trousers - pelvis crotch legs"
+  ],
+  "weight_changed_objects": [
+    "Clean ankle -1",
+    "Clean ankle 1"
+  ],
+  "appended_meshes": [
+    {
+      "object": "Closed outsole plate -1",
+      "raw_vertices": 128,
+      "exported_vertices_including_normal_splits": 384,
+      "triangles": 252,
+      "foot_weights": {
+        "maximum_float32_normalization_delta": 0.0,
+        "small_positive_weights_preserved": 0,
+        "maximum_influences": 1
+      }
+    },
+    {
+      "object": "Closed outsole plate 1",
+      "raw_vertices": 128,
+      "exported_vertices_including_normal_splits": 384,
+      "triangles": 252,
+      "foot_weights": {
+        "maximum_float32_normalization_delta": 0.0,
+        "small_positive_weights_preserved": 0,
+        "maximum_influences": 1
+      }
+    }
+  ],
+  "default_pose_changed_bones": [
+    "Lip_L.001_64",
+    "Lip_L.002_62",
+    "Lip_L.003_5",
+    "Lip_L.004_66",
+    "Lip_L.005_67",
+    "Lip_L.006_7",
+    "Lip_L.007_8",
+    "Lip_Lower_6",
+    "Lip_R.001_68",
+    "Lip_R.002_63",
+    "Lip_R.003_9",
+    "Lip_R.004_69",
+    "Lip_R.005_70",
+    "Lip_R.006_10",
+    "Lip_R.007_11",
+    "Lip_Upper_65"
+  ],
+  "changed_existing_accessor_ids": [
+    0,
+    1,
+    2,
+    3,
+    6,
+    7,
+    8,
+    9,
+    22,
+    23,
+    27,
+    28,
+    31,
+    32,
+    37,
+    38,
+    71,
+    72
+  ],
+  "preserved": {
+    "bone_count": 227,
+    "bone_names_order_parent_rest_exact": true,
+    "inverse_bind_matrices_bit_exact": true,
+    "existing_weights_bit_exact_except_two_generated_ankles": true,
+    "all_existing_uvs_bit_exact": true,
+    "all_existing_indices_bit_exact": true,
+    "all_materials_images_textures_exact": true,
+    "face_hand_raw_coordinates_weights_uvs_topology_exact": true,
+    "skinned_mesh_count": 74,
+    "animations": 0
+  },
+  "mapping": [
+    {
+      "object": "Clean ankle -1",
+      "raw_vertices": 336,
+      "glb_vertices": 336,
+      "mapping_world_max_error_m": 7.259232185352891e-09,
+      "original_normal_max_error": 6.472324124677705e-05,
+      "new_world_position_float32_max_error_m": 7.329989128013261e-09
+    },
+    {
+      "object": "Clean ankle 1",
+      "raw_vertices": 336,
+      "glb_vertices": 336,
+      "mapping_world_max_error_m": 7.259232185352891e-09,
+      "original_normal_max_error": 6.474587976245171e-05,
+      "new_world_position_float32_max_error_m": 7.362245508043723e-09
+    },
+    {
+      "object": "Dark cloth flat -1",
+      "raw_vertices": 8704,
+      "glb_vertices": 8704,
+      "mapping_world_max_error_m": 9.720307250575187e-09,
+      "original_normal_max_error": 8.249217235273526e-05,
+      "new_world_position_float32_max_error_m": 9.309805064387502e-09
+    },
+    {
+      "object": "Dark cloth flat 1",
+      "raw_vertices": 8704,
+      "glb_vertices": 8704,
+      "mapping_world_max_error_m": 9.638978548999997e-09,
+      "original_normal_max_error": 8.20654464033442e-05,
+      "new_world_position_float32_max_error_m": 9.641335590220528e-09
+    },
+    {
+      "object": "Flat thin sole -1",
+      "raw_vertices": 10250,
+      "glb_vertices": 11275,
+      "mapping_world_max_error_m": 9.24221732276071e-09,
+      "original_normal_max_error": 8.324799598335467e-05,
+      "new_world_position_float32_max_error_m": 9.705389908701004e-09
+    },
+    {
+      "object": "Flat thin sole 1",
+      "raw_vertices": 10250,
+      "glb_vertices": 11275,
+      "mapping_world_max_error_m": 9.568442659998095e-09,
+      "original_normal_max_error": 8.23590616661954e-05,
+      "new_world_position_float32_max_error_m": 9.376234926604727e-09
+    },
+    {
+      "object": "Godette continuous trousers - pelvis crotch legs",
+      "raw_vertices": 21350,
+      "glb_vertices": 21350,
+      "mapping_world_max_error_m": 5.5511621267855054e-08,
+      "original_normal_max_error": 8.244803197206715e-05,
+      "new_world_position_float32_max_error_m": 5.537225853032195e-08
+    }
+  ],
+  "ankle_weights": [
+    {
+      "object": "Clean ankle -1",
+      "maximum_float32_normalization_delta": 0.0,
+      "small_positive_weights_preserved": 0,
+      "maximum_influences": 2
+    },
+    {
+      "object": "Clean ankle 1",
+      "maximum_float32_normalization_delta": 0.0,
+      "small_positive_weights_preserved": 0,
+      "maximum_influences": 2
+    }
+  ],
+  "existing_binary_changed_bytes": 901935,
+  "appended_binary_bytes": 36816,
+  "pass": true
+}

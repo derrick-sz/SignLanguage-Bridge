@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "base_commit": "308aa8df30faf54b0e4511d640b544c2481d3b0d",
+  "status": "research_candidate",
+  "compression": "gzip -n; lossless; decoded SHA256 independently checked",
+  "files": {
+    "godette-reference-v12.glb.gz": {
+      "bytes": 8701906,
+      "sha256": "4e63675b70af66198f4f3f8c9f21c77fc0864fe79f7e8f780a607c1127c0b66c",
+      "decoded_filename": "godette-reference-v12.glb",
+      "decoded_bytes": 17381724,
+      "decoded_sha256": "a7942f7a69e8fb078d50767e85944c0e59b47dc20b40479ab86d8c16513717c4"
+    },
+    "godette-reference-v12.blend.gz": {
+      "bytes": 8036849,
+      "sha256": "641d852c7098c63c4a1f2a8c0180ccb552c639be92fe14da04a2f77c2a2dbe4d",
+      "decoded_filename": "godette-reference-v12.blend",
+      "decoded_bytes": 8458480,
+      "decoded_sha256": "38666f464943ce2e5e9498ce6d461130e689aafce1c92304ea91a568de0420e4"
+    }
+  },
+  "automatic_nonmanual_supported": false,
+  "merged": false,
+  "deployed": false,
+  "stage": "v12 intermediate checkpoint; reference-guided shape work continues in v13"
+}

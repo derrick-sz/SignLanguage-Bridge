@@ -1,0 +1,49 @@
+{
+  "candidate_sha256": "38666f464943ce2e5e9498ce6d461130e689aafce1c92304ea91a568de0420e4",
+  "review_sha256": "432a7e6cfcc13e98205f80d1cab065420fdc43f7a12b6b5e8a7015fa11f06ac0",
+  "verdict": "Passed the stated preservation, six-state pants self / pants-ankle checks, 63 sampled pants self / pants-ankle checks, and new outsole closure checks. Not a full-character, all-motion, all-object-pairs clearance.",
+  "mesh_count": 74,
+  "source_rest_bones": 227,
+  "final_rest_bones": 227,
+  "original_Object_7_vertices_exactly_preserved": 4815,
+  "hand_and_retained_forearm_native_evaluated_vertices_unchanged": 2530,
+  "intentional_lip_translation_changes": 16,
+  "six_static_pants_self_candidates": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "six_static_pants_related_cross_object_candidates": {
+    "rest": 0,
+    "native_default": 0,
+    "review_standing": 0,
+    "left": 0,
+    "right": 0,
+    "both": 0
+  },
+  "sweep_samples": 63,
+  "sweep_all_self_candidates_zero": true,
+  "sweep_all_pants_ankle_candidates_zero": true,
+  "sweep_all_finite": true,
+  "new_outsole_plates_closed_manifold": true,
+  "underside_instep_triangle_centroid_samples": 1056,
+  "underside_sampled_skin_first_hits": 0,
+  "visual_evidence": [
+    "standing_back.png",
+    "left_back.png",
+    "left_side.png",
+    "right_back.png",
+    "both_back.png",
+    "standing_underside.png"
+  ],
+  "retained_limits": [
+    "Separate shoe upper, rim and new outsole plate surfaces overlap at their assembly seams.",
+    "Generated ankle and instep remain separate surfaces with a visible contact seam in the stress side view.",
+    "63 samples are discrete path samples, not a proof for every intermediate time or arbitrary animation.",
+    "Coat/waist contact and original hand defects are not re-certified or repaired by this review.",
+    "Lip-expression appearance and GLB serialization are reviewed separately."
+  ]
+}
