@@ -297,7 +297,18 @@ def test_example_models_resolve_to_real_bundles(defaults_module):
 
 # --- 环境感知默认模型的接线（desktop entry point） -------------------------------
 
-def test_desktop_default_unisign_model_follows_environment(monkeypatch, tmp_path):
+@pytest.fixture
+def desktop_defaults_config(monkeypatch, tmp_path):
+    """Exercise the real loader without requiring a developer's local config."""
+    from slbridge import model_defaults
+
+    config = tmp_path / "desktop-model-defaults.json"
+    config.write_text(EXAMPLE.read_text(encoding="utf-8"), encoding="utf-8")
+    monkeypatch.setattr(model_defaults, "DEFAULT_CONFIG_PATH", config)
+    return config
+
+
+def test_desktop_default_unisign_model_follows_environment(monkeypatch, tmp_path, desktop_defaults_config):
     """dev/test -> stage2 bundle, prod/unset -> legacy stage1 bundle."""
     from slbridge import desktop_models
 
@@ -309,7 +320,7 @@ def test_desktop_default_unisign_model_follows_environment(monkeypatch, tmp_path
     assert desktop_models.default_unisign_model(tmp_path, environment="prod").name == "model_bundle"
 
 
-def test_desktop_default_unisign_model_override_wins(monkeypatch, tmp_path):
+def test_desktop_default_unisign_model_override_wins(monkeypatch, tmp_path, desktop_defaults_config):
     from slbridge import desktop_models
 
     monkeypatch.delenv("SLBRIDGE_ENV", raising=False)
@@ -317,7 +328,7 @@ def test_desktop_default_unisign_model_override_wins(monkeypatch, tmp_path):
     assert chosen.name == "unisign_stage2_pose"
 
 
-def test_desktop_default_unisign_model_env_var(monkeypatch, tmp_path):
+def test_desktop_default_unisign_model_env_var(monkeypatch, tmp_path, desktop_defaults_config):
     from slbridge import desktop_models
 
     monkeypatch.setenv("SLBRIDGE_ENV", "dev")
@@ -336,10 +347,9 @@ def test_desktop_default_unisign_model_falls_back_when_config_missing(monkeypatc
     monkeypatch.setattr(model_defaults, "load_model_defaults", missing)
     assert desktop_models.default_unisign_model(tmp_path) == tmp_path / desktop_models.LEGACY_UNISIGN_BUNDLE
 
-def test_desktop_default_unisign_model_unknown_environment_raises():
-    """Unknown environments must fail fast rather than silently pick a model."""
-    import pytest as _pytest
-    from slbridge import desktop_models
+def test_desktop_default_unisign_model_unknown_environment_raises(desktop_defaults_config):
+    """With valid configuration, unknown environments must fail fast."""
+    from slbridge import desktop_models, model_defaults
 
-    with _pytest.raises(Exception):
+    with pytest.raises(model_defaults.ModelDefaultsError, match="unknown environment"):
         desktop_models.default_unisign_model(environment="staging")
