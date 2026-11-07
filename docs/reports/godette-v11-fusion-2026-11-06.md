@@ -19,7 +19,8 @@ The exact editable `.blend` and losslessly compressed `.glb.gz` are committed un
 - `git apply --check` and apply succeeded; all 18 changed files match the independently reviewed delivery byte-for-byte.
 - Python focused suite: 84 passed, 4 explicit skips, 3 subtests passed; one Starlette/AnyIO deprecation warning.
 - All 51 Node tests ran with actual Three.js r170 and the frozen v11 GLB: 50 passed, one skipped because the old calibrated GLB was absent in the recovered environment. The v11 real-asset and interpolation tests passed. The earlier independent delivery included the old GLB and recorded 51/51; that is separate evidence, not a claim of a fresh old-asset rerun.
-- Full pytest was started in the recovered environment and remains in progress at this checkpoint. It is not claimed green. The earlier comparison in the delivery reported identical 111 failures and 45 errors for baseline/candidate due to unavailable dependencies/resources; complete failure lists are retained in that delivery.
+- Full pytest now completed for both the untouched base and final candidate in the same recovered environment. Base: 903 passed, 111 failed, 45 errors, 83 skipped. Candidate: 912 passed, 111 failed, 45 errors, 83 skipped, 3 subtests passed. Both recorded 3 warnings. All 156 failure/error identities match exactly; no new failures or errors were introduced by this patch. These are dependency/partial-snapshot limits and are NOT marked passed. The complete failure/error identity list is committed in [fresh verification](evidence/godette-v11-fusion/fresh-verification.json).
+- No commit statuses or PR-triggered GitHub Actions runs were reported for the code commit at verification time. No CI success is claimed.
 
 ## Still unverified
 
