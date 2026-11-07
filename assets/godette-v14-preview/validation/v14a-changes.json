@@ -1,0 +1,66 @@
+{
+  "source": "frozen v13",
+  "sha256": "46398198b758afbb012ea2e9cad5b0e9236eec2ec2de36a9eb62124daedac6c9",
+  "changes": [
+    {
+      "mesh": "Mandarin jacket - front and back",
+      "changed_vertices": 8956,
+      "max_displacement_m": 0.011990845384578246
+    },
+    {
+      "mesh": "Jade front piping",
+      "changed_vertices": 530,
+      "max_displacement_m": 0.0008431076982409847
+    },
+    {
+      "mesh": "Jade front piping.001",
+      "changed_vertices": 530,
+      "max_displacement_m": 0.0008431076982409847
+    },
+    {
+      "mesh": "Jade hem binding",
+      "changed_vertices": 12800,
+      "max_displacement_m": 0.012000024465392238
+    },
+    {
+      "mesh": "Ivory inner panel",
+      "changed_vertices": 14,
+      "max_displacement_m": 0.0011461973128316307
+    },
+    {
+      "mesh": "Tailored princess seam -1",
+      "changed_vertices": 370,
+      "max_displacement_m": 0.008503079573972984
+    },
+    {
+      "mesh": "Tailored princess seam 1",
+      "changed_vertices": 370,
+      "max_displacement_m": 0.008503079573972984
+    },
+    {
+      "mesh": "Gold cloud Hem",
+      "changed_vertices": 8650,
+      "max_displacement_m": 0.005281567529151623
+    },
+    {
+      "mesh": "Gold cloud Hem.001",
+      "changed_vertices": 8650,
+      "max_displacement_m": 0.006112515847024617
+    },
+    {
+      "mesh": "Gold cloud Hem.002",
+      "changed_vertices": 8650,
+      "max_displacement_m": 0.0033897161965884158
+    },
+    {
+      "mesh": "Gold cloud tail Hem",
+      "changed_vertices": 650,
+      "max_displacement_m": 0.007685720898143687
+    },
+    {
+      "mesh": "Godette continuous trousers - pelvis crotch legs",
+      "changed_vertices": 4006,
+      "max_displacement_m": 0.017999991728663612
+    }
+  ]
+}

@@ -1,0 +1,495 @@
+{
+  "candidate": "/workspace/scratch/87fc5b72c014/godette_v14_exploration/checkpoints/godette-v14a-hem-cuff.blend",
+  "method": "Evaluated world-space exact-zero-epsilon triangle BVH; self pairs sharing any vertex excluded. No candidates is sufficient for no triangle self-contact within these sampled poses, not all possible poses.",
+  "state_count": 66,
+  "states": [
+    {
+      "state": "native_default",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      },
+      "coat": {
+        "nonadjacent_self_candidates": 1686,
+        "finite": true
+      }
+    },
+    {
+      "state": "rest",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      },
+      "coat": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "neutral_standing",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      },
+      "coat": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "left_0.0",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "left_0.05",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "left_0.1",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "left_0.15",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "left_0.2",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "left_0.25",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "left_0.3",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "left_0.35",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "left_0.4",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "left_0.45",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "left_0.5",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "left_0.55",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "left_0.6",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "left_0.65",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "left_0.7",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "left_0.75",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "left_0.8",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "left_0.85",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "left_0.9",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "left_0.95",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "left_1.0",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      },
+      "coat": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "right_0.0",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "right_0.05",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "right_0.1",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "right_0.15",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "right_0.2",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "right_0.25",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "right_0.3",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "right_0.35",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "right_0.4",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "right_0.45",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "right_0.5",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "right_0.55",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "right_0.6",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "right_0.65",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "right_0.7",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "right_0.75",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "right_0.8",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "right_0.85",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "right_0.9",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "right_0.95",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "right_1.0",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      },
+      "coat": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "both_0.0",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "both_0.05",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "both_0.1",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "both_0.15",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "both_0.2",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "both_0.25",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "both_0.3",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "both_0.35",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "both_0.4",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "both_0.45",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "both_0.5",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "both_0.55",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "both_0.6",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "both_0.65",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "both_0.7",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "both_0.75",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "both_0.8",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "both_0.85",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "both_0.9",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "both_0.95",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    },
+    {
+      "state": "both_1.0",
+      "pants": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      },
+      "coat": {
+        "nonadjacent_self_candidates": 0,
+        "finite": true
+      }
+    }
+  ],
+  "all_pants_zero": true,
+  "all_finite": true
+}

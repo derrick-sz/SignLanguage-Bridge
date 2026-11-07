@@ -1,0 +1,206 @@
+{
+  "baseline_units": {
+    "system": "METRIC",
+    "system_rotation": "DEGREES",
+    "scale_length": 1.0,
+    "use_separate": false,
+    "length_unit": "METERS",
+    "mass_unit": "KILOGRAMS",
+    "time_unit": "SECONDS",
+    "temperature_unit": "KELVIN"
+  },
+  "baseline_to_A": {
+    "object_names_equal": true,
+    "material_names_equal": true,
+    "scene_equal": true,
+    "rigs_equal": true,
+    "objects_changed": {},
+    "materials_changed": [],
+    "meshes_changed": {
+      "Mandarin jacket - front and back": [
+        "co"
+      ],
+      "Jade front piping": [
+        "co"
+      ],
+      "Jade front piping.001": [
+        "co"
+      ],
+      "Jade hem binding": [
+        "co"
+      ],
+      "Ivory inner panel": [
+        "co"
+      ],
+      "Tailored princess seam -1": [
+        "co"
+      ],
+      "Tailored princess seam 1": [
+        "co"
+      ],
+      "Gold cloud Hem": [
+        "co"
+      ],
+      "Gold cloud Hem.001": [
+        "co"
+      ],
+      "Gold cloud Hem.002": [
+        "co"
+      ],
+      "Gold cloud tail Hem": [
+        "co"
+      ],
+      "Godette continuous trousers - pelvis crotch legs": [
+        "co"
+      ]
+    },
+    "pants_regions": {
+      "all": {
+        "vertices": 21350,
+        "changed_over_1e8": 4006,
+        "max_displacement": 0.0179999990046231
+      },
+      "upper_above_0.87": {
+        "vertices": 3432,
+        "changed_over_1e8": 0,
+        "max_displacement": 0.0
+      },
+      "central_crotch": {
+        "vertices": 1924,
+        "changed_over_1e8": 0,
+        "max_displacement": 0.0
+      },
+      "above_cuff_falloff": {
+        "vertices": 17344,
+        "changed_over_1e8": 0,
+        "max_displacement": 0.0
+      }
+    },
+    "pants_triangle_check": {
+      "flipped_normal_vs_source": 0,
+      "newly_degenerate": 0,
+      "min_corresponding_normal_dot": 0.9998484998941422,
+      "min_area_ratio": 0.8663870221150035
+    }
+  },
+  "baseline_to_B": {
+    "object_names_equal": true,
+    "material_names_equal": true,
+    "scene_equal": true,
+    "rigs_equal": true,
+    "objects_changed": {},
+    "materials_changed": [],
+    "meshes_changed": {
+      "Mandarin jacket - front and back": [
+        "co"
+      ],
+      "Jade front piping": [
+        "co"
+      ],
+      "Jade front piping.001": [
+        "co"
+      ],
+      "Jade hem binding": [
+        "co"
+      ],
+      "Ivory inner panel": [
+        "co"
+      ],
+      "Tailored princess seam -1": [
+        "co"
+      ],
+      "Tailored princess seam 1": [
+        "co"
+      ],
+      "Gold cloud Hem": [
+        "co"
+      ],
+      "Gold cloud Hem.001": [
+        "co"
+      ],
+      "Gold cloud Hem.002": [
+        "co"
+      ],
+      "Gold cloud tail Hem": [
+        "co"
+      ],
+      "Godette continuous trousers - pelvis crotch legs": [
+        "co"
+      ]
+    },
+    "pants_regions": {
+      "all": {
+        "vertices": 21350,
+        "changed_over_1e8": 7333,
+        "max_displacement": 0.01799999900928758
+      },
+      "upper_above_0.87": {
+        "vertices": 3432,
+        "changed_over_1e8": 0,
+        "max_displacement": 0.0
+      },
+      "central_crotch": {
+        "vertices": 1924,
+        "changed_over_1e8": 0,
+        "max_displacement": 0.0
+      },
+      "above_cuff_falloff": {
+        "vertices": 17344,
+        "changed_over_1e8": 3327,
+        "max_displacement": 0.0008499771480669729
+      }
+    },
+    "pants_triangle_check": {
+      "flipped_normal_vs_source": 0,
+      "newly_degenerate": 0,
+      "min_corresponding_normal_dot": 0.9941993970423937,
+      "min_area_ratio": 0.8663870221150035
+    }
+  },
+  "A_to_B": {
+    "object_names_equal": true,
+    "material_names_equal": true,
+    "scene_equal": true,
+    "rigs_equal": true,
+    "objects_changed": {},
+    "materials_changed": [],
+    "meshes_changed": {
+      "Godette continuous trousers - pelvis crotch legs": [
+        "co"
+      ]
+    },
+    "pants_regions": {
+      "all": {
+        "vertices": 21350,
+        "changed_over_1e8": 4515,
+        "max_displacement": 0.0008499771480669729
+      },
+      "upper_above_0.87": {
+        "vertices": 3432,
+        "changed_over_1e8": 0,
+        "max_displacement": 0.0
+      },
+      "central_crotch": {
+        "vertices": 1924,
+        "changed_over_1e8": 0,
+        "max_displacement": 0.0
+      },
+      "above_cuff_falloff": {
+        "vertices": 17344,
+        "changed_over_1e8": 3327,
+        "max_displacement": 0.0008499771480669729
+      }
+    },
+    "pants_triangle_check": {
+      "flipped_normal_vs_source": 0,
+      "newly_degenerate": 0,
+      "min_corresponding_normal_dot": 0.9950150363147259,
+      "min_area_ratio": 0.9937837511805945
+    }
+  },
+  "hashes": {
+    "baseline/godette-reference-v13.blend": "f03f7ebecb892ac2b01a0768d3c140802cf06e207c4bad33bd0aa4f0b92822b4",
+    "checkpoints/godette-v14a-hem-cuff.blend": "46398198b758afbb012ea2e9cad5b0e9236eec2ec2de36a9eb62124daedac6c9",
+    "checkpoints/godette-v14b-pressed-crease.blend": "b92681a0a1dcb54de0e91d338bea4ef93a409f861b7e7665da8214dad7acf6b9"
+  }
+}

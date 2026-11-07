@@ -1,0 +1,41 @@
+{
+  "pants": {
+    "box_xyxy": [
+      315,
+      260,
+      535,
+      875
+    ],
+    "mean_absolute_channel_difference_0_to_255": 0.0680339985218034,
+    "p95": 1.0,
+    "p99": 1.0,
+    "max": 2.0,
+    "fraction_pixels_with_channel_difference_over_4": 0.0
+  },
+  "crotch": {
+    "box_xyxy": [
+      350,
+      140,
+      500,
+      280
+    ],
+    "mean_absolute_channel_difference_0_to_255": 0.03177777777777778,
+    "p95": 0.0,
+    "p99": 1.0,
+    "max": 1.0,
+    "fraction_pixels_with_channel_difference_over_4": 0.0
+  },
+  "all": {
+    "box_xyxy": [
+      0,
+      0,
+      850,
+      1000
+    ],
+    "mean_absolute_channel_difference_0_to_255": 0.011595686274509805,
+    "p95": 0.0,
+    "p99": 1.0,
+    "max": 3.0,
+    "fraction_pixels_with_channel_difference_over_4": 0.0
+  }
+}

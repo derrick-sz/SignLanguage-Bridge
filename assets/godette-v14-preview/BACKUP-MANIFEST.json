@@ -1,0 +1,159 @@
+{
+  "status": "Blender reference-fit candidate A; not a production runtime replacement",
+  "base_commit": "b693c5249fe9fbf955b21101bae7bd7a93ec6a54",
+  "source_blend_sha256": "f03f7ebecb892ac2b01a0768d3c140802cf06e207c4bad33bd0aa4f0b92822b4",
+  "candidate_blend_sha256": "46398198b758afbb012ea2e9cad5b0e9236eec2ec2de36a9eb62124daedac6c9",
+  "candidate_blend_bytes": 8497954,
+  "files": [
+    {
+      "path": "ATTRIBUTION.md",
+      "bytes": 1027,
+      "sha256": "cce4b9c9c0e82602d80a7b5c97e46b0ee3c51e39f51c82a393383afe7c44cfe4",
+      "git_blob_sha1": "c5117517313d58d4f532c66ed3db9787e8a5c985"
+    },
+    {
+      "path": "README-v14a.md",
+      "bytes": 4577,
+      "sha256": "63bc82c2df848455e457eb6c68d0fcbd37fcefcf419a1c1736b70805cb57e040",
+      "git_blob_sha1": "e9c6d4dca55ef2dd9bc2b365c14450c35cc0dc73"
+    },
+    {
+      "path": "godette-v14a-hem-cuff.blend.gz",
+      "bytes": 8079091,
+      "sha256": "279ac52faa45c0b03647e84f18137d2a39bed66c9302952d7fb6aa404f26eea7",
+      "git_blob_sha1": "3a44e196bfd24cf412129366dd46160eb04d8d90"
+    },
+    {
+      "path": "godette-v14a-review-evidence.zip",
+      "bytes": 3479117,
+      "sha256": "3af38db51f3bff2b1f9879d646a40d40ea3fdec5b5f4cc386e9419acceb6098c",
+      "git_blob_sha1": "c4da7d1da3fd7b5c3934fd6b90602ae893ca66c6"
+    },
+    {
+      "path": "previews/v13-v14a-hem-cuff-detail.png",
+      "bytes": 329162,
+      "sha256": "d452dfc0ae133fbabd0fc43925bef343ca5bd2dae64abad245bb32897f520c5a",
+      "git_blob_sha1": "54447e63d84f8a3bc47fce2097d6a41b32683027"
+    },
+    {
+      "path": "previews/v13-v14a-three-panel.png",
+      "bytes": 493542,
+      "sha256": "4163a768435b6fc9706f0920d4ab850aef21549cb2a4cdbe82b235bd65a073be",
+      "git_blob_sha1": "a14fe659ebd6227d92d0cf906c88e13ff7d93ed9"
+    },
+    {
+      "path": "review_independent/REVIEW.md",
+      "bytes": 5659,
+      "sha256": "5ac35ba8d558c41178518526623305933ce1fe207b70d87dbf3b07a3efe86d5d",
+      "git_blob_sha1": "7a824736e531bc818a68ffbe46d7501479c21b84"
+    },
+    {
+      "path": "review_independent/inspect_preservation.py",
+      "bytes": 5964,
+      "sha256": "aab1fba2ed717da95c0478193f9e85e8e185efefae52e8c92d159ba9cf16e358",
+      "git_blob_sha1": "650a6fb3fb18bcc95a2a71b9603eacd3c6502789"
+    },
+    {
+      "path": "review_independent/pixel-comparison.json",
+      "bytes": 784,
+      "sha256": "1cc08839c1f386ad1989e4bc6a02657b6d74cac534a3af496c5d27a781bd8306",
+      "git_blob_sha1": "80f341b172ab85190aac7541b35f37a6d7fc3220"
+    },
+    {
+      "path": "review_independent/preservation-results.json",
+      "bytes": 5010,
+      "sha256": "080af50c4747fd41554592510cb907acd81f93fbb896acafae670925f3d7dd73",
+      "git_blob_sha1": "4e9b8c39d24d3788ab4b89679e3b0276afc2342d"
+    },
+    {
+      "path": "scripts/audit_deformation.py",
+      "bytes": 2894,
+      "sha256": "9cfee377e5f4ec4df3d6488a4d3ca1e05bb03d2ec8f7d5afb19a1ff285b8251a",
+      "git_blob_sha1": "6c7efbb9a415cbeb126e60926548eb707f59c6c0"
+    },
+    {
+      "path": "scripts/audit_deformation_a.py",
+      "bytes": 2894,
+      "sha256": "b7ef3930026a1662692bb952e8d341aa050e0906aecc42a040a5d280ed263faa",
+      "git_blob_sha1": "31f6b2854782a31bd294f3f9ff6ea8fa25e94b26"
+    },
+    {
+      "path": "scripts/audit_native_coat_contacts.py",
+      "bytes": 1365,
+      "sha256": "0a09d6c1570079aac5a3f27bc2f0a26cd6d24cf373f620324c680838a403bc1b",
+      "git_blob_sha1": "0c2019f8c276b8a23a43fb6833a09c4acdd096be"
+    },
+    {
+      "path": "scripts/build_reference_fit.py",
+      "bytes": 2727,
+      "sha256": "94014289933024d8a5e6615a9cf15c77d2f2039c67e7099c423bbacc246581ba",
+      "git_blob_sha1": "8ac90604955ccf804e227d37700726c758d36c8e"
+    },
+    {
+      "path": "scripts/inspect_baseline.py",
+      "bytes": 916,
+      "sha256": "6ba95aac7663a30269ea8940c30dd937bb8c5d6503e6d09ffc652c1d8d12c3e1",
+      "git_blob_sha1": "b4b98e2aff6ed53234ed88510a929e4429c26fa4"
+    },
+    {
+      "path": "scripts/render_comparisons.py",
+      "bytes": 1866,
+      "sha256": "53c764752985024a75af3b3e7cfd448c3ee718a8e400018fffa7a6879383997f",
+      "git_blob_sha1": "d6a12dce20f43a1cf19a29b7fec21dee599aab18"
+    },
+    {
+      "path": "scripts/render_comparisons_a.py",
+      "bytes": 1729,
+      "sha256": "6bdb6a96198d28efd4999ba21b2ecd37acbba310f63fbe95a80a2127d7dda1cb",
+      "git_blob_sha1": "7f615cd1e20d296a68a04e0c126576ba655a509d"
+    },
+    {
+      "path": "scripts/render_motion_views.py",
+      "bytes": 2160,
+      "sha256": "1b80e8530180fab177f13ebc25fe4775bb1223d76f3950727340dc9ee9d766e6",
+      "git_blob_sha1": "c42f3991808eab612d2fd8b59520a1153a75e94d"
+    },
+    {
+      "path": "scripts/render_motion_views_a.py",
+      "bytes": 2160,
+      "sha256": "1a5a668bbc6ffb82a15d95f9126560147f4947234d3ab7d669b5aa5695a93657",
+      "git_blob_sha1": "6978e4e5efe03c3e4bb4c224a089e8d96a8ec341"
+    },
+    {
+      "path": "scripts/verify_delta.py",
+      "bytes": 2811,
+      "sha256": "86b1390ec2e29c94583cca3a849710c9a5aa07efd5d41e4b8f5c043484c71786",
+      "git_blob_sha1": "004dde638cfb96eb0a5d448434744ca6472694ec"
+    },
+    {
+      "path": "scripts/verify_delta_a.py",
+      "bytes": 2799,
+      "sha256": "a7e6ffc49a2d9e60620570508655ec39e426c2bc96dfdbdc569121bd9da8e425",
+      "git_blob_sha1": "e70c7c00158357f3dd146c5c2d40593732afcace"
+    },
+    {
+      "path": "validation/native-coat-contact-comparison.json",
+      "bytes": 1013,
+      "sha256": "8ddbdb2536e863f610bd93ce09b8b439548bfb2714adf2e9fcb20d31845dd9e7",
+      "git_blob_sha1": "97be7e05825c9d162209f9094e96a95780aac94e"
+    },
+    {
+      "path": "validation/v13-v14a-delta.json",
+      "bytes": 2466,
+      "sha256": "ad9b2e9fd2887f9a996bcaacaac81ac68808ec2746c8b023fef88951c13331ae",
+      "git_blob_sha1": "f807c91dc77d074f0d3f3386ce50b2a662c8d5e3"
+    },
+    {
+      "path": "validation/v14a-changes.json",
+      "bytes": 1738,
+      "sha256": "4a477edae162855a20191940d74f46bd7d8a35304f6aeac784e15c40e7cc8428",
+      "git_blob_sha1": "49bcb4fa91f1465f8b9e2d7830debbf2dc5961cb"
+    },
+    {
+      "path": "validation/v14a-deformation-66-states.json",
+      "bytes": 9606,
+      "sha256": "904ef9dba6d95b77d10a75c6eadb329d16118a3e84a60d0e782107159a5ea1f2",
+      "git_blob_sha1": "4d7c50d8c21de1cf258079c21cdbc89483fced4b"
+    }
+  ]
+}

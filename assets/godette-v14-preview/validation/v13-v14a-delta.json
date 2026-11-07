@@ -1,0 +1,100 @@
+{
+  "source_sha256": "f03f7ebecb892ac2b01a0768d3c140802cf06e207c4bad33bd0aa4f0b92822b4",
+  "candidate_sha256": "46398198b758afbb012ea2e9cad5b0e9236eec2ec2de36a9eb62124daedac6c9",
+  "bone_count": [
+    227,
+    227
+  ],
+  "rest_hierarchy_equal": true,
+  "pose_equal": true,
+  "armature_equal": true,
+  "mesh_names_equal": true,
+  "protected_Object_7_equal": true,
+  "only_mesh_coordinates_changed": true,
+  "changed": {
+    "Mandarin jacket - front and back": {
+      "fields": [
+        "co"
+      ],
+      "vertices_changed_above_1e8": 8956,
+      "max_displacement_m": 0.011990845384578246
+    },
+    "Jade front piping": {
+      "fields": [
+        "co"
+      ],
+      "vertices_changed_above_1e8": 530,
+      "max_displacement_m": 0.0008431076982409847
+    },
+    "Jade front piping.001": {
+      "fields": [
+        "co"
+      ],
+      "vertices_changed_above_1e8": 530,
+      "max_displacement_m": 0.0008431076982409847
+    },
+    "Jade hem binding": {
+      "fields": [
+        "co"
+      ],
+      "vertices_changed_above_1e8": 12800,
+      "max_displacement_m": 0.012000024465392238
+    },
+    "Ivory inner panel": {
+      "fields": [
+        "co"
+      ],
+      "vertices_changed_above_1e8": 14,
+      "max_displacement_m": 0.0011461973128316307
+    },
+    "Tailored princess seam -1": {
+      "fields": [
+        "co"
+      ],
+      "vertices_changed_above_1e8": 370,
+      "max_displacement_m": 0.008503079573972984
+    },
+    "Tailored princess seam 1": {
+      "fields": [
+        "co"
+      ],
+      "vertices_changed_above_1e8": 370,
+      "max_displacement_m": 0.008503079573972984
+    },
+    "Gold cloud Hem": {
+      "fields": [
+        "co"
+      ],
+      "vertices_changed_above_1e8": 8650,
+      "max_displacement_m": 0.005281567529151623
+    },
+    "Gold cloud Hem.001": {
+      "fields": [
+        "co"
+      ],
+      "vertices_changed_above_1e8": 8650,
+      "max_displacement_m": 0.006112515847024617
+    },
+    "Gold cloud Hem.002": {
+      "fields": [
+        "co"
+      ],
+      "vertices_changed_above_1e8": 8650,
+      "max_displacement_m": 0.0033897161965884158
+    },
+    "Gold cloud tail Hem": {
+      "fields": [
+        "co"
+      ],
+      "vertices_changed_above_1e8": 650,
+      "max_displacement_m": 0.007685720898143687
+    },
+    "Godette continuous trousers - pelvis crotch legs": {
+      "fields": [
+        "co"
+      ],
+      "vertices_changed_above_1e8": 4006,
+      "max_displacement_m": 0.017999991728663612
+    }
+  }
+}
