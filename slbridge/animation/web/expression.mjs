@@ -45,6 +45,7 @@ export function applyExpression(rig, input = {}, {jawRadians=null} = {}) {
     control.bone.position.addScaledVector(control.offset, amount);
   }
   if(rig.jawCalibrationAvailable)rig.applyCalibratedJaw(jawRadians??values.jawOpen*0.16);
+  else if(rig.manualMouthAvailable)rig.applyManualMouth(values.jawOpen);
   else if (rig.bones.jaw) rig.bones.jaw.rotateX(-values.jawOpen * 0.16);
   return values;
 }

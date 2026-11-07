@@ -33,7 +33,7 @@ function createHarness(respond) {
     window: { addEventListener() {} },
     fetch: async (url, options) => ({ ok: true, json: async () => respond(url, options) }),
   });
-  vm.runInContext(source + '\nglobalThis.review = {preview, stage, gate, seed: a => {assets = a;}, setOrigin: o => {origin = o; updateInput();}};', context);
+  vm.runInContext(source + '\nglobalThis.review = {preview, stage, gate, renderAttribution: typeof renderPresentationAttribution === "function" ? renderPresentationAttribution : null, seed: a => {assets = a;}, setOrigin: o => {origin = o; updateInput();}};', context);
   context.review.seed([asset]);
   return { ...context.review, element };
 }
@@ -97,4 +97,17 @@ test('Editing a recognition preserves raw evidence; a new catalog origin clears 
   h.setOrigin({kind: 'catalog', asset_id: 'hello'});
   assert.equal(h.element('raw-result').hidden, true);
   assert.equal(h.element('raw-result').textContent, '');
+});
+
+
+test('verified presentation attribution is shown as plain text and can be cleared', () => {
+  const h = createHarness(() => plan);
+  assert.equal(typeof h.renderAttribution, 'function');
+  h.stage.presentation = {attribution:'Godette v11 · zahlenmaler · CC BY 4.0; <b>modified</b>'};
+  h.renderAttribution();
+  assert.equal(h.element('presentation-attribution').textContent,h.stage.presentation.attribution);
+  assert.equal(h.element('presentation-attribution').hidden,false);
+  h.stage.presentation = {};h.renderAttribution();
+  assert.equal(h.element('presentation-attribution').textContent,'');
+  assert.equal(h.element('presentation-attribution').hidden,true);
 });

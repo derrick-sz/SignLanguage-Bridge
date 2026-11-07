@@ -59,7 +59,7 @@ include = ["slbridge*"]
 [tool.setuptools.package-data]
 slbridge = ["resources/*.json"]
 "slbridge.slrt" = ["NOTICE.md"]
-"slbridge.animation" = ["web/*.html", "web/*.css", "web/*.js", "web/*.mjs", "web/NOTICE.md"]
+"slbridge.animation" = ["godette_v11_manifest.json", "godette_v11_attribution.md", "web/*.html", "web/*.css", "web/*.js", "web/*.mjs", "web/NOTICE.md"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

@@ -1,11 +1,28 @@
 # Godette v11 fusion checkpoint
 
-Base: PR #1 commit `ad3806f8e0ba2227231492860cfed33eb70347f9`.
+Base: PR #1 commit `ad3806f8e0ba2227231492860cfed33eb70347f9`. The upstream PR head was rechecked and remains unchanged. Work is on `codex/godette-v11-fusion-20261106`; no merge or deployment has been performed.
 
-Status: integration in progress, not merged or language-approved. A verified 292-file source/test/config snapshot is available in the engineering workspace. The existing corpus, SignSparK generation pipeline and SHA-bound nonmanual gates will be preserved.
+## Implementation
 
-Current model: `godette-reference-v11.glb`, SHA256 `e4a5766d98ab53871415da3ef4609c4848386c8b4de2958d5e420a8d7524d476`. Editable `.blend` and original delivery archive are retained. Binary backup is being checked separately; this note alone does not mean the model bytes are on GitHub.
+- Independent v11 presentation builder preserves all six pilot source hashes and the cap-0067 temporal profile, rejects mismatched/missing sources, and never copies old-target baked exports.
+- v11 manual mouth uses an exact avatar SHA and separate 0.04 rad limit. Legacy template/target automatic-jaw gates and the SignSparK manifest preflight are unchanged.
+- Quaternion interpolation normalizes detached changing intermediate samples only. Authored endpoints, unchanged keys and source arrays are preserved. Nominal integer times with floating-point residues can change, as documented.
+- Display attribution, package resources and regression tests are included. Existing corpus/generation sources and the frozen model bytes remain unchanged.
 
-Plan: create a separate source-bound presentation for v11, retain the six pilot bindings and temporal profiles, omit old-target baked exports, leave automatic source-jaw unavailable for the uncalibrated v11 target, and regression-test the narrow quaternion interpolation fix. No dataset, SMPL-X template or generation checkpoint will be committed.
+## Backup
 
-Godette (Rigged) by zahlenmaler, CC BY 4.0. Source: https://sketchfab.com/3d-models/godette-rigged-dd05b69799a2438e97c90d166f6e416a . License: https://creativecommons.org/licenses/by/4.0/ . Modified hair, clothing, shoes, materials, clothing weights and trouser surface; retained original face, hands and 227-bone skeleton. Engineering checks do not establish sign-language accuracy, complete collision freedom or visual acceptance.
+The exact editable `.blend` and losslessly compressed `.glb.gz` are committed under `assets/godette-v11/`, with sizes, SHA256 and Git blob identities in `BACKUP.json`. Decompression was checked byte-for-byte. The raw GLB request exceeded the 16 MiB transport limit; the gzip contains the exact original bytes and must be decompressed before use. The separately delivered complete model ZIP remains an additional archive.
+
+## Fresh verification before this code backup
+
+- Restored 292 source/test/config files directly from the base commit and verified every Git blob identity.
+- `git apply --check` and apply succeeded; all 18 changed files match the independently reviewed delivery byte-for-byte.
+- Python focused suite: 84 passed, 4 explicit skips, 3 subtests passed; one Starlette/AnyIO deprecation warning.
+- All 51 Node tests ran with actual Three.js r170 and the frozen v11 GLB: 50 passed, one skipped because the old calibrated GLB was absent in the recovered environment. The v11 real-asset and interpolation tests passed. The earlier independent delivery included the old GLB and recorded 51/51; that is separate evidence, not a claim of a fresh old-asset rerun.
+- Full pytest was started in the recovered environment and remains in progress at this checkpoint. It is not claimed green. The earlier comparison in the delivery reported identical 111 failures and 45 errors for baseline/candidate due to unavailable dependencies/resources; complete failure lists are retained in that delivery.
+
+## Still unverified
+
+Production motion archive/catalog, actual 19,877-record corpus, GPU generation, deployed vendor, browser/WebGL/texture rendering, end-to-end service deployment, contact/collision, sign-language quality and mobile performance. This is a research candidate, not language approval or deployment readiness.
+
+See [integration instructions](../godette-v11-presentation.md) and [asset backup](../../assets/godette-v11/README.md). Godette (Rigged) by zahlenmaler, CC BY 4.0; original source and license links and modification descriptions accompany the files.

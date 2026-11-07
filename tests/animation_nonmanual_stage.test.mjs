@@ -51,3 +51,16 @@ test('cancelled initialization cannot restore a pending jaw track after Stop',as
   assert.equal(stage.nonmanualAvailable,false);assert.equal(stage.nonmanualEnabled,false);
   assert.equal(stage.clock.duration,0);
 });
+
+test('manual v11 summary records its own bounded angle while automatic source jaw stays unavailable',async()=>{
+  const {stage,data}=harness();
+  stage.presentation.avatar_sha256='e4a5766d98ab53871415da3ef4609c4848386c8b4de2958d5e420a8d7524d476';
+  stage.rig.jawCalibrationAvailable=false;stage.rig.manualJawMaxAngle=.04;
+  await stage.loadMotion(data,'clip',()=>true,'source');
+  assert.equal(stage.nonmanualAvailable,false);assert.equal(stage.nonmanualEnabled,false);
+  stage.setNonmanualEnabled(true);assert.equal(stage.nonmanualEnabled,false);
+  stage.expression={jawOpen:.5};
+  assert.equal(stage.jawAngle(0),.02);
+  assert.equal(stage.exportReview().nonmanual.angle_radians,.02);
+  assert.equal(stage.exportReview().nonmanual.profile,null);
+});

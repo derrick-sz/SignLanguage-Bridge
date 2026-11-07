@@ -1,6 +1,8 @@
 import { validateRigProfile } from "./expression.mjs";
 import { JAW_AVATAR_SHA256, MAX_JAW_ANGLE } from "./nonmanual.mjs";
 
+const GODETTE_V11_SHA256 = "e4a5766d98ab53871415da3ef4609c4848386c8b4de2958d5e420a8d7524d476";
+
 const HUMANOID_BONES = Object.freeze([
   "root",
   "body",
@@ -283,6 +285,29 @@ function createHumanoidRig(root, profile = GODETTE_PROFILE, {avatarSha256=null} 
   const jawCalibrationAvailable=Boolean(avatarSha256===JAW_AVATAR_SHA256 && bones.jaw?.name==='Jaw_4' &&
     lowerLipGroup?.isBone && lowerLipGroup.parent===bones.jaw.parent);
   if(jawCalibrationAvailable)facialRest.set(lowerLipGroup,{position:lowerLipGroup.position.clone(),quaternion:lowerLipGroup.quaternion.clone()});
+  // v11 has a separate manual-only mouth driver. Never reuse the legacy
+  // source-jaw calibration or enable it from matching bone names alone.
+  const mouthCorners=["Lip_L007_8", "Lip_R007_11"].map(name=>root.getObjectByName?.(name));
+  const manualMouthAvailable=Boolean(avatarSha256===GODETTE_V11_SHA256 && profile.id==='godette-v1' &&
+    bones.jaw?.name==='Jaw_4' && lowerLipGroup?.isBone && lowerLipGroup.parent===bones.jaw.parent &&
+    mouthCorners.every(bone=>bone?.isBone && bone.parent===lowerLipGroup));
+  const manualJawMaxAngle=manualMouthAvailable?0.04:MAX_JAW_ANGLE;
+  if(manualMouthAvailable){
+    for(const bone of [lowerLipGroup,...mouthCorners])
+      facialRest.set(bone,{position:bone.position.clone(),quaternion:bone.quaternion.clone()});
+  }
+  function applyManualMouth(amount){
+    if(!Number.isFinite(amount) || amount<0 || amount>1)throw new Error('Invalid manual mouth intensity');
+    if(!manualMouthAvailable)return false;
+    for(const bone of [bones.jaw,lowerLipGroup])bone.rotateX(amount*manualJawMaxAngle);
+    // Counter-rotate seam bones in the lower-lip parent's coordinates.
+    for(const bone of mouthCorners){
+      const axis=bone.position.clone().set(1,0,0);
+      const counter=bone.quaternion.clone().setFromAxisAngle(axis,-amount*manualJawMaxAngle);
+      bone.position.applyQuaternion(counter);bone.quaternion.premultiply(counter);
+    }
+    return true;
+  }
   function resetExpression() {
     for (const [bone,base] of facialRest) {bone.position.copy(base.position);bone.quaternion.copy(base.quaternion);}
   }
@@ -351,7 +376,14 @@ function createHumanoidRig(root, profile = GODETTE_PROFILE, {avatarSha256=null} 
     for (const [name, bone] of Object.entries(bones)) {
       const start = from[name] || rest[name].quaternion;
       const target = targets[name] || rest[name].quaternion;
-      bone.quaternion.copy(start).slerp(target, amount);
+      // Slightly non-unit imported keys can produce dot > 1 and make slerp
+      // freeze. Normalize detached, changing intermediate samples only, keeping
+      // authored endpoints and identical/resting keys component-exact.
+      if (amount > 0 && amount < 1 && !start.equals(target)) {
+        bone.quaternion.copy(start).normalize().slerp(target.clone().normalize(), amount);
+      } else {
+        bone.quaternion.copy(start).slerp(target, amount);
+      }
     }
     update();
   }
@@ -389,6 +421,9 @@ function createHumanoidRig(root, profile = GODETTE_PROFILE, {avatarSha256=null} 
     resetExpression,
     jawCalibrationAvailable,
     applyCalibratedJaw,
+    manualMouthAvailable,
+    manualJawMaxAngle,
+    applyManualMouth,
     faceControls,
     update,
   };

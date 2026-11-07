@@ -86,7 +86,7 @@ export class MotionStage {
   get nonmanualAvailable(){return Boolean(this.jawTrack&&this.rig?.jawCalibrationAvailable);}
   setNonmanualEnabled(value){this.nonmanualEnabled=Boolean(value)&&this.nonmanualAvailable;this.refresh();}
   jawAngle(time){
-    if(Object.hasOwn(this.expression,'jawOpen'))return this.expression.jawOpen*MAX_JAW_ANGLE;
+    if(Object.hasOwn(this.expression,'jawOpen'))return this.expression.jawOpen*(this.rig?.manualJawMaxAngle??MAX_JAW_ANGLE);
     return this.nonmanualEnabled?sampleJawCandidate(this.jawTrack,time):0;
   }
   async loadMotion(data,id,isCurrent=()=>true,sourceSha=null){

@@ -359,6 +359,12 @@ $("recognize").addEventListener("click", async () => {
   }
 });
 
+function renderPresentationAttribution() {
+  const text=typeof stage.presentation?.attribution==="string"?stage.presentation.attribution:"";
+  $("presentation-attribution").textContent=text;
+  $("presentation-attribution").hidden=!text;
+}
+
 async function init() {
   try {
     const catalog = await request("/v1/animation/assets");
@@ -376,6 +382,7 @@ async function init() {
       history.replaceState(null, "", location.pathname);
     }
     updateInput(); renderLibrary(); await stage.ready;
+    renderPresentationAttribution();
     if(stage.presentation?.pilots?.length){
       $("pilot-panel").hidden=false;
       for(const pilot of stage.presentation.pilots){
