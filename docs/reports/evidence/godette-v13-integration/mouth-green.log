@@ -1,0 +1,15 @@
+✔ frozen v13 activates coordinated manual mouth only and never automatic jaw (3.983444ms)
+✔ v13 101 levels, backward samples and both resets restore the authored neutral baseline (7.981532ms)
+✔ v13 with invalid profile or mouth hierarchy stays closed instead of unsafe jaw-only fallback (1.420244ms)
+✔ unknown bytes and legacy identity cannot gain the frozen manual driver (0.794023ms)
+✔ v13 cannot relabel the legacy automatic candidate (0.206991ms)
+✔ stage playback keeps frozen v13 automatic jaw unavailable and reports only manual opening (3.034239ms)
+✔ frozen v13 real loader and skinned geometry remain stable through 101 manual mouth levels and neutral reset (1062.5257ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1176.728553

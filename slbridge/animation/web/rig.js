@@ -5,6 +5,8 @@ const GODETTE_V11_SHA256 = "e4a5766d98ab53871415da3ef4609c4848386c8b4de2958d5e42
 
 const GODETTE_V12_SHA256 = "a7942f7a69e8fb078d50767e85944c0e59b47dc20b40479ab86d8c16513717c4";
 
+const GODETTE_V13_SHA256 = "2d89e2e33271d2e06c5a834a56675663aa5551814e2c98ef86fc084ca0c151a8";
+
 const HUMANOID_BONES = Object.freeze([
   "root",
   "body",
@@ -287,12 +289,12 @@ function createHumanoidRig(root, profile = GODETTE_PROFILE, {avatarSha256=null} 
   const jawCalibrationAvailable=Boolean(avatarSha256===JAW_AVATAR_SHA256 && bones.jaw?.name==='Jaw_4' &&
     lowerLipGroup?.isBone && lowerLipGroup.parent===bones.jaw.parent);
   if(jawCalibrationAvailable)facialRest.set(lowerLipGroup,{position:lowerLipGroup.position.clone(),quaternion:lowerLipGroup.quaternion.clone()});
-  // Frozen v11 and neutral v12 have a separate manual-only mouth driver.
-  // v12 must remain closed if its controls fail validation, never jaw-only.
+  // Frozen v11 and neutral v12/v13 have a separate manual-only mouth driver.
+  // v12/v13 must remain closed if its controls fail validation, never jaw-only.
   // Never reuse the legacy
   // source-jaw calibration or enable it from matching bone names alone.
   const mouthCorners=["Lip_L007_8", "Lip_R007_11"].map(name=>root.getObjectByName?.(name));
-  const manualMouthRequired=avatarSha256===GODETTE_V12_SHA256;
+  const manualMouthRequired=avatarSha256===GODETTE_V12_SHA256 || avatarSha256===GODETTE_V13_SHA256;
   const manualMouthAvailable=Boolean((avatarSha256===GODETTE_V11_SHA256 || manualMouthRequired) && profile.id==='godette-v1' &&
     bones.jaw?.name==='Jaw_4' && lowerLipGroup?.isBone && lowerLipGroup.parent===bones.jaw.parent &&
     mouthCorners.every(bone=>bone?.isBone && bone.parent===lowerLipGroup));

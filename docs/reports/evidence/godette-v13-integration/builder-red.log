@@ -1,0 +1,103 @@
+FFFFFFFsFF                                                               [100%]
+=================================== FAILURES ===================================
+_ GodetteV13PresentationTests.test_cli_rejects_malformed_archive_without_output _
+
+self = <test_godette_v13_presentation.GodetteV13PresentationTests testMethod=test_cli_rejects_malformed_archive_without_output>
+
+    def setUp(self):
+>       self.assertIsNotNone(importlib.util.find_spec('slbridge.animation.godette_v13_presentation'),
+                             'independent v13 presentation builder missing')
+E       AssertionError: unexpectedly None : independent v13 presentation builder missing
+
+tests/test_godette_v13_presentation.py:24: AssertionError
+______ GodetteV13PresentationTests.test_existing_output_is_never_replaced ______
+
+self = <test_godette_v13_presentation.GodetteV13PresentationTests testMethod=test_existing_output_is_never_replaced>
+
+    def setUp(self):
+>       self.assertIsNotNone(importlib.util.find_spec('slbridge.animation.godette_v13_presentation'),
+                             'independent v13 presentation builder missing')
+E       AssertionError: unexpectedly None : independent v13 presentation builder missing
+
+tests/test_godette_v13_presentation.py:24: AssertionError
+_ GodetteV13PresentationTests.test_failed_bundle_validation_cleans_staging_directory _
+
+self = <test_godette_v13_presentation.GodetteV13PresentationTests testMethod=test_failed_bundle_validation_cleans_staging_directory>
+
+    def setUp(self):
+>       self.assertIsNotNone(importlib.util.find_spec('slbridge.animation.godette_v13_presentation'),
+                             'independent v13 presentation builder missing')
+E       AssertionError: unexpectedly None : independent v13 presentation builder missing
+
+tests/test_godette_v13_presentation.py:24: AssertionError
+_ GodetteV13PresentationTests.test_invalid_archive_identity_fails_before_publication _
+
+self = <test_godette_v13_presentation.GodetteV13PresentationTests testMethod=test_invalid_archive_identity_fails_before_publication>
+
+    def setUp(self):
+>       self.assertIsNotNone(importlib.util.find_spec('slbridge.animation.godette_v13_presentation'),
+                             'independent v13 presentation builder missing')
+E       AssertionError: unexpectedly None : independent v13 presentation builder missing
+
+tests/test_godette_v13_presentation.py:24: AssertionError
+_ GodetteV13PresentationTests.test_missing_changed_or_duplicate_pilot_never_gets_silently_dropped _
+
+self = <test_godette_v13_presentation.GodetteV13PresentationTests testMethod=test_missing_changed_or_duplicate_pilot_never_gets_silently_dropped>
+
+    def setUp(self):
+>       self.assertIsNotNone(importlib.util.find_spec('slbridge.animation.godette_v13_presentation'),
+                             'independent v13 presentation builder missing')
+E       AssertionError: unexpectedly None : independent v13 presentation builder missing
+
+tests/test_godette_v13_presentation.py:24: AssertionError
+_ GodetteV13PresentationTests.test_only_avatar_manifest_and_license_are_published_with_all_six_pilots _
+
+self = <test_godette_v13_presentation.GodetteV13PresentationTests testMethod=test_only_avatar_manifest_and_license_are_published_with_all_six_pilots>
+
+    def setUp(self):
+>       self.assertIsNotNone(importlib.util.find_spec('slbridge.animation.godette_v13_presentation'),
+                             'independent v13 presentation builder missing')
+E       AssertionError: unexpectedly None : independent v13 presentation builder missing
+
+tests/test_godette_v13_presentation.py:24: AssertionError
+_ GodetteV13PresentationTests.test_publish_claim_rejects_a_concurrent_empty_destination _
+
+self = <test_godette_v13_presentation.GodetteV13PresentationTests testMethod=test_publish_claim_rejects_a_concurrent_empty_destination>
+
+    def setUp(self):
+>       self.assertIsNotNone(importlib.util.find_spec('slbridge.animation.godette_v13_presentation'),
+                             'independent v13 presentation builder missing')
+E       AssertionError: unexpectedly None : independent v13 presentation builder missing
+
+tests/test_godette_v13_presentation.py:24: AssertionError
+_ GodetteV13PresentationTests.test_real_registry_cli_bundle_and_api_chain_with_fixture_trust_anchors _
+
+self = <test_godette_v13_presentation.GodetteV13PresentationTests testMethod=test_real_registry_cli_bundle_and_api_chain_with_fixture_trust_anchors>
+
+    def setUp(self):
+>       self.assertIsNotNone(importlib.util.find_spec('slbridge.animation.godette_v13_presentation'),
+                             'independent v13 presentation builder missing')
+E       AssertionError: unexpectedly None : independent v13 presentation builder missing
+
+tests/test_godette_v13_presentation.py:24: AssertionError
+_ GodetteV13PresentationTests.test_wrong_avatar_digest_fails_before_publication _
+
+self = <test_godette_v13_presentation.GodetteV13PresentationTests testMethod=test_wrong_avatar_digest_fails_before_publication>
+
+    def setUp(self):
+>       self.assertIsNotNone(importlib.util.find_spec('slbridge.animation.godette_v13_presentation'),
+                             'independent v13 presentation builder missing')
+E       AssertionError: unexpectedly None : independent v13 presentation builder missing
+
+tests/test_godette_v13_presentation.py:24: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_godette_v13_presentation.py::GodetteV13PresentationTests::test_cli_rejects_malformed_archive_without_output
+FAILED tests/test_godette_v13_presentation.py::GodetteV13PresentationTests::test_existing_output_is_never_replaced
+FAILED tests/test_godette_v13_presentation.py::GodetteV13PresentationTests::test_failed_bundle_validation_cleans_staging_directory
+FAILED tests/test_godette_v13_presentation.py::GodetteV13PresentationTests::test_invalid_archive_identity_fails_before_publication
+FAILED tests/test_godette_v13_presentation.py::GodetteV13PresentationTests::test_missing_changed_or_duplicate_pilot_never_gets_silently_dropped
+FAILED tests/test_godette_v13_presentation.py::GodetteV13PresentationTests::test_only_avatar_manifest_and_license_are_published_with_all_six_pilots
+FAILED tests/test_godette_v13_presentation.py::GodetteV13PresentationTests::test_publish_claim_rejects_a_concurrent_empty_destination
+FAILED tests/test_godette_v13_presentation.py::GodetteV13PresentationTests::test_real_registry_cli_bundle_and_api_chain_with_fixture_trust_anchors
+FAILED tests/test_godette_v13_presentation.py::GodetteV13PresentationTests::test_wrong_avatar_digest_fails_before_publication
+9 failed, 1 skipped in 0.08s

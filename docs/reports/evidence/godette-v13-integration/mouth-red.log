@@ -1,0 +1,91 @@
+✖ frozen v13 activates coordinated manual mouth only and never automatic jaw (3.616919ms)
+✔ v13 101 levels, backward samples and both resets restore the authored neutral baseline (9.212022ms)
+✖ v13 with invalid profile or mouth hierarchy stays closed instead of unsafe jaw-only fallback (1.677032ms)
+✔ unknown bytes and legacy identity cannot gain the frozen manual driver (1.363781ms)
+✔ v13 cannot relabel the legacy automatic candidate (0.424098ms)
+✖ stage playback keeps frozen v13 automatic jaw unavailable and reports only manual opening (3.788347ms)
+✖ frozen v13 real loader and skinned geometry remain stable through 101 manual mouth levels and neutral reset (454.712505ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 3
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 562.967935
+
+✖ failing tests:
+
+test at tests/animation_godette_v13.test.mjs:25:1
+✖ frozen v13 activates coordinated manual mouth only and never automatic jaw (3.616919ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/87fc5b72c014/godette_v13_integration/tests/animation_godette_v13.test.mjs:27:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/animation_godette_v13.test.mjs:45:1
+✖ v13 with invalid profile or mouth hierarchy stays closed instead of unsafe jaw-only fallback (1.677032ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0.16 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/87fc5b72c014/godette_v13_integration/tests/animation_godette_v13.test.mjs:53:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0.16,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/animation_godette_v13.test.mjs:76:1
+✖ stage playback keeps frozen v13 automatic jaw unavailable and reports only manual opening (3.788347ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0.08 !== 0.02
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/87fc5b72c014/godette_v13_integration/tests/animation_godette_v13.test.mjs:91:44)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0.08,
+    expected: 0.02,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/animation_godette_v13_glb.test.mjs:13:1
+✖ frozen v13 real loader and skinned geometry remain stable through 101 manual mouth levels and neutral reset (454.712505ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/87fc5b72c014/godette_v13_integration/tests/animation_godette_v13_glb.test.mjs:28:48)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

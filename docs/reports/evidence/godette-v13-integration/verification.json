@@ -1,0 +1,253 @@
+{
+  "base_commit": "218c1a64a8180918994e7cb17cfbf31170ec127d",
+  "model_commit": "e66657fc633bec53c750cb6a03c0ee52c84502cc",
+  "python": {
+    "passed": 1342,
+    "skipped": 42,
+    "failed": 0,
+    "errors": 0,
+    "warnings": 17,
+    "passed_subtests": 9
+  },
+  "node": {
+    "169": {
+      "passed": 64,
+      "skipped": 1,
+      "failed": 0
+    },
+    "170": {
+      "passed": 64,
+      "skipped": 1,
+      "failed": 0
+    }
+  },
+  "skip_cases": [
+    {
+      "name": "tests.test_signspark_source_contract",
+      "class": "",
+      "reason": "collection skipped"
+    },
+    {
+      "name": "tests.test_slrt_frame_cache",
+      "class": "",
+      "reason": "collection skipped"
+    },
+    {
+      "name": "test_implementation_matches_pinned_upstream_normalizer_when_available",
+      "class": "tests.test_cecsl",
+      "reason": "Pinned upstream audit source is local evidence"
+    },
+    {
+      "name": "test_probe_media_real_video_complete",
+      "class": "tests.test_job_media",
+      "reason": "trimmed artifact not present locally"
+    },
+    {
+      "name": "test_job_metadata_real_video",
+      "class": "tests.test_job_media",
+      "reason": "trimmed artifact not present locally"
+    },
+    {
+      "name": "test_runner_real_source_end_to_end",
+      "class": "tests.test_job_runner",
+      "reason": "frozen P-1 source not present"
+    },
+    {
+      "name": "test_real_video_and_saved_model_cross_path_parity",
+      "class": "tests.test_live",
+      "reason": "set SLBRIDGE_LIVE_VIDEO and SLBRIDGE_LIVE_MODEL for real saved-model acceptance"
+    },
+    {
+      "name": "test_local_configuration_matches_example_when_present",
+      "class": "tests.test_model_defaults",
+      "reason": "local configs/model_defaults.json not present (gitignored)"
+    },
+    {
+      "name": "test_pilot_50_a_candidates_verbatim",
+      "class": "tests.test_replay_adapter",
+      "reason": "frozen P-1 source not present"
+    },
+    {
+      "name": "test_real_gloss_source_first_rows_verbatim",
+      "class": "tests.test_replay_adapter",
+      "reason": "frozen P-1 source not present"
+    },
+    {
+      "name": "test_legacy_model_bundles_still_load_if_present",
+      "class": "tests.test_rgb_core",
+      "reason": "Local pre-F4 bundle not distributed"
+    },
+    {
+      "name": "test_empty_wrapper_keeps_actual_xlmr_buffers_and_strict_assign_forward",
+      "class": "tests.test_signspark_empty_loading",
+      "reason": "could not import 'torch': No module named 'torch'"
+    },
+    {
+      "name": "test_empty_wrapper_rejects_nonmeta_parameters_and_meta_buffers",
+      "class": "tests.test_signspark_empty_loading",
+      "reason": "could not import 'torch': No module named 'torch'"
+    },
+    {
+      "name": "test_meta_without_assign_fails_before_deserialization",
+      "class": "tests.test_signspark_empty_loading",
+      "reason": "could not import 'torch': No module named 'torch'"
+    },
+    {
+      "name": "test_strict_assign_rejects_unmaterialized_nonpersistent_buffer",
+      "class": "tests.test_signspark_empty_loading",
+      "reason": "could not import 'torch': No module named 'torch'"
+    },
+    {
+      "name": "test_verified_checkpoint_loads_strictly_and_rejects_missing_keys[False]",
+      "class": "tests.test_signspark_generation",
+      "reason": "could not import 'torch': No module named 'torch'"
+    },
+    {
+      "name": "test_verified_checkpoint_loads_strictly_and_rejects_missing_keys[True]",
+      "class": "tests.test_signspark_generation",
+      "reason": "could not import 'torch': No module named 'torch'"
+    },
+    {
+      "name": "test_assign_loader_shares_real_loaded_state_storage_and_keeps_frozen_flags",
+      "class": "tests.test_signspark_generation",
+      "reason": "could not import 'torch': No module named 'torch'"
+    },
+    {
+      "name": "test_real_nine_assets_move_with_same_bytes_and_corruption_is_rejected[legacy]",
+      "class": "tests.test_signspark_portability",
+      "reason": "explicit real asset opt-in"
+    },
+    {
+      "name": "test_real_nine_assets_move_with_same_bytes_and_corruption_is_rejected[compact]",
+      "class": "tests.test_signspark_portability",
+      "reason": "explicit real asset opt-in"
+    },
+    {
+      "name": "test_real_nine_assets_move_with_same_bytes_and_corruption_is_rejected[fallback]",
+      "class": "tests.test_signspark_portability",
+      "reason": "explicit real asset opt-in"
+    },
+    {
+      "name": "test_real_source_all_forty_blobs_accept_both_pinned_receipts",
+      "class": "tests.test_signspark_portability",
+      "reason": "explicit real asset opt-in"
+    },
+    {
+      "name": "test_real_verified_avatar_and_template_optional_integration",
+      "class": "tests.test_signspark_presentation",
+      "reason": "explicit real-asset integration opt-in"
+    },
+    {
+      "name": "test_official_color_geometry_and_heatmap",
+      "class": "tests.test_slrt_protocol",
+      "reason": "could not import 'torch': No module named 'torch'"
+    },
+    {
+      "name": "test_mirror_heatmap_equals_flipped_heatmap_grid",
+      "class": "tests.test_slrt_protocol",
+      "reason": "could not import 'torch': No module named 'torch'"
+    },
+    {
+      "name": "test_weights_only_load_allows_only_audited_numpy_float64_metadata",
+      "class": "tests.test_tfnet_export",
+      "reason": "could not import 'torch': No module named 'torch'"
+    },
+    {
+      "name": "test_runner_uses_upstream_collated_lengths_and_explicit_fused_inference",
+      "class": "tests.test_tfnet_export",
+      "reason": "could not import 'torch': No module named 'torch'"
+    },
+    {
+      "name": "test_native_provenance_snapshots_caller_precision_without_changing_flags",
+      "class": "tests.test_tfnet_export",
+      "reason": "could not import 'torch': No module named 'torch'"
+    },
+    {
+      "name": "test_wrapper_channel_fft_and_full_length_dense_lstm_match_packed_surrogate[16]",
+      "class": "tests.test_tfnet_export",
+      "reason": "could not import 'torch': No module named 'torch'"
+    },
+    {
+      "name": "test_wrapper_channel_fft_and_full_length_dense_lstm_match_packed_surrogate[20]",
+      "class": "tests.test_tfnet_export",
+      "reason": "could not import 'torch': No module named 'torch'"
+    },
+    {
+      "name": "test_wrapper_channel_fft_and_full_length_dense_lstm_match_packed_surrogate[24]",
+      "class": "tests.test_tfnet_export",
+      "reason": "could not import 'torch': No module named 'torch'"
+    },
+    {
+      "name": "test_wrapper_channel_fft_and_full_length_dense_lstm_match_packed_surrogate[28]",
+      "class": "tests.test_tfnet_export",
+      "reason": "could not import 'torch': No module named 'torch'"
+    },
+    {
+      "name": "test_surrogate_export_verifies_dynamic_time_and_preserves_destination",
+      "class": "tests.test_tfnet_export",
+      "reason": "could not import 'torch': No module named 'torch'"
+    },
+    {
+      "name": "test_precision_is_restored_when_runner_constructor_fails",
+      "class": "tests.test_tfnet_export",
+      "reason": "could not import 'torch': No module named 'torch'"
+    },
+    {
+      "name": "test_windows_cuda_path_entries_are_not_duplicated",
+      "class": "tests.test_uni_sign_adapter",
+      "reason": "Windows CUDA DLL path handling"
+    },
+    {
+      "name": "test_rtmlib_cache_reuses_the_existing_production_cache",
+      "class": "tests.test_unisign_rgb_pose_adapter",
+      "reason": "rtmlib cache artifact not present in this checkout"
+    },
+    {
+      "name": "test_rtmpose_inputs_normalize_isotropic_like_a_path",
+      "class": "tests.test_unisign_rgb_pose_adapter",
+      "reason": "load_part_kp builds torch tensors"
+    },
+    {
+      "name": "test_rtmpose_inputs_honors_explicit_wh_compatibility_mode",
+      "class": "tests.test_unisign_rgb_pose_adapter",
+      "reason": "load_part_kp builds torch tensors"
+    },
+    {
+      "name": "test_build_support_rgb_layouts_same_output_shape",
+      "class": "tests.test_unisign_rgb_pose_adapter",
+      "reason": "trimmed artifact not present"
+    },
+    {
+      "name": "test_build_inputs_deterministic_cpu",
+      "class": "tests.test_unisign_rgb_pose_adapter",
+      "reason": "trimmed artifact not present"
+    },
+    {
+      "name": "test_gpu_one_sample_verbatim_vs_frozen",
+      "class": "tests.test_unisign_rgb_pose_adapter",
+      "reason": "trimmed artifact not present"
+    },
+    {
+      "name": "test_gpu_rtmpose_mode_one_video_end_to_end",
+      "class": "tests.test_unisign_rgb_pose_adapter",
+      "reason": "trimmed artifact not present"
+    }
+  ],
+  "evidence_sha256": {
+    "builder-green.log": "a803fe3344c799843e99bfa0afc9d8127de4b11f94337a3e8f009b5159e098a5",
+    "python-full.log": "8e61eb55621a51222daf8adefc3bd390d3c0e0313906ffd41c7b4d73f03c66da",
+    "wheel.log": "4b611a72337cd78e3c95c4ce6fc5ea8f2c567441a6a02c1e8437ad0f3c1f6c65",
+    "builder-red.log": "fd57e2875d62087c7ac2a1611c3e0d4cced30ebbbb2dfad40892b711f8105f86",
+    "node-three-170.log": "1e1964211081c2edd9f85ad480464c022c2b182310df7bc8aa7ffc913962123d",
+    "mouth-skin-three-170.json": "6f40aede839ad8aae07893cad3f09727648985871b29dc16d42a07249ca3e785",
+    "mouth-skin-three-169.json": "c045f13427f3010a5b236f6a86e1cec3505730f3d3031d20d5316aa6656a53a6",
+    "mouth-green.log": "029202b9665549324e36aaf4d7d42c407154bbe62b538bb38ba91f2a934316c5",
+    "mouth-red.log": "60a9e0d8da4976e8e54e1176db44b107af9b19c648260cfe9317f07d6bddc06e",
+    "node-three-169.log": "3f57f2a0d31095b5c8898e1c19740d31bc6f7d5ea1236997b297bbc1f8f7b0f8",
+    "mouth-open1-nodes.json": "e7ff7ab46f8abeb5590ca5f848522751ebd3bc67604b614b7951db7f1a5fa358"
+  },
+  "production_six_clips_rerun": false,
+  "browser_webgl_verified": false,
+  "merged": false,
+  "deployed": false
+}

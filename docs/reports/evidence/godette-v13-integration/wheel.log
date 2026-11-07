@@ -1,0 +1,10 @@
+WARNING: The directory '/home/agent/.cache/pip' or its parent directory is not owned or is not writable by the current user. The cache has been disabled. Check the permissions and owner of that directory. If executing pip with sudo, you should use sudo's -H flag.
+Processing ./.
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Building wheels for collected packages: signlanguage-bridge-core
+  Building wheel for signlanguage-bridge-core (pyproject.toml): started
+  Building wheel for signlanguage-bridge-core (pyproject.toml): finished with status 'done'
+  Created wheel for signlanguage-bridge-core: filename=signlanguage_bridge_core-0.3.0-py3-none-any.whl size=402588 sha256=f1a805f0067359a378fa09af457df94c4643ba63300bad364957aeec57e68353
+  Stored in directory: /tmp/pip-ephem-wheel-cache-jf360kix/wheels/0c/d0/62/4d287cf426ad44b500486bdd48f304627366fc68971b3442eb
+Successfully built signlanguage-bridge-core
