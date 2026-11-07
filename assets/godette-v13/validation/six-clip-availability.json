@@ -1,0 +1,54 @@
+{
+  "candidate_glb_sha256": "2d89e2e33271d2e06c5a834a56675663aa5551814e2c98ef86fc084ca0c151a8",
+  "status": "BLOCKED_MISSING_SIX_ORIGINAL_MOTION_JSON",
+  "historical_report_used_only_to_identify_required_inputs": "expression_review/runtime_input/unpacked/verification/project-runtime-report.json",
+  "historical_results_reused_as_current_pass": false,
+  "clips": [
+    {
+      "asset_id": "new-1918b4f42eac7d78-cap-0009",
+      "expected_source_sha256_from_historical_report": "5126b1f99ceaba71659770da0f9972020afd0cd039f11db9de97f600cec37118",
+      "expected_frames": 200,
+      "source_json_available_in_current_workspace": false,
+      "rerun_status": "NOT_RUN_MISSING_ORIGINAL_SOURCE"
+    },
+    {
+      "asset_id": "pilot-greeting-answer-002",
+      "expected_source_sha256_from_historical_report": "05723cfe6e6df23583769907abaf8f23c003b266db03bac9c758157ea343f9e1",
+      "expected_frames": 174,
+      "source_json_available_in_current_workspace": false,
+      "rerun_status": "NOT_RUN_MISSING_ORIGINAL_SOURCE"
+    },
+    {
+      "asset_id": "pilot-greeting-how-004",
+      "expected_source_sha256_from_historical_report": "8363d7ce82873a8c6dbb4aa6bc04d3e4c74b3a8991efa8aa07a173cb522546bb",
+      "expected_frames": 153,
+      "source_json_available_in_current_workspace": false,
+      "rerun_status": "NOT_RUN_MISSING_ORIGINAL_SOURCE"
+    },
+    {
+      "asset_id": "pilot-greeting-busy-005",
+      "expected_source_sha256_from_historical_report": "cb88764f91d952353e936cebb4d22536aaa7a778c0b5d4173ae20f33e7d6ba55",
+      "expected_frames": 148,
+      "source_json_available_in_current_workspace": false,
+      "rerun_status": "NOT_RUN_MISSING_ORIGINAL_SOURCE"
+    },
+    {
+      "asset_id": "pilot-hospital-pay-013",
+      "expected_source_sha256_from_historical_report": "f6c9d36a14d570941c7527dfe507c885c266bfebf8cf5d43d8712f0307794914",
+      "expected_frames": 163,
+      "source_json_available_in_current_workspace": false,
+      "rerun_status": "NOT_RUN_MISSING_ORIGINAL_SOURCE"
+    },
+    {
+      "asset_id": "new-0ad6eaefc7647487-cap-0067",
+      "expected_source_sha256_from_historical_report": "0fc8a1476f4362df5e9d55fe0df5f6765de98efe7596fcf0c735588ac2c55b31",
+      "expected_frames": 300,
+      "source_json_available_in_current_workspace": false,
+      "rerun_status": "NOT_RUN_MISSING_ORIGINAL_SOURCE"
+    }
+  ],
+  "limits": [
+    "No six-clip raw/temporal/temporal_ik run is claimed.",
+    "The v13 intentionally changes 13 lower-body defaults; do not reuse the old zero world-matrix-difference assertion without documenting expected pose deltas."
+  ]
+}

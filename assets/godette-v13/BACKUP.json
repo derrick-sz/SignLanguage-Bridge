@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "base_commit": "218c1a64a8180918994e7cb17cfbf31170ec127d",
+  "status": "research_candidate",
+  "compression": "gzip -n; lossless; decoded SHA256 independently checked",
+  "files": {
+    "godette-reference-v13.blend.gz": {
+      "bytes": 8062793,
+      "sha256": "596a93702dce6047c25bf7e67fc8cf194f557c20b3a3c2cae782b0a7e210682e",
+      "decoded_filename": "godette-reference-v13.blend",
+      "decoded_bytes": 8484074,
+      "decoded_sha256": "f03f7ebecb892ac2b01a0768d3c140802cf06e207c4bad33bd0aa4f0b92822b4",
+      "git_blob_sha": "8bbb2065f77bb31d5f1199eefebddeb70fe7e51d"
+    },
+    "godette-reference-v13.glb.gz": {
+      "bytes": 8818313,
+      "sha256": "4c5b5e0396b4cd71288bc93cc4d72a1d5f08d6bfe2f397623ddfe8208f4c1552",
+      "decoded_filename": "godette-reference-v13.glb",
+      "decoded_bytes": 17381924,
+      "decoded_sha256": "2d89e2e33271d2e06c5a834a56675663aa5551814e2c98ef86fc084ca0c151a8",
+      "git_blob_sha": "76e714e15835b0dd774e74d008dd85be01df86d3"
+    }
+  },
+  "automatic_nonmanual_supported": false,
+  "merged": false,
+  "deployed": false
+}

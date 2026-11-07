@@ -1,0 +1,93 @@
+{
+  "schema": "godette-v13-glb-delivery-manifest-v1",
+  "candidate_blend_sha256": "f03f7ebecb892ac2b01a0768d3c140802cf06e207c4bad33bd0aa4f0b92822b4",
+  "glb_sha256": "2d89e2e33271d2e06c5a834a56675663aa5551814e2c98ef86fc084ca0c151a8",
+  "scope": "GLB export/roundtrip passed; test-only coordinated mouth passed; production v13 gate and six-clip validation not complete",
+  "files": [
+    {
+      "path": "godette-reference-v13.glb",
+      "size": 17381924,
+      "sha256": "2d89e2e33271d2e06c5a834a56675663aa5551814e2c98ef86fc084ca0c151a8"
+    },
+    {
+      "path": "README-export-validation.md",
+      "size": 4603,
+      "sha256": "25b855726a813908f9924f3d24ede8ec1248a5b80790f78d968487a6f2b7cad7"
+    },
+    {
+      "path": "export-contract.json",
+      "size": 4958,
+      "sha256": "ed093c5c3ab4715ea392b7ceacc9f716922ea2edaa0eea0e12345c0b2ada4271"
+    },
+    {
+      "path": "artifact-check.json",
+      "size": 1703,
+      "sha256": "82f6820d3e5ba10c363c3119b1d3411df2c1568905a52c1ba23b7150afcdc215"
+    },
+    {
+      "path": "deformation-numerics.json",
+      "size": 26263,
+      "sha256": "db011f2b7d96f68d5aa4abeca4329d44cebd14dee0644b0ef92488e9097715d4"
+    },
+    {
+      "path": "roundtrip-validation.json",
+      "size": 20193,
+      "sha256": "67113497b039b3cc1a12fefd3fe67de166e4b938a49e5979a25ec71559940c09"
+    },
+    {
+      "path": "negative-gate-tests.json",
+      "size": 464,
+      "sha256": "44287acf13d9da9d3550b90c84382e21e5dbf744437e2593fc322492bf5a678e"
+    },
+    {
+      "path": "six-clip-availability.json",
+      "size": 2578,
+      "sha256": "4636715b20cb79e8b7c286b0f21d07b579d2a36a3d6ccc71a27bc6793ecf68de"
+    },
+    {
+      "path": "runtime_probe/production-gate.json",
+      "size": 667,
+      "sha256": "a38325386f4a63d47c3fbc3240708d2e8001a998cbd37962b9152f42456e08dd"
+    },
+    {
+      "path": "runtime_probe/production-gate-observed.log",
+      "size": 667,
+      "sha256": "a38325386f4a63d47c3fbc3240708d2e8001a998cbd37962b9152f42456e08dd"
+    },
+    {
+      "path": "runtime_probe/three169/mouth-skin-three-169.json",
+      "size": 1577,
+      "sha256": "5198ae123601d3a48b41add57b5062f5dc5942329c19d6b8cc7cf41da6678989"
+    },
+    {
+      "path": "runtime_probe/three169/test.log",
+      "size": 243,
+      "sha256": "894de27bbc3dda8a6bf502fb0762a4fc042fb6fc2ccb679cfd62f0d278a140d5"
+    },
+    {
+      "path": "runtime_probe/three170/mouth-skin-three-170.json",
+      "size": 1577,
+      "sha256": "f20d8f387af8e67e78dd4dc83208100003400f504784d7ad04eaba002aed180e"
+    },
+    {
+      "path": "runtime_probe/three170/test.log",
+      "size": 243,
+      "sha256": "8310cdec690e014d8f4fb9f70a2ffb9b3b425ea2357f925c9c99de5d9dc50eb9"
+    },
+    {
+      "path": "previews/v13-native-face.png",
+      "size": 1085265,
+      "sha256": "6f2a1d9c25bbe51ef794d64352860d22efac8d8438977bd33a1f860e030d2976"
+    },
+    {
+      "path": "previews/v13-native-front.png",
+      "size": 926770,
+      "sha256": "6c007d6ce75f3bc222fc5e9aefbe896a55e16c84ac50d308e467f7f2f2b0de89"
+    },
+    {
+      "path": "previews/v13-native-side.png",
+      "size": 887035,
+      "sha256": "4a4fcfccf8105fe871d3330278cddb41e991dfe9567d2b6a3aeef5274eaf9ead"
+    }
+  ]
+}

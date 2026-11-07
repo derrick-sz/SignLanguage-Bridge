@@ -1,0 +1,16 @@
+{
+  "glb_sha256_unchanged": "2d89e2e33271d2e06c5a834a56675663aa5551814e2c98ef86fc084ca0c151a8",
+  "tests": [
+    {
+      "test": "existing output refuses overwrite",
+      "passed": true,
+      "error": "Refusing overwrite"
+    },
+    {
+      "test": "wrong frozen input SHA refuses export",
+      "passed": true,
+      "error": "Input SHA mismatch /workspace/scratch/87fc5b72c014/godette_v13_model_delivery/godette-reference-v13.blend"
+    }
+  ],
+  "pass": true
+}

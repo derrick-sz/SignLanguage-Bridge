@@ -1,0 +1,181 @@
+{
+  "schema": "godette-v13-export-contract-v1",
+  "source_glb_sha256": "a7942f7a69e8fb078d50767e85944c0e59b47dc20b40479ab86d8c16513717c4",
+  "candidate_blend_sha256": "f03f7ebecb892ac2b01a0768d3c140802cf06e207c4bad33bd0aa4f0b92822b4",
+  "output_glb_sha256": "2d89e2e33271d2e06c5a834a56675663aa5551814e2c98ef86fc084ca0c151a8",
+  "geometry_changed_objects": [
+    "Godette continuous trousers - pelvis crotch legs",
+    "Ivory inner panel",
+    "Jade collar edge",
+    "Jade front piping",
+    "Jade front piping.001",
+    "Jade hem binding",
+    "Mandarin jacket - front and back"
+  ],
+  "weight_changed_objects": [
+    "Godette continuous trousers - pelvis crotch legs"
+  ],
+  "default_pose_changed_bones": [
+    "Foot.L_201",
+    "Foot.R_207",
+    "Hip_218",
+    "Knee.L_203",
+    "Knee.R_209",
+    "Leg_Lower.L_202",
+    "Leg_Lower.R_208",
+    "Leg_Upper.L_205",
+    "Leg_Upper.R_211",
+    "Leg_Upper_2.L_204",
+    "Leg_Upper_2.R_210",
+    "Toe.L_200",
+    "Toe.R_206"
+  ],
+  "mapping": [
+    {
+      "object": "Godette continuous trousers - pelvis crotch legs",
+      "raw_vertices": 21350,
+      "exported_vertices": 21350,
+      "mapping_max_m": 5.537225848217173e-08,
+      "normal_mapping_max": 1.3657139822709083e-07,
+      "position_float32_max_m": 5.536013867985216e-08
+    },
+    {
+      "object": "Ivory inner panel",
+      "raw_vertices": 57,
+      "exported_vertices": 57,
+      "mapping_max_m": 5.1610235699412895e-08,
+      "normal_mapping_max": 5.9090990158861795e-05,
+      "position_float32_max_m": 5.161023564781486e-08
+    },
+    {
+      "object": "Jade collar edge",
+      "raw_vertices": 12810,
+      "exported_vertices": 14091,
+      "mapping_max_m": 4.498899767247473e-08,
+      "normal_mapping_max": 8.301540547904883e-05,
+      "position_float32_max_m": 5.296384447278926e-08
+    },
+    {
+      "object": "Jade front piping",
+      "raw_vertices": 2090,
+      "exported_vertices": 2299,
+      "mapping_max_m": 5.537455920834147e-08,
+      "normal_mapping_max": 8.205698623203857e-05,
+      "position_float32_max_m": 5.537959803781196e-08
+    },
+    {
+      "object": "Jade front piping.001",
+      "raw_vertices": 2090,
+      "exported_vertices": 2299,
+      "mapping_max_m": 5.537455920834147e-08,
+      "normal_mapping_max": 8.248861308470319e-05,
+      "position_float32_max_m": 5.537959803781196e-08
+    },
+    {
+      "object": "Jade hem binding",
+      "raw_vertices": 12810,
+      "exported_vertices": 14091,
+      "mapping_max_m": 2.8421291035278966e-08,
+      "normal_mapping_max": 8.269605318314713e-05,
+      "position_float32_max_m": 5.513108750874819e-08
+    },
+    {
+      "object": "Mandarin jacket - front and back",
+      "raw_vertices": 34026,
+      "exported_vertices": 34026,
+      "mapping_max_m": 5.554637150911902e-08,
+      "normal_mapping_max": 8.230254373380303e-05,
+      "position_float32_max_m": 5.554637160661046e-08
+    }
+  ],
+  "pose_decomposition": [
+    {
+      "bone": "Hip_218",
+      "trs_decomposition_max": 1.9050259481012688e-08
+    },
+    {
+      "bone": "Leg_Upper.L_205",
+      "trs_decomposition_max": 9.42166916706455e-09
+    },
+    {
+      "bone": "Leg_Upper_2.L_204",
+      "trs_decomposition_max": 6.540479551011186e-09
+    },
+    {
+      "bone": "Knee.L_203",
+      "trs_decomposition_max": 2.5392501379339905e-08
+    },
+    {
+      "bone": "Leg_Lower.L_202",
+      "trs_decomposition_max": 1.1522029531862987e-08
+    },
+    {
+      "bone": "Foot.L_201",
+      "trs_decomposition_max": 2.0282641850668907e-08
+    },
+    {
+      "bone": "Toe.L_200",
+      "trs_decomposition_max": 6.638992688934309e-08
+    },
+    {
+      "bone": "Leg_Upper.R_211",
+      "trs_decomposition_max": 2.793161979486314e-08
+    },
+    {
+      "bone": "Leg_Upper_2.R_210",
+      "trs_decomposition_max": 1.2658416477485886e-08
+    },
+    {
+      "bone": "Knee.R_209",
+      "trs_decomposition_max": 8.148484778201445e-09
+    },
+    {
+      "bone": "Leg_Lower.R_208",
+      "trs_decomposition_max": 5.8100775961189566e-09
+    },
+    {
+      "bone": "Foot.R_207",
+      "trs_decomposition_max": 2.2787623797583707e-08
+    },
+    {
+      "bone": "Toe.R_206",
+      "trs_decomposition_max": 1.372392427131941e-08
+    }
+  ],
+  "pants_weights": {
+    "maximum_float32_normalization_delta": 5.960464477539063e-08,
+    "small_positive_weights_preserved": 224,
+    "maximum_influences": 4
+  },
+  "changed_accessor_ids": [
+    71,
+    72,
+    73,
+    74,
+    267,
+    268,
+    272,
+    273,
+    297,
+    298,
+    303,
+    304,
+    308,
+    309,
+    313,
+    314
+  ],
+  "preserved": {
+    "bone_count": 227,
+    "bone_names_order_hierarchy_rest_exact": true,
+    "inverse_bind_matrices_bit_exact": true,
+    "mouth_16_lip_pose_nodes_bit_exact_vs_v12": true,
+    "all_other_nodes_bit_exact_vs_v12": true,
+    "unchanged_object_attributes_bit_exact": true,
+    "all_uv_indices_materials_textures_images_bit_exact": true,
+    "skinned_mesh_count": 74,
+    "primitive_count": 78,
+    "animations": 0
+  },
+  "pass": true
+}
