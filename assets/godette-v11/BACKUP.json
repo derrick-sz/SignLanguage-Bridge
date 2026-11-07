@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "baseline_commit": "ad3806f8e0ba2227231492860cfed33eb70347f9",
   "blend": {
     "path": "godette-reference-v11.blend",
@@ -7,11 +7,14 @@
     "sha256": "b03224d8683604848b1a241c4a2178bc669124abb1ae005bc92b99495b0b0f77",
     "git_blob_sha": "c8765fc5d99bf81ea94a3eb9b07ac995c7ea8cf5"
   },
-  "glb": {
-    "sha256": "e4a5766d98ab53871415da3ef4609c4848386c8b4de2958d5e420a8d7524d476",
-    "size_bytes": 17342876,
-    "status": "not_uploaded_request_exceeds_16MiB_transport_limit",
-    "archive": "godette-reference-model-v11-20261106.zip"
+  "glb_gzip": {
+    "path": "godette-reference-v11.glb.gz",
+    "size_bytes": 8498819,
+    "sha256": "3c97c282a5bab81b62845892392f0c998179c02520fbd79c243c6bb47a9cb00c",
+    "git_blob_sha": "d71e21f047c95d85693dac421e478aa980d1ed89",
+    "uncompressed_size_bytes": 17342876,
+    "uncompressed_sha256": "e4a5766d98ab53871415da3ef4609c4848386c8b4de2958d5e420a8d7524d476",
+    "roundtrip_bytes_verified": true
   },
   "license": "CC BY 4.0",
   "author": "zahlenmaler",
