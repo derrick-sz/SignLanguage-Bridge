@@ -1,0 +1,451 @@
+{
+  "base_commit": "ad3806f8e0ba2227231492860cfed33eb70347f9",
+  "restored_count": 89,
+  "files": [
+    {
+      "path": "app/collect_data.py",
+      "git_blob_sha": "ae0fbdf2bec4035cba7974dd5077d958568debdd",
+      "size_bytes": 8213
+    },
+    {
+      "path": "app/desktop_app.py",
+      "git_blob_sha": "05b9a5efae04448170b2ee064be6417b0e9cb8e9",
+      "size_bytes": 428
+    },
+    {
+      "path": "app/legacy_desktop_app.py",
+      "git_blob_sha": "919697a032af1e71a2420f217b9c48f01b58498a",
+      "size_bytes": 13353
+    },
+    {
+      "path": "app/train_hand_model.py",
+      "git_blob_sha": "cb9646364276b3969c5ed4daafd12c93a9732124",
+      "size_bytes": 3240
+    },
+    {
+      "path": "app/train_model.py",
+      "git_blob_sha": "14fe41a25798da90146e4d58933bea81849d1a75",
+      "size_bytes": 2650
+    },
+    {
+      "path": "docs/model-adapter-example.md",
+      "git_blob_sha": "7b96fe346da0d3f98b902d58a5d67f6f0cae0af5",
+      "size_bytes": 5838
+    },
+    {
+      "path": "docs/架构开发文件/SignLanguage_Bridge_API_Contract_V1.yaml",
+      "git_blob_sha": "3b05835c5f618577006fc3505228402f9cee481c",
+      "size_bytes": 10751
+    },
+    {
+      "path": "experiments/__init__.py",
+      "git_blob_sha": "756f0c12f2527ad656b442ec16e4878c774820ad",
+      "size_bytes": 78
+    },
+    {
+      "path": "experiments/benchmark_ctc_cpu.py",
+      "git_blob_sha": "498e3b640639e8d15e539130d941eb5968baa4fb",
+      "size_bytes": 7276
+    },
+    {
+      "path": "experiments/benchmark_ctc_runtime.py",
+      "git_blob_sha": "2e53099d83a8399e74ce848f2c855910b87ffdf5",
+      "size_bytes": 194
+    },
+    {
+      "path": "experiments/libras_rf.py",
+      "git_blob_sha": "f1cc15678dcd0545e9eb611f37fdaeb277802788",
+      "size_bytes": 6435
+    },
+    {
+      "path": "experiments/p1/__init__.py",
+      "git_blob_sha": "6db48920518852cb7da826a1d26a7600a88356e7",
+      "size_bytes": 654
+    },
+    {
+      "path": "experiments/p1/collect_summary.py",
+      "git_blob_sha": "ab576e979786aae343e954fd494454cd9b19a984",
+      "size_bytes": 12347
+    },
+    {
+      "path": "experiments/p1/common.py",
+      "git_blob_sha": "b4a12d03d47b776f68565ebfd0ff5318a9249457",
+      "size_bytes": 9422
+    },
+    {
+      "path": "experiments/p1/datasets/__init__.py",
+      "git_blob_sha": "055e33afab35d764ef348caa259a074ed1369e8e",
+      "size_bytes": 26
+    },
+    {
+      "path": "experiments/p1/datasets/build_manifest.py",
+      "git_blob_sha": "5f8b86fe9ec402a72eb711e291b30053b83f5185",
+      "size_bytes": 8579
+    },
+    {
+      "path": "experiments/p1/e00/_data_snapshot.py",
+      "git_blob_sha": "eb25d563af5b5c63305ed0d462e7e855985297cf",
+      "size_bytes": 6470
+    },
+    {
+      "path": "experiments/p1/e00/_env_probe.py",
+      "git_blob_sha": "433c53290ddd2402779527797fe22b826a96918a",
+      "size_bytes": 1992
+    },
+    {
+      "path": "experiments/p1/e01/analyze_corrected_rgb_pose.py",
+      "git_blob_sha": "c78e6f81eeca38a72881ca5c3c2939922cb8e199",
+      "size_bytes": 19978
+    },
+    {
+      "path": "experiments/p1/e01/check_stage2_pose_subset.py",
+      "git_blob_sha": "663186d70c286e9faf0c559db9e4531d0266d54c",
+      "size_bytes": 17135
+    },
+    {
+      "path": "experiments/p1/e01/eval_unisign_rgb_pose.py",
+      "git_blob_sha": "603c3e0c97456a46bab56d1125dbeca6571039da",
+      "size_bytes": 40570
+    },
+    {
+      "path": "experiments/p1/e01/regression_rgb_pose_adapter.py",
+      "git_blob_sha": "e010ee9d81871e40dab4253b4ea53aa90f61be82",
+      "size_bytes": 13845
+    },
+    {
+      "path": "experiments/p1/e01/run_adapter_regression.py",
+      "git_blob_sha": "cb4b3e2c4f991c8aed578d64eb41b1823aa4eda5",
+      "size_bytes": 18308
+    },
+    {
+      "path": "experiments/p1/e01/runs/unisign-rgb-pose-1086-20261027/protocol.json",
+      "git_blob_sha": "45d61a075251033f76829db509324b8bb7320fa0",
+      "size_bytes": 28842
+    },
+    {
+      "path": "experiments/p1/e01/tools/build_e01_summary.py",
+      "git_blob_sha": "7e68e5512712bfcfb3b29244ce72347ef709561c",
+      "size_bytes": 16428
+    },
+    {
+      "path": "experiments/p1/e01/tools/build_preprocess_audit.py",
+      "git_blob_sha": "d7a89f71cf27d4b8cca4fe4f9f50c0e76d5e16f8",
+      "size_bytes": 12039
+    },
+    {
+      "path": "experiments/p1/e01/tools/build_video_probe.py",
+      "git_blob_sha": "ee62edcb63af87ec17525837528a9578d0f518b1",
+      "size_bytes": 6360
+    },
+    {
+      "path": "experiments/p1/e01/tools/finalize_slrt_run.py",
+      "git_blob_sha": "2296b8dbe063dbb8d98148a5e8138203f80e8b3d",
+      "size_bytes": 17898
+    },
+    {
+      "path": "experiments/p1/e01/tools/finalize_unisign_run.py",
+      "git_blob_sha": "fe1ad7c8ed6f8e041aef689249086e2984d47467",
+      "size_bytes": 24010
+    },
+    {
+      "path": "experiments/p1/e01/tools/prepare_s1_inputs.py",
+      "git_blob_sha": "6b192816024f8142ce530f1b0fbb2d55ecddfbbe",
+      "size_bytes": 4965
+    },
+    {
+      "path": "experiments/p1/e01/tools/prepare_u2_inputs.py",
+      "git_blob_sha": "04a844bd721a774bfb59fb73e1c1a20f341a161e",
+      "size_bytes": 3824
+    },
+    {
+      "path": "experiments/p1/e02/__init__.py",
+      "git_blob_sha": "09726a5ebc6ecb87e088366a6a2cdf09aca2ba43",
+      "size_bytes": 22
+    },
+    {
+      "path": "experiments/p1/e02/llm_fusion/__init__.py",
+      "git_blob_sha": "feb53ed51b6f975a244e245dde7b05eb994e523a",
+      "size_bytes": 888
+    },
+    {
+      "path": "experiments/p1/e02/llm_fusion/analyze_group_f.py",
+      "git_blob_sha": "9bb22a83a8550f7dda14c5ac8e2fe7e889660c16",
+      "size_bytes": 28430
+    },
+    {
+      "path": "experiments/p1/e02/llm_fusion/analyze_prompt_v2.py",
+      "git_blob_sha": "9afeb81cffda6ca972a0ee9f59c8380c16751ca7",
+      "size_bytes": 34878
+    },
+    {
+      "path": "experiments/p1/e02/llm_fusion/backends/__init__.py",
+      "git_blob_sha": "d7ac7b0465da6c079ad84a17173c9f4889cb7e43",
+      "size_bytes": 1377
+    },
+    {
+      "path": "experiments/p1/e02/llm_fusion/backends/base.py",
+      "git_blob_sha": "9d19db588a8830eaeb4efacef231202f7b74ebfe",
+      "size_bytes": 2330
+    },
+    {
+      "path": "experiments/p1/e02/llm_fusion/backends/codex_cli.py",
+      "git_blob_sha": "aad1c88a2b851ed14cacf002c7664bde933a0943",
+      "size_bytes": 7925
+    },
+    {
+      "path": "experiments/p1/e02/llm_fusion/backends/openai_compat.py",
+      "git_blob_sha": "7a788fcc6eac0668b03a29087df6aeeef521a538",
+      "size_bytes": 12649
+    },
+    {
+      "path": "experiments/p1/e02/llm_fusion/backends/stub.py",
+      "git_blob_sha": "061978556af0f22fcbe591f5faa54cc857828d23",
+      "size_bytes": 4133
+    },
+    {
+      "path": "experiments/p1/e02/llm_fusion/evaluate.py",
+      "git_blob_sha": "5f3b652d3a77b208ec80e3538dad706147f771d8",
+      "size_bytes": 23073
+    },
+    {
+      "path": "experiments/p1/e02/llm_fusion/harness.py",
+      "git_blob_sha": "37a2fedbc781939400e9b4f6cc6d12b7ff27455c",
+      "size_bytes": 33710
+    },
+    {
+      "path": "experiments/p1/e02/llm_fusion/run_group_f.py",
+      "git_blob_sha": "6e9269505b83d9ad03190bce0f4380266ef61c23",
+      "size_bytes": 6700
+    },
+    {
+      "path": "experiments/p1/e02/llm_fusion/run_prompt_v2.py",
+      "git_blob_sha": "1a08c3b0fd73b10feb78ae9f4d2301fd96ada669",
+      "size_bytes": 29405
+    },
+    {
+      "path": "experiments/p1/e02/llm_fusion/run_real_50.py",
+      "git_blob_sha": "57a7daf1425b4cc519b20ba90f2a61244c43d500",
+      "size_bytes": 22328
+    },
+    {
+      "path": "experiments/p1/e02/llm_fusion/selftest.py",
+      "git_blob_sha": "b77ae22ff68985b5f1433650eb5880c90c09b32a",
+      "size_bytes": 24623
+    },
+    {
+      "path": "experiments/p1/e02/run_e02.py",
+      "git_blob_sha": "19765f9a0776d66b9a87e428b993d2b52f96c022",
+      "size_bytes": 34783
+    },
+    {
+      "path": "experiments/p1/e03/build_e03.py",
+      "git_blob_sha": "ac1179bb95b48a8480b1b8b7284f611d6db0c4e3",
+      "size_bytes": 61610
+    },
+    {
+      "path": "experiments/p1/e04/__init__.py",
+      "git_blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "size_bytes": 0
+    },
+    {
+      "path": "experiments/p1/e04/benchmark_p1.py",
+      "git_blob_sha": "5f1abdc670d1b9a6f438283e536b8b8b1b0da073",
+      "size_bytes": 65109
+    },
+    {
+      "path": "experiments/p1/e04/opt_slrt_preprocess.py",
+      "git_blob_sha": "51db6b09dfe4329359683049ae75734bc2e9eb28",
+      "size_bytes": 28630
+    },
+    {
+      "path": "experiments/p1/e04/opt_unisign_frontend.py",
+      "git_blob_sha": "682fbb0ddf31f555ef5534cb951388a53d63b5d6",
+      "size_bytes": 26640
+    },
+    {
+      "path": "experiments/p1/e04/perf_common.py",
+      "git_blob_sha": "6dbcdedcbfe4c91886f62bebf1b31c954b3b6522",
+      "size_bytes": 21458
+    },
+    {
+      "path": "experiments/p1/e04/rgbpose_perf.py",
+      "git_blob_sha": "3f89e1ffd728805cb4d26e207b5848c29472f332",
+      "size_bytes": 55642
+    },
+    {
+      "path": "experiments/p1/e04/validate_slrt_frame_cache.py",
+      "git_blob_sha": "11fe216185719620f40375192eee96b2b73d1f21",
+      "size_bytes": 11471
+    },
+    {
+      "path": "experiments/p1/e05/__init__.py",
+      "git_blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "size_bytes": 0
+    },
+    {
+      "path": "experiments/p1/e05/prefix_probe.py",
+      "git_blob_sha": "a42cd2cbda7c523c27507999ffe26c230481e3c3",
+      "size_bytes": 43135
+    },
+    {
+      "path": "experiments/p1/e05/replay_probe.py",
+      "git_blob_sha": "136549f42c2ad078d3bec5bae30029c4936a20ff",
+      "size_bytes": 41569
+    },
+    {
+      "path": "experiments/p1/e06/build_e06.py",
+      "git_blob_sha": "1b592b6ad93754bbc331c9f1845d385ac6e7c3d0",
+      "size_bytes": 71847
+    },
+    {
+      "path": "experiments/p1/e06/round2_tools/make_round2_package.py",
+      "git_blob_sha": "bdc55f9e06712030d07564c9678ce8cfbd9537f9",
+      "size_bytes": 20192
+    },
+    {
+      "path": "experiments/p1/e06/round2_tools/xlsx_writer.py",
+      "git_blob_sha": "eee8745ffb1f83246996e8671500a39f026a119b",
+      "size_bytes": 6491
+    },
+    {
+      "path": "experiments/p1/e06/round3_tools/make_round3_package.py",
+      "git_blob_sha": "fd06dd38824e80f280b02f0705f30a3074cb208f",
+      "size_bytes": 27765
+    },
+    {
+      "path": "experiments/p1/e06/round3_tools/prefill_reviewer_a.py",
+      "git_blob_sha": "f6d0d6ec4eb53e428fcfacd1cf61adf177dcf136",
+      "size_bytes": 9692
+    },
+    {
+      "path": "experiments/p1/e06/round3_tools/xlsx_writer_v2.py",
+      "git_blob_sha": "998661e8dfe8d488ffad7e8df6135f90682c56bc",
+      "size_bytes": 7644
+    },
+    {
+      "path": "experiments/p1/e06/slot_patch/slot_patch.py",
+      "git_blob_sha": "bdd35ffd3fefe69b115b20bf9689b7d08cf975cb",
+      "size_bytes": 43178
+    },
+    {
+      "path": "experiments/p1/e07/analyze_coverage.py",
+      "git_blob_sha": "70ca9efe2f99422ecfe32c31075ffa8335b295b7",
+      "size_bytes": 88367
+    },
+    {
+      "path": "experiments/p1/e08/pose_perturbation_sweep.py",
+      "git_blob_sha": "d7ae90bd5afd6f280da50d827e758e5aaef5f0c6",
+      "size_bytes": 12386
+    },
+    {
+      "path": "experiments/p1/eval/__init__.py",
+      "git_blob_sha": "055e33afab35d764ef348caa259a074ed1369e8e",
+      "size_bytes": 26
+    },
+    {
+      "path": "experiments/p1/eval/evaluate.py",
+      "git_blob_sha": "9ccfa083f4b2ebd93d8356dd1bc45b09f0da3a07",
+      "size_bytes": 10948
+    },
+    {
+      "path": "experiments/p1/eval/metrics.py",
+      "git_blob_sha": "8a7375d0ff1a7bbfdb20f72222a42b5984bcf4e6",
+      "size_bytes": 9196
+    },
+    {
+      "path": "experiments/p1/gt_guard.py",
+      "git_blob_sha": "732c629c34c2b43f0371bba3dae0a43953aa3cc1",
+      "size_bytes": 3431
+    },
+    {
+      "path": "experiments/p1/references/__init__.py",
+      "git_blob_sha": "055e33afab35d764ef348caa259a074ed1369e8e",
+      "size_bytes": 26
+    },
+    {
+      "path": "experiments/p1/references/build_references.py",
+      "git_blob_sha": "92d9b5062bcb86f223893c492228425dfc637873",
+      "size_bytes": 4660
+    },
+    {
+      "path": "experiments/p1/schemas/evidence_candidate.schema.json",
+      "git_blob_sha": "c3bef9fb1dcbda1554ac23c87702c4262e68a02b",
+      "size_bytes": 2468
+    },
+    {
+      "path": "experiments/p1/schemas/run_record.schema.json",
+      "git_blob_sha": "39633736c5bd776745736d8e94cb6699ed7c84ff",
+      "size_bytes": 1365
+    },
+    {
+      "path": "experiments/p1/tests/__init__.py",
+      "git_blob_sha": "055e33afab35d764ef348caa259a074ed1369e8e",
+      "size_bytes": 26
+    },
+    {
+      "path": "experiments/p1/tests/test_p1_infra.py",
+      "git_blob_sha": "9109a2a7fa5aa7471ed39538f947adbb533f3d00",
+      "size_bytes": 5153
+    },
+    {
+      "path": "experiments/p1/verify_all.py",
+      "git_blob_sha": "82a3bacdd7f0ff685a1fdeefcf393694bc9350eb",
+      "size_bytes": 11072
+    },
+    {
+      "path": "experiments/probe_camera.py",
+      "git_blob_sha": "007617174baa24f5add2d456a810d92a30c19085",
+      "size_bytes": 2166
+    },
+    {
+      "path": "experiments/probe_unified_runtime.py",
+      "git_blob_sha": "7a4ebf105d3ed3c9cb3788c8778ef0d82a235f8d",
+      "size_bytes": 3494
+    },
+    {
+      "path": "experiments/validate_auto_camera.py",
+      "git_blob_sha": "f2eb78b1386e475b2d67fa32de286791566942e8",
+      "size_bytes": 3306
+    },
+    {
+      "path": "experiments/validate_auto_captions.py",
+      "git_blob_sha": "7829faa227ef89e8a3b05dd25016cc36b6807b93",
+      "size_bytes": 14177
+    },
+    {
+      "path": "experiments/validate_desktop.py",
+      "git_blob_sha": "c997478f4b823b6edd93cda2828053cb37cc0422",
+      "size_bytes": 10211
+    },
+    {
+      "path": "experiments/validate_keypoint_video.py",
+      "git_blob_sha": "737a176ffb594ad7383471204fd54c013b5a5e01",
+      "size_bytes": 9555
+    },
+    {
+      "path": "experiments/validate_keypoint_workbench.py",
+      "git_blob_sha": "fe70b90d79726d49d4012d170565e03fa168ca5d",
+      "size_bytes": 6347
+    },
+    {
+      "path": "experiments/validate_libras.py",
+      "git_blob_sha": "6d6ca4ae104cea467d684d1ae9f6cca436c1da80",
+      "size_bytes": 5683
+    },
+    {
+      "path": "experiments/validate_model_api.py",
+      "git_blob_sha": "d1b0e6874b9fe8291a8a67c5472d8f8d66e900d5",
+      "size_bytes": 4926
+    },
+    {
+      "path": "experiments/validate_model_runtime.py",
+      "git_blob_sha": "3f9376dff2f1f75f39002cf3329e0b27f8d57bde",
+      "size_bytes": 12775
+    },
+    {
+      "path": "experiments/validate_onnx_gpu.py",
+      "git_blob_sha": "e6cc6221de667e33bf5bd01bef5398d2ce2c38c3",
+      "size_bytes": 4687
+    }
+  ]
+}

@@ -60,6 +60,8 @@
 
 ## 7. 性能与 Windows 环境的坑
 
+- **已修复云端测试隔离（2026-11-07）：** 部分源码快照缺文件及 OpenCV/MediaPipe/PySide6 时，后台异常可表现为超时，不能先改调度或放宽断言。恢复固定提交文件及隔离依赖后，剩余四个默认模型测试因依赖 gitignored 配置失败；现用临时 example 配置走真实 loader，生产选择与缺配置回退不变。两次全量回归均 1322 passed / 42 skipped / 0 failed / 0 errors；跳过不计通过，真实语料/GPU及浏览器仍待验收。根因、依赖和边界见 [v11 融合恢复报告](../reports/godette-v11-fusion-2026-11-06.md)。
+
 - **本轮实跑通过、原OOM唯一根因未定（2026-11-07）：CUDA OOM不等于专用显存已满；全meta构造会遗漏非持久缓冲区。** 触发：SignSparK run01在face搬运时申请16 MiB失败，仍报告10.42 GiB空闲。避免：参数用`init_empty_weights(include_buffers=False)`，保留XLM-R/RoPE真实CPU非持久缓冲区，SHA/strict/mmap/assign及FP32不变，加载后拒绝meta残留并保存阶段内存快照。run02三流各859张量严格加载、两句256帧完成；与run01可比较的六份原始流逐位相同。系统提交额度运行中变化，不能严格归因于单一WDDM/主机commit原因，也不能外推任意负载稳定性。失败诊断写盘应best-effort，不能覆盖原异常。[R36]
 
 - **仍待优化：** 当前上游 forward 先执行未使用的 sentinel loss 路径，再 generate；24 条完整推理均实测调用 mT5 encoder 两次。这是效率问题，不是离线低 BLEU 的直接解释。优化时验证生成结果、编码次数和端到端耗时。

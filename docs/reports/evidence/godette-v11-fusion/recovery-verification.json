@@ -1,0 +1,469 @@
+{
+  "schema_version": 1,
+  "verification_date_utc": "2026-11-07",
+  "upstream_base_commit": "ad3806f8e0ba2227231492860cfed33eb70347f9",
+  "verified_code_commit": "491704e1ff0adf02d58cd965823ed92f94b22d76",
+  "branch": "codex/godette-v11-fusion-20261106",
+  "supersedes_incomplete_environment_full_suite_status_in": "fresh-verification.json",
+  "historical_first_blockers": [
+    {
+      "cause": "OpenCV",
+      "failures": 101,
+      "errors": 2
+    },
+    {
+      "cause": "PySide6",
+      "failures": 4,
+      "errors": 8
+    },
+    {
+      "cause": "MediaPipe",
+      "failures": 0,
+      "errors": 11
+    },
+    {
+      "cause": "API contract YAML",
+      "failures": 1,
+      "errors": 20
+    },
+    {
+      "cause": "experiments package",
+      "failures": 0,
+      "errors": 2
+    },
+    {
+      "cause": "frozen protocol JSON",
+      "failures": 0,
+      "errors": 2
+    },
+    {
+      "cause": "adapter example document",
+      "failures": 1,
+      "errors": 0
+    },
+    {
+      "cause": "test-local model defaults configuration",
+      "failures": 4,
+      "errors": 0
+    }
+  ],
+  "source_recovery": {
+    "initial_verified_tracked_files": 292,
+    "additional_verified_tracked_files": 89,
+    "snapshot_total_tracked_files": 381,
+    "complete_repository_checkout": false,
+    "restored_file_manifest": "restored-files.json",
+    "restored_files_are_already_in_upstream": true
+  },
+  "code_change_after_integration": {
+    "file": "tests/test_model_defaults.py",
+    "git_blob_sha": "58e30cef88ef77e1223f4cf8d1d9383b977c0bba",
+    "purpose": "Temporary fixture from checked-in example drives real loader; no developer-local config required",
+    "red": {
+      "passed": 23,
+      "failed": 4,
+      "skipped": 1
+    },
+    "green": {
+      "passed": 27,
+      "failed": 0,
+      "skipped": 1
+    },
+    "independent_review_and_green_rerun": true,
+    "production_model_selection_changed": false,
+    "test_assertions_weakened": false
+  },
+  "environment": {
+    "python": "3.12.14",
+    "node": "24.22.1",
+    "three": "0.170.0",
+    "platform": "Linux cloud workspace",
+    "qt_platform": "offscreen",
+    "dependencies": "Official PyPI packages installed into isolated workspace target directory",
+    "direct_requirements": "qa-requirements.txt",
+    "installed_constraints": "qa-constraints.txt",
+    "system_packages_modified": false,
+    "user_local_data_accessed": false,
+    "production_requirements_libras_dry_run": "passed without modifications"
+  },
+  "full_python": {
+    "runs": 2,
+    "per_run": {
+      "passed": 1322,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 42,
+      "passed_subtests": 3,
+      "warnings": 17
+    },
+    "elapsed_seconds": [
+      81.42,
+      72.5
+    ],
+    "warning_categories": [
+      "Project-test pytest parameterization deprecations (2)",
+      "Starlette/AnyIO deprecation",
+      "Matplotlib/Pyparsing deprecations"
+    ],
+    "junit_top_level_testcase_elements": 1364,
+    "junit_tests_including_subtests": 1367,
+    "skip_category_counts": {
+      "torch": 22,
+      "external_assets_or_opt_in": 18,
+      "local_developer_config": 1,
+      "windows_platform": 1
+    },
+    "skips": [
+      {
+        "id": "tests.test_signspark_source_contract",
+        "reason": "could not import 'torch': No module named 'torch'",
+        "category": "torch",
+        "collection_skip": true
+      },
+      {
+        "id": "tests.test_slrt_frame_cache",
+        "reason": "could not import 'torch': No module named 'torch'",
+        "category": "torch",
+        "collection_skip": true
+      },
+      {
+        "id": "tests.test_cecsl.test_implementation_matches_pinned_upstream_normalizer_when_available",
+        "reason": "Pinned upstream audit source is local evidence",
+        "category": "external_assets_or_opt_in",
+        "collection_skip": false
+      },
+      {
+        "id": "tests.test_job_media.test_probe_media_real_video_complete",
+        "reason": "trimmed artifact not present locally",
+        "category": "external_assets_or_opt_in",
+        "collection_skip": false
+      },
+      {
+        "id": "tests.test_job_media.test_job_metadata_real_video",
+        "reason": "trimmed artifact not present locally",
+        "category": "external_assets_or_opt_in",
+        "collection_skip": false
+      },
+      {
+        "id": "tests.test_job_runner.test_runner_real_source_end_to_end",
+        "reason": "frozen P-1 source not present",
+        "category": "external_assets_or_opt_in",
+        "collection_skip": false
+      },
+      {
+        "id": "tests.test_live.test_real_video_and_saved_model_cross_path_parity",
+        "reason": "set SLBRIDGE_LIVE_VIDEO and SLBRIDGE_LIVE_MODEL for real saved-model acceptance",
+        "category": "external_assets_or_opt_in",
+        "collection_skip": false
+      },
+      {
+        "id": "tests.test_model_defaults.test_local_configuration_matches_example_when_present",
+        "reason": "local configs/model_defaults.json not present (gitignored)",
+        "category": "local_developer_config",
+        "collection_skip": false
+      },
+      {
+        "id": "tests.test_replay_adapter.test_pilot_50_a_candidates_verbatim",
+        "reason": "frozen P-1 source not present",
+        "category": "external_assets_or_opt_in",
+        "collection_skip": false
+      },
+      {
+        "id": "tests.test_replay_adapter.test_real_gloss_source_first_rows_verbatim",
+        "reason": "frozen P-1 source not present",
+        "category": "external_assets_or_opt_in",
+        "collection_skip": false
+      },
+      {
+        "id": "tests.test_rgb_core.test_legacy_model_bundles_still_load_if_present",
+        "reason": "Local pre-F4 bundle not distributed",
+        "category": "external_assets_or_opt_in",
+        "collection_skip": false
+      },
+      {
+        "id": "tests.test_signspark_empty_loading.test_empty_wrapper_keeps_actual_xlmr_buffers_and_strict_assign_forward",
+        "reason": "could not import 'torch': No module named 'torch'",
+        "category": "torch",
+        "collection_skip": false
+      },
+      {
+        "id": "tests.test_signspark_empty_loading.test_empty_wrapper_rejects_nonmeta_parameters_and_meta_buffers",
+        "reason": "could not import 'torch': No module named 'torch'",
+        "category": "torch",
+        "collection_skip": false
+      },
+      {
+        "id": "tests.test_signspark_empty_loading.test_meta_without_assign_fails_before_deserialization",
+        "reason": "could not import 'torch': No module named 'torch'",
+        "category": "torch",
+        "collection_skip": false
+      },
+      {
+        "id": "tests.test_signspark_empty_loading.test_strict_assign_rejects_unmaterialized_nonpersistent_buffer",
+        "reason": "could not import 'torch': No module named 'torch'",
+        "category": "torch",
+        "collection_skip": false
+      },
+      {
+        "id": "tests.test_signspark_generation.test_verified_checkpoint_loads_strictly_and_rejects_missing_keys[False]",
+        "reason": "could not import 'torch': No module named 'torch'",
+        "category": "torch",
+        "collection_skip": false
+      },
+      {
+        "id": "tests.test_signspark_generation.test_verified_checkpoint_loads_strictly_and_rejects_missing_keys[True]",
+        "reason": "could not import 'torch': No module named 'torch'",
+        "category": "torch",
+        "collection_skip": false
+      },
+      {
+        "id": "tests.test_signspark_generation.test_assign_loader_shares_real_loaded_state_storage_and_keeps_frozen_flags",
+        "reason": "could not import 'torch': No module named 'torch'",
+        "category": "torch",
+        "collection_skip": false
+      },
+      {
+        "id": "tests.test_signspark_portability.test_real_nine_assets_move_with_same_bytes_and_corruption_is_rejected[legacy]",
+        "reason": "explicit real asset opt-in",
+        "category": "external_assets_or_opt_in",
+        "collection_skip": false
+      },
+      {
+        "id": "tests.test_signspark_portability.test_real_nine_assets_move_with_same_bytes_and_corruption_is_rejected[compact]",
+        "reason": "explicit real asset opt-in",
+        "category": "external_assets_or_opt_in",
+        "collection_skip": false
+      },
+      {
+        "id": "tests.test_signspark_portability.test_real_nine_assets_move_with_same_bytes_and_corruption_is_rejected[fallback]",
+        "reason": "explicit real asset opt-in",
+        "category": "external_assets_or_opt_in",
+        "collection_skip": false
+      },
+      {
+        "id": "tests.test_signspark_portability.test_real_source_all_forty_blobs_accept_both_pinned_receipts",
+        "reason": "explicit real asset opt-in",
+        "category": "external_assets_or_opt_in",
+        "collection_skip": false
+      },
+      {
+        "id": "tests.test_signspark_presentation.test_real_verified_avatar_and_template_optional_integration",
+        "reason": "explicit real-asset integration opt-in",
+        "category": "external_assets_or_opt_in",
+        "collection_skip": false
+      },
+      {
+        "id": "tests.test_slrt_protocol.test_official_color_geometry_and_heatmap",
+        "reason": "could not import 'torch': No module named 'torch'",
+        "category": "torch",
+        "collection_skip": false
+      },
+      {
+        "id": "tests.test_slrt_protocol.test_mirror_heatmap_equals_flipped_heatmap_grid",
+        "reason": "could not import 'torch': No module named 'torch'",
+        "category": "torch",
+        "collection_skip": false
+      },
+      {
+        "id": "tests.test_tfnet_export.test_weights_only_load_allows_only_audited_numpy_float64_metadata",
+        "reason": "could not import 'torch': No module named 'torch'",
+        "category": "torch",
+        "collection_skip": false
+      },
+      {
+        "id": "tests.test_tfnet_export.test_runner_uses_upstream_collated_lengths_and_explicit_fused_inference",
+        "reason": "could not import 'torch': No module named 'torch'",
+        "category": "torch",
+        "collection_skip": false
+      },
+      {
+        "id": "tests.test_tfnet_export.test_native_provenance_snapshots_caller_precision_without_changing_flags",
+        "reason": "could not import 'torch': No module named 'torch'",
+        "category": "torch",
+        "collection_skip": false
+      },
+      {
+        "id": "tests.test_tfnet_export.test_wrapper_channel_fft_and_full_length_dense_lstm_match_packed_surrogate[16]",
+        "reason": "could not import 'torch': No module named 'torch'",
+        "category": "torch",
+        "collection_skip": false
+      },
+      {
+        "id": "tests.test_tfnet_export.test_wrapper_channel_fft_and_full_length_dense_lstm_match_packed_surrogate[20]",
+        "reason": "could not import 'torch': No module named 'torch'",
+        "category": "torch",
+        "collection_skip": false
+      },
+      {
+        "id": "tests.test_tfnet_export.test_wrapper_channel_fft_and_full_length_dense_lstm_match_packed_surrogate[24]",
+        "reason": "could not import 'torch': No module named 'torch'",
+        "category": "torch",
+        "collection_skip": false
+      },
+      {
+        "id": "tests.test_tfnet_export.test_wrapper_channel_fft_and_full_length_dense_lstm_match_packed_surrogate[28]",
+        "reason": "could not import 'torch': No module named 'torch'",
+        "category": "torch",
+        "collection_skip": false
+      },
+      {
+        "id": "tests.test_tfnet_export.test_surrogate_export_verifies_dynamic_time_and_preserves_destination",
+        "reason": "could not import 'torch': No module named 'torch'",
+        "category": "torch",
+        "collection_skip": false
+      },
+      {
+        "id": "tests.test_tfnet_export.test_precision_is_restored_when_runner_constructor_fails",
+        "reason": "could not import 'torch': No module named 'torch'",
+        "category": "torch",
+        "collection_skip": false
+      },
+      {
+        "id": "tests.test_uni_sign_adapter.test_windows_cuda_path_entries_are_not_duplicated",
+        "reason": "Windows CUDA DLL path handling",
+        "category": "windows_platform",
+        "collection_skip": false
+      },
+      {
+        "id": "tests.test_unisign_rgb_pose_adapter.test_rtmlib_cache_reuses_the_existing_production_cache",
+        "reason": "rtmlib cache artifact not present in this checkout",
+        "category": "external_assets_or_opt_in",
+        "collection_skip": false
+      },
+      {
+        "id": "tests.test_unisign_rgb_pose_adapter.test_rtmpose_inputs_normalize_isotropic_like_a_path",
+        "reason": "load_part_kp builds torch tensors",
+        "category": "torch",
+        "collection_skip": false
+      },
+      {
+        "id": "tests.test_unisign_rgb_pose_adapter.test_rtmpose_inputs_honors_explicit_wh_compatibility_mode",
+        "reason": "load_part_kp builds torch tensors",
+        "category": "torch",
+        "collection_skip": false
+      },
+      {
+        "id": "tests.test_unisign_rgb_pose_adapter.test_build_support_rgb_layouts_same_output_shape",
+        "reason": "trimmed artifact not present",
+        "category": "external_assets_or_opt_in",
+        "collection_skip": false
+      },
+      {
+        "id": "tests.test_unisign_rgb_pose_adapter.test_build_inputs_deterministic_cpu",
+        "reason": "trimmed artifact not present",
+        "category": "external_assets_or_opt_in",
+        "collection_skip": false
+      },
+      {
+        "id": "tests.test_unisign_rgb_pose_adapter.test_gpu_one_sample_verbatim_vs_frozen",
+        "reason": "trimmed artifact not present",
+        "category": "external_assets_or_opt_in",
+        "collection_skip": false
+      },
+      {
+        "id": "tests.test_unisign_rgb_pose_adapter.test_gpu_rtmpose_mode_one_video_end_to_end",
+        "reason": "trimmed artifact not present",
+        "category": "external_assets_or_opt_in",
+        "collection_skip": false
+      }
+    ]
+  },
+  "node": {
+    "passed": 50,
+    "failed": 0,
+    "skipped": 1,
+    "duration_ms": 791.434878,
+    "real_three_module_used": true,
+    "real_v11_glb_used": true,
+    "v11_glb_sha256": "e4a5766d98ab53871415da3ef4609c4848386c8b4de2958d5e420a8d7524d476",
+    "skipped_test": "calibrated real jaw opens downward with its sibling lower lip and resets without drift",
+    "skip_reason": "Old calibrated avatar absent; not substituted by v11"
+  },
+  "unchanged_production_files": [
+    {
+      "path": "slbridge/animation/corpus_store.py",
+      "git_blob_sha": "5cba34cc5071f7e9c2a2b9fd7b0797bcdf6e0cc0",
+      "unchanged_from_base": true
+    },
+    {
+      "path": "slbridge/animation/full_corpus.py",
+      "git_blob_sha": "e554c2da91ca4e64b7040bbeb8c57a9ea29acb09",
+      "unchanged_from_base": true
+    },
+    {
+      "path": "slbridge/animation/full_corpus_audit.py",
+      "git_blob_sha": "ea8acf7e047c5544307bd7c9f01a263c80de25fa",
+      "unchanged_from_base": true
+    },
+    {
+      "path": "slbridge/animation/signspark_generation.py",
+      "git_blob_sha": "80c685863c261339b825033327c7f21c88a2e9d6",
+      "unchanged_from_base": true
+    },
+    {
+      "path": "slbridge/animation/signspark_presentation.py",
+      "git_blob_sha": "8a8bf7660acb792e3af2c23e1efff3ca15028c07",
+      "unchanged_from_base": true
+    },
+    {
+      "path": "slbridge/animation/web/nonmanual.mjs",
+      "git_blob_sha": "e67b76c54e82a66f9264abdabb4c7fd16b7263fa",
+      "unchanged_from_base": true
+    },
+    {
+      "path": "slbridge/desktop_models.py",
+      "git_blob_sha": "477e3e488a98e3c20ca215b0c45b617d9fefb5da",
+      "unchanged_from_base": true
+    },
+    {
+      "path": "requirements-libras.txt",
+      "git_blob_sha": "d860a16c6d08e66090a0742484d15fbf7b82cb3b",
+      "unchanged_from_base": true
+    }
+  ],
+  "original_local_evidence_sha256": [
+    {
+      "file": "full-python-restored-candidate.log",
+      "sha256": "316c20007e3ac762ba00ad0b5edb8ab3ee249ae5f9aeb37bcd0adce1ae78e11f"
+    },
+    {
+      "file": "full-python-restored-final.log",
+      "sha256": "799b4dcf6e7567d1e480c67e6da33b0e0600f09d9c5486c08dcd4f2eea520b88"
+    },
+    {
+      "file": "node-restored-final.log",
+      "sha256": "74107236442f5b35582707ca18ab9790066677be0573a4d11586632b2592952b"
+    },
+    {
+      "file": "model-defaults-restored-baseline-red.log",
+      "sha256": "6da8fe773481c99179911acf5cd4ccc2ded69c75796f56ee2d4106cca530771a"
+    },
+    {
+      "file": "model-defaults-green.log",
+      "sha256": "d4f5e1bf0acdd04b571959ec82fc6960f9765adabe58cd0726dcf5768f49263b"
+    },
+    {
+      "file": "requirements-libras-resolution.log",
+      "sha256": "18de8fea323167382478fb978c1a4146f627866e9a27c39f3210b51b5d60a16d"
+    },
+    {
+      "file": "full-python-restored-candidate.xml",
+      "sha256": "524d92b956b2e813c8b767ac30eb1e84a17787e37ac7875eca11938c93f4fa34"
+    }
+  ],
+  "not_verified": [
+    "Torch-dependent tests and collection-skipped modules",
+    "External pinned assets and real saved-model acceptance",
+    "Actual 19,877-record corpus and production motion archive/catalog",
+    "GPU generation",
+    "Browser/WebGL/texture rendering",
+    "End-to-end deployment",
+    "Contact/collision",
+    "Sign-language quality",
+    "Mobile performance",
+    "Windows-only behavior"
+  ],
+  "merged": false,
+  "deployed": false,
+  "ci_success_claimed": false
+}
