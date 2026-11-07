@@ -1,0 +1,2413 @@
+{
+  "schema": "godette-v13-real-six-motion-cpu-v1",
+  "status": "PASS_BOUNDED_CPU_RUNTIME_CHECKS",
+  "rest_tolerance": 1e-12,
+  "intermediate_sample_fractions": [
+    0.1,
+    0.25,
+    0.5,
+    0.75,
+    0.9
+  ],
+  "rig_override": {
+    "file": "rig.js",
+    "sha256": "c886ff0441af0873e113ab4934b75b77dc8449af2a112ac2b2ea55c7681c1505",
+    "scope": "Local equality-preserving candidate, not committed production"
+  },
+  "runtime_commit": "cc11b4d6ed0f51e0d727a45a2f2aba71ea1e289f",
+  "node": "v24.22.1",
+  "three": "170",
+  "dependencies": {
+    "package": "three",
+    "version": "0.170.0",
+    "files": [
+      {
+        "path": "package.json",
+        "sha256": "2caf5d31ca4368c7e39e7e598dd95774fe1bdaae7cfbc5b073c8dcb5ec7e25da"
+      },
+      {
+        "path": "build/three.module.js",
+        "sha256": "ce1fa418de16a19495a9f72495580e3015d7745c296d3ce0485897f902ddedfb"
+      },
+      {
+        "path": "examples/jsm/loaders/GLTFLoader.js",
+        "sha256": "45139faddd5aaf48ed2d62203d976e5cbd703db1a592de40527f9f6cf58abd44"
+      },
+      {
+        "path": "examples/jsm/utils/BufferGeometryUtils.js",
+        "sha256": "c25b7930e570e9ec56173cd3b866ec8d2e10016630db3937efb439daf1cedbf6"
+      }
+    ]
+  },
+  "avatar_sha256": "2d89e2e33271d2e06c5a834a56675663aa5551814e2c98ef86fc084ca0c151a8",
+  "source_zip_sha256": "fb5cd09cdc5896baa7ffaba998a1a6f7227ce9439a63cff0068dec6bbff623f7",
+  "source_manifest_sha256": "37f1602cb24476c4ff35706db49ec127e3bb9eb6035754b7cbb52013bdd3c638",
+  "source_manifest_files_verified": 26,
+  "source_total_frames": 1138,
+  "model": {
+    "gltf_meshes": 74,
+    "loaded_skinned_primitives": 78,
+    "bones": 227,
+    "animations": 0,
+    "default_pose_lower_nodes": [
+      "Foot.L_201",
+      "Foot.R_207",
+      "Hip_218",
+      "Knee.L_203",
+      "Knee.R_209",
+      "Leg_Lower.L_202",
+      "Leg_Lower.R_208",
+      "Leg_Upper.L_205",
+      "Leg_Upper.R_211",
+      "Leg_Upper_2.L_204",
+      "Leg_Upper_2.R_210",
+      "Toe.L_200",
+      "Toe.R_206"
+    ],
+    "manual_mouth_available": true,
+    "automatic_jaw_available": false,
+    "geometry_attributes_sha256_before": "afca42954d03f43b4ca07f0a6eb63e074e8324d677d95a2ad7f75d5adbd527ea",
+    "geometry_attributes_unchanged": true,
+    "binding_sha256_before": "7bb067ca3589fffa860b394824bc4fc15c1d35a62bc02f954e25e19b09350a2e",
+    "binding_and_hierarchy_unchanged": true,
+    "raw_glb_weights": {
+      "vertices": 300447,
+      "influences": 433555,
+      "small_positive_weights": 224,
+      "max_sum_error": 1.5087425708770752e-7,
+      "min_positive": 2.143803179421866e-8,
+      "primitives": [
+        {
+          "name": "Clean ankle -1",
+          "vertices": 336,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Clean ankle 1",
+          "vertices": 336,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Sphere",
+          "vertices": 323,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Sphere.001",
+          "vertices": 323,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Dark cloth flat -1",
+          "vertices": 8704,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Dark cloth flat 1",
+          "vertices": 8704,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Flat thin sole -1",
+          "vertices": 11275,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Flat thin sole 1",
+          "vertices": 11275,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Frog closure loop",
+          "vertices": 4235,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Frog closure loop.001",
+          "vertices": 4235,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Frog closure loop.002",
+          "vertices": 4235,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Frog closure loop.003",
+          "vertices": 4235,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Godette bare wrist bridge -1",
+          "vertices": 336,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Godette bare wrist bridge 1",
+          "vertices": 336,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Continuous Godette trousers union input",
+          "vertices": 21350,
+          "small_positive_weights": 224
+        },
+        {
+          "name": "Gold cloud Chest",
+          "vertices": 9515,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Gold cloud Chest.001",
+          "vertices": 9515,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Gold cloud Chest.002",
+          "vertices": 9515,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Gold cloud Hem",
+          "vertices": 9515,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Gold cloud Hem.001",
+          "vertices": 9515,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Gold cloud Hem.002",
+          "vertices": 9515,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Gold cloud tail Chest",
+          "vertices": 715,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Gold cloud tail Hem",
+          "vertices": 715,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_EarBackWisp_LMesh",
+          "vertices": 742,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_EarBackWisp_RMesh",
+          "vertices": 742,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_EarFrontFineLock_LMesh",
+          "vertices": 982,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_EarFrontFineLock_RMesh",
+          "vertices": 982,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_GatheredSide_L_00Mesh",
+          "vertices": 1222,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_GatheredSide_L_01Mesh",
+          "vertices": 1222,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_GatheredSide_L_02Mesh",
+          "vertices": 1222,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_GatheredSide_L_03Mesh",
+          "vertices": 1222,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_GatheredSide_L_04Mesh",
+          "vertices": 1222,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_GatheredSide_R_00Mesh",
+          "vertices": 1222,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_GatheredSide_R_01Mesh",
+          "vertices": 1222,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_GatheredSide_R_02Mesh",
+          "vertices": 1222,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_GatheredSide_R_03Mesh",
+          "vertices": 1222,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_GatheredSide_R_04Mesh",
+          "vertices": 1222,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_LongPony_BackSheenMesh",
+          "vertices": 2714,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_LongPony_CenterMesh",
+          "vertices": 2714,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_LongPony_InwardCurlMesh",
+          "vertices": 2330,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_LongPony_LeftMesh",
+          "vertices": 2714,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_LongPony_LeftOuterMesh",
+          "vertices": 2330,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_LongPony_RightMesh",
+          "vertices": 2714,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_LongPony_RightOuterMesh",
+          "vertices": 2330,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_PartReturn_00Mesh",
+          "vertices": 982,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_PartReturn_01Mesh",
+          "vertices": 982,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_PonyFlowAccent_LMesh",
+          "vertices": 1138,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_PonyFlowAccent_RMesh",
+          "vertices": 1138,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_PonyRoot_DarkBandMesh",
+          "vertices": 1792,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_PonyRoot_GatherMesh",
+          "vertices": 862,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_SideSweep_Fringe_00Mesh",
+          "vertices": 982,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_SideSweep_Fringe_01Mesh",
+          "vertices": 982,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_SideSweep_Fringe_02Mesh",
+          "vertices": 982,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_SideSweep_Fringe_03Mesh",
+          "vertices": 982,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_SweptScalp_CapMesh",
+          "vertices": 22800,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_TempleWisp_LMesh",
+          "vertices": 982,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_TempleWisp_RMesh",
+          "vertices": 982,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Ivory inner panel",
+          "vertices": 57,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Jade collar edge",
+          "vertices": 14091,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Jade cuff -1",
+          "vertices": 896,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Jade cuff 1",
+          "vertices": 896,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Jade frog closure",
+          "vertices": 715,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Jade frog closure.001",
+          "vertices": 715,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Jade front piping",
+          "vertices": 2299,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Jade front piping.001",
+          "vertices": 2299,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Jade hem binding",
+          "vertices": 14091,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Mandarin jacket - front and back",
+          "vertices": 34026,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Object_0",
+          "vertices": 1978,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Object_0",
+          "vertices": 2530,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Object_0",
+          "vertices": 48,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Object_0",
+          "vertices": 106,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Object_0",
+          "vertices": 184,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Seven-eighth sleeve -1",
+          "vertices": 7554,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Seven-eighth sleeve 1",
+          "vertices": 7554,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Tailored princess seam -1",
+          "vertices": 891,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Tailored princess seam 1",
+          "vertices": 891,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Closed outsole plate -1",
+          "vertices": 384,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Closed outsole plate 1",
+          "vertices": 384,
+          "small_positive_weights": 0
+        }
+      ]
+    },
+    "loaded_normalized_runtime_weights": {
+      "vertices": 300447,
+      "influences": 433555,
+      "small_positive_weights": 224,
+      "max_influences": 4,
+      "max_sum_error": 4.563480615615845e-8,
+      "min_positive": 2.143803179421866e-8,
+      "meshes": [
+        {
+          "name": "Object_0",
+          "vertices": 1978,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Object_0_1",
+          "vertices": 2530,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Object_0_2",
+          "vertices": 48,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Object_0_3",
+          "vertices": 106,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Object_0_4",
+          "vertices": 184,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Clean_ankle_-1",
+          "vertices": 336,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Clean_ankle_1",
+          "vertices": 336,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Clean_instep_-1",
+          "vertices": 323,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Clean_instep_1",
+          "vertices": 323,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Dark_cloth_flat_-1",
+          "vertices": 8704,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Dark_cloth_flat_1",
+          "vertices": 8704,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Flat_thin_sole_-1",
+          "vertices": 11275,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Flat_thin_sole_1",
+          "vertices": 11275,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Frog_closure_loop",
+          "vertices": 4235,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Frog_closure_loop001",
+          "vertices": 4235,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Frog_closure_loop002",
+          "vertices": 4235,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Frog_closure_loop003",
+          "vertices": 4235,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Godette_bare_wrist_bridge_-1",
+          "vertices": 336,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Godette_bare_wrist_bridge_1",
+          "vertices": 336,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Godette_continuous_trousers_-_pelvis_crotch_legs",
+          "vertices": 21350,
+          "small_positive_weights": 224
+        },
+        {
+          "name": "Gold_cloud_Chest",
+          "vertices": 9515,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Gold_cloud_Chest001",
+          "vertices": 9515,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Gold_cloud_Chest002",
+          "vertices": 9515,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Gold_cloud_Hem",
+          "vertices": 9515,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Gold_cloud_Hem001",
+          "vertices": 9515,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Gold_cloud_Hem002",
+          "vertices": 9515,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Gold_cloud_tail_Chest",
+          "vertices": 715,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Gold_cloud_tail_Hem",
+          "vertices": 715,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_EarBackWisp_L",
+          "vertices": 742,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_EarBackWisp_R",
+          "vertices": 742,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_EarFrontFineLock_L",
+          "vertices": 982,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_EarFrontFineLock_R",
+          "vertices": 982,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_GatheredSide_L_00",
+          "vertices": 1222,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_GatheredSide_L_01",
+          "vertices": 1222,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_GatheredSide_L_02",
+          "vertices": 1222,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_GatheredSide_L_03",
+          "vertices": 1222,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_GatheredSide_L_04",
+          "vertices": 1222,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_GatheredSide_R_00",
+          "vertices": 1222,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_GatheredSide_R_01",
+          "vertices": 1222,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_GatheredSide_R_02",
+          "vertices": 1222,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_GatheredSide_R_03",
+          "vertices": 1222,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_GatheredSide_R_04",
+          "vertices": 1222,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_LongPony_BackSheen",
+          "vertices": 2714,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_LongPony_Center",
+          "vertices": 2714,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_LongPony_InwardCurl",
+          "vertices": 2330,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_LongPony_Left",
+          "vertices": 2714,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_LongPony_LeftOuter",
+          "vertices": 2330,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_LongPony_Right",
+          "vertices": 2714,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_LongPony_RightOuter",
+          "vertices": 2330,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_PartReturn_00",
+          "vertices": 982,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_PartReturn_01",
+          "vertices": 982,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_PonyFlowAccent_L",
+          "vertices": 1138,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_PonyFlowAccent_R",
+          "vertices": 1138,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_PonyRoot_DarkBand",
+          "vertices": 1792,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_PonyRoot_Gather",
+          "vertices": 862,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_SideSweep_Fringe_00",
+          "vertices": 982,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_SideSweep_Fringe_01",
+          "vertices": 982,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_SideSweep_Fringe_02",
+          "vertices": 982,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_SideSweep_Fringe_03",
+          "vertices": 982,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_SweptScalp_Cap",
+          "vertices": 22800,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_TempleWisp_L",
+          "vertices": 982,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "HR_TempleWisp_R",
+          "vertices": 982,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Ivory_inner_panel",
+          "vertices": 57,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Jade_collar_edge",
+          "vertices": 14091,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Jade_cuff_-1",
+          "vertices": 896,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Jade_cuff_1",
+          "vertices": 896,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Jade_frog_closure",
+          "vertices": 715,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Jade_frog_closure001",
+          "vertices": 715,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Jade_front_piping",
+          "vertices": 2299,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Jade_front_piping001",
+          "vertices": 2299,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Jade_hem_binding",
+          "vertices": 14091,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Mandarin_jacket_-_front_and_back",
+          "vertices": 34026,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Seven-eighth_sleeve_-1",
+          "vertices": 7554,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Seven-eighth_sleeve_1",
+          "vertices": 7554,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Tailored_princess_seam_-1",
+          "vertices": 891,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Tailored_princess_seam_1",
+          "vertices": 891,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Closed_outsole_plate_-1",
+          "vertices": 384,
+          "small_positive_weights": 0
+        },
+        {
+          "name": "Closed_outsole_plate_1",
+          "vertices": 384,
+          "small_positive_weights": 0
+        }
+      ]
+    }
+  },
+  "counters": {
+    "pose_samples": 27255,
+    "bone_world_matrix_checks": 6186885,
+    "max_quaternion_norm_error": 4.21791027771512e-7,
+    "max_lower_local_delta": 0,
+    "max_lower_world_delta": 0,
+    "max_unmapped_local_delta": 0
+  },
+  "clips": [
+    {
+      "id": "new-1918b4f42eac7d78-cap-0009",
+      "text": "认识你很高兴",
+      "frames": 200,
+      "fps": 25,
+      "wrapper_sha256": "5126b1f99ceaba71659770da0f9972020afd0cd039f11db9de97f600cec37118",
+      "registry_source_motion_sha256": "02e3cbfaceca600f560b83ccfa5787590ab19ca19a4429fe7336db65e91547af",
+      "clip_source_video_sha256": "1918b4f42eac7d7892c2bcb0ed415a56f9010ffb285583a388cd80c905c3ceff",
+      "temporal_profile": null,
+      "used_temporal_profile": "quaternion-temporal-adaptive-v1",
+      "modes": [
+        {
+          "name": "raw",
+          "mapped_bones": 40,
+          "integer_samples": 200,
+          "half_samples": 199,
+          "intermediate_samples": 995,
+          "max_mapped_rotation_from_first_rad": 1.1036480073928476,
+          "diagnostics": null,
+          "skin_samples": [
+            {
+              "sample": 0,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.7506420565604948,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.17731765525676485,
+                0.001624119258309768,
+                -0.14168742781215438,
+                0.2098407296319363,
+                1.6896582538603293,
+                0.39371807091789657
+              ]
+            },
+            {
+              "sample": 99,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.7058212463351493,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.18290844020142633,
+                0.001624119258309768,
+                -0.15314917504964376,
+                0.16817338506764778,
+                1.6917015045855845,
+                0.44528466999792515
+              ]
+            },
+            {
+              "sample": 199,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.5893226063426844,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.2687650764291878,
+                0.001624119258309768,
+                -0.15117191003816685,
+                0.2378737151618484,
+                1.685907315640159,
+                0.37705788506563526
+              ]
+            }
+          ],
+          "repeat_reverse_world_max_delta": 0
+        },
+        {
+          "name": "temporal",
+          "mapped_bones": 40,
+          "integer_samples": 200,
+          "half_samples": 199,
+          "intermediate_samples": 995,
+          "max_mapped_rotation_from_first_rad": 1.0939668231499837,
+          "diagnostics": null,
+          "skin_samples": [
+            {
+              "sample": 0,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.7506420541890854,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.17731765286777346,
+                0.001624119258309768,
+                -0.14168742781232246,
+                0.20984072863018788,
+                1.6896582538603717,
+                0.3937180697018241
+              ]
+            },
+            {
+              "sample": 99,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.6659746403348056,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.18577512181169228,
+                0.001624119258309768,
+                -0.15314917504958195,
+                0.17026817490148297,
+                1.6917015045855481,
+                0.44889742774026353
+              ]
+            },
+            {
+              "sample": 199,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.5893226087304497,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.2687650762011084,
+                0.001624119258309768,
+                -0.1511719100379916,
+                0.23787371481779426,
+                1.6859073156400355,
+                0.3770578887803865
+              ]
+            }
+          ],
+          "repeat_reverse_world_max_delta": 0
+        },
+        {
+          "name": "temporal_ik",
+          "mapped_bones": 40,
+          "integer_samples": 200,
+          "half_samples": 199,
+          "intermediate_samples": 995,
+          "max_mapped_rotation_from_first_rad": 1.1258022556258716,
+          "diagnostics": {
+            "strategy": "source-wrist-ik-v1",
+            "samples": 400,
+            "clamped": 0,
+            "wrist_error_before_mean": 0.0201555468404244,
+            "wrist_error_after_mean": 4.761014377231598e-8
+          },
+          "skin_samples": [
+            {
+              "sample": 0,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.7306540708956119,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.18155024040410783,
+                0.001624119258309768,
+                -0.14168742781232246,
+                0.21317325884607197,
+                1.6896582538603717,
+                0.388875949859784
+              ]
+            },
+            {
+              "sample": 99,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.6851766422242996,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.18235288123554627,
+                0.001624119258309768,
+                -0.15314917504958195,
+                0.1688804634405876,
+                1.6917015045855481,
+                0.44815313348053254
+              ]
+            },
+            {
+              "sample": 199,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.5792001790129898,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.27383387528873837,
+                0.001624119258309768,
+                -0.1511719100379916,
+                0.2430354838771987,
+                1.6859073156400355,
+                0.3764959282976905
+              ]
+            }
+          ],
+          "repeat_reverse_world_max_delta": 0
+        }
+      ],
+      "stage": {
+        "integer_samples": 200,
+        "half_samples": 199,
+        "intermediate_samples": 995,
+        "automatic_jaw_disabled": true,
+        "manual_mouth_half_angle": 0.02,
+        "all_four_manual_controls_neutral_restored": true,
+        "end_hold_world_max_delta": 0,
+        "stage_vs_direct_compiled_world_max_delta": 0,
+        "backward_seek_reproducible": true,
+        "play_pause_speed_flags_and_refresh": true,
+        "deterministic_clock_half_speed_verified": true,
+        "stop_keeps_v13_lower_defaults": true,
+        "render_stub_calls": 15,
+        "bounds": {
+          "minX": -0.24800126049919716,
+          "maxX": 0.2,
+          "minY": 0.798586256408213,
+          "maxY": 1.86,
+          "minZ": -0.12,
+          "maxZ": 0.4858079014104482
+        },
+        "hands": {
+          "minX": -0.27800126049919716,
+          "maxX": 0.22339111089237146,
+          "minY": 0.7685862564082131,
+          "maxY": 1.6005520632129555,
+          "minZ": 0.10046564582269135,
+          "maxZ": 0.5158079014104482
+        },
+        "focus": [
+          {
+            "frame": 100,
+            "time": 4,
+            "left_hand_m": [
+              0.08306599495179223,
+              1.158855396040159,
+              0.30747147374734574
+            ],
+            "right_hand_m": [
+              -0.0892502671071577,
+              1.1598071348683865,
+              0.31298129011052656
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "pilot-greeting-answer-002",
+      "text": "是啊，你过得好不好？",
+      "frames": 174,
+      "fps": 25,
+      "wrapper_sha256": "05723cfe6e6df23583769907abaf8f23c003b266db03bac9c758157ea343f9e1",
+      "registry_source_motion_sha256": "0087d5024d320ea2564640f538e4cc7a8ff06f36898f9875c32d9add94ed8a6f",
+      "clip_source_video_sha256": "86d7d13f742cb4cfbc441a3917118d8f7a2e4ad5d8470d3174883fe35a28f8a8",
+      "temporal_profile": null,
+      "used_temporal_profile": "quaternion-temporal-adaptive-v1",
+      "modes": [
+        {
+          "name": "raw",
+          "mapped_bones": 40,
+          "integer_samples": 174,
+          "half_samples": 173,
+          "intermediate_samples": 865,
+          "max_mapped_rotation_from_first_rad": 1.3939919735516282,
+          "diagnostics": null,
+          "skin_samples": [
+            {
+              "sample": 0,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.7482794227687599,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.18598335404868593,
+                0.001624119258309768,
+                -0.1312272330677678,
+                0.1770063126763711,
+                1.6799437503681256,
+                0.40977851367471146
+              ]
+            },
+            {
+              "sample": 86,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.7827938111530067,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.2077081040599168,
+                0.001624119258309768,
+                -0.1284544347619413,
+                0.19818092029827342,
+                1.6676089212754965,
+                0.4104883622123993
+              ]
+            },
+            {
+              "sample": 173,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.5760251082244944,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.18901909817013654,
+                0.001624119258309768,
+                -0.1330494807384311,
+                0.1889740894744062,
+                1.673470462124262,
+                0.4229733184661859
+              ]
+            }
+          ],
+          "repeat_reverse_world_max_delta": 0
+        },
+        {
+          "name": "temporal",
+          "mapped_bones": 40,
+          "integer_samples": 174,
+          "half_samples": 173,
+          "intermediate_samples": 865,
+          "max_mapped_rotation_from_first_rad": 1.3939919735516282,
+          "diagnostics": null,
+          "skin_samples": [
+            {
+              "sample": 0,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.7482794202074411,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.18598335206245728,
+                0.001624119258309768,
+                -0.13122723306771422,
+                0.17700631154926852,
+                1.6799437503680805,
+                0.40977851336911236
+              ]
+            },
+            {
+              "sample": 86,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.7827938100342666,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.20770810286281816,
+                0.001624119258309768,
+                -0.12845443476187623,
+                0.19818091947681143,
+                1.6676089212757816,
+                0.4096852614731043
+              ]
+            },
+            {
+              "sample": 173,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.5760251106464367,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.18901909676806472,
+                0.001624119258309768,
+                -0.13304948073842526,
+                0.18897408845983804,
+                1.6734704621243652,
+                0.4229733164932057
+              ]
+            }
+          ],
+          "repeat_reverse_world_max_delta": 0
+        },
+        {
+          "name": "temporal_ik",
+          "mapped_bones": 40,
+          "integer_samples": 174,
+          "half_samples": 173,
+          "intermediate_samples": 865,
+          "max_mapped_rotation_from_first_rad": 1.42350098412592,
+          "diagnostics": {
+            "strategy": "source-wrist-ik-v1",
+            "samples": 348,
+            "clamped": 0,
+            "wrist_error_before_mean": 0.013937377263299864,
+            "wrist_error_after_mean": 5.759413102397543e-8
+          },
+          "skin_samples": [
+            {
+              "sample": 0,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.736803667212283,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.18837322420684258,
+                0.001624119258309768,
+                -0.13122723306771422,
+                0.1774676617021473,
+                1.6799437503680805,
+                0.40783696942631736
+              ]
+            },
+            {
+              "sample": 86,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.7719186705006403,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.21110986230594536,
+                0.001624119258309768,
+                -0.12845443476187623,
+                0.19973295110744094,
+                1.6676089212757816,
+                0.40899457199440614
+              ]
+            },
+            {
+              "sample": 173,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.5719794540445835,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.19001328369334658,
+                0.001624119258309768,
+                -0.13304948073842526,
+                0.19004967020664915,
+                1.6734704621243652,
+                0.4219880550368913
+              ]
+            }
+          ],
+          "repeat_reverse_world_max_delta": 0
+        }
+      ],
+      "stage": {
+        "integer_samples": 174,
+        "half_samples": 173,
+        "intermediate_samples": 865,
+        "automatic_jaw_disabled": true,
+        "manual_mouth_half_angle": 0.02,
+        "all_four_manual_controls_neutral_restored": true,
+        "end_hold_world_max_delta": 0,
+        "stage_vs_direct_compiled_world_max_delta": 0,
+        "backward_seek_reproducible": true,
+        "play_pause_speed_flags_and_refresh": true,
+        "deterministic_clock_half_speed_verified": true,
+        "stop_keeps_v13_lower_defaults": true,
+        "render_stub_calls": 15,
+        "bounds": {
+          "minX": -0.36299094105976326,
+          "maxX": 0.23407682276079078,
+          "minY": 0.98,
+          "maxY": 1.86,
+          "minZ": -0.12,
+          "maxZ": 0.4965579517536218
+        },
+        "hands": {
+          "minX": -0.3929909410597633,
+          "maxX": 0.2640768227607908,
+          "minY": 0.9745146718620208,
+          "maxY": 1.637218526581162,
+          "minZ": 0.18925320040143023,
+          "maxZ": 0.5265579517536219
+        },
+        "focus": [
+          {
+            "frame": 87,
+            "time": 3.48,
+            "left_hand_m": [
+              0.11117407079824254,
+              1.0803579015280258,
+              0.26370472445152443
+            ],
+            "right_hand_m": [
+              -0.08819675171611822,
+              1.3154583860444722,
+              0.3196105845191918
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "pilot-greeting-how-004",
+      "text": "很好，你呢？",
+      "frames": 153,
+      "fps": 25,
+      "wrapper_sha256": "8363d7ce82873a8c6dbb4aa6bc04d3e4c74b3a8991efa8aa07a173cb522546bb",
+      "registry_source_motion_sha256": "0087d5024d320ea2564640f538e4cc7a8ff06f36898f9875c32d9add94ed8a6f",
+      "clip_source_video_sha256": "86d7d13f742cb4cfbc441a3917118d8f7a2e4ad5d8470d3174883fe35a28f8a8",
+      "temporal_profile": null,
+      "used_temporal_profile": "quaternion-temporal-adaptive-v1",
+      "modes": [
+        {
+          "name": "raw",
+          "mapped_bones": 40,
+          "integer_samples": 153,
+          "half_samples": 152,
+          "intermediate_samples": 760,
+          "max_mapped_rotation_from_first_rad": 1.289408100390946,
+          "diagnostics": null,
+          "skin_samples": [
+            {
+              "sample": 0,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.5697660405659799,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.18697122367993224,
+                0.001624119258309768,
+                -0.1362500654412352,
+                0.18165976742781212,
+                1.6638306117677768,
+                0.3963555736017119
+              ]
+            },
+            {
+              "sample": 76,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.5197652644473602,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.284323836927756,
+                0.001624119258309768,
+                -0.13463317223638507,
+                0.26348354764581194,
+                1.671445924370517,
+                0.391775278868304
+              ]
+            },
+            {
+              "sample": 152,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.5712330155789987,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.18253617097386687,
+                0.001624119258309768,
+                -0.14281762471114162,
+                0.181500891007099,
+                1.666122176548154,
+                0.4098431727464266
+              ]
+            }
+          ],
+          "repeat_reverse_world_max_delta": 0
+        },
+        {
+          "name": "temporal",
+          "mapped_bones": 40,
+          "integer_samples": 153,
+          "half_samples": 152,
+          "intermediate_samples": 760,
+          "max_mapped_rotation_from_first_rad": 1.2894081003909454,
+          "diagnostics": null,
+          "skin_samples": [
+            {
+              "sample": 0,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.5697660412971169,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.1869712224258402,
+                0.001624119258309768,
+                -0.1362500654411813,
+                0.1816597664114352,
+                1.663830611767669,
+                0.39635557361243934
+              ]
+            },
+            {
+              "sample": 76,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.5195868276759055,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.28480230050805866,
+                0.001624119258309768,
+                -0.13463317223635157,
+                0.26348354885285397,
+                1.6714459243709086,
+                0.3928453594331447
+              ]
+            },
+            {
+              "sample": 152,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.5712330184696883,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.18253616983781698,
+                0.001624119258309768,
+                -0.1428176247111313,
+                0.18150089002886258,
+                1.6661221765481233,
+                0.40984317279112825
+              ]
+            }
+          ],
+          "repeat_reverse_world_max_delta": 0
+        },
+        {
+          "name": "temporal_ik",
+          "mapped_bones": 40,
+          "integer_samples": 153,
+          "half_samples": 152,
+          "intermediate_samples": 760,
+          "max_mapped_rotation_from_first_rad": 1.2859304169473653,
+          "diagnostics": {
+            "strategy": "source-wrist-ik-v1",
+            "samples": 306,
+            "clamped": 0,
+            "wrist_error_before_mean": 0.012459782863129282,
+            "wrist_error_after_mean": 5.146122349421622e-8
+          },
+          "skin_samples": [
+            {
+              "sample": 0,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.5631728464657105,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.18836106609075914,
+                0.001624119258309768,
+                -0.1362500654411813,
+                0.18218534834493555,
+                1.663830611767669,
+                0.39542645494948836
+              ]
+            },
+            {
+              "sample": 76,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.513786754561407,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.2750568848930649,
+                0.001624119258309768,
+                -0.13463317223635157,
+                0.26857242230257694,
+                1.6714459243709086,
+                0.39014679960220033
+              ]
+            },
+            {
+              "sample": 152,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.5652215605815575,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.18362574526642336,
+                0.001624119258309768,
+                -0.1428176247111313,
+                0.1820060315222315,
+                1.6661221765481233,
+                0.4070619787131645
+              ]
+            }
+          ],
+          "repeat_reverse_world_max_delta": 0
+        }
+      ],
+      "stage": {
+        "integer_samples": 153,
+        "half_samples": 152,
+        "intermediate_samples": 760,
+        "automatic_jaw_disabled": true,
+        "manual_mouth_half_angle": 0.02,
+        "all_four_manual_controls_neutral_restored": true,
+        "end_hold_world_max_delta": 0,
+        "stage_vs_direct_compiled_world_max_delta": 0,
+        "backward_seek_reproducible": true,
+        "play_pause_speed_flags_and_refresh": true,
+        "deterministic_clock_half_speed_verified": true,
+        "stop_keeps_v13_lower_defaults": true,
+        "render_stub_calls": 15,
+        "bounds": {
+          "minX": -0.387739728122108,
+          "maxX": 0.3706262172281797,
+          "minY": 0.98,
+          "maxY": 1.86,
+          "minZ": -0.12,
+          "maxZ": 0.4573501874283571
+        },
+        "hands": {
+          "minX": -0.417739728122108,
+          "maxX": 0.4006262172281797,
+          "minY": 0.9544889701201236,
+          "maxY": 1.5294802738910882,
+          "minZ": 0.1433364066286295,
+          "maxZ": 0.4873501874283571
+        },
+        "focus": [
+          {
+            "frame": 76,
+            "time": 3.04,
+            "left_hand_m": [
+              0.1838629546975942,
+              1.1345596039924777,
+              0.23265231056918603
+            ],
+            "right_hand_m": [
+              -0.17552851501078892,
+              1.1394693329069179,
+              0.26679764919473087
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "pilot-greeting-busy-005",
+      "text": "工作忙吗？",
+      "frames": 148,
+      "fps": 25,
+      "wrapper_sha256": "cb88764f91d952353e936cebb4d22536aaa7a778c0b5d4173ae20f33e7d6ba55",
+      "registry_source_motion_sha256": "0087d5024d320ea2564640f538e4cc7a8ff06f36898f9875c32d9add94ed8a6f",
+      "clip_source_video_sha256": "86d7d13f742cb4cfbc441a3917118d8f7a2e4ad5d8470d3174883fe35a28f8a8",
+      "temporal_profile": null,
+      "used_temporal_profile": "quaternion-temporal-adaptive-v1",
+      "modes": [
+        {
+          "name": "raw",
+          "mapped_bones": 40,
+          "integer_samples": 148,
+          "half_samples": 147,
+          "intermediate_samples": 735,
+          "max_mapped_rotation_from_first_rad": 0.9664384315609925,
+          "diagnostics": null,
+          "skin_samples": [
+            {
+              "sample": 0,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.6539687562861032,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.18999511961628177,
+                0.001624119258309768,
+                -0.13071612233770255,
+                0.1789447765507462,
+                1.669584247925411,
+                0.3914157478956622
+              ]
+            },
+            {
+              "sample": 73,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.7680503167772637,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.1839932724511325,
+                0.001624119258309768,
+                -0.12876631231394153,
+                0.17869805764954266,
+                1.6781870308642957,
+                0.3824443100689343
+              ]
+            },
+            {
+              "sample": 147,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.5643395438615811,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.18255481664835638,
+                0.001624119258309768,
+                -0.14110948031538395,
+                0.17940561691891302,
+                1.665086876594315,
+                0.4088307894665426
+              ]
+            }
+          ],
+          "repeat_reverse_world_max_delta": 0
+        },
+        {
+          "name": "temporal",
+          "mapped_bones": 40,
+          "integer_samples": 148,
+          "half_samples": 147,
+          "intermediate_samples": 735,
+          "max_mapped_rotation_from_first_rad": 0.9205307657329734,
+          "diagnostics": null,
+          "skin_samples": [
+            {
+              "sample": 0,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.6539687555962085,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.18999511826778123,
+                0.001624119258309768,
+                -0.13071612233766727,
+                0.17894477538570988,
+                1.6695842479256477,
+                0.39141574437498905
+              ]
+            },
+            {
+              "sample": 73,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.768050311290394,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.18399327014981476,
+                0.001624119258309768,
+                -0.12876631231358227,
+                0.17869805626530785,
+                1.6781870308640376,
+                0.37963695169506384
+              ]
+            },
+            {
+              "sample": 147,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.5643395447377992,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.1825548155328885,
+                0.001624119258309768,
+                -0.14110948031536663,
+                0.17940561591029697,
+                1.6650868765942695,
+                0.4088307865778733
+              ]
+            }
+          ],
+          "repeat_reverse_world_max_delta": 0
+        },
+        {
+          "name": "temporal_ik",
+          "mapped_bones": 40,
+          "integer_samples": 148,
+          "half_samples": 147,
+          "intermediate_samples": 735,
+          "max_mapped_rotation_from_first_rad": 0.9205307657329734,
+          "diagnostics": {
+            "strategy": "source-wrist-ik-v1",
+            "samples": 296,
+            "clamped": 0,
+            "wrist_error_before_mean": 0.014246184239099496,
+            "wrist_error_after_mean": 5.7658501148354595e-8
+          },
+          "skin_samples": [
+            {
+              "sample": 0,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.6429078694549087,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.19308336256401742,
+                0.001624119258309768,
+                -0.13071612233766727,
+                0.17979005240923462,
+                1.6695842479256477,
+                0.3893920425915483
+              ]
+            },
+            {
+              "sample": 73,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.751634148931865,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.18679230730672597,
+                0.001624119258309768,
+                -0.12876631231358227,
+                0.17914848907140113,
+                1.6781870308640376,
+                0.38333139735973387
+              ]
+            },
+            {
+              "sample": 147,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.5583915912415031,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.18364576117444503,
+                0.001624119258309768,
+                -0.14110948031536663,
+                0.1799389103671633,
+                1.6650868765942695,
+                0.40666215519778603
+              ]
+            }
+          ],
+          "repeat_reverse_world_max_delta": 0
+        }
+      ],
+      "stage": {
+        "integer_samples": 148,
+        "half_samples": 147,
+        "intermediate_samples": 735,
+        "automatic_jaw_disabled": true,
+        "manual_mouth_half_angle": 0.02,
+        "all_four_manual_controls_neutral_restored": true,
+        "end_hold_world_max_delta": 0,
+        "stage_vs_direct_compiled_world_max_delta": 0,
+        "backward_seek_reproducible": true,
+        "play_pause_speed_flags_and_refresh": true,
+        "deterministic_clock_half_speed_verified": true,
+        "stop_keeps_v13_lower_defaults": true,
+        "render_stub_calls": 15,
+        "bounds": {
+          "minX": -0.22475747680167144,
+          "maxX": 0.2,
+          "minY": 0.9762128021678098,
+          "maxY": 1.86,
+          "minZ": -0.12,
+          "maxZ": 0.45103657505251044
+        },
+        "hands": {
+          "minX": -0.25475747680167143,
+          "maxX": 0.16499652375467252,
+          "minY": 0.9462128021678098,
+          "maxY": 1.576960156409106,
+          "minZ": 0.15507061395223612,
+          "maxZ": 0.48103657505251046
+        },
+        "focus": [
+          {
+            "frame": 74,
+            "time": 2.96,
+            "left_hand_m": [
+              0.08482931134988136,
+              1.0623847979076981,
+              0.25615489040647915
+            ],
+            "right_hand_m": [
+              -0.08307311217596888,
+              1.3036952326301043,
+              0.28843589002212244
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "pilot-hospital-pay-013",
+      "text": "先交费，然后去取药。",
+      "frames": 163,
+      "fps": 25,
+      "wrapper_sha256": "f6c9d36a14d570941c7527dfe507c885c266bfebf8cf5d43d8712f0307794914",
+      "registry_source_motion_sha256": "0087d5024d320ea2564640f538e4cc7a8ff06f36898f9875c32d9add94ed8a6f",
+      "clip_source_video_sha256": "ef6dbafaabf0c13c634fe50f37c5e1f498f8307a6b304020c570ea991919060f",
+      "temporal_profile": null,
+      "used_temporal_profile": "quaternion-temporal-adaptive-v1",
+      "modes": [
+        {
+          "name": "raw",
+          "mapped_bones": 40,
+          "integer_samples": 163,
+          "half_samples": 162,
+          "intermediate_samples": 810,
+          "max_mapped_rotation_from_first_rad": 1.3145711597221104,
+          "diagnostics": null,
+          "skin_samples": [
+            {
+              "sample": 0,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.5849429875377777,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.1854798026704484,
+                0.001624119258309768,
+                -0.1395233742913286,
+                0.18032451920664844,
+                1.665266774297027,
+                0.3968685748942269
+              ]
+            },
+            {
+              "sample": 81,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.6851877803636259,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.22009998190799915,
+                0.001624119258309768,
+                -0.1362206847942875,
+                0.22145523522093885,
+                1.6653405799602436,
+                0.38846890211563123
+              ]
+            },
+            {
+              "sample": 162,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.6437922269210011,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.22347295348133506,
+                0.001624119258309768,
+                -0.13052476030194618,
+                0.18878159572981135,
+                1.6660075007650321,
+                0.396522755488417
+              ]
+            }
+          ],
+          "repeat_reverse_world_max_delta": 0
+        },
+        {
+          "name": "temporal",
+          "mapped_bones": 40,
+          "integer_samples": 163,
+          "half_samples": 162,
+          "intermediate_samples": 810,
+          "max_mapped_rotation_from_first_rad": 1.3145711597221093,
+          "diagnostics": null,
+          "skin_samples": [
+            {
+              "sample": 0,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.5849429885000335,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.18547980139710962,
+                0.001624119258309768,
+                -0.13952337429125267,
+                0.18032451815411135,
+                1.665266774296898,
+                0.396868572394117
+              ]
+            },
+            {
+              "sample": 81,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.6851877766660794,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.22009998119839105,
+                0.001624119258309768,
+                -0.13622068479378258,
+                0.2214552348000391,
+                1.6653405799592875,
+                0.3884688923752053
+              ]
+            },
+            {
+              "sample": 162,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.6437922214276756,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.2234729527628352,
+                0.001624119258309768,
+                -0.13052476030153637,
+                0.1887815947165028,
+                1.6660075007663977,
+                0.3965227508379777
+              ]
+            }
+          ],
+          "repeat_reverse_world_max_delta": 0
+        },
+        {
+          "name": "temporal_ik",
+          "mapped_bones": 40,
+          "integer_samples": 163,
+          "half_samples": 162,
+          "intermediate_samples": 810,
+          "max_mapped_rotation_from_first_rad": 1.3268987450147587,
+          "diagnostics": {
+            "strategy": "source-wrist-ik-v1",
+            "samples": 326,
+            "clamped": 0,
+            "wrist_error_before_mean": 0.016796114045203148,
+            "wrist_error_after_mean": 5.8943004151550276e-8
+          },
+          "skin_samples": [
+            {
+              "sample": 0,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.5777088958996811,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.18708285433980376,
+                0.001624119258309768,
+                -0.13952337429125267,
+                0.18093242400239917,
+                1.665266774296898,
+                0.3957130711275685
+              ]
+            },
+            {
+              "sample": 81,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.6738166270172963,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.225699702397579,
+                0.001624119258309768,
+                -0.13622068479378258,
+                0.22368413072756316,
+                1.6653405799592875,
+                0.3896090339152817
+              ]
+            },
+            {
+              "sample": 162,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.6335639923917331,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.22702475032323988,
+                0.001624119258309768,
+                -0.13052476030153637,
+                0.18997722938733874,
+                1.6660075007663977,
+                0.3962157816820784
+              ]
+            }
+          ],
+          "repeat_reverse_world_max_delta": 0
+        }
+      ],
+      "stage": {
+        "integer_samples": 163,
+        "half_samples": 162,
+        "intermediate_samples": 810,
+        "automatic_jaw_disabled": true,
+        "manual_mouth_half_angle": 0.02,
+        "all_four_manual_controls_neutral_restored": true,
+        "end_hold_world_max_delta": 0,
+        "stage_vs_direct_compiled_world_max_delta": 0,
+        "backward_seek_reproducible": true,
+        "play_pause_speed_flags_and_refresh": true,
+        "deterministic_clock_half_speed_verified": true,
+        "stop_keeps_v13_lower_defaults": true,
+        "render_stub_calls": 15,
+        "bounds": {
+          "minX": -0.2178418846772994,
+          "maxX": 0.20001317275882904,
+          "minY": 0.9582853625773083,
+          "maxY": 1.86,
+          "minZ": -0.12,
+          "maxZ": 0.47544353114887916
+        },
+        "hands": {
+          "minX": -0.2478418846772994,
+          "maxX": 0.23001317275882904,
+          "minY": 0.9282853625773084,
+          "maxY": 1.6789634580961463,
+          "minZ": 0.10078022393382705,
+          "maxZ": 0.5054435311488792
+        },
+        "focus": [
+          {
+            "frame": 81,
+            "time": 3.24,
+            "left_hand_m": [
+              0.13504545044890395,
+              1.0763124465815133,
+              0.23833059959672245
+            ],
+            "right_hand_m": [
+              -0.07104420815454598,
+              1.2070398171180687,
+              0.30327878678920006
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "new-0ad6eaefc7647487-cap-0067",
+      "text": "我去开会汇报抽样调查落实的情况",
+      "frames": 300,
+      "fps": 25,
+      "wrapper_sha256": "0fc8a1476f4362df5e9d55fe0df5f6765de98efe7596fcf0c735588ac2c55b31",
+      "registry_source_motion_sha256": "91a8f852780699f4614279c7680c2c236aa4769de03f30ed5e2133b55e5b6c80",
+      "clip_source_video_sha256": "0ad6eaefc764748726222bfe0caa950b9b7e3d5f9d240459191777f4c793337b",
+      "temporal_profile": "source-quaternion-temporal-v1",
+      "used_temporal_profile": "source-quaternion-temporal-v1",
+      "modes": [
+        {
+          "name": "raw",
+          "mapped_bones": 40,
+          "integer_samples": 300,
+          "half_samples": 299,
+          "intermediate_samples": 1495,
+          "max_mapped_rotation_from_first_rad": 0.9422385154238968,
+          "diagnostics": null,
+          "skin_samples": [
+            {
+              "sample": 0,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.6046644053428566,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.19309241968831303,
+                0.001624119258309768,
+                -0.1458359062860322,
+                0.1871751662140419,
+                1.6645966317444643,
+                0.34619053867737937
+              ]
+            },
+            {
+              "sample": 102,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.6662680178685106,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.19039062691769343,
+                0.001624119258309768,
+                -0.14826548690613908,
+                0.17791814270616385,
+                1.6897279517171284,
+                0.4295388563482797
+              ]
+            },
+            {
+              "sample": 103,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.8416496172827871,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.2253749722410093,
+                0.001624119258309768,
+                -0.1552244054268641,
+                0.19274616944533496,
+                1.6952150169881461,
+                0.41227426343542517
+              ]
+            },
+            {
+              "sample": 104,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.6621049990634886,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.18603969391713254,
+                0.001624119258309768,
+                -0.15427230363843944,
+                0.17386189220729678,
+                1.6922913032422962,
+                0.4265411922150846
+              ]
+            },
+            {
+              "sample": 149,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.6818104179261922,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.2156598590128645,
+                0.001624119258309768,
+                -0.16203967939155367,
+                0.1770975528965104,
+                1.6966144524955162,
+                0.4363534433373206
+              ]
+            },
+            {
+              "sample": 299,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.5830109311739626,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.19801002526368994,
+                0.001624119258309768,
+                -0.14830103402144168,
+                0.16786299233485047,
+                1.6877772484309965,
+                0.39516812051064687
+              ]
+            }
+          ],
+          "repeat_reverse_world_max_delta": 0
+        },
+        {
+          "name": "temporal",
+          "mapped_bones": 40,
+          "integer_samples": 300,
+          "half_samples": 299,
+          "intermediate_samples": 1495,
+          "max_mapped_rotation_from_first_rad": 0.8650939332669609,
+          "diagnostics": null,
+          "skin_samples": [
+            {
+              "sample": 0,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.6046644053428566,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.19309241968831303,
+                0.001624119258309768,
+                -0.1458359062860322,
+                0.1871751662140419,
+                1.6645966317444643,
+                0.34619053867737937
+              ]
+            },
+            {
+              "sample": 102,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.7417134206878547,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.22063732300413358,
+                0.001624119258309768,
+                -0.15174956295312844,
+                0.1877762782375501,
+                1.6931797078669617,
+                0.451232746743656
+              ]
+            },
+            {
+              "sample": 103,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.7273889823270311,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.2175445645447018,
+                0.001624119258309768,
+                -0.15312578093696072,
+                0.18583695885130186,
+                1.6935475533933841,
+                0.4538249815978308
+              ]
+            },
+            {
+              "sample": 104,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.7412986671123007,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.21742413429286217,
+                0.001624119258309768,
+                -0.1542080340652322,
+                0.18816952037074236,
+                1.6940925471625339,
+                0.4507267617115839
+              ]
+            },
+            {
+              "sample": 149,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.6880534236776599,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.21016167227747784,
+                0.001624119258309768,
+                -0.1600158010563954,
+                0.17728305864578653,
+                1.6955789654473872,
+                0.43568952534093086
+              ]
+            },
+            {
+              "sample": 299,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.5830109311739626,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.19801002526368994,
+                0.001624119258309768,
+                -0.14830103402144168,
+                0.16786299233485047,
+                1.6877772484309965,
+                0.39516812051064687
+              ]
+            }
+          ],
+          "repeat_reverse_world_max_delta": 0
+        },
+        {
+          "name": "temporal_ik",
+          "mapped_bones": 40,
+          "integer_samples": 300,
+          "half_samples": 299,
+          "intermediate_samples": 1495,
+          "max_mapped_rotation_from_first_rad": 0.8650939332669609,
+          "diagnostics": {
+            "strategy": "source-wrist-ik-v1",
+            "samples": 600,
+            "clamped": 0,
+            "wrist_error_before_mean": 0.015730546374981464,
+            "wrist_error_after_mean": 3.797230405302711e-8
+          },
+          "skin_samples": [
+            {
+              "sample": 0,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.5883182181490275,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.19881797237952098,
+                0.001624119258309768,
+                -0.1458359062860322,
+                0.1895846049855616,
+                1.6645966317444643,
+                0.34759885561920756
+              ]
+            },
+            {
+              "sample": 102,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.7346692879506592,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.2221560238781957,
+                0.001624119258309768,
+                -0.15174956295312844,
+                0.19166991887511586,
+                1.6931797078669617,
+                0.4500606547319207
+              ]
+            },
+            {
+              "sample": 103,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.7203840245180713,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.2190134084444664,
+                0.001624119258309768,
+                -0.15312578093696072,
+                0.1894115202295395,
+                1.6935475533933841,
+                0.45248930067299087
+              ]
+            },
+            {
+              "sample": 104,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.7340690318137139,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.21900917228790148,
+                0.001624119258309768,
+                -0.1542080340652322,
+                0.19181874525723738,
+                1.6940925471625339,
+                0.44966235992525605
+              ]
+            },
+            {
+              "sample": 149,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.6710271335216582,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.2113551998429325,
+                0.001624119258309768,
+                -0.1600158010563954,
+                0.18024639939838227,
+                1.6955789654473872,
+                0.43257527703878157
+              ]
+            },
+            {
+              "sample": 299,
+              "vertices": 300447,
+              "max_displacement_from_v13_default_m": 0.5728774494489398,
+              "trousers_max_displacement_from_v13_default_m": 0,
+              "world_bounds_m": [
+                -0.20100625710230746,
+                0.001624119258309768,
+                -0.14830103402144168,
+                0.16894474317483243,
+                1.6877772484309965,
+                0.39610096109611936
+              ]
+            }
+          ],
+          "repeat_reverse_world_max_delta": 0
+        }
+      ],
+      "stage": {
+        "integer_samples": 300,
+        "half_samples": 299,
+        "intermediate_samples": 1495,
+        "automatic_jaw_disabled": true,
+        "manual_mouth_half_angle": 0.02,
+        "all_four_manual_controls_neutral_restored": true,
+        "end_hold_world_max_delta": 0,
+        "stage_vs_direct_compiled_world_max_delta": 0,
+        "backward_seek_reproducible": true,
+        "play_pause_speed_flags_and_refresh": true,
+        "deterministic_clock_half_speed_verified": true,
+        "stop_keeps_v13_lower_defaults": true,
+        "render_stub_calls": 21,
+        "bounds": {
+          "minX": -0.21631348953978036,
+          "maxX": 0.2,
+          "minY": 0.9238871706117515,
+          "maxY": 1.86,
+          "minZ": -0.12,
+          "maxZ": 0.48682928944128684
+        },
+        "hands": {
+          "minX": -0.24631348953978036,
+          "maxX": 0.1899983823173069,
+          "minY": 0.8938871706117515,
+          "maxY": 1.5988150137637602,
+          "minZ": 0.148461891431053,
+          "maxZ": 0.5168292894412869
+        },
+        "focus": [
+          {
+            "frame": 102,
+            "time": 4.08,
+            "left_hand_m": [
+              0.08674571854866375,
+              1.2604328137310543,
+              0.29378536928273824
+            ],
+            "right_hand_m": [
+              -0.13031457649388511,
+              1.2963753528524145,
+              0.34374233212147176
+            ]
+          },
+          {
+            "frame": 103,
+            "time": 4.12,
+            "left_hand_m": [
+              0.08789148679452627,
+              1.2560978195853396,
+              0.29562491906761473
+            ],
+            "right_hand_m": [
+              -0.12746757735116893,
+              1.2796296682392951,
+              0.34368895331893384
+            ]
+          },
+          {
+            "frame": 104,
+            "time": 4.16,
+            "left_hand_m": [
+              0.08920984794534823,
+              1.2527442020302524,
+              0.2948893436159201
+            ],
+            "right_hand_m": [
+              -0.12490308114809066,
+              1.2958084903753546,
+              0.34377204416575946
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "limitations": [
+    "Actual pinned Three.js GLTFLoader 0.170.0 plus pinned production rig/retarget/stage CPU execution; textures and renderer are stubbed. Not browser/WebGL, screenshots, mobile performance or deployed vendor equality.",
+    "Full original motion archive, real MotionRegistry, presentation CLI, server and deployment were not run. Six source wrappers match the original manifest; declared registry hashes match old and current presets.",
+    "No source-video, human motion-quality, sign-language semantic or automatic semantic mouth acceptance.",
+    "Retarget maps 40 upper-body bones, not lower-body source motion. Keeping v13 defaults is not testing arbitrary hip/knee animation.",
+    "All vertices checked only at listed selected poses; finite bone transforms at all integer and listed fractional samples. No full collision guarantee.",
+    "Historical v11/v12 whole-skeleton zero-difference evidence is not reused."
+  ]
+}

@@ -386,7 +386,9 @@ function createHumanoidRig(root, profile = GODETTE_PROFILE, {avatarSha256=null} 
       // Slightly non-unit imported keys can produce dot > 1 and make slerp
       // freeze. Normalize detached, changing intermediate samples only, keeping
       // authored endpoints and identical/resting keys component-exact.
-      if (amount > 0 && amount < 1 && !start.equals(target)) {
+      if (start.equals(target)) {
+        bone.quaternion.copy(start);
+      } else if (amount > 0 && amount < 1) {
         bone.quaternion.copy(start).normalize().slerp(target.clone().normalize(), amount);
       } else {
         bone.quaternion.copy(start).slerp(target, amount);

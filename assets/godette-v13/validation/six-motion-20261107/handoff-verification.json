@@ -1,0 +1,71 @@
+{
+  "status": "PASS_INPUT_IDENTITY_ONLY",
+  "manifest_sha256": "37f1602cb24476c4ff35706db49ec127e3bb9eb6035754b7cbb52013bdd3c638",
+  "archive_sha256": "fb5cd09cdc5896baa7ffaba998a1a6f7227ce9439a63cff0068dec6bbff623f7",
+  "checked_files": 26,
+  "runtime_commit": "cc11b4d6ed0f51e0d727a45a2f2aba71ea1e289f",
+  "runtime_files_verified": 12,
+  "clips": [
+    {
+      "id": "new-1918b4f42eac7d78-cap-0009",
+      "text": "认识你很高兴",
+      "frames": 200,
+      "fps": 25.0,
+      "wrapper_sha256": "5126b1f99ceaba71659770da0f9972020afd0cd039f11db9de97f600cec37118",
+      "registry_source_motion_sha256": "02e3cbfaceca600f560b83ccfa5787590ab19ca19a4429fe7336db65e91547af",
+      "clip_source_video_sha256": "1918b4f42eac7d7892c2bcb0ed415a56f9010ffb285583a388cd80c905c3ceff",
+      "temporal_profile": null
+    },
+    {
+      "id": "pilot-greeting-answer-002",
+      "text": "是啊，你过得好不好？",
+      "frames": 174,
+      "fps": 25.0,
+      "wrapper_sha256": "05723cfe6e6df23583769907abaf8f23c003b266db03bac9c758157ea343f9e1",
+      "registry_source_motion_sha256": "0087d5024d320ea2564640f538e4cc7a8ff06f36898f9875c32d9add94ed8a6f",
+      "clip_source_video_sha256": "86d7d13f742cb4cfbc441a3917118d8f7a2e4ad5d8470d3174883fe35a28f8a8",
+      "temporal_profile": null
+    },
+    {
+      "id": "pilot-greeting-how-004",
+      "text": "很好，你呢？",
+      "frames": 153,
+      "fps": 25.0,
+      "wrapper_sha256": "8363d7ce82873a8c6dbb4aa6bc04d3e4c74b3a8991efa8aa07a173cb522546bb",
+      "registry_source_motion_sha256": "0087d5024d320ea2564640f538e4cc7a8ff06f36898f9875c32d9add94ed8a6f",
+      "clip_source_video_sha256": "86d7d13f742cb4cfbc441a3917118d8f7a2e4ad5d8470d3174883fe35a28f8a8",
+      "temporal_profile": null
+    },
+    {
+      "id": "pilot-greeting-busy-005",
+      "text": "工作忙吗？",
+      "frames": 148,
+      "fps": 25.0,
+      "wrapper_sha256": "cb88764f91d952353e936cebb4d22536aaa7a778c0b5d4173ae20f33e7d6ba55",
+      "registry_source_motion_sha256": "0087d5024d320ea2564640f538e4cc7a8ff06f36898f9875c32d9add94ed8a6f",
+      "clip_source_video_sha256": "86d7d13f742cb4cfbc441a3917118d8f7a2e4ad5d8470d3174883fe35a28f8a8",
+      "temporal_profile": null
+    },
+    {
+      "id": "pilot-hospital-pay-013",
+      "text": "先交费，然后去取药。",
+      "frames": 163,
+      "fps": 25.0,
+      "wrapper_sha256": "f6c9d36a14d570941c7527dfe507c885c266bfebf8cf5d43d8712f0307794914",
+      "registry_source_motion_sha256": "0087d5024d320ea2564640f538e4cc7a8ff06f36898f9875c32d9add94ed8a6f",
+      "clip_source_video_sha256": "ef6dbafaabf0c13c634fe50f37c5e1f498f8307a6b304020c570ea991919060f",
+      "temporal_profile": null
+    },
+    {
+      "id": "new-0ad6eaefc7647487-cap-0067",
+      "text": "我去开会汇报抽样调查落实的情况",
+      "frames": 300,
+      "fps": 25.0,
+      "wrapper_sha256": "0fc8a1476f4362df5e9d55fe0df5f6765de98efe7596fcf0c735588ac2c55b31",
+      "registry_source_motion_sha256": "91a8f852780699f4614279c7680c2c236aa4769de03f30ed5e2133b55e5b6c80",
+      "clip_source_video_sha256": "0ad6eaefc764748726222bfe0caa950b9b7e3d5f9d240459191777f4c793337b",
+      "temporal_profile": "source-quaternion-temporal-v1"
+    }
+  ],
+  "scope": "Wrapper bytes verified. Registry hashes match handoff and current preset; full source archive unavailable."
+}

@@ -1,0 +1,16 @@
+[
+  {
+    "file": "godette-reference-v13.glb",
+    "sha256": "2d89e2e33271d2e06c5a834a56675663aa5551814e2c98ef86fc084ca0c151a8",
+    "bytes": 17381924,
+    "gzip_sha256": "4c5b5e0396b4cd71288bc93cc4d72a1d5f08d6bfe2f397623ddfe8208f4c1552",
+    "magic_hex": "676c544602000000"
+  },
+  {
+    "file": "godette-reference-v13.blend",
+    "sha256": "f03f7ebecb892ac2b01a0768d3c140802cf06e207c4bad33bd0aa4f0b92822b4",
+    "bytes": 8484074,
+    "gzip_sha256": "596a93702dce6047c25bf7e67fc8cf194f557c20b3a3c2cae782b0a7e210682e",
+    "magic_hex": "28b52ffd60d4037d"
+  }
+]
