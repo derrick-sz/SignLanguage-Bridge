@@ -1,0 +1,44 @@
+{
+  "candidate_sha256": "a7942f7a69e8fb078d50767e85944c0e59b47dc20b40479ab86d8c16513717c4",
+  "three_revision": "169",
+  "intensity_samples": 101,
+  "bones": 227,
+  "retained_meshes": [
+    {
+      "name": "Object_0",
+      "vertices": 1978
+    },
+    {
+      "name": "Object_0_1",
+      "vertices": 2530
+    },
+    {
+      "name": "Object_0_2",
+      "vertices": 48
+    },
+    {
+      "name": "Object_0_3",
+      "vertices": 106
+    },
+    {
+      "name": "Object_0_4",
+      "vertices": 184
+    }
+  ],
+  "triangle_count": 8308,
+  "relative_normal_reversal_samples": 0,
+  "minimum_area_ratio": 0.8708633395870086,
+  "maximum_area_ratio": 2.819055094949218,
+  "maximum_edge_ratio": 1.6556852353601865,
+  "maximum_upper_teeth_motion_m": 0,
+  "lower_teeth_drop_m": 0.003106530906157756,
+  "maximum_nonface_mesh_motion_m": 0,
+  "maximum_reset_vertex_error_m": 0,
+  "reset_node_component_exact": true,
+  "repeated_backward_node_component_exact": true,
+  "limits": [
+    "CPU GLTFLoader with stubbed texture decode, not WebGL/browser visual certification.",
+    "Normal and area checks are relative to the neutral baseline, not proof of absolute manifoldness or absence of collision.",
+    "No semantic mouthing, lip sync, corpus, GPU generation or mobile performance certification."
+  ]
+}

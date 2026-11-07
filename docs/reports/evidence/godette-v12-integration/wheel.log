@@ -1,0 +1,13 @@
+WARNING: The directory '/home/agent/.cache/pip' or its parent directory is not owned or is not writable by the current user. The cache has been disabled. Check the permissions and owner of that directory. If executing pip with sudo, you should use sudo's -H flag.
+Processing ./.
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Building wheels for collected packages: signlanguage-bridge-core
+  Building wheel for signlanguage-bridge-core (pyproject.toml): started
+  Building wheel for signlanguage-bridge-core (pyproject.toml): finished with status 'done'
+  Created wheel for signlanguage-bridge-core: filename=signlanguage_bridge_core-0.3.0-py3-none-any.whl size=397479 sha256=3b393dc17d361fe6405294ae49c441ce99c301fd574aed49bdfbd9cdaba233b2
+  Stored in directory: /tmp/pip-ephem-wheel-cache-l024t3jj/wheels/16/eb/4a/a3fa25dc6b8e52435390a16066e01b6e6b8acb08ca6c4bf55d
+Successfully built signlanguage-bridge-core
+
+[notice] A new release of pip is available: 26.2.2 -> 26.3
+[notice] To update, run: pip install --upgrade pip

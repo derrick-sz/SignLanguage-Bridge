@@ -1,0 +1,103 @@
+........................................................................ [  5%]
+........................................................................ [ 10%]
+.....................................................s.................. [ 15%]
+........................................................................ [ 20%]
+........................................................................ [ 26%]
+........................................................................ [ 31%]
+.................................................s..s............. [ 36%]
+....s................................................................... [ 41%]
+............................................................s........... [ 46%]
+........................................................................ [ 52%]
+.........s.............................................................. [ 57%]
+..................................ss...............s.................... [ 62%]
+........................................................................ [ 67%]
+........................................................................ [ 73%]
+........................................ssss....................ss.s.... [ 78%]
+......ssss............s.................................s......s........ [ 83%]
+........................................................................ [ 88%]
+............................sss...sssss.s.............s................. [ 94%]
+.........................................................sss..s.s....ss. [ 99%]
+..........                                                               [100%]
+=============================== warnings summary ===============================
+../fusion_qa_deps/starlette/testclient.py:51
+  /workspace/scratch/87fc5b72c014/fusion_qa_deps/starlette/testclient.py:51: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+../fusion_qa_deps/_pytest/python.py:144
+  /workspace/scratch/87fc5b72c014/fusion_qa_deps/_pytest/python.py:144: PytestRemovedIn10Warning: Passing a non-Collection iterable to parametrize is deprecated.
+  Test: tests/test_signspark_codec.py::test_invalid_stream_is_rejected_without_padding_or_type_coercion, argvalues type: enumerate
+  Please convert to a list or tuple.
+  See https://docs.pytest.org/en/stable/deprecations.html#parametrize-iterators
+    metafunc.parametrize(*marker.args, **marker.kwargs, _param_mark=marker)
+
+../fusion_qa_deps/_pytest/python.py:144
+  /workspace/scratch/87fc5b72c014/fusion_qa_deps/_pytest/python.py:144: PytestRemovedIn10Warning: Passing a non-Collection iterable to parametrize is deprecated.
+  Test: tests/test_signspark_codec.py::test_degenerate_rotation_cannot_silently_become_identity, argvalues type: enumerate
+  Please convert to a list or tuple.
+  See https://docs.pytest.org/en/stable/deprecations.html#parametrize-iterators
+    metafunc.parametrize(*marker.args, **marker.kwargs, _param_mark=marker)
+
+tests/test_live.py::test_uniform_sampling_resize_quality_and_tracking_isolation
+  /workspace/scratch/87fc5b72c014/fusion_qa_deps/matplotlib/_fontconfig_pattern.py:64: PyparsingDeprecationWarning: 'oneOf' deprecated - use 'one_of'
+    prop = Group((name + Suppress("=") + comma_separated(value)) | oneOf(_CONSTANTS))
+
+tests/test_live.py::test_uniform_sampling_resize_quality_and_tracking_isolation
+tests/test_live.py::test_uniform_sampling_resize_quality_and_tracking_isolation
+tests/test_live.py::test_uniform_sampling_resize_quality_and_tracking_isolation
+tests/test_live.py::test_uniform_sampling_resize_quality_and_tracking_isolation
+tests/test_live.py::test_uniform_sampling_resize_quality_and_tracking_isolation
+tests/test_live.py::test_uniform_sampling_resize_quality_and_tracking_isolation
+  /workspace/scratch/87fc5b72c014/fusion_qa_deps/matplotlib/_fontconfig_pattern.py:85: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'
+    parse = parser.parseString(pattern)
+
+tests/test_live.py::test_uniform_sampling_resize_quality_and_tracking_isolation
+tests/test_live.py::test_uniform_sampling_resize_quality_and_tracking_isolation
+tests/test_live.py::test_uniform_sampling_resize_quality_and_tracking_isolation
+tests/test_live.py::test_uniform_sampling_resize_quality_and_tracking_isolation
+tests/test_live.py::test_uniform_sampling_resize_quality_and_tracking_isolation
+tests/test_live.py::test_uniform_sampling_resize_quality_and_tracking_isolation
+  /workspace/scratch/87fc5b72c014/fusion_qa_deps/matplotlib/_fontconfig_pattern.py:89: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'
+    parser.resetCache()
+
+tests/test_live.py::test_uniform_sampling_resize_quality_and_tracking_isolation
+  /workspace/scratch/87fc5b72c014/fusion_qa_deps/matplotlib/_mathtext.py:45: PyparsingDeprecationWarning: 'enablePackrat' deprecated - use 'enable_packrat'
+    ParserElement.enablePackrat()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+SKIPPED [1] tests/test_signspark_source_contract.py:8: could not import 'torch': No module named 'torch'
+SKIPPED [1] tests/test_slrt_frame_cache.py:20: could not import 'torch': No module named 'torch'
+SKIPPED [1] tests/test_cecsl.py:187: Pinned upstream audit source is local evidence
+SKIPPED [1] tests/test_job_media.py:58: trimmed artifact not present locally
+SKIPPED [1] tests/test_job_media.py:180: trimmed artifact not present locally
+SKIPPED [1] tests/test_job_runner.py:364: frozen P-1 source not present
+SKIPPED [1] tests/test_live.py:158: set SLBRIDGE_LIVE_VIDEO and SLBRIDGE_LIVE_MODEL for real saved-model acceptance
+SKIPPED [1] tests/test_model_defaults.py:272: local configs/model_defaults.json not present (gitignored)
+SKIPPED [1] tests/test_replay_adapter.py:304: frozen P-1 source not present
+SKIPPED [1] tests/test_replay_adapter.py:333: frozen P-1 source not present
+SKIPPED [1] tests/test_rgb_core.py:152: Local pre-F4 bundle not distributed
+SKIPPED [1] tests/test_signspark_empty_loading.py:27: could not import 'torch': No module named 'torch'
+SKIPPED [1] tests/test_signspark_empty_loading.py:54: could not import 'torch': No module named 'torch'
+SKIPPED [1] tests/test_signspark_empty_loading.py:68: could not import 'torch': No module named 'torch'
+SKIPPED [1] tests/test_signspark_empty_loading.py:78: could not import 'torch': No module named 'torch'
+SKIPPED [2] tests/test_signspark_generation.py:43: could not import 'torch': No module named 'torch'
+SKIPPED [1] tests/test_signspark_generation.py:65: could not import 'torch': No module named 'torch'
+SKIPPED [3] tests/test_signspark_portability.py:90: explicit real asset opt-in
+SKIPPED [1] tests/test_signspark_portability.py:107: explicit real asset opt-in
+SKIPPED [1] tests/test_signspark_presentation.py:141: explicit real-asset integration opt-in
+SKIPPED [1] tests/test_slrt_protocol.py:38: could not import 'torch': No module named 'torch'
+SKIPPED [1] tests/test_slrt_protocol.py:126: could not import 'torch': No module named 'torch'
+SKIPPED [1] tests/test_tfnet_export.py:122: could not import 'torch': No module named 'torch'
+SKIPPED [1] tests/test_tfnet_export.py:134: could not import 'torch': No module named 'torch'
+SKIPPED [1] tests/test_tfnet_export.py:163: could not import 'torch': No module named 'torch'
+SKIPPED [4] tests/test_tfnet_export.py:264: could not import 'torch': No module named 'torch'
+SKIPPED [1] tests/test_tfnet_export.py:282: could not import 'torch': No module named 'torch'
+SKIPPED [1] tests/test_tfnet_export.py:342: could not import 'torch': No module named 'torch'
+SKIPPED [1] tests/test_uni_sign_adapter.py:319: Windows CUDA DLL path handling
+SKIPPED [1] tests/test_unisign_rgb_pose_adapter.py:335: rtmlib cache artifact not present in this checkout
+SKIPPED [2] tests/test_unisign_rgb_pose_adapter.py:375: load_part_kp builds torch tensors
+SKIPPED [1] tests/test_unisign_rgb_pose_adapter.py:459: trimmed artifact not present
+SKIPPED [1] tests/test_unisign_rgb_pose_adapter.py:512: trimmed artifact not present
+SKIPPED [1] tests/test_unisign_rgb_pose_adapter.py:641: trimmed artifact not present
+SKIPPED [1] tests/test_unisign_rgb_pose_adapter.py:668: trimmed artifact not present
+1332 passed, 42 skipped, 17 warnings, 6 subtests passed in 66.19s (0:01:06)
