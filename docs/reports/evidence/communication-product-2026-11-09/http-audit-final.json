@@ -1,0 +1,62 @@
+{
+  "scope": "HTTP wiring only; uploaded dataset-derived WebM; not camera or semantic acceptance",
+  "root_redirect": "/communicate/",
+  "status": {
+    "enabled": true,
+    "ready": true,
+    "languages": [
+      {
+        "id": "csl",
+        "label": "中国手语",
+        "ready": true,
+        "busy": false,
+        "task_type": "gloss_sequence",
+        "scope": "中文手语词识别，请核对后使用"
+      },
+      {
+        "id": "libras",
+        "label": "巴西手语 Libras",
+        "ready": true,
+        "busy": false,
+        "task_type": "classification",
+        "scope": "现有12词试点，中葡释义需核对"
+      }
+    ],
+    "max_upload_bytes": 134217728,
+    "max_recording_seconds": 12,
+    "recording_available": true,
+    "busy": false
+  },
+  "avatar_sha256": "535fc9ab96ec3d837e2568817abc41d593fac1c4fcad8565b45b29c5f4472f5e",
+  "word_bundle_id": "csl-product-95379e49911c11908e420a94",
+  "negative_inputs": {
+    "empty": 422,
+    "nonvideo": 422
+  },
+  "webm": {
+    "fixture": "recording-format.webm",
+    "sha256": "7b6453cf63fe4c920ce92331227b0cc0f03b72129fb9ca0bc93d764a2fca28b7",
+    "elapsed_seconds": 8.153841999999713,
+    "status": 200,
+    "body": {
+      "request_id": "webm-final-c9082d7e473e48d8a9f5bbe2cf7c33b1",
+      "recognized": true,
+      "text": "三 平方 我 自己 。",
+      "translations": {},
+      "output_kind": "gloss_sequence",
+      "sign_language": "csl",
+      "review_status": "unverified",
+      "media": {
+        "source_format": ".webm",
+        "inference_format": ".mp4",
+        "transcoded": true
+      },
+      "provenance": {
+        "model_id": "cecsl-tfnet-onnx-20261009",
+        "model_version": "d3f99a36ab8c9b7a13d9d2cda03ae23a04058482d90942d23e4cd2bff3037815",
+        "model_generation": 1,
+        "preprocessing_version": "bf362fc063c0b81395c45c1df5d29b21bf46c7b8a089de7195d46b314e8755ec"
+      }
+    }
+  }
+}

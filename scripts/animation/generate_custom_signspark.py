@@ -253,6 +253,9 @@ def main(argv=None):
     parser.add_argument('--frames',type=int,default=128,help='Explicit output length; not learned from text')
     parser.add_argument('--steps',type=int,default=50)
     parser.add_argument('--seed',type=int,default=123)
+    parser.add_argument('--readonly-checkpoint-mmap',action='store_true',
+                        help='Pinned read-only checkpoint mapping to reduce Windows commit pressure')
+    parser.add_argument('--cpu-offload',action='store_true',help='Keep FP32 weights on CPU and move layers to CUDA as needed')
     parser.add_argument('--source',type=Path,default=Path('G:/Archive/Zenodo/SignSparK/source'))
     parser.add_argument('--source-manifest',type=Path,default=DEFAULT_SOURCE_MANIFEST)
     parser.add_argument('--text-assets',type=Path,default=Path('G:/Archive/Zenodo/SignSparK/text-assets'))
@@ -295,6 +298,8 @@ def main(argv=None):
               'model_revision':MODEL_REVISION,'text_assets_manifest_sha256':text_sha,
               'requests':[asdict(r) for r in requests],'streams':{},'raw_streams':[],'codec':CODEC_VERSION,
               'parameter_initialization':'accelerate-meta-parameters-cpu-buffers-v1',
+              'checkpoint_mapping':'readonly-file-backed-v1' if args.readonly_checkpoint_mmap else 'torch-native-mmap',
+              'execution_profile':'fp32-layer-offload-cached-text-v1' if args.cpu_offload else 'fp32-cuda-resident',
               'checkpoint_loads':{},'memory_snapshots':[],
               'target_motion':None,'observed_keyframes':0,'length_source':'explicit request',
               'text_guidance_scale':-1,'language_review':'NOT_RUN','motion_review':'NOT_RUN'}
@@ -310,12 +315,18 @@ def main(argv=None):
             record_memory(manifest,report,torch,stream,'before_construct')
             model,flow=empty_model(stream,args.text_assets)
             record_memory(manifest,report,torch,stream,'after_construct')
-            load_report=load_strict_checkpoint(model,checkpoint,expected_sha256=digest,expected_bytes=size,assign=True)
+            load_report=load_strict_checkpoint(model,checkpoint,expected_sha256=digest,expected_bytes=size,assign=True,
+                                              readonly_mmap=args.readonly_checkpoint_mmap)
             manifest['checkpoint_loads'][stream]=load_report.copy()
             record_memory(manifest,report,torch,stream,'after_load')
             torch.cuda.empty_cache();torch.cuda.reset_peak_memory_stats()
             record_memory(manifest,report,torch,stream,'before_cuda')
-            model.eval().requires_grad_(False).to('cuda')
+            if args.cpu_offload:
+                from slbridge.animation.signspark_generation import prepare_cpu_offload
+                offload_report=prepare_cpu_offload(model,['<Chinese> '+r.text.strip() for r in requests],device='cuda')
+                manifest.setdefault('offload',{})[stream]=offload_report
+            else:
+                model.eval().requires_grad_(False).to('cuda')
             record_memory(manifest,report,torch,stream,'after_cuda')
             roles=[('left',1),('right',2)] if stream=='hand' else [(stream,0 if stream=='body' else 3)]
             for role,offset in roles:

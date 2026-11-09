@@ -1,0 +1,751 @@
+{
+  "schema_version": 1,
+  "title": "基本场景 v1",
+  "purpose": "关键词候选分组与固定目标差距核查；候选数不是语义覆盖率",
+  "scenes": [
+    {
+      "id": "greeting",
+      "title": "问候礼貌",
+      "keywords": [
+        "你好",
+        "你们好",
+        "谢谢",
+        "不客气",
+        "对不起",
+        "没关系",
+        "请坐",
+        "认识你"
+      ],
+      "targets": [
+        {
+          "id": "greeting-01",
+          "text": "你好。"
+        },
+        {
+          "id": "greeting-02",
+          "text": "谢谢。"
+        },
+        {
+          "id": "greeting-03",
+          "text": "不客气。"
+        },
+        {
+          "id": "greeting-04",
+          "text": "对不起。"
+        },
+        {
+          "id": "greeting-05",
+          "text": "没关系。"
+        },
+        {
+          "id": "greeting-06",
+          "text": "请坐。"
+        },
+        {
+          "id": "greeting-07",
+          "text": "再见。"
+        },
+        {
+          "id": "greeting-08",
+          "text": "很高兴认识你。"
+        }
+      ],
+      "featured_sample_ids": [
+        "S007172_P0000_T00",
+        "S000000_P0000_T00",
+        "S000003_P0000_T00",
+        "S000001_P0000_T00",
+        "S000002_P0000_T00",
+        "S000004_P0000_T00",
+        "S000094_P0000_T00",
+        "S000159_P0000_T00"
+      ],
+      "curation_scope": "Chinese text relevance only; motion and CSL language review NOT_RUN"
+    },
+    {
+      "id": "family",
+      "title": "身份家庭",
+      "keywords": [
+        "名字",
+        "叫我",
+        "爸爸",
+        "妈妈",
+        "哥哥",
+        "姐姐",
+        "弟弟",
+        "妹妹",
+        "家人",
+        "孩子"
+      ],
+      "targets": [
+        {
+          "id": "family-01",
+          "text": "我叫小明。"
+        },
+        {
+          "id": "family-02",
+          "text": "你叫什么名字？"
+        },
+        {
+          "id": "family-03",
+          "text": "我今年二十岁。"
+        },
+        {
+          "id": "family-04",
+          "text": "这是我的妈妈。"
+        },
+        {
+          "id": "family-05",
+          "text": "这是我的爸爸。"
+        },
+        {
+          "id": "family-06",
+          "text": "我有一个姐姐。"
+        },
+        {
+          "id": "family-07",
+          "text": "我家有三口人。"
+        },
+        {
+          "id": "family-08",
+          "text": "你住在哪里？"
+        }
+      ],
+      "featured_sample_ids": [
+        "S000005_P0000_T00",
+        "S000012_P0000_T00",
+        "S000011_P0000_T00",
+        "S000018_P0000_T00",
+        "S000017_P0000_T00",
+        "S000019_P0000_T00",
+        "S005089_P0000_T00",
+        "S001120_P0000_T00"
+      ],
+      "curation_scope": "Chinese text relevance only; motion and CSL language review NOT_RUN"
+    },
+    {
+      "id": "schedule",
+      "title": "时间安排",
+      "keywords": [
+        "今天",
+        "明天",
+        "昨天",
+        "星期",
+        "周末",
+        "下午",
+        "上午",
+        "几点",
+        "时间",
+        "晚上"
+      ],
+      "targets": [
+        {
+          "id": "schedule-01",
+          "text": "现在几点？"
+        },
+        {
+          "id": "schedule-02",
+          "text": "今天星期几？"
+        },
+        {
+          "id": "schedule-03",
+          "text": "明天见。"
+        },
+        {
+          "id": "schedule-04",
+          "text": "我今天有空。"
+        },
+        {
+          "id": "schedule-05",
+          "text": "我明天没有时间。"
+        },
+        {
+          "id": "schedule-06",
+          "text": "下午三点见。"
+        },
+        {
+          "id": "schedule-07",
+          "text": "我们周末去公园。"
+        },
+        {
+          "id": "schedule-08",
+          "text": "请等一下。"
+        }
+      ],
+      "featured_sample_ids": [
+        "S000099_P0000_T00",
+        "S000100_P0000_T00",
+        "S005849_P0000_T00",
+        "S000176_P0000_T00",
+        "S000104_P0000_T00",
+        "S000424_P0000_T00",
+        "S000200_P0000_T00",
+        "S000338_P0000_T00"
+      ],
+      "curation_scope": "Chinese text relevance only; motion and CSL language review NOT_RUN"
+    },
+    {
+      "id": "food",
+      "title": "饮食",
+      "keywords": [
+        "吃饭",
+        "喝水",
+        "喝茶",
+        "喝咖啡",
+        "早餐",
+        "午饭",
+        "晚饭",
+        "水果",
+        "面包",
+        "牛奶",
+        "米饭",
+        "饿了"
+      ],
+      "targets": [
+        {
+          "id": "food-01",
+          "text": "我想喝水。"
+        },
+        {
+          "id": "food-02",
+          "text": "你吃饭了吗？"
+        },
+        {
+          "id": "food-03",
+          "text": "我饿了。"
+        },
+        {
+          "id": "food-04",
+          "text": "我想吃米饭。"
+        },
+        {
+          "id": "food-05",
+          "text": "请给我一杯水。"
+        },
+        {
+          "id": "food-06",
+          "text": "这个很好吃。"
+        },
+        {
+          "id": "food-07",
+          "text": "我不喝酒。"
+        },
+        {
+          "id": "food-08",
+          "text": "我们一起吃饭吧。"
+        }
+      ],
+      "featured_sample_ids": [
+        "S000052_P0000_T00",
+        "S000050_P0000_T00",
+        "S000053_P0000_T00",
+        "S000051_P0000_T00",
+        "S000660_P0000_T00",
+        "S007250_P0000_T00",
+        "S000030_P0000_T00",
+        "S000619_P0000_T00"
+      ],
+      "curation_scope": "Chinese text relevance only; motion and CSL language review NOT_RUN"
+    },
+    {
+      "id": "shopping",
+      "title": "购物支付",
+      "keywords": [
+        "买",
+        "卖",
+        "多少钱",
+        "商店",
+        "超市",
+        "便宜",
+        "价格",
+        "付款",
+        "现金",
+        "银行卡",
+        "块钱"
+      ],
+      "targets": [
+        {
+          "id": "shopping-01",
+          "text": "这个多少钱？"
+        },
+        {
+          "id": "shopping-02",
+          "text": "太贵了。"
+        },
+        {
+          "id": "shopping-03",
+          "text": "可以便宜一点吗？"
+        },
+        {
+          "id": "shopping-04",
+          "text": "我要买这个。"
+        },
+        {
+          "id": "shopping-05",
+          "text": "我用现金付款。"
+        },
+        {
+          "id": "shopping-06",
+          "text": "可以刷卡吗？"
+        },
+        {
+          "id": "shopping-07",
+          "text": "请给我一个袋子。"
+        },
+        {
+          "id": "shopping-08",
+          "text": "我不要这个。"
+        }
+      ],
+      "featured_sample_ids": [
+        "S000636_P0000_T00",
+        "S000058_P0000_T00",
+        "S000059_P0000_T00",
+        "S000644_P0000_T00",
+        "S000621_P0000_T00",
+        "S001258_P0000_T00",
+        "S000655_P0000_T00",
+        "S002369_P0000_T00"
+      ],
+      "curation_scope": "Chinese text relevance only; motion and CSL language review NOT_RUN"
+    },
+    {
+      "id": "travel",
+      "title": "出行问路",
+      "keywords": [
+        "公交",
+        "公共汽车",
+        "地铁",
+        "出租车",
+        "车站",
+        "机场",
+        "火车",
+        "怎么走",
+        "问路",
+        "左转",
+        "右转",
+        "坐车",
+        "骑车"
+      ],
+      "targets": [
+        {
+          "id": "travel-01",
+          "text": "车站在哪里？"
+        },
+        {
+          "id": "travel-02",
+          "text": "去医院怎么走？"
+        },
+        {
+          "id": "travel-03",
+          "text": "我要坐公交车。"
+        },
+        {
+          "id": "travel-04",
+          "text": "地铁站在哪里？"
+        },
+        {
+          "id": "travel-05",
+          "text": "请在这里停车。"
+        },
+        {
+          "id": "travel-06",
+          "text": "请往左走。"
+        },
+        {
+          "id": "travel-07",
+          "text": "我要买一张火车票。"
+        },
+        {
+          "id": "travel-08",
+          "text": "我迷路了。"
+        }
+      ],
+      "featured_sample_ids": [
+        "S005082_P0000_T00",
+        "S000668_P0000_T00",
+        "S000642_P0000_T00",
+        "S000643_P0000_T00",
+        "S000164_P0000_T00",
+        "S002414_P0000_T00",
+        "S000648_P0000_T00",
+        "S000787_P0000_T00"
+      ],
+      "curation_scope": "Chinese text relevance only; motion and CSL language review NOT_RUN"
+    },
+    {
+      "id": "school",
+      "title": "学校学习",
+      "keywords": [
+        "学校",
+        "老师",
+        "学生",
+        "上课",
+        "下课",
+        "考试",
+        "学习",
+        "作业",
+        "同学",
+        "读书",
+        "教室"
+      ],
+      "targets": [
+        {
+          "id": "school-01",
+          "text": "我是学生。"
+        },
+        {
+          "id": "school-02",
+          "text": "你在哪个学校？"
+        },
+        {
+          "id": "school-03",
+          "text": "老师好。"
+        },
+        {
+          "id": "school-04",
+          "text": "我听不懂。"
+        },
+        {
+          "id": "school-05",
+          "text": "请再说一遍。"
+        },
+        {
+          "id": "school-06",
+          "text": "我要去上课。"
+        },
+        {
+          "id": "school-07",
+          "text": "我正在学习手语。"
+        },
+        {
+          "id": "school-08",
+          "text": "作业做完了吗？"
+        }
+      ],
+      "featured_sample_ids": [
+        "S000126_P0000_T00",
+        "S000061_P0008_T00",
+        "S000026_P0000_T00",
+        "S000025_P0000_T00",
+        "S001321_P0000_T00",
+        "S003559_P0000_T00",
+        "S000712_P0000_T00",
+        "S000457_P0000_T00"
+      ],
+      "curation_scope": "Chinese text relevance only; motion and CSL language review NOT_RUN"
+    },
+    {
+      "id": "work",
+      "title": "工作沟通",
+      "keywords": [
+        "工作",
+        "上班",
+        "下班",
+        "开会",
+        "会议",
+        "同事",
+        "公司",
+        "报告",
+        "办公室",
+        "请假"
+      ],
+      "targets": [
+        {
+          "id": "work-01",
+          "text": "你做什么工作？"
+        },
+        {
+          "id": "work-02",
+          "text": "我要去上班。"
+        },
+        {
+          "id": "work-03",
+          "text": "我下班了。"
+        },
+        {
+          "id": "work-04",
+          "text": "我们明天开会。"
+        },
+        {
+          "id": "work-05",
+          "text": "会议几点开始？"
+        },
+        {
+          "id": "work-06",
+          "text": "我想请假。"
+        },
+        {
+          "id": "work-07",
+          "text": "请把文件发给我。"
+        },
+        {
+          "id": "work-08",
+          "text": "工作完成了。"
+        }
+      ],
+      "featured_sample_ids": [
+        "S000073_P0000_T00",
+        "S000074_P0000_T00",
+        "S006548_P0000_T00",
+        "S002221_P0000_T00",
+        "S006894_P0000_T00",
+        "S003111_P0000_T00",
+        "S004797_P0000_T00",
+        "S004793_P0000_T00"
+      ],
+      "curation_scope": "Chinese text relevance only; motion and CSL language review NOT_RUN"
+    },
+    {
+      "id": "health",
+      "title": "健康就医",
+      "keywords": [
+        "医院",
+        "医生",
+        "护士",
+        "生病",
+        "发烧",
+        "头疼",
+        "头痛",
+        "肚子疼",
+        "吃药",
+        "挂号",
+        "身体",
+        "不舒服"
+      ],
+      "targets": [
+        {
+          "id": "health-01",
+          "text": "我不舒服。"
+        },
+        {
+          "id": "health-02",
+          "text": "我头疼。"
+        },
+        {
+          "id": "health-03",
+          "text": "我要去医院。"
+        },
+        {
+          "id": "health-04",
+          "text": "我发烧了。"
+        },
+        {
+          "id": "health-05",
+          "text": "请帮我挂号。"
+        },
+        {
+          "id": "health-06",
+          "text": "你哪里不舒服？"
+        },
+        {
+          "id": "health-07",
+          "text": "我对这个药过敏。"
+        },
+        {
+          "id": "health-08",
+          "text": "请叫医生。"
+        }
+      ],
+      "featured_sample_ids": [
+        "S000119_P0000_T00",
+        "S005707_P0000_T00",
+        "S000649_P0000_T00",
+        "S000204_P0000_T00",
+        "S000816_P0000_T00",
+        "S000780_P0000_T00",
+        "S003112_P0000_T00",
+        "S001395_P0000_T00"
+      ],
+      "curation_scope": "Chinese text relevance only; motion and CSL language review NOT_RUN"
+    },
+    {
+      "id": "home",
+      "title": "居家日常",
+      "keywords": [
+        "家里",
+        "回家",
+        "在家",
+        "睡觉",
+        "起床",
+        "洗澡",
+        "洗衣",
+        "打扫",
+        "做饭",
+        "休息",
+        "开门",
+        "关门"
+      ],
+      "targets": [
+        {
+          "id": "home-01",
+          "text": "我要回家。"
+        },
+        {
+          "id": "home-02",
+          "text": "我在家休息。"
+        },
+        {
+          "id": "home-03",
+          "text": "我要睡觉了。"
+        },
+        {
+          "id": "home-04",
+          "text": "请开门。"
+        },
+        {
+          "id": "home-05",
+          "text": "请关门。"
+        },
+        {
+          "id": "home-06",
+          "text": "我正在做饭。"
+        },
+        {
+          "id": "home-07",
+          "text": "我要洗澡。"
+        },
+        {
+          "id": "home-08",
+          "text": "休息一下。"
+        }
+      ],
+      "featured_sample_ids": [
+        "S000078_P0000_T00",
+        "S000069_P0000_T00",
+        "S000216_P0000_T00",
+        "S000456_P0000_T00",
+        "S000130_P0000_T00",
+        "S000221_P0000_T00",
+        "S001436_P0000_T00",
+        "S000594_P0000_T00"
+      ],
+      "curation_scope": "Chinese text relevance only; motion and CSL language review NOT_RUN"
+    },
+    {
+      "id": "social",
+      "title": "情绪社交",
+      "keywords": [
+        "高兴",
+        "开心",
+        "难过",
+        "生气",
+        "担心",
+        "喜欢",
+        "朋友",
+        "一起",
+        "电影",
+        "认识",
+        "生日",
+        "快乐"
+      ],
+      "targets": [
+        {
+          "id": "social-01",
+          "text": "我很高兴。"
+        },
+        {
+          "id": "social-02",
+          "text": "我很难过。"
+        },
+        {
+          "id": "social-03",
+          "text": "我喜欢你。"
+        },
+        {
+          "id": "social-04",
+          "text": "你是我的朋友。"
+        },
+        {
+          "id": "social-05",
+          "text": "生日快乐。"
+        },
+        {
+          "id": "social-06",
+          "text": "我们一起看电影吧。"
+        },
+        {
+          "id": "social-07",
+          "text": "我有点担心。"
+        },
+        {
+          "id": "social-08",
+          "text": "不要生气。"
+        }
+      ],
+      "featured_sample_ids": [
+        "S000541_P0000_T00",
+        "S000542_P0000_T00",
+        "S000499_P0000_T00",
+        "S005634_P0000_T00",
+        "S000231_P0000_T00",
+        "S000154_P0000_T00",
+        "S006427_P0000_T00",
+        "S000360_P0000_T00"
+      ],
+      "curation_scope": "Chinese text relevance only; motion and CSL language review NOT_RUN"
+    },
+    {
+      "id": "help",
+      "title": "求助安全",
+      "keywords": [
+        "帮助",
+        "帮我",
+        "救命",
+        "危险",
+        "安全",
+        "警察",
+        "报警",
+        "着火",
+        "小心",
+        "丢了",
+        "紧急"
+      ],
+      "targets": [
+        {
+          "id": "help-01",
+          "text": "请帮助我。"
+        },
+        {
+          "id": "help-02",
+          "text": "救命！"
+        },
+        {
+          "id": "help-03",
+          "text": "请报警。"
+        },
+        {
+          "id": "help-04",
+          "text": "这里很危险。"
+        },
+        {
+          "id": "help-05",
+          "text": "小心！"
+        },
+        {
+          "id": "help-06",
+          "text": "我的东西丢了。"
+        },
+        {
+          "id": "help-07",
+          "text": "请打急救电话。"
+        },
+        {
+          "id": "help-08",
+          "text": "请告诉我发生了什么。"
+        }
+      ],
+      "featured_sample_ids": [
+        "S003484_P0000_T00",
+        "S004831_P0000_T00",
+        "S002398_P0000_T00",
+        "S000462_P0000_T00",
+        "S007131_P0000_T00",
+        "S006163_P0000_T00",
+        "S003277_P0000_T00",
+        "S005809_P0000_T00"
+      ],
+      "curation_scope": "Chinese text relevance only; motion and CSL language review NOT_RUN"
+    }
+  ]
+}

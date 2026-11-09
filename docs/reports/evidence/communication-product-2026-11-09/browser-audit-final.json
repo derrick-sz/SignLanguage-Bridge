@@ -1,0 +1,109 @@
+{
+  "checks": [
+    {
+      "avatarStatus": "表达结束",
+      "edited": "40平米的房子比较适合一个人住。",
+      "messages": [
+        "40平米的房子比较适合一个人住。",
+        "请等一下。"
+      ],
+      "original": "平方 我 自己 。",
+      "reply": "请等一下。",
+      "replyStatus": "手语已准备，请与对方一起核对。",
+      "stage": "video-to-confirmed-text-to-avatar",
+      "url": "http://127.0.0.1:8879/communicate/"
+    },
+    {
+      "stage": "current-upload-confirm-reply",
+      "avatar": "表达结束",
+      "edited": "40平米的房子比较适合一个人住。",
+      "messages": [
+        "40平米的房子比较适合一个人住。",
+        "请等一下。"
+      ],
+      "original": "平方 我 自己 。",
+      "time": "0.5 / 0.5 秒"
+    },
+    {
+      "stage": "missing-word",
+      "messages": [
+        "40平米的房子比较适合一个人住。",
+        "请等一下。"
+      ],
+      "playDisabled": true,
+      "recovery": true,
+      "reply": "这句话暂时缺少完整的手语动作。请调整表达，或尝试完整生成。"
+    },
+    {
+      "stage": "omitted-meaning",
+      "messages": [
+        "40平米的房子比较适合一个人住。",
+        "请等一下。"
+      ],
+      "playDisabled": true,
+      "recovery": true,
+      "reply": "这句话有内容未能完整表达。请调整或分句后重试。"
+    },
+    {
+      "stage": "libras-upload",
+      "messages": 2,
+      "portuguese": "葡语原词：Sim",
+      "scope": "当前释义为待核对草案，你可以修改后加入对话。",
+      "text": "是 / 是的"
+    },
+    {
+      "stage": "cancel-upload-no-late-result",
+      "messages": 2,
+      "resultHidden": true,
+      "status": "已取消本次识别。"
+    },
+    {
+      "stage": "mobile-understand-and-undo",
+      "documentWidth": 375,
+      "expressVisible": false,
+      "messages": 2,
+      "understandVisible": true,
+      "width": 390
+    },
+    {
+      "stage": "mobile-express",
+      "documentWidth": 375,
+      "expressVisible": true,
+      "messages": 2,
+      "understandVisible": false,
+      "width": 390
+    },
+    {
+      "stage": "final-clear-undo",
+      "messages": [
+        "是 / 是的",
+        "你好。"
+      ],
+      "recognitionStatus": "对话已恢复，可以继续识别当前视频。",
+      "replyStatus": "对话已恢复，可以继续表达。"
+    }
+  ],
+  "final": {
+    "avatar": "表达结束",
+    "connection": "已准备就绪",
+    "documentWidth": 1265,
+    "messages": [
+      "是 / 是的",
+      "你好。"
+    ],
+    "reply": "手语已准备，请与对方一起核对。",
+    "sendButtonBottom": 467.1999931335449,
+    "url": "http://127.0.0.1:8879/communicate/",
+    "viewport": [
+      1280,
+      720
+    ]
+  },
+  "console": [],
+  "scope": {
+    "camera": "NOT_RUN: user selected uploaded videos only",
+    "microphone": "NOT_REQUESTED",
+    "semanticQuality": "NOT_ACCEPTED",
+    "source": "real CE-CSL and Libras RGB dataset videos"
+  }
+}

@@ -1,0 +1,16 @@
+Processing c:\users\admin\.codex\worktrees\csl-animation-workspace\signlanguage-bridge
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Building wheels for collected packages: signlanguage-bridge-core
+  Building wheel for signlanguage-bridge-core (pyproject.toml): started
+  Building wheel for signlanguage-bridge-core (pyproject.toml): finished with status 'done'
+  Created wheel for signlanguage-bridge-core: filename=signlanguage_bridge_core-0.3.0-py3-none-any.whl size=500351 sha256=8fa51a9b4c800f70c29c6a929b3f800e10eddb1818bb8d0066fe946e6138fd5c
+  Stored in directory: c:\users\admin\appdata\local\pip\cache\wheels\76\1d\06\d1a0df6d8bb1c4bd38fc1ff3be95dbcd52a56fbc16b8cfb41a
+Successfully built signlanguage-bridge-core
+
+[notice] A new release of pip is available: 24.2 -> 26.3
+[notice] To update, run: E:\githubproject\SignLanguage-Bridge\.venv-libras\Scripts\python.exe -m pip install --upgrade pip

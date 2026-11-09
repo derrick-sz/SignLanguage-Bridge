@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>文字生成手语演示</title>
+  <link rel="stylesheet" href="/generate/generate.css">
+  <script type="module" src="/generate/generate.js"></script>
+</head>
+<body>
+  <header class="page-header"><div><p class="brand">SignLanguage Bridge</p><h1>文字生成手语演示</h1></div><nav class="workspace-nav" aria-label="工作台入口"><a href="/generate/" aria-current="page">文字演示</a><a href="/animation/">动作与手形对照</a><a href="/scenes/library">原句场景库</a></nav></header>
+  <main class="workspace">
+    <section class="editor panel" aria-labelledby="input-heading">
+      <h2 id="input-heading">想表达什么？</h2>
+      <p class="muted">输入中文，在人物上观看手语演示。</p>
+      <form id="generate-form">
+        <div class="mode-field"><label for="mode">演示方式</label><select id="mode"><option value="fast" selected>快速组合</option><option value="generate">模型生成（较慢）</option></select></div>
+        <p id="mode-help" class="mode-help">复用词语动作，组合完成后自动播放。缺少动作会明确提示。</p>
+        <label for="expression">你的文字</label>
+        <textarea id="expression" rows="6" aria-describedby="input-help" placeholder="例如：明天我们一起去公园散步。"></textarea>
+        <p id="input-help" class="input-help">支持换行，1–200 个字符。<span id="count">0 / 200</span></p>
+        <p id="duration-help" class="input-help">演示时长由本次词语动作决定。</p>
+        <div id="duration-field" class="duration" hidden><label for="seconds">演示时长</label><select id="seconds"><option value="4">4 秒</option><option value="6" selected>6 秒</option><option value="8">8 秒</option><option value="10">10 秒</option></select></div>
+        <div class="actions"><button id="generate" type="submit" class="primary" disabled>组合并演示</button><button id="cancel" type="button" disabled>取消</button></div>
+      </form>
+      <div class="progress" aria-live="polite"><p id="status" role="status">正在准备人物…</p><p id="wait-hint" class="muted" hidden></p></div>
+      <section id="gloss-panel" class="expression-detail" aria-labelledby="gloss-heading" hidden><h3 id="gloss-heading">本次手语词序（待核对）</h3><div id="glosses" class="glosses"></div><p id="missing-words" class="missing-words" hidden></p></section>
+      <div id="timing-panel" class="timing-detail" hidden><p id="processing-time"></p><p id="playback-latency"></p></div>
+      <aside class="review-note"><strong>生成演示仍需核对手语含义</strong><p id="quality-warning">手形、表情和动作自然度尚需核对。</p><p id="language-review">语言审核：未进行</p></aside>
+    </section>
+    <section class="preview panel" aria-labelledby="preview-heading">
+      <div class="section-head"><h2 id="preview-heading">人物演示</h2><span id="playback-state">等待输入</span></div>
+      <div id="stage" class="stage"></div>
+      <div class="playback-controls"><span id="time">0:00 / 0:00</span><label class="sr-only" for="view">观察视角</label><select id="view"><option value="front">正面</option><option value="side">侧面</option><option value="hands">手部</option></select><button id="play" disabled>播放</button><button id="pause" disabled>暂停</button><button id="stop" disabled>停止</button></div>
+      <p id="subtitle" class="subtitle">演示准备完成后显示本次文字。</p>
+    </section>
+  </main>
+</body>
+</html>

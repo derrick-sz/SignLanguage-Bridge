@@ -11,7 +11,7 @@ from .planner import plan_motion
 
 _WEB = Path(__file__).with_name("web")
 _STATIC = {"index.html", "workspace.js", "stage.js", "player-core.mjs", "workspace.css",
-           "rig.js", "retarget.js", "stabilization.js", "motion-geometry.mjs", "expression.mjs", "nonmanual.mjs"}
+           "rig.js", "retarget.js", "body-clearance.js", "stabilization.js", "motion-geometry.mjs", "expression.mjs", "nonmanual.mjs"}
 _VENDOR = {"model.glb": "model.glb", "three.module.js": "three.module.js",
            "jsm/loaders/GLTFLoader.js": "GLTFLoader.js",
            "jsm/utils/BufferGeometryUtils.js": "BufferGeometryUtils.js"}

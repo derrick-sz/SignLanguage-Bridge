@@ -97,7 +97,8 @@ export class MotionStage {
       const corrected=createT08Retarget(this.rig,this.model,data);
       const temporalProfile=this.presentation?.pilots?.find(p=>p.asset_id===id)?.temporal_profile||data.clip.gesture_refinement?.profile||"quaternion-temporal-adaptive-v1";
       const original=raw.compile(data.clip,{stabilize:false});
-      const improved=corrected.compile(data.clip,{stabilize:true,stabilizationProfile:temporalProfile,positionConstraints:true});
+      const bodyClearance=this.presentation?.avatar_sha256==='535fc9ab96ec3d837e2568817abc41d593fac1c4fcad8565b45b29c5f4472f5e';
+      const improved=corrected.compile(data.clip,{stabilize:true,stabilizationProfile:temporalProfile,positionConstraints:true,bodyClearance});
       let changed=0;
       original.forEach((frame,i)=>{if(Object.keys(frame).some(k=>frame[k].clone().normalize().angleTo(improved[i][k].clone().normalize())>1e-6))changed++;});
       const bounds={minX:-0.20,maxX:0.20,minY:0.98,maxY:1.86,minZ:-0.12,maxZ:0.12};

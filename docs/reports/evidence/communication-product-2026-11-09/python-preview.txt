@@ -1,0 +1,39 @@
+........................................................................ [ 17%]
+........................................................................ [ 34%]
+.....................................................ssssssssssss....... [ 51%]
+........ssss....................ss.s..........ssss............sssssssss. [ 68%]
+........................................................................ [ 85%]
+..........ss.s................................................           [100%]
+============================== warnings summary ===============================
+E:\githubproject\SignLanguage-Bridge\.venv-libras\Lib\site-packages\starlette\testclient.py:51
+  E:\githubproject\SignLanguage-Bridge\.venv-libras\Lib\site-packages\starlette\testclient.py:51: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+SKIPPED [1] tests\test_signspark_source_contract.py:8: could not import 'torch': No module named 'torch'
+SKIPPED [1] tests\test_word_library_build.py:15: could not import 'lmdb': No module named 'lmdb'
+SKIPPED [1] tests\test_signspark_cpu_offload.py:33: could not import 'torch': No module named 'torch'
+SKIPPED [4] tests\test_signspark_cpu_offload.py:68: could not import 'torch': No module named 'torch'
+SKIPPED [1] tests\test_signspark_cpu_offload.py:77: could not import 'torch': No module named 'torch'
+SKIPPED [3] tests\test_signspark_cpu_offload.py:90: could not import 'torch': No module named 'torch'
+SKIPPED [3] tests\test_signspark_cpu_offload.py:107: could not import 'torch': No module named 'torch'
+SKIPPED [1] tests\test_signspark_empty_loading.py:27: could not import 'torch': No module named 'torch'
+SKIPPED [1] tests\test_signspark_empty_loading.py:54: could not import 'torch': No module named 'torch'
+SKIPPED [1] tests\test_signspark_empty_loading.py:68: could not import 'torch': No module named 'torch'
+SKIPPED [1] tests\test_signspark_empty_loading.py:78: could not import 'torch': No module named 'torch'
+SKIPPED [2] tests\test_signspark_generation.py:43: could not import 'torch': No module named 'torch'
+SKIPPED [1] tests\test_signspark_generation.py:65: could not import 'torch': No module named 'torch'
+SKIPPED [3] tests\test_signspark_portability.py:90: explicit real asset opt-in
+SKIPPED [1] tests\test_signspark_portability.py:107: explicit real asset opt-in
+SKIPPED [1] tests\test_signspark_presentation.py:141: explicit real-asset integration opt-in
+SKIPPED [1] tests\test_signspark_readonly_mapping.py:18: could not import 'torch': No module named 'torch'
+SKIPPED [1] tests\test_signspark_readonly_mapping.py:66: could not import 'torch': No module named 'torch'
+SKIPPED [2] tests\test_signspark_readonly_mapping.py:76: could not import 'torch': No module named 'torch'
+SKIPPED [1] tests\test_signspark_readonly_mapping.py:88: could not import 'torch': No module named 'torch'
+SKIPPED [1] tests\test_signspark_readonly_mapping.py:96: could not import 'torch': No module named 'torch'
+SKIPPED [1] tests\test_signspark_readonly_mapping.py:107: could not import 'torch': No module named 'torch'
+SKIPPED [1] tests\test_signspark_readonly_mapping.py:118: could not import 'torch': No module named 'torch'
+SKIPPED [2] tests\test_v14a_presentation.py:89: symlink creation unavailable on this platform
+SKIPPED [1] tests\test_v14a_presentation.py:115: set ANIMATION_V14A_AVATAR_GLB for frozen-byte integration check
+387 passed, 37 skipped, 1 warning in 46.58s

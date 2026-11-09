@@ -1,0 +1,12 @@
+{
+  "word_library": "D:/sign-assets/SignSparK_Retrieval/word-library-v1",
+  "planner": {
+    "python": "D:/envs/signspark/Scripts/python.exe",
+    "script": "D:/SignLanguage-Bridge/scripts/animation/text_gloss_worker.py",
+    "model_dir": "D:/sign-assets/SignSparK_Retrieval/t2g/CSL-Daily",
+    "device": "cuda",
+    "startup_timeout": 180,
+    "request_timeout": 30,
+    "stderr_log": "D:/sign-assets/logs/text-gloss-worker.log"
+  }
+}

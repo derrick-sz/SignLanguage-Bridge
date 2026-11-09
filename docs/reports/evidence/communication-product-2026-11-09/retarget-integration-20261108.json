@@ -1,0 +1,58 @@
+[
+  {
+    "filename": "composed-motion.json",
+    "id": "words-7be4d2c9cd9f5425203ae160",
+    "text": "我想喝水。",
+    "frames": 50,
+    "checked_finger_keys": 1500,
+    "changed_finger_keys": 0,
+    "mutated": false,
+    "diagnostics": {
+      "strategy": "source-wrist-ik-v1",
+      "handshape_source": "original-poses",
+      "samples": 100,
+      "clamped": 0,
+      "body_clearance": {
+        "profile": "mesh-core-clearance-directional-v3",
+        "available": true,
+        "contact_track": null,
+        "adjusted_hands": 37,
+        "max_offset": 0.06000001186160845,
+        "max_offset_step": 0.05825689055733326,
+        "max_wrist_rotation": 0,
+        "max_wrist_rotation_step": 0,
+        "remaining_core_hits": 1
+      },
+      "wrist_error_before_mean": 0.03189632867883847,
+      "wrist_error_after_mean": 0.010957993831750586
+    }
+  },
+  {
+    "filename": "watermelon-motion.json",
+    "id": "soke-full-S000931_P0000_T00-e61082953513a62a",
+    "text": "今天水果很新鲜，买一个西瓜回家。",
+    "frames": 162,
+    "checked_finger_keys": 4860,
+    "changed_finger_keys": 0,
+    "mutated": false,
+    "diagnostics": {
+      "strategy": "source-wrist-ik-v1",
+      "handshape_source": "original-poses",
+      "samples": 324,
+      "clamped": 0,
+      "body_clearance": {
+        "profile": "mesh-core-clearance-directional-v3",
+        "available": true,
+        "contact_track": "v14a-S000931-contact-v1",
+        "adjusted_hands": 49,
+        "max_offset": 0.059999967463119676,
+        "max_offset_step": 0.008699423779258624,
+        "max_wrist_rotation": 0.2617993877991494,
+        "max_wrist_rotation_step": 0.03874630939427566,
+        "remaining_core_hits": 0
+      },
+      "wrist_error_before_mean": 0.019690822904124782,
+      "wrist_error_after_mean": 0.0040423289198115156
+    }
+  }
+]

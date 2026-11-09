@@ -213,6 +213,14 @@ async function preview() {
       (diagnostics ? "手腕目标平均偏差：" + diagnostics.wrist_error_before_mean.toFixed(5) + " → " +
         diagnostics.wrist_error_after_mean.toFixed(5) + "（模型坐标单位）；不是语言准确率。" : "") +
       "原始姿态保留；非手控语法未认证。";
+    if(diagnostics?.handshape_source==='original-poses')$("provenance").textContent+=' 手指保留原始手形，不做独立平滑。';
+    if(diagnostics?.body_clearance?.available){
+      const clearance=diagnostics.body_clearance;
+      $("provenance").textContent+=' 深入身体检查：'+clearance.adjusted_hands+' 次臂腕避让；最大偏移 '+clearance.max_offset.toFixed(5)+'（模型坐标单位）。';
+      if(clearance.contact_track)$("provenance").textContent+=' 已应用整段接触轨候选；最大附加腕转角 '+(clearance.max_wrist_rotation*180/Math.PI).toFixed(1)+'°，含义与接触自然度待审核。';
+      if(clearance.remaining_core_hits)$("provenance").textContent+=' 仍有 '+clearance.remaining_core_hits+' 个核心体积重叠线索，需逐帧复核。';
+      if(clearance.max_offset_step>.015)$("provenance").textContent+=' 避让过渡仍有明显变化，需慢速复核。';
+    }
     if (isCorpus) $("provenance").textContent += " 参数 SHA256 " + asset.parameter_sha256 +
       "；按需派生手势候选，原视频时间对齐未验证。";
     const pilot = stage.presentation?.pilots?.find(p => p.asset_id === asset.id);

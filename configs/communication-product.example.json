@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "output_root": "D:/SignLanguage-Bridge/artifacts/communication-product",
+  "recognition": {
+    "python": "D:/SignLanguage-Bridge/.venv-gpu/Scripts/python.exe",
+    "workdir": "D:/SignLanguage-Bridge",
+    "port": 8765,
+    "catalog": "D:/SignLanguage-Bridge/configs/communication-recognition.example.json"
+  },
+  "product": {
+    "python": "D:/SignLanguage-Bridge/.venv-libras/Scripts/python.exe",
+    "workdir": "D:/SignLanguage-Bridge",
+    "port": 8879,
+    "archive": "D:/sign-assets/signbridge-chrome-extension-motion-demo-20261022.zip",
+    "archive_sha256": "4d98380ac0fe08db90b042df63528ae9be5c96b93f492625ec27a015ea5edae5",
+    "presentation": "D:/sign-assets/godette-v14a/presentation",
+    "avatar_sha256": "535fc9ab96ec3d837e2568817abc41d593fac1c4fcad8565b45b29c5f4472f5e",
+    "corpus": "D:/sign-assets/SOKE/full-library",
+    "composition_config": "D:/SignLanguage-Bridge/configs/animation/word-composition.example.json",
+    "bundle_id": "REPLACE_WITH_YOUR_WORD_LIBRARY_MANIFEST_BUNDLE_ID"
+  }
+}

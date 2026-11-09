@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>基本场景 · 手语表达研究预览</title>
+  <link rel="stylesheet" href="/scenes/scenes.css">
+  <script type="module" src="/scenes/scenes.js"></script>
+</head>
+<body>
+  <header class="page-header">
+    <div><p class="eyebrow">SIGNLANGUAGE BRIDGE / 场景表达</p><h1>从真实原句，组织日常表达</h1></div>
+    <nav class="workspace-nav" aria-label="工作台入口"><a href="/generate/">文字演示</a><a href="/animation/">动作与手形对照</a><a href="/scenes/library" aria-current="page">原句场景库</a></nav><span class="research-badge">研究预览 · 未经语言验收</span>
+  </header>
+  <main class="workspace">
+    <section class="library panel" aria-labelledby="library-heading">
+      <div class="section-head"><h2 id="library-heading">场景原句库</h2><span id="catalog-state" role="status">正在读取…</span></div>
+      <p class="muted">按关键词归类的 train 完整原句。候选数量与固定目标覆盖分别显示。</p>
+      <label for="scene">选择场景</label><select id="scene"><option value="">全部场景</option></select>
+      <p id="scene-summary" class="muted"></p>
+      <form id="search-form" class="search-row"><label class="sr-only" for="search">检索原句</label><input id="search" type="search" placeholder="检索真实字幕，例如：吃饭" maxlength="200"><button type="submit">检索</button></form>
+      <div id="asset-list" class="asset-list" aria-label="真实原句候选"></div>
+      <nav class="pagination" aria-label="原句分页"><button id="prev" disabled>上一页</button><span id="page-label">—</span><button id="next" disabled>下一页</button></nav>
+    </section>
+    <section class="preview panel" aria-labelledby="preview-heading">
+      <div class="section-head"><h2 id="preview-heading">人物预览</h2><span id="playback-state">待选择表达</span></div>
+      <div id="stage" class="stage"></div>
+      <div class="playback-controls"><span id="time">0:00 / 0:00</span><label for="view" class="sr-only">观察视角</label><select id="view"><option value="front">正面</option><option value="side">侧面</option><option value="hands">手部</option></select><button id="pause" disabled>暂停</button><button id="stop">停止</button></div>
+      <p id="subtitle" class="subtitle">选择原句只填入文本，确认后再预览。</p>
+      <div class="editor"><label for="expression">组织你的表达</label><p class="muted" id="expression-help">可用换行或句末标点分隔，最多 6 句。每句必须完整匹配已有原句；任一句缺失将阻断整体播放。</p>
+        <textarea id="expression" rows="4" maxlength="500" aria-describedby="expression-help" placeholder="从左侧选择原句，或输入已有完整表达。"></textarea>
+        <label class="confirmation"><input id="confirmed" type="checkbox"><span>我已核对表达，并了解这是研究预览：多句衔接、手形、表情和自然度尚未验收。</span></label>
+        <div class="actions"><button id="preview" class="primary" disabled>确认并研究预览</button><button id="download" disabled>下载计划</button></div>
+      </div>
+      <p id="status" role="status" aria-live="polite">正在准备人物与原句库…</p>
+      <section id="plan-details" class="plan-details" hidden><h3>来源与缺项</h3><p id="plan-review"></p><ul id="sources"></ul><div id="missing-box" hidden><strong>以下内容未覆盖，整体未播放</strong><ul id="missing"></ul></div></section>
+    </section>
+  </main>
+</body>
+</html>

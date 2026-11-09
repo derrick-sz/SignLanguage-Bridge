@@ -1,0 +1,245 @@
+{
+  "schema_version": 1,
+  "avatar": "godette-reference-v14a.glb",
+  "processing_version": "godette-v14a-garment-shape-manual-mouth-v1",
+  "attribution": "Godette (Rigged) by zahlenmaler, CC BY 4.0. Modified hairstyle, clothing, shoes, materials and clothing skin weights; v12 neutral lip-bone default pose and shoe/ankle refinements; v13 reference-guided clothing contours, trouser weights and lower-body default pose. v14A garment POSITION/NORMAL-only shape refinement, preserving v13 nodes, defaults, inverse bind matrices and skin weights. Original face, hands and 227-bone skeleton retained. Source: https://sketchfab.com/3d-models/godette-rigged-dd05b69799a2438e97c90d166f6e416a ; License: https://creativecommons.org/licenses/by/4.0/",
+  "rig_profile": {
+    "id": "godette-v1",
+    "motionSpace": "humanoid-local-v1",
+    "bones": {
+      "root": [
+        "Root_225"
+      ],
+      "body": [
+        "Body_220"
+      ],
+      "hips": [
+        "Hip_218"
+      ],
+      "spine": [
+        "Spine_1_199"
+      ],
+      "chest": [
+        "Spine_2_198"
+      ],
+      "upperChest": [
+        "Ribcage_197"
+      ],
+      "neck": [
+        "Neck_1_132"
+      ],
+      "neck2": [
+        "Neck_2_131"
+      ],
+      "neck3": [
+        "Neck_3_130"
+      ],
+      "head": [
+        "Head_129"
+      ],
+      "rightShoulder": [
+        "ClavicR_192",
+        "Clavic.R_192"
+      ],
+      "rightUpperArm": [
+        "Arm_Upper_1R_187",
+        "Arm_Upper_1.R_187"
+      ],
+      "rightLowerArm": [
+        "Arm_Lower_1R_185",
+        "Arm_Lower_1.R_185"
+      ],
+      "rightHand": [
+        "HandR_184",
+        "Hand.R_184"
+      ],
+      "leftShoulder": [
+        "ClavicL_162",
+        "Clavic.L_162"
+      ],
+      "leftUpperArm": [
+        "Arm_Upper_1L_157",
+        "Arm_Upper_1.L_157"
+      ],
+      "leftLowerArm": [
+        "Arm_Lower_1L_155",
+        "Arm_Lower_1.L_155"
+      ],
+      "leftHand": [
+        "HandL_154",
+        "Hand.L_154"
+      ],
+      "rightThumbMetacarpal": [
+        "ThumbR_178",
+        "Thumb.R_178"
+      ],
+      "rightThumbProximal": [
+        "ThumbR002_177",
+        "Thumb.R.002_177"
+      ],
+      "rightThumbDistal": [
+        "ThumbR001_176",
+        "Thumb.R.001_176"
+      ],
+      "rightIndexProximal": [
+        "Finger_1R_166",
+        "Finger_1.R_166"
+      ],
+      "rightIndexIntermediate": [
+        "Finger_1R002_165",
+        "Finger_1.R.002_165"
+      ],
+      "rightIndexDistal": [
+        "Finger_1R001_164",
+        "Finger_1.R.001_164"
+      ],
+      "rightMiddleProximal": [
+        "Finger_2R_169",
+        "Finger_2.R_169"
+      ],
+      "rightMiddleIntermediate": [
+        "Finger_2R002_168",
+        "Finger_2.R.002_168"
+      ],
+      "rightMiddleDistal": [
+        "Finger_2R001_167",
+        "Finger_2.R.001_167"
+      ],
+      "rightRingProximal": [
+        "Finger_3R_172",
+        "Finger_3.R_172"
+      ],
+      "rightRingIntermediate": [
+        "Finger_3R002_171",
+        "Finger_3.R.002_171"
+      ],
+      "rightRingDistal": [
+        "Finger_3R001_170",
+        "Finger_3.R.001_170"
+      ],
+      "rightLittleProximal": [
+        "Finger_4R_175",
+        "Finger_4.R_175"
+      ],
+      "rightLittleIntermediate": [
+        "Finger_4R002_174",
+        "Finger_4.R.002_174"
+      ],
+      "rightLittleDistal": [
+        "Finger_4R001_173",
+        "Finger_4.R.001_173"
+      ],
+      "leftThumbMetacarpal": [
+        "ThumbL_148",
+        "Thumb.L_148"
+      ],
+      "leftThumbProximal": [
+        "ThumbL002_147",
+        "Thumb.L.002_147"
+      ],
+      "leftThumbDistal": [
+        "ThumbL001_146",
+        "Thumb.L.001_146"
+      ],
+      "leftIndexProximal": [
+        "Finger_1L_136",
+        "Finger_1.L_136"
+      ],
+      "leftIndexIntermediate": [
+        "Finger_1L002_135",
+        "Finger_1.L.002_135"
+      ],
+      "leftIndexDistal": [
+        "Finger_1L001_134",
+        "Finger_1.L.001_134"
+      ],
+      "leftMiddleProximal": [
+        "Finger_2L_139",
+        "Finger_2.L_139"
+      ],
+      "leftMiddleIntermediate": [
+        "Finger_2L002_138",
+        "Finger_2.L.002_138"
+      ],
+      "leftMiddleDistal": [
+        "Finger_2L001_137",
+        "Finger_2.L.001_137"
+      ],
+      "leftRingProximal": [
+        "Finger_3L_142",
+        "Finger_3.L_142"
+      ],
+      "leftRingIntermediate": [
+        "Finger_3L002_141",
+        "Finger_3.L.002_141"
+      ],
+      "leftRingDistal": [
+        "Finger_3L001_140",
+        "Finger_3.L.001_140"
+      ],
+      "leftLittleProximal": [
+        "Finger_4L_145",
+        "Finger_4.L_145"
+      ],
+      "leftLittleIntermediate": [
+        "Finger_4L002_144",
+        "Finger_4.L.002_144"
+      ],
+      "leftLittleDistal": [
+        "Finger_4L001_143",
+        "Finger_4.L.001_143"
+      ],
+      "jaw": [
+        "Jaw_4"
+      ],
+      "leftUpperEyelid": [
+        "Eyelid_Control_UpperL_14"
+      ],
+      "rightUpperEyelid": [
+        "Eyelid_Control_UpperR_15"
+      ],
+      "leftLowerEyelid": [
+        "Eyelid_Control_LowerL_16"
+      ],
+      "rightLowerEyelid": [
+        "Eyelid_Control_LowerR_17"
+      ]
+    }
+  },
+  "files": {
+    "godette-reference-v14a.glb": "535fc9ab96ec3d837e2568817abc41d593fac1c4fcad8565b45b29c5f4472f5e"
+  },
+  "pilots": [
+    {
+      "asset_id": "new-1918b4f42eac7d78-cap-0009",
+      "source_motion_sha256": "02e3cbfaceca600f560b83ccfa5787590ab19ca19a4429fe7336db65e91547af",
+      "text": "认识你很高兴"
+    },
+    {
+      "asset_id": "pilot-greeting-answer-002",
+      "source_motion_sha256": "0087d5024d320ea2564640f538e4cc7a8ff06f36898f9875c32d9add94ed8a6f",
+      "text": "是啊，你过得好不好？"
+    },
+    {
+      "asset_id": "pilot-greeting-how-004",
+      "source_motion_sha256": "0087d5024d320ea2564640f538e4cc7a8ff06f36898f9875c32d9add94ed8a6f",
+      "text": "很好，你呢？"
+    },
+    {
+      "asset_id": "pilot-greeting-busy-005",
+      "source_motion_sha256": "0087d5024d320ea2564640f538e4cc7a8ff06f36898f9875c32d9add94ed8a6f",
+      "text": "工作忙吗？"
+    },
+    {
+      "asset_id": "pilot-hospital-pay-013",
+      "source_motion_sha256": "0087d5024d320ea2564640f538e4cc7a8ff06f36898f9875c32d9add94ed8a6f",
+      "text": "先交费，然后去取药。"
+    },
+    {
+      "asset_id": "new-0ad6eaefc7647487-cap-0067",
+      "source_motion_sha256": "91a8f852780699f4614279c7680c2c236aa4769de03f30ed5e2133b55e5b6c80",
+      "text": "我去开会汇报抽样调查落实的情况",
+      "temporal_profile": "source-quaternion-temporal-v1"
+    }
+  ]
+}

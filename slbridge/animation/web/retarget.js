@@ -1,5 +1,6 @@
 import * as THREE from "/animation/vendor/three.module.js";
 import { stabilizeQuaternionTrack } from "./stabilization.js";
+import { createBodyClearance, selectContactTrack } from "./body-clearance.js";
 import { forwardKinematics, solveTwoBone, selectSourcePoses, SOURCE_TEMPORAL_PROFILE, GESTURE_REFINEMENT_PROFILE } from "./motion-geometry.mjs";
 export function axisAngleQuaternion(vector) {
   if (vector?.length !== 3 || !vector.every(Number.isFinite))
@@ -76,6 +77,9 @@ export function createT08Retarget(rig, modelRoot, bundle) {
   const playingPose = rig.capture();
   let binding, sourceBasis, targetBasis, armSettings, sourceCenter, targetCenter;
   let diagnostics = null;
+  let clearance = null;
+  let previousClearanceOffsets;
+  let previousClearanceRotations;
   const position = name => rig.bones[name].getWorldPosition(new THREE.Vector3());
   function basis(left, right, up) {
     const x = left.clone().sub(right).normalize();
@@ -210,7 +214,7 @@ export function createT08Retarget(rig, modelRoot, bundle) {
     const delta = new THREE.Quaternion().setFromUnitVectors(from, to);
     setWorldRotation(bone, delta.multiply(bone.getWorldQuaternion(new THREE.Quaternion())));
   }
-  function constrain(frame, pose) {
+  function constrain(frame, pose, guard, preferred, contact) {
     rig.interpolate(frame, frame, 1); modelRoot.updateMatrixWorld(true);
     const source = forwardKinematics(pose, bundle.parents, bundle.restJoints).positions;
     for (const arm of armSettings) {
@@ -223,7 +227,31 @@ export function createT08Retarget(rig, modelRoot, bundle) {
       const solved = solveTwoBone(root.toArray(), position(arm.side+"LowerArm").toArray(), position(arm.side+"Hand").toArray(), goal.toArray());
       pointBone(upper, lower, new THREE.Vector3(...solved.elbow));
       pointBone(lower, hand, new THREE.Vector3(...solved.wrist));
+      const rotation=contact?.[arm.side]?.rotation || [0,0,0];
+      const delta=axisAngleQuaternion(rotation);
+      orientation.premultiply(delta);
       setWorldRotation(hand, orientation);
+      if(guard?.available){
+        const hint=contact?.[arm.side]?.offset;
+        const start=position(arm.side+"Hand"),offset=guard.offset(arm.side,.06,hint?new THREE.Vector3(...hint):preferred?.[arm.side]);
+        if(offset.lengthSq()>1e-12){
+          const safe=solveTwoBone(root.toArray(),position(arm.side+"LowerArm").toArray(),start.toArray(),start.clone().add(offset).toArray());
+          pointBone(upper,lower,new THREE.Vector3(...safe.elbow));
+          pointBone(lower,hand,new THREE.Vector3(...safe.wrist));
+          setWorldRotation(hand,orientation);
+          diagnostics.body_clearance.adjusted_hands++;
+          diagnostics.body_clearance.max_offset=Math.max(diagnostics.body_clearance.max_offset,start.distanceTo(position(arm.side+"Hand")));
+        }
+        const actualOffset=position(arm.side+"Hand").sub(start);
+        const previous=previousClearanceOffsets[arm.side];
+        if(previous)diagnostics.body_clearance.max_offset_step=Math.max(diagnostics.body_clearance.max_offset_step,actualOffset.distanceTo(previous));
+        previousClearanceOffsets[arm.side]=actualOffset;
+        const angle=Math.hypot(...rotation),previousRotation=previousClearanceRotations[arm.side];
+        diagnostics.body_clearance.max_wrist_rotation=Math.max(diagnostics.body_clearance.max_wrist_rotation,angle);
+        if(previousRotation)diagnostics.body_clearance.max_wrist_rotation_step=Math.max(diagnostics.body_clearance.max_wrist_rotation_step,delta.angleTo(previousRotation));
+        previousClearanceRotations[arm.side]=delta;
+        diagnostics.body_clearance.remaining_core_hits+=guard.coreHits(arm.side);
+      }
       diagnostics.samples++;
       diagnostics.before_sum += before;
       diagnostics.after_sum += position(arm.side+"Hand").distanceTo(goal);
@@ -237,18 +265,64 @@ export function createT08Retarget(rig, modelRoot, bundle) {
       stabilize = clip.experimental === true,
       stabilizationProfile = clip.gesture_refinement?.profile || clip.display_stabilization_profile,
       positionConstraints = false,
+      bodyClearance = false,
     } = {},
   ) {
     const snapshot = rig.capture();
     try {
+      if(bodyClearance&&!clearance){rig.reset();modelRoot.updateMatrixWorld(true);clearance=createBodyClearance(rig,modelRoot);}
       const sourceSpace = stabilize && [SOURCE_TEMPORAL_PROFILE,GESTURE_REFINEMENT_PROFILE].includes(stabilizationProfile);
       const poses = selectSourcePoses(clip,{stabilize,profile:stabilizationProfile});
       const raw = poses.map((p) => poseTargets(p));
-      const frames = stabilize && !sourceSpace
+      let frames = stabilize && !sourceSpace
         ? stabilizeQuaternionTrack(raw, clip.fps, stabilizationProfile)
         : raw;
-      diagnostics = { strategy: "source-wrist-ik-v1", samples: 0, before_sum: 0, after_sum: 0, clamped: 0 };
-      return positionConstraints ? frames.map((frame, i) => constrain(frame, poses[i])) : frames;
+      // Independent finger filtering changes handshape and can destroy contacts.
+      // Display repair owns arm/wrist placement; retain the original source's
+      // thirty local finger rotations on this avatar, including source-space
+      // repair profiles whose body rotations use a derived pose stream.
+      if (stabilize) {
+        const handSource = sourceSpace ? clip.poses.map(poseTargets) : raw;
+        frames = frames.map((frame, i) => {
+          const result = { ...frame };
+          for (const name of Object.keys(frame)) {
+            if (/Thumb|Index|Middle|Ring|Little/.test(name)) result[name] = handSource[i][name].clone();
+          }
+          return result;
+        });
+      }
+      const guard=bodyClearance?clearance:null;
+      const contactTrack=positionConstraints&&guard?.available&&stabilize
+        ?selectContactTrack(clip,bundle.sha256,stabilizationProfile):null;
+      const beginDiagnostics=()=>({strategy:"source-wrist-ik-v1",samples:0,before_sum:0,after_sum:0,clamped:0});
+      diagnostics=beginDiagnostics();
+      let preferred;
+      if(positionConstraints&&guard?.available){
+        const trial=frames.map((frame,i)=>constrain(frame,poses[i],null,null,contactTrack?.frames[i]));
+        const required=trial.map(frame=>{
+          rig.interpolate(frame,frame,1);modelRoot.updateMatrixWorld(true);
+          return {left:guard.offset('left'),right:guard.offset('right')};
+        });
+        const step=.24/clip.fps,radius=Math.ceil(.06/step);
+        preferred=required.map((_,i)=>{
+          const result={};
+          for(const side of ['left','right']){
+            let magnitude=0,direction=new THREE.Vector3(),fallback=new THREE.Vector3();
+            for(let j=Math.max(0,i-radius);j<=Math.min(required.length-1,i+radius);j++){
+              const value=required[j][side],length=value.length(),weight=Math.max(0,length-step*Math.abs(i-j));
+              if(weight>magnitude){magnitude=weight;fallback=value;}
+              if(weight>0)direction.addScaledVector(value,weight/length);
+            }
+            result[side]=(direction.lengthSq()>1e-12?direction:fallback.clone()).normalize().multiplyScalar(magnitude);
+          }
+          return result;
+        });
+      }
+      diagnostics=beginDiagnostics();
+      previousClearanceOffsets={left:null,right:null};
+      previousClearanceRotations={left:null,right:null};
+      if(guard)diagnostics.body_clearance={profile:guard.profile,available:guard.available,contact_track:contactTrack?.id||null,adjusted_hands:0,max_offset:0,max_offset_step:0,max_wrist_rotation:0,max_wrist_rotation_step:0,remaining_core_hits:0};
+      return positionConstraints?frames.map((frame,i)=>constrain(frame,poses[i],guard,preferred?.[i],contactTrack?.frames[i])):frames;
     } finally {
       rig.interpolate(snapshot, snapshot, 1);
       modelRoot.updateMatrixWorld(true);
@@ -262,7 +336,8 @@ export function createT08Retarget(rig, modelRoot, bundle) {
     },
     get diagnostics() {
     if (!diagnostics?.samples) return null;
-    return { strategy: diagnostics.strategy, samples: diagnostics.samples, clamped: diagnostics.clamped,
+    return { strategy: diagnostics.strategy, handshape_source: 'original-poses', samples: diagnostics.samples, clamped: diagnostics.clamped,
+      ...(diagnostics.body_clearance?{body_clearance:{...diagnostics.body_clearance}}:{}),
       wrist_error_before_mean: diagnostics.before_sum / diagnostics.samples,
       wrist_error_after_mean: diagnostics.after_sum / diagnostics.samples };
   } };
