@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#F3F6FB"><link rel="icon" href="data:,">
+  <title>手语桥 · 会议字幕</title>
+  <link rel="stylesheet" href="/communicate/meeting.css">
+  <script type="module" src="/communicate/meeting-app.js"></script>
+</head>
+<body>
+  <header class="app-header">
+    <a class="brand" href="/communicate/" aria-label="手语桥首页"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M7 27V14a7 7 0 0 1 7-7h12a7 7 0 0 1 7 7v12a7 7 0 0 1-7 7H15l-8 3v-9Z"/><path d="M13 24c2-6 12-6 14 0M14 15v5m6-7v6m6-4v5"/></svg><span>手语桥<small>SignLanguage Bridge</small></span></a>
+    <nav aria-label="产品功能"><a href="/communicate/" aria-current="page">会议字幕</a><a href="/communicate/realtime.html">实时字幕</a><a href="/communicate/assist.html" target="_blank" rel="noopener">文字转手语</a></nav>
+    <div class="header-actions"><span id="connection" class="connection">正在连接</span><button id="settings-open" class="quiet">设置</button></div>
+  </header>
+  <main class="shell">
+    <div class="intro"><div><h1>看懂屏幕里的手语</h1><p>共享会议画面，在预览中框选手语者，字幕会随片段识别完成而更新。</p></div><span class="local-note">在本机识别视频 · 不采集声音</span></div>
+    <div class="meeting-grid">
+      <section class="source-panel" aria-labelledby="source-title">
+        <div class="panel-heading"><h2 id="source-title">会议画面</h2><span id="source-label" class="source-label">尚未选择来源</span></div>
+        <div class="preview-box" id="preview-box">
+          <video id="meeting-video" muted playsinline hidden></video>
+          <div id="selection-overlay" class="selection-overlay" hidden aria-label="在视频预览中拖动框选手语者"><div id="selection-rect" class="selection-rect" hidden><span>识别区域</span><i></i></div></div>
+          <div id="preview-empty" class="preview-empty"><svg viewBox="0 0 90 70" aria-hidden="true"><rect x="8" y="8" width="74" height="48" rx="5"/><path d="M33 64h24M45 56v8M26 23v-5h7m24 0h7v5m0 18v5h-7m-24 0h-7v-5"/><circle cx="45" cy="29" r="6"/><path d="M34 44c0-9 22-9 22 0"/></svg><h3>把手语者的画面带进来</h3><p>可选择任意会议窗口、屏幕，或用已有视频演示。</p></div>
+          <span id="capture-badge" class="capture-badge" hidden><i></i><span>正在采集</span></span>
+        </div>
+        <div class="source-toolbar"><button id="share-screen" class="primary">共享屏幕</button><button id="upload-demo" class="secondary">用视频演示</button><input id="source-file" type="file" accept="video/*,.mp4,.webm,.mov,.mkv" class="sr-only" aria-label="选择演示视频"><button id="end-source" class="quiet" disabled>结束采集</button></div>
+        <div class="region-row"><div class="region-preview"><canvas id="crop-preview" width="160" height="100" aria-label="实际送入识别的选区预览"></canvas><span id="crop-empty">选区预览</span></div><div class="region-info"><strong id="region-label">先选择画面，再框选手语者</strong><p id="selection-hint">请包含脸部、双手和上半身。</p><div><button id="full-region" class="text-button" disabled>使用全画面</button><button id="reselect" class="text-button" disabled>重新框选</button></div></div></div>
+        <div class="capture-controls"><div><button id="start-captions" class="primary" disabled>开始字幕</button><button id="pause-captions" class="secondary" hidden>暂停</button><button id="submit-segment" class="quiet" hidden>提交当前片段</button></div><span id="segment-progress" class="segment-progress">准备就绪后开始</span></div>
+        <p id="capture-status" class="status-line" role="status">正在连接识别服务…</p>
+      </section>
+      <section class="caption-panel" aria-labelledby="captions-title">
+        <div class="panel-heading"><h2 id="captions-title">会议字幕</h2><label><span class="sr-only">识别的手语</span><select id="sign-language" aria-label="识别的手语"><option value="csl">中国手语</option><option value="libras">巴西手语 · 12词试点</option></select></label></div>
+        <div class="current-caption" data-empty="true"><span id="caption-state" class="caption-state">等待画面</span><p id="live-caption" aria-live="polite" aria-atomic="true">字幕将在这里出现</p><span id="caption-kind" class="caption-kind">选择画面后，开始一次手语交流。</span></div>
+        <div class="history-heading"><h3>字幕记录 <span id="caption-count">0</span></h3><div><button id="export-captions" class="quiet" disabled>导出</button><button id="clear-captions" class="quiet" disabled>清空</button></div></div>
+        <div id="history-empty" class="history-empty">识别完成的片段会按顺序保留。<br>你可以核对并修改文字。</div>
+        <ol id="caption-history" class="caption-history" aria-label="已识别字幕"></ol>
+        <div class="caption-foot"><p id="queue-status" role="status">字幕在每段识别完成后追加。</p><button id="undo-clear" class="text-button" hidden>撤销清空</button><p id="session-notice" class="session-notice" role="status" hidden></p></div>
+      </section>
+    </div>
+    <footer class="page-footer"><p>自动识别结果请结合上下文核对。会话保留最近200段字幕，可导出保存。</p><div><a href="/communicate/index.html" target="_blank" rel="noopener">打开样例视频窗口</a><span aria-hidden="true"> · </span><a href="/communicate/assist.html" target="_blank" rel="noopener">文字转手语</a></div></footer>
+  </main>
+  <dialog id="settings"><form method="dialog" class="dialog-heading"><h2>会议字幕设置</h2><button class="quiet" aria-label="关闭设置">关闭</button></form><div class="dialog-body"><label class="setting-label" for="segment-mode">如何分段</label><select id="segment-mode"><option value="pause">按画面停顿分段（最长8秒）</option><option value="interval">定时分段（每6秒）</option></select><p class="small-note">停顿分段依据画面活动。静态手势可点“提交当前片段”；较长表达可用定时分段。改变方式会暂停采集。</p><h3>当前识别能力</h3><ul id="capability-list"><li>正在读取…</li></ul><button id="retry-connections" class="secondary">重新连接服务</button><details><summary>演示与使用说明</summary><p>点击“共享屏幕”，在浏览器中选择屏幕或会议窗口，再在本页预览中框选。也可以播放上传的视频，实际采集选区并调用模型。</p><p>请保持本页可见。页面切到后台时会暂停采集，避免低帧率片段影响识别。选区尺寸或共享来源变化后，请重新确认。</p><p>字幕在片段完成后更新。词序列与句子草稿按模型实际任务显示；数字人辅助表达不作为识别模型的标准答案。</p><a href="/communicate/assist.html" target="_blank" rel="noopener">面对面沟通与数字人表达</a></details></div></dialog>
+  <dialog id="edit-dialog"><form id="edit-form"><div class="dialog-heading"><h2>核对这段字幕</h2><button id="edit-close" type="button" class="quiet">关闭</button></div><div class="dialog-body"><label class="sr-only" for="edit-text">修改字幕文字</label><textarea id="edit-text" rows="4" maxlength="8000"></textarea><p class="small-note">原始识别结果会保留在记录中。</p><div class="edit-actions"><button class="primary" type="submit">保存修改</button></div></div></form></dialog>
+  <div id="notice" class="toast" role="status" hidden></div>
+</body>
+</html>

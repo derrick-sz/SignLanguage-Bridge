@@ -1,0 +1,72 @@
+{
+  "checked_at": "2026-11-09T17:33:09.394917+08:00",
+  "method": "read-only HTTP GET and source inspection",
+  "source_sha256": {
+    "slbridge/animation/web/communication/capture.mjs": "43dd1852f0d3f2db8c11b5fe5b4fab3d4c011bc1ee3cce5d51bc33b2b5ecf1cc",
+    "slbridge/animation/web/communication/app.js": "23d0dd1f5fd279fca47b001c24a2789675bdd1c5b743aaeabcab9d7c35323546",
+    "slbridge/animation/web/communication/recognition-controller.mjs": "51ae84da6a40fbd6e9968c56475fd540537c3272a0b2f82a36a8b448f82f7b3f",
+    "slbridge/communication.py": "d2a712c9c4595da0cffdbef975de71b261d7c6875bc5a7233a3424a9a15d1119",
+    "slbridge/sources.py": "c6e038f7b1aff866454182a4ce36f313e3cfef8bfa279036eea377d19c71b7e2",
+    "slbridge/segmentation.py": "1df30c981dbe1003eee443fb52f9a448ee9a50236f0d87b6f159ed0e382dc71c",
+    "slbridge/caption_events.py": "c40d096003f313eff0f97cd17bd01adba75fa2cfec11f74d2f0c15f0d0ddd2e1"
+  },
+  "deployed_capabilities": {
+    "csl": {
+      "model_id": "cecsl-tfnet-onnx-20261009",
+      "sign_language": "csl",
+      "task_type": "gloss_sequence",
+      "modes": [
+        "clip"
+      ],
+      "inputs": [
+        {
+          "representation_id": "tfnet_rgb_v1",
+          "shape": [
+            1,
+            null,
+            3,
+            224,
+            224
+          ],
+          "dtype": "float32",
+          "preprocessing_version": "bf362fc063c0b81395c45c1df5d29b21bf46c7b8a089de7195d46b314e8755ec",
+          "input_kinds": [
+            "file",
+            "captured_clip",
+            "prepared"
+          ]
+        }
+      ]
+    },
+    "libras": {
+      "model_id": "libras-rf-pilot-20261009",
+      "sign_language": "libras",
+      "task_type": "classification",
+      "modes": [
+        "clip"
+      ],
+      "inputs": [
+        {
+          "representation_id": "mediapipe225_rgb_v1",
+          "shape": [
+            30,
+            225
+          ],
+          "dtype": "float32",
+          "preprocessing_version": "c090b7f6839b370e7a169b6329ee4d0d987266014431b7529ce351546707b4e2",
+          "input_kinds": [
+            "file",
+            "captured_clip",
+            "prepared"
+          ]
+        }
+      ]
+    }
+  },
+  "device_or_screen_accessed": false,
+  "current_product_capture": "camera preview followed by bounded recording and whole-file inference",
+  "screen_region_capture": "NOT_IMPLEMENTED",
+  "meeting_continuous_caption_acceptance": "NOT_RUN",
+  "meeting_language_accuracy_and_end_to_end_latency": "NOT_RUN",
+  "proposed_direction": "competition Web demo: screen sharing, preview region selection, segmented recognition and page captions; text-to-gesture auxiliary"
+}

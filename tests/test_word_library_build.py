@@ -60,6 +60,41 @@ def build(tmp_path, fixture_args=None, **kwargs):
                               expected_annotations_sha256=sha(iso), **kwargs)
 
 
+def test_standalone_export_keeps_whole_native_take_and_excludes_multiword_context(tmp_path):
+    from slbridge.animation.signspark_codec import decode_signspark_streams
+    entries=[
+        dict(video_file='single',label='谢谢',start=2,end=6,seq_len=4),
+        dict(video_file='context',label='谢谢',start=2,end=6,seq_len=4),
+        dict(video_file='context',label='医生',start=7,end=11,seq_len=4),
+    ]
+    fields=streams()
+    args=fixture(tmp_path,entries=entries,values={'single':fields,'context':streams()})
+    manifest=build(tmp_path,args,standalone_only=True,labels=['谢谢'])
+    unit,=manifest['units']
+    assert manifest['standalone_expressions'] is True
+    assert manifest['source']['selection_scope']=='whole-single-gloss-utterance-v1'
+    assert unit['complete_expression'] is True
+    assert unit['source']['video_file']=='single'
+    assert unit['source']['start']==0 and unit['source']['end']==unit['frames']==12
+    assert unit['source']['annotation_frame_range']==[2,6]
+    assert unit['source']['source_label_count']==1
+    assert len(unit['source']['native_blob_sha256'])==64
+    expected=decode_signspark_streams(fields['body_features'][:,66:],fields['left_features'],
+                                      fields['right_features'],fields['face_features'],left_hand_convention='smplx-left')
+    with np.load(tmp_path/'words'/unit['path'],allow_pickle=False) as saved:
+        np.testing.assert_array_equal(saved['poses'],expected.poses)
+        np.testing.assert_array_equal(saved['expression'],expected.expression)
+
+
+def test_label_filter_cannot_turn_a_multiword_source_into_standalone(tmp_path):
+    entries=[dict(video_file='source',label=label,start=start,end=start+3,seq_len=3)
+             for label,start in [('谢谢',1),('医生',7)]]
+    args=fixture(tmp_path,entries=entries,values={'source':streams()})
+    with pytest.raises(ValueError,match='No valid'):
+        build(tmp_path,args,standalone_only=True,labels=['谢谢'])
+    assert not (tmp_path/'words'/'manifest.json').exists()
+
+
 def test_native_word_boundaries_left_convention_and_expression_are_preserved(tmp_path):
     from slbridge.animation.signspark_codec import decode_signspark_streams
     manifest = build(tmp_path)

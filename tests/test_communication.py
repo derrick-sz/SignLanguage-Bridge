@@ -11,6 +11,21 @@ from slbridge.communication import RecognitionGateway, RecognitionUnavailable
 from slbridge.communication_routes import mount_communication_routes
 
 
+def test_meeting_is_the_main_product_and_avatar_remains_an_auxiliary_page():
+    app=FastAPI();mount_communication_routes(app,None)
+    with TestClient(app) as client:
+        main=client.get('/communicate/')
+        assert main.status_code==200 and '会议字幕' in main.text
+        assert 'meeting-app.js' in main.text and '共享屏幕' in main.text
+        auxiliary=client.get('/communicate/assist.html')
+        assert auxiliary.status_code==200 and '写下你想说的话' in auxiliary.text
+        for name in ['meeting.css','meeting-app.js','selection.mjs','screen-capture.mjs','caption-session.mjs',
+                     'realtime.html','realtime-app.mjs','conversation-transfer.mjs','conversation.mjs','app.js']:
+            resource=client.get('/communicate/'+name)
+            assert resource.status_code==200 and resource.headers['x-content-type-options']=='nosniff'
+        assert client.get('/communicate/not-a-resource.mjs').status_code==404
+
+
 def backend(*, wrong_generation=False, wrong_language=False, task='gloss_sequence'):
     calls=[]
     def handle(request):

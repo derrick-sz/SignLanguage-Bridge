@@ -16,7 +16,7 @@ import numpy as np
 
 from .registry import _skeleton
 from .signspark_codec import CODEC_VERSION
-from .word_library_build import SOURCE_IDENTITIES
+from .word_library_build import SOURCE_IDENTITIES, is_complete_expression
 
 _SHA = re.compile(r'[0-9a-f]{64}\Z')
 _ID = re.compile(r'[A-Za-z0-9][A-Za-z0-9_.-]{0,127}\Z')
@@ -154,6 +154,7 @@ def _library(path):
             record.update(library_bundle_id=origin['library_bundle_id'],
                           library_manifest_sha256=origin['manifest_sha256'],
                           lmdb_sha256=origin['lmdb_sha256'], annotations_sha256=origin['annotations_sha256'])
+        is_complete_expression(unit)
         unit['path'] = f'units/{identity}.npz'
         actual_path = _safe_path(root, raw_unit['path'])
         _motion_bytes(actual_path, unit)
@@ -169,7 +170,10 @@ def _unit_identity(unit):
     # original data/interval/semantic label must remain identical.
     source = {k: v for k, v in unit['source'].items()
               if k not in ('library_bundle_id', 'library_manifest_sha256')}
-    return _json({key: unit[key] for key in ('id', 'label', 'sha256', 'frames', 'fps')} | {'source': source})
+    value = {key: unit[key] for key in ('id', 'label', 'sha256', 'frames', 'fps')} | {'source': source}
+    if unit.get('complete_expression'):
+        value['complete_expression'] = True
+    return _json(value)
 
 
 def _span_identity(unit):

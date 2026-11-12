@@ -1,0 +1,201 @@
+{
+  "checked_at": "2026-11-09T15:14:39.991261+08:00",
+  "head": "ca20cbb94acf6cc26c02e07db78ced165d41393c",
+  "new_fix_committed": false,
+  "new_fix_pushed": false,
+  "implementation_and_test_sha256": {
+    "configs/animation/word-composition.example.json": "58d747396806706117f783bf5c29d0308beafb79680c2f5d60f28da87e1c3853",
+    "scripts/animation/build_word_library.py": "3c579c799ff405bfdc94a329283dbecfc658d2c87756b732fee856c979512882",
+    "slbridge/animation/scene_cli.py": "49a72d25b776422db8d43275321df814d7bbf377375fc29f927db55ffe4655b3",
+    "slbridge/animation/word_composition.py": "90fba28d4ecb76d041162bd680e46ff89dd502169a13c28692b8e7941ec11179",
+    "slbridge/animation/word_library_build.py": "cfb84d046ea2bd7feefbb335a458193f60ba44f25668146986e26eaf423e140b",
+    "slbridge/animation/word_library_merge.py": "4487fd549fc92e0d55c84e0d8cf6f2b50400b5a0205457a57a37913446000bc0",
+    "tests/test_word_composition.py": "5d29c226dbbd6d7d70137512df2e69be869aea20e72ba1d9e7b64b056542caee",
+    "tests/test_word_library_build.py": "707a57eb45674668b9086417a32900f20583bdd7ece28422e96286c23d74eff8",
+    "tests/test_word_library_merge.py": "de82de1501333738ba8dea924da0958307be00221775a45c0e0571325a8d27a2"
+  },
+  "library_audit": {
+    "changed_labels": [
+      "谢谢"
+    ],
+    "word_count_before": 1990,
+    "word_count_after": 1990,
+    "unit_count_before": 14317,
+    "unit_count_after": 14317,
+    "base_native_units_preserved": 5916,
+    "unrelated_hello_and_wait_parameters_identical": true,
+    "standalone_bundle": "csl-words-08cb8863983b420e92ba682a",
+    "merged_bundle": "csl-product-ae27c39e228ec7375afb2081",
+    "thanks_frames": 30,
+    "thanks_you_frames": 41,
+    "thanks_source": {
+      "unit_id": "word-7e7c48d68567c461f4f47e7a",
+      "gloss": "谢谢",
+      "sha256": "19464f2a05d8914a9203e918a2c92235413bcce7baf4f534158bd0b4b49fff05",
+      "source": {
+        "video_file": "S000003_P0000_T00",
+        "start": 0,
+        "end": 30,
+        "split": "train",
+        "annotation_frame_range": [
+          4,
+          17
+        ],
+        "source_label_count": 1,
+        "native_blob_sha256": "2ae15a6cb957066a0bf9750ac903a688c5f23dd7b6d99cd3de5745d06f4324e4"
+      },
+      "source_frame_range": [
+        0,
+        30
+      ],
+      "output_frame_range": [
+        0,
+        30
+      ],
+      "selection_kind": "whole_native_expression"
+    }
+  },
+  "browser": {
+    "before": {
+      "messages": 35,
+      "slow": "true",
+      "text": "谢谢",
+      "time": "0.3 / 0.3 秒"
+    },
+    "after": {
+      "clip": {
+        "height": 711,
+        "width": 432,
+        "x": 470,
+        "y": 0
+      },
+      "closeup": "false",
+      "messages": 36,
+      "replyStatus": "手语已准备，请与对方一起核对。",
+      "slow": "true",
+      "status": "表达结束",
+      "text": "谢谢！",
+      "time": "0:01 / 0:01"
+    },
+    "reload_or_clear_history": false,
+    "fresh_tab_sentence_glosses": [
+      "你",
+      "好",
+      "你",
+      "谢谢"
+    ]
+  },
+  "display_geometry": {
+    "avatar_sha256": "535fc9ab96ec3d837e2568817abc41d593fac1c4fcad8565b45b29c5f4472f5e",
+    "frames": 30,
+    "finger_keys": 900,
+    "changed_finger_keys": 0,
+    "source_unchanged": true,
+    "interpolated_times": 233,
+    "head_joint_and_segment_samples": 14446,
+    "minimum_normalized_head_radius": 3.223562297754451,
+    "body_clearance": {
+      "profile": "mesh-core-clearance-directional-v3",
+      "available": true,
+      "contact_track": null,
+      "adjusted_hands": 0,
+      "max_offset": 0,
+      "max_offset_step": 0,
+      "max_wrist_rotation": 0,
+      "max_wrist_rotation_step": 0,
+      "remaining_core_hits": 0
+    },
+    "scope": "frozen geometry head-core and source-key check; not full mesh/cloth/self-collision or language acceptance"
+  },
+  "http": {
+    "thanks_frames": 30,
+    "thanks_mode": "exact_native_utterance",
+    "language_review": "NOT_RUN",
+    "other_actual_inputs": [
+      {
+        "text": "谢谢你",
+        "status": "ready",
+        "glosses": [
+          "谢谢"
+        ],
+        "frames": 30,
+        "items": [
+          {
+            "gloss": "谢谢",
+            "selection_kind": "whole_native_expression",
+            "source_frame_range": [
+              0,
+              30
+            ]
+          }
+        ]
+      },
+      {
+        "text": "我想去成都。",
+        "status": "blocked",
+        "glosses": [
+          "成都",
+          "我",
+          "想",
+          "去"
+        ],
+        "frames": null,
+        "items": []
+      },
+      {
+        "text": "明天早上我们一起去医院看朋友。",
+        "status": "needs_review",
+        "glosses": [
+          "明天",
+          "早",
+          "我们",
+          "去",
+          "看",
+          "朋友"
+        ],
+        "frames": null,
+        "items": []
+      }
+    ]
+  },
+  "tests": {
+    "native_python": {
+      "passed": 111,
+      "skipped": 0,
+      "log": "python-native-final.log"
+    },
+    "api_python": {
+      "passed": 124,
+      "warning": 1,
+      "log": "python-api-final.log"
+    },
+    "node": {
+      "passed": 119,
+      "skipped": 9,
+      "failed": 0,
+      "log": "node-final.log"
+    },
+    "note": "overlapping suites; counts must not be added"
+  },
+  "wheel": {
+    "name": "signlanguage_bridge_core-0.3.0-py3-none-any.whl",
+    "sha256": "e4f72b285fd1c77951f555a7214ca861c47c340d5889e029985c9a80b3c678ca",
+    "required_resources_verified": [
+      "slbridge/animation/word_library_build.py",
+      "slbridge/animation/word_library_merge.py",
+      "slbridge/animation/word_composition.py",
+      "slbridge/animation/scene_cli.py",
+      "slbridge/animation/web/communication/index.html",
+      "slbridge/animation/basic_scenes_v1.json"
+    ]
+  },
+  "not_run": [
+    "human_language_acceptance",
+    "full_mesh_cloth_self_interhand_collision",
+    "physical_camera",
+    "microphone",
+    "new_full_gpu_generation",
+    "full_repo_suite",
+    "remote_ci"
+  ]
+}

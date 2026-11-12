@@ -1,0 +1,6 @@
+{
+  "command": "& tests/communication_launcher.test.ps1",
+  "passed": 17,
+  "failed": 0,
+  "real_service_mutations": false
+}

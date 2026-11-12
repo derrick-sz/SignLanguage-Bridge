@@ -1,6 +1,7 @@
 {
   "schema_version": 1,
   "models": {
+    "unisign_pose_stage1": "D:/SignLanguage-Bridge/models/external/uni_sign/model_bundle",
     "csl-tfnet": "D:/sign-assets/models/cecsl-tfnet-onnx-20261009",
     "libras-rf": "D:/sign-assets/models/libras-rf-pilot-20261009"
   }

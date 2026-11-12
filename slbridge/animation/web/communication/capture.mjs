@@ -1,6 +1,6 @@
 export class CameraCapture {
   constructor({getUserMedia=constraints=>navigator.mediaDevices.getUserMedia(constraints),Recorder=globalThis.MediaRecorder,
-    onState=()=>{},maxSeconds=12,setTimer=setTimeout,clearTimer=clearTimeout}={}){
+    onState=()=>{},maxSeconds=12,setTimer=(callback,ms)=>globalThis.setTimeout(callback,ms),clearTimer=id=>globalThis.clearTimeout(id)}={}){
     this.getUserMedia=getUserMedia;this.Recorder=Recorder;this.onState=onState;this.maxSeconds=maxSeconds;
     this.setTimer=setTimer;this.clearTimer=clearTimer;this.epoch=0;this.stream=null;this.recorder=null;this.timer=null;
   }

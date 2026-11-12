@@ -14,8 +14,28 @@ function Get-OwnedListener($service, $module, $tokens) {
     $ownerIds = @($listener.OwningProcess | Select-Object -Unique)
     if ($ownerIds.Count -ne 1) { throw "Port $($service.port) has multiple owners." }
     $owner = Get-CimInstance Win32_Process -Filter "ProcessId=$($ownerIds[0])"
-    foreach ($token in @($module) + $tokens) {
-        if (-not $owner.CommandLine -or -not $owner.CommandLine.Contains([string]$token)) {
+    $required = @($module) + $tokens
+    $optional = if ($module -eq 'slbridge.animation.scene_cli') { @('--demo-catalog') } else { @('--realtime-config') }
+    foreach ($option in $optional) {
+        $escapedOption = [regex]::Escape($option)
+        # Presence depends on the complete option name, not how its value is quoted.
+        $presentPattern = '(?:^|\s)"?' + $escapedOption + '(?=\s|=|"|$)'
+        if ($required -cnotcontains $option -and $owner.CommandLine -cmatch $presentPattern) {
+            throw "Port $($service.port) has the disabled option $option; its process has been left running."
+        }
+    }
+    for ($index = 0; $index -lt $required.Count; $index++) {
+        $token = [string]$required[$index]
+        $escaped = [regex]::Escape($token)
+        $pattern = '(?:^|\s)(?:"' + $escaped + '"|' + $escaped + ')'
+        if ($token -in @('--route', '--device', '--recognition-url', '--port', '--realtime-config', '--demo-catalog')) {
+            if ($index + 1 -ge $required.Count) { throw "Missing expected value for $token." }
+            $index++
+            $value = [regex]::Escape([string]$required[$index])
+            $pattern += '\s+(?:"' + $value + '"|' + $value + ')'
+        }
+        $pattern += '(?=\s|$)'
+        if (-not $owner.CommandLine -or $owner.CommandLine -cnotmatch $pattern) {
             throw "Port $($service.port) belongs to a different service; it has been left running."
         }
     }
@@ -47,6 +67,11 @@ function Stop-OwnedTree($owner) {
 function Start-ServiceProcess($service, $arguments, $name, $module, $tokens) {
     $owner = Get-OwnedListener $service $module $tokens
     if ($owner) { return $owner }
+    $startupTimeout = 30
+    if ($null -ne $service.startup_timeout_seconds) {
+        $startupTimeout = [int]$service.startup_timeout_seconds
+        if ($startupTimeout -lt 1 -or $startupTimeout -gt 600) { throw 'Startup timeout must be between 1 and 600 seconds.' }
+    }
     foreach ($path in @($service.python, $service.workdir)) {
         if (-not (Test-Path -LiteralPath $path)) { throw "Required local asset missing: $path" }
     }
@@ -57,24 +82,40 @@ function Start-ServiceProcess($service, $arguments, $name, $module, $tokens) {
     }
     $stamp = Get-Date -Format 'yyyyMMdd-HHmmss'
     $launch = Start-Process -FilePath $service.python -ArgumentList ($quoted -join ' ') -WorkingDirectory $service.workdir -WindowStyle Hidden -PassThru -RedirectStandardOutput (Join-Path $outputRoot "$name-$stamp.stdout.log") -RedirectStandardError (Join-Path $outputRoot "$name-$stamp.stderr.log")
-    $deadline = (Get-Date).AddSeconds(30)
+    $deadline = (Get-Date).AddSeconds($startupTimeout)
     do {
         Start-Sleep -Milliseconds 250
         $owner = Get-OwnedListener $service $module $tokens
         $launch.Refresh()
         if ($launch.HasExited -and -not $owner) { throw "$name did not start. See $outputRoot logs." }
     } until ($owner -or (Get-Date) -ge $deadline)
-    if (-not $owner) { throw "$name has not started within 30 seconds. See $outputRoot logs." }
+    if (-not $owner) { throw "$name has not started within $startupTimeout seconds. See $outputRoot logs." }
     return $owner
 }
 
 $recognition = $settings.recognition
 $product = $settings.product
-$recognitionTokens = @($recognition.catalog, '--route', 'csl=csl-tfnet', 'libras=libras-rf', '--port')
+$cslModel = if ($recognition.csl_model) { [string]$recognition.csl_model } else { 'csl-tfnet' }
+$librasModel = if ($recognition.libras_model) { [string]$recognition.libras_model } else { 'libras-rf' }
+$recognitionDevice = if ($recognition.device) { [string]$recognition.device } else { 'cpu' }
+foreach ($alias in @($cslModel, $librasModel)) {
+    if ($alias -notmatch '^[A-Za-z0-9][A-Za-z0-9_.-]{0,79}$') { throw 'Invalid recognition model alias.' }
+}
+if ($recognitionDevice -notin @('auto', 'cpu', 'cuda')) { throw 'Recognition device must be auto, cpu or cuda.' }
+$recognitionTokens = @($recognition.catalog, '--route', "csl=$cslModel", '--route', "libras=$librasModel", '--device', $recognitionDevice, '--port', [string]$recognition.port)
+$realtimeConfig = if ($recognition.realtime_config) { [string]$recognition.realtime_config } else { $null }
+if ($realtimeConfig) { $recognitionTokens += @('--realtime-config', $realtimeConfig) }
 $recognitionUrl = "http://127.0.0.1:$($recognition.port)"
-$productTokens = @($product.composition_config, $product.presentation, '--recognition-url', $recognitionUrl, '--port')
+$productTokens = @($product.composition_config, $product.presentation, '--recognition-url', $recognitionUrl, '--port', [string]$product.port)
+$demoCatalog = if ($product.demo_catalog) { [string]$product.demo_catalog } else { $null }
+if ($demoCatalog) { $productTokens += @('--demo-catalog', $demoCatalog) }
 if ($Action -in @('Stop', 'StopProduct', 'RestartProduct')) {
     $owner = Get-OwnedListener $product 'slbridge.animation.scene_cli' $productTokens
+    $recognitionActionOwner = $null
+    if ($Action -in @('Stop', 'RestartProduct')) {
+        # Validate every service affected by this action before stopping any.
+        $recognitionActionOwner = Get-OwnedListener $recognition 'slbridge.api_cli' $recognitionTokens
+    }
     if ($Action -eq 'RestartProduct' -and $owner) {
         $generation = @(Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -like '*generate_custom_signspark.py*' -and $_.Name -like 'python*' })
         if ($generation.Count) { throw 'A full animation generation is active; wait or cancel it before restarting.' }
@@ -85,23 +126,50 @@ if ($Action -in @('Stop', 'StopProduct', 'RestartProduct')) {
         exit 0
     }
     if ($Action -eq 'Stop') {
-        Stop-OwnedTree (Get-OwnedListener $recognition 'slbridge.api_cli' $recognitionTokens)
+        Stop-OwnedTree $recognitionActionOwner
         Write-Output 'Stopped only the matching local product and recognition services.'
         exit 0
     }
 }
-$recognitionArgs = @('-u', '-X', 'utf8', '-m', 'slbridge.api_cli', '--catalog', $recognition.catalog, '--route', 'csl=csl-tfnet', '--route', 'libras=libras-rf', '--device', 'cpu', '--intra-op-threads', '4', '--port', [string]$recognition.port)
+$recognitionArgs = @('-u', '-X', 'utf8', '-m', 'slbridge.api_cli', '--catalog', $recognition.catalog, '--route', "csl=$cslModel", '--route', "libras=$librasModel", '--device', $recognitionDevice, '--intra-op-threads', '4', '--port', [string]$recognition.port)
+if ($realtimeConfig) { $recognitionArgs += @('--realtime-config', $realtimeConfig) }
 $recognitionOwner = Start-ServiceProcess $recognition $recognitionArgs 'recognition' 'slbridge.api_cli' $recognitionTokens
 $productArgs = @('-u', '-X', 'utf8', '-m', 'slbridge.animation.scene_cli', '--archive', $product.archive, '--expected-sha256', $product.archive_sha256, '--presentation', $product.presentation, '--corpus', $product.corpus, '--composition-config', $product.composition_config, '--recognition-url', $recognitionUrl, '--port', [string]$product.port)
+if ($demoCatalog) { $productArgs += @('--demo-catalog', $demoCatalog) }
 $productOwner = Start-ServiceProcess $product $productArgs 'product' 'slbridge.animation.scene_cli' $productTokens
 $productUrl = "http://127.0.0.1:$($product.port)"
+if ($demoCatalog) {
+    $demos = Invoke-RestMethod "$productUrl/v1/communication/demos" -TimeoutSec 15
+    $expectedDemoHash = (Get-FileHash -LiteralPath $demoCatalog -Algorithm SHA256).Hash.ToLowerInvariant()
+    if (-not $demos.enabled -or $demos.catalog_sha256 -ne $expectedDemoHash) {
+        throw 'Demo catalog changed since startup; restart the matching product to apply it.'
+    }
+}
 $identity = Invoke-RestMethod "$productUrl/v1/animation/presentation" -TimeoutSec 15
 $library = Invoke-RestMethod "$productUrl/v1/animation/composition" -TimeoutSec 15
 if ($identity.avatar_sha256 -ne $product.avatar_sha256 -or $library.bundle_id -ne $product.bundle_id) {
     throw 'The running avatar or word library differs from the selected product profile.'
 }
 $status = Invoke-RestMethod "$productUrl/v1/communication/recognition" -TimeoutSec 15
-if (-not $status.ready) { throw 'The product is running but the recognition connection is not ready.' }
-@{ recognition_pid = $recognitionOwner.ProcessId; product_pid = $productOwner.ProcessId; url = "$productUrl/communicate/"; checked_at = (Get-Date).ToString('o') } | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $outputRoot 'runtime-state.json') -Encoding UTF8
+$chineseStatus = @($status.languages | Where-Object { $_.id -eq 'csl' })
+if (-not $status.ready -or $chineseStatus.Count -ne 1 -or -not $chineseStatus[0].ready) { throw 'The product is running but Chinese recognition is not ready.' }
+if ($realtimeConfig) {
+    $liveStatus = Invoke-RestMethod "$productUrl/v1/communication/realtime" -TimeoutSec 15
+    if (-not $liveStatus.enabled -or -not $liveStatus.ready -or $liveStatus.protocol -ne 'csl-realtime-v1') {
+        throw 'The configured realtime pipeline is not ready. See recognition logs.'
+    }
+    $expectedRealtimeHash = (Get-FileHash -LiteralPath $realtimeConfig -Algorithm SHA256).Hash.ToLowerInvariant()
+    $liveDefinition = Get-Content -LiteralPath $realtimeConfig -Raw -Encoding UTF8 | ConvertFrom-Json
+    $slrtConfigPath = [string]$liveDefinition.slrt_config_file
+    if (-not [IO.Path]::IsPathRooted($slrtConfigPath)) {
+        $slrtConfigPath = Join-Path (Split-Path -Parent $realtimeConfig) $slrtConfigPath
+    }
+    $expectedSlrtHash = (Get-FileHash -LiteralPath $slrtConfigPath -Algorithm SHA256).Hash.ToLowerInvariant()
+    if ($liveStatus.pipeline.realtime_config_sha256 -ne $expectedRealtimeHash -or
+        $liveStatus.pipeline.slrt_config_sha256 -ne $expectedSlrtHash) {
+        throw 'Realtime configuration changed since startup; restart the matching services to apply it.'
+    }
+}
+@{ recognition_pid = $recognitionOwner.ProcessId; product_pid = $productOwner.ProcessId; csl_model = $cslModel; recognition_device = $recognitionDevice; url = "$productUrl/communicate/"; checked_at = (Get-Date).ToString('o') } | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $outputRoot 'runtime-state.json') -Encoding UTF8
 Write-Output "Product: $productUrl/communicate/"
 Write-Output 'The text planner may still be warming up. Readiness appears in the page header.'

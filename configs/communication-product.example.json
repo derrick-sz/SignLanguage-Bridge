@@ -2,10 +2,15 @@
   "schema_version": 1,
   "output_root": "D:/SignLanguage-Bridge/artifacts/communication-product",
   "recognition": {
-    "python": "D:/SignLanguage-Bridge/.venv-gpu/Scripts/python.exe",
+    "python": "D:/SignLanguage-Bridge/.conda-env/python.exe",
     "workdir": "D:/SignLanguage-Bridge",
     "port": 8765,
-    "catalog": "D:/SignLanguage-Bridge/configs/communication-recognition.example.json"
+    "catalog": "D:/SignLanguage-Bridge/configs/communication-recognition.example.json",
+    "csl_model": "unisign_pose_stage1",
+    "libras_model": "libras-rf",
+    "device": "auto",
+    "startup_timeout_seconds": 180,
+    "realtime_config": null
   },
   "product": {
     "python": "D:/SignLanguage-Bridge/.venv-libras/Scripts/python.exe",
@@ -17,6 +22,7 @@
     "avatar_sha256": "535fc9ab96ec3d837e2568817abc41d593fac1c4fcad8565b45b29c5f4472f5e",
     "corpus": "D:/sign-assets/SOKE/full-library",
     "composition_config": "D:/SignLanguage-Bridge/configs/animation/word-composition.example.json",
-    "bundle_id": "REPLACE_WITH_YOUR_WORD_LIBRARY_MANIFEST_BUNDLE_ID"
+    "bundle_id": "REPLACE_WITH_YOUR_WORD_LIBRARY_MANIFEST_BUNDLE_ID",
+    "demo_catalog": null
   }
 }

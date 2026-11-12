@@ -1,3 +1,5 @@
+import {requireValidatedRealtimeTransfer} from './conversation-transfer.mjs';
+
 export class Conversation {
   constructor({now=()=>new Date().toISOString(),limit=200}={}){this.now=now;this.limit=limit;this.items=[];this.cleared=null;}
   get messages(){return structuredClone(this.items);}
@@ -14,6 +16,13 @@ export class Conversation {
       sign_language:result.sign_language,output_kind:result.output_kind,review_status:result.review_status,
       provenance:result.provenance,text_confirmed_by_user:true});
   }
+  confirmRealtime(payload){
+    const value=requireValidatedRealtimeTransfer(payload);
+    return this.append({id:value.id,direction:'received',text:value.text,original_text:value.original_text,
+      sign_language:'csl',output_kind:'text',review_status:'unverified',text_confirmed_by_user:true,
+      provenance:{kind:'realtime',caption_id:value.caption_id,revision:value.revision,source:value.source,
+        word_evidence:value.word_evidence,review_hint:value.review_hint}});
+  }
   addReply(text,id){return this.append({id:'reply:'+id,direction:'sent',text,original_text:text,sign_language:'csl',review_status:'unverified'});}
   clear(){this.cleared=this.items;this.items=[];}
   undoClear(){if(!this.cleared||this.items.length)return false;this.items=this.cleared;this.cleared=null;return true;}
@@ -23,9 +32,11 @@ export class Conversation {
 export function readableTranscript(data){
   const lines=['手语桥 · 本次对话',''];
   for(const message of data.messages){
-    const who=message.direction==='sent'?'我':'对方的手语（'+(message.sign_language==='libras'?'Libras':'中国手语')+'）';
+    const source=message.provenance?.source?.kind;
+    const who=message.direction==='sent'?'我':(source==='diagnostic_replay'?'问题回放的手语（':source==='training_replay'?'训练示范的手语（':'对方的手语（')+(message.sign_language==='libras'?'Libras':'中国手语')+'）';
     lines.push(who+'  '+new Date(message.created_at).toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'}));
     lines.push(...message.text.split(/\r?\n/).map(line=>'  '+line));
+    if(message.provenance?.kind==='realtime')lines.push('  来源：'+message.provenance.source.label,'  文字已由使用者核对。');
     if(message.direction==='received'&&message.original_text!==message.text)lines.push('  识别原文：'+message.original_text,'  上方文字经过使用者核对修改。');
     lines.push('');
   }

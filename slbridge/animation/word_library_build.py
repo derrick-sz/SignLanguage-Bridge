@@ -116,21 +116,52 @@ def _native_streams(blob):
     return body[:, 66:], left[:, :90], right[:, :90], face
 
 
+def is_complete_expression(unit):
+    """Validate the explicit whole-take marker without interpreting captions."""
+    marker = unit.get('complete_expression', False)
+    if type(marker) is not bool:
+        raise ValueError('Invalid complete expression marker')
+    if not marker:
+        return False
+    source, frames = unit.get('source'), unit.get('frames')
+    if not isinstance(source, dict) or type(frames) is not int or not 1 <= frames <= 180:
+        raise ValueError('Invalid complete expression length or source')
+    span, digest = source.get('annotation_frame_range'), source.get('native_blob_sha256')
+    if (source.get('start') != 0 or source.get('end') != frames
+            or type(source.get('source_label_count')) is not int or source['source_label_count'] != 1
+            or not isinstance(span, list) or len(span) != 2
+            or any(type(value) is not int for value in span) or not 0 <= span[0] < span[1] <= frames
+            or not isinstance(digest, str) or not re.fullmatch(r'[0-9a-f]{64}', digest)):
+        raise ValueError('Incomplete complete-expression source binding')
+    return True
+
+
 def build_word_library(lmdb_path, annotations, base_archive, output, *,
-                       expected_lmdb_sha256, expected_annotations_sha256, max_candidates=3, split='train'):
+                       expected_lmdb_sha256, expected_annotations_sha256, max_candidates=3, split='train',
+                       standalone_only=False, labels=None):
     """Authenticate paired sources then export at most eight native spans per label.
 
     ISO frame ranges are used only against their paired LMDB, never against
     SOKE fittings. Invalid annotations or individual clips are counted and
     isolated; a source-identity mismatch fails before creating the output.
+    standalone_only exports the entire native take only when its full source
+    annotation contains exactly one gloss, before any requested-label filter.
+    This is a source-completeness marker, not human language approval.
     """
     output, database, annotations = Path(output), Path(lmdb_path), Path(annotations)
     if output.exists():
         raise ValueError('Use a new output directory; existing output is preserved')
     if type(max_candidates) is not int or not 1 <= max_candidates <= 8:
         raise ValueError('Use one to eight candidates per label')
+    if type(standalone_only) is not bool:
+        raise ValueError('standalone_only must be a boolean')
+    if labels is not None and (not isinstance(labels, (list, tuple)) or not 1 <= len(labels) <= 32
+                               or any(not isinstance(label, str) or not label.strip() for label in labels)):
+        raise ValueError('Use one to 32 explicit labels')
     if split not in SOURCE_IDENTITIES:
         raise ValueError('Use an explicit train, dev or test source split')
+    if standalone_only and split != 'train':
+        raise ValueError('Standalone expressions require authenticated train sources')
     pair = (expected_lmdb_sha256, expected_annotations_sha256)
     known_splits = [name for name, hashes in SOURCE_IDENTITIES.items() if pair == hashes]
     if known_splits and known_splits != [split]:
@@ -153,19 +184,35 @@ def build_word_library(lmdb_path, annotations, base_archive, output, *,
               'dataset_revision': DATASET_REVISION if official else None,
               'annotations_repo': 'LionelLow/SignSparK_Retrieval' if official else None,
               'annotations_revision': ANNOTATIONS_REVISION if official else None}
+    if standalone_only:
+        source['selection_scope'] = 'whole-single-gloss-utterance-v1'
     groups, seen = defaultdict(list), set()
+    video_counts, invalid_videos = Counter(), set()
     excluded = 0
     for raw in entries:
         value = _entry(raw)
         if value is None:
             excluded += 1
+            if isinstance(raw, dict) and isinstance(raw.get('video_file'), str):
+                invalid_videos.add(raw['video_file'])
             continue
         identity = (value['label'], value['video_file'], value['start'], value['end'])
         if identity in seen:
             excluded += 1
             continue
         seen.add(identity)
+        video_counts[value['video_file']] += 1
         groups[value['label']].append(value)
+    # Count every source annotation before applying a requested-label filter.
+    # Otherwise filtering for "thanks" could hide "doctor" in the same take.
+    if standalone_only:
+        groups = {label: [value for value in values if video_counts[value['video_file']] == 1
+                         and value['video_file'] not in invalid_videos]
+                  for label, values in groups.items()}
+    groups = {label: values for label, values in groups.items()
+              if values and (labels is None or label in labels)}
+    if not groups:
+        raise ValueError('No valid native word sources match the selection')
     import lmdb
     env = lmdb.open(str(database), subdir=database.is_dir(), readonly=True, lock=False,
                     readahead=False, meminit=False, max_readers=1)
@@ -188,6 +235,10 @@ def build_word_library(lmdb_path, annotations, base_archive, output, *,
                         start, end = value['start'], value['end']
                         if end > len(streams[0]):
                             raise ValueError('Annotation range exceeds native LMDB frames')
+                        if standalone_only:
+                            start, end = 0, len(streams[0])
+                            if end > 180:
+                                raise ValueError('Standalone native take exceeds 180 frames')
                         motion = decode_signspark_streams(*(v[start:end] for v in streams),
                                                           left_hand_convention='smplx-left')
                         with np.errstate(over='ignore', invalid='ignore'):
@@ -206,8 +257,13 @@ def build_word_library(lmdb_path, annotations, base_archive, output, *,
                     np.savez_compressed(output/relative, poses=poses, expression=expression)
                     units.append({'id': identity, 'label': label, 'path': relative,
                                   'sha256': _digest(output/relative), 'frames': end-start, 'fps': 30,
-                                  'source': {key: value[key] for key in ('video_file', 'start', 'end')}
-                                            | {'split': split}})
+                                  'source': {'video_file': value['video_file'], 'start': start, 'end': end,
+                                             'split': split}})
+                    if standalone_only:
+                        units[-1]['complete_expression'] = True
+                        units[-1]['source'].update(annotation_frame_range=[value['start'], value['end']],
+                                                   source_label_count=1,
+                                                   native_blob_sha256=hashlib.sha256(blob).hexdigest())
                     count += 1
                     if count == max_candidates:
                         break
@@ -230,5 +286,7 @@ def build_word_library(lmdb_path, annotations, base_archive, output, *,
                                'labels': len({u['label'] for u in units}), 'units': len(units),
                                'failed_candidates': failed, 'failure_reasons': dict(reasons),
                                'labels_without_valid_units': failed_labels}}
+    if standalone_only:
+        manifest['standalone_expressions'] = True
     (output/'manifest.json').write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding='utf-8')
     return manifest

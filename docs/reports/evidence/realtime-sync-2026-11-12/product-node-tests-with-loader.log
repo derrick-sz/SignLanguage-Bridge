@@ -1,0 +1,268 @@
+✔ split comparison preserves both panes and stacks them on a narrow stage (1.5279ms)
+✔ camera includes off-center hands extending toward the viewer (0.2138ms)
+✔ a late search page cannot overwrite newer corpus results (2.0939ms)
+✔ paging does not discard the selected sample and playback binds its derived SHA (1.9705ms)
+✔ Stop rejects a late corpus motion and mismatched motion responses never play (2.7597ms)
+(node:12560) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/ADMIN/.codex/worktrees/csl-animation-workspace/SignLanguage-Bridge/slbridge/animation/web/rig.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\ADMIN\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ equal under-unit imported resting keys are component-exact at every tested fraction (2.6603ms)
+✔ separate equal nonunit input keys preserve exact components and source objects (0.4847ms)
+✔ changing and antipodal nonunit keys preserve exact endpoints and normalized intermediate behavior (0.4609ms)
+✔ missing facial data stays neutral instead of deriving an emotion from text (1.5305ms)
+✔ expression sampling is deterministic on forward and backward seeks (0.2486ms)
+✔ untrusted face tracks cannot apply NaN, unknown channels or excessive intensities (0.2143ms)
+✔ rig profiles reject invalid bindings and large axis corrections (0.2541ms)
+✔ free text requests composition once and current verified result automatically plays (1.655ms)
+✔ invalid text never requests and blocks previous playback (0.148ms)
+✔ multiline original input is retained while verified normalized caption is used (0.1769ms)
+✔ missing words block the whole result and expose gaps without loading or partial playback (0.1474ms)
+✔ blocked response containing motion is rejected instead of playing it (0.1618ms)
+✔ omitted meaning needs review without motion and cannot replay a previous successful result (0.2283ms)
+✔ review response with motion or malformed omitted terms is rejected rather than partially played (0.2493ms)
+✔ late review response cannot replace a newer complete composition (0.1873ms)
+✔ editing or switching mode during request aborts and ignores late HTTP result (0.1333ms)
+✔ cancel during loading invalidates the stage guard and cannot publish or play late (0.3092ms)
+✔ stop during loading prevents late autoplay while completed stop preserves replay (0.1932ms)
+✔ late older errors cannot overwrite newer successful state (0.1319ms)
+✔ invalid identities, provenance, captions and glosses never reach stage (0.1753ms)
+✔ HTTP and unreadable responses remain actionable without stale subtitle (0.4278ms)
+✔ newer preview wins when an older stage load finishes last (0.3774ms)
+✔ free text posts directly, polls actual state, loads verified caption, explicit play (1.4666ms)
+✔ invalid input and unsupported duration never submit (0.2078ms)
+✔ multiline text is sent unchanged and server normalized text is checked (0.1519ms)
+✔ editing during submit cancels late assigned job without waiting (0.1713ms)
+✔ cancel invalidates pending polling and ignores late completion (0.2073ms)
+✔ older stage load cannot publish ready or play after new input (0.2162ms)
+✔ old errors and cancellation responses cannot overwrite newer state (0.2494ms)
+✔ failed server jobs and caption mismatch never load or play (0.1648ms)
+✔ HTTP errors remain readable (0.2055ms)
+✔ stopping completed playback preserves result for replay without generating again (0.2191ms)
+✔ source FK rotates child positions around their actual parent and leaves source intact (0.7419ms)
+✔ source FK rejects forward parents and non-finite rotations instead of corrupting a track (0.1886ms)
+✔ two-bone IK reaches an attainable goal and preserves both segment lengths and bend side (0.1742ms)
+✔ unreachable and coincident goals remain finite without stretching bones (0.1227ms)
+✔ gesture profile keeps raw mode and explicitly selects the refined source for rotations and FK (1.8055ms)
+✔ refined source rejects incomplete, nonfinite or wrong-profile data (0.3201ms)
+(node:30808) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/ADMIN/.codex/worktrees/csl-animation-workspace/SignLanguage-Bridge/slbridge/animation/web/rig.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\ADMIN\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ v11 enables only its SHA-bound manual driver and cannot activate the legacy automatic calibration (2.596ms)
+✔ v11 manual mouth remains deterministic through 101 levels, repeats, backward seeks and reset (5.007ms)
+✔ matching names or rig profile alone never enable v11 manual controls (1.0762ms)
+✔ v11 cannot reuse or relabel legacy source-target nonmanual candidates (0.1317ms)
+(node:32020) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/ADMIN/.codex/worktrees/csl-animation-workspace/SignLanguage-Bridge/slbridge/animation/web/rig.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\ADMIN\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+﹣ frozen v11 GLB opens its real lower mouth, fixes the upper mouth and restores every bone (0.3724ms) # SKIP
+(node:9712) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/ADMIN/.codex/worktrees/csl-animation-workspace/SignLanguage-Bridge/slbridge/animation/web/rig.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\ADMIN\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ frozen v12 activates coordinated manual mouth only and never automatic jaw (2.9674ms)
+✔ v12 101 levels, backward samples and both resets restore the authored neutral baseline (5.0355ms)
+✔ v12 with invalid profile or mouth hierarchy stays closed instead of unsafe jaw-only fallback (1.0946ms)
+✔ unknown bytes and legacy identity cannot gain the frozen manual driver (0.6296ms)
+✔ v12 cannot relabel the legacy automatic candidate (0.1524ms)
+✔ stage playback keeps frozen v12 automatic jaw unavailable and reports only manual opening (2.1502ms)
+(node:55584) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/ADMIN/.codex/worktrees/csl-animation-workspace/SignLanguage-Bridge/slbridge/animation/web/rig.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\ADMIN\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+﹣ frozen v12 real loader and skinned geometry remain stable through 101 manual mouth levels and neutral reset (0.381ms) # set ANIMATION_THREE_MODULE, ANIMATION_GLTF_LOADER and ANIMATION_V12_AVATAR_GLB
+(node:49388) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/ADMIN/.codex/worktrees/csl-animation-workspace/SignLanguage-Bridge/slbridge/animation/web/rig.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\ADMIN\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ frozen v13 activates coordinated manual mouth only and never automatic jaw (2.8924ms)
+✔ v13 101 levels, backward samples and both resets restore the authored neutral baseline (5.705ms)
+✔ v13 with invalid profile or mouth hierarchy stays closed instead of unsafe jaw-only fallback (1.1468ms)
+✔ unknown bytes and legacy identity cannot gain the frozen manual driver (0.6942ms)
+✔ v13 cannot relabel the legacy automatic candidate (0.15ms)
+✔ stage playback keeps frozen v13 automatic jaw unavailable and reports only manual opening (2.3741ms)
+(node:15388) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/ADMIN/.codex/worktrees/csl-animation-workspace/SignLanguage-Bridge/slbridge/animation/web/rig.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\ADMIN\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+﹣ frozen v13 real loader and skinned geometry remain stable through 101 manual mouth levels and neutral reset (0.403ms) # set ANIMATION_THREE_MODULE, ANIMATION_GLTF_LOADER and ANIMATION_V13_AVATAR_GLB
+(node:43020) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/ADMIN/.codex/worktrees/csl-animation-workspace/SignLanguage-Bridge/slbridge/animation/web/rig.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\ADMIN\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ frozen v14a activates coordinated manual mouth only and never automatic jaw (2.7879ms)
+✔ v14a 101 levels, backward samples and both resets restore the authored neutral baseline (5.4609ms)
+✔ v14a with invalid profile or mouth hierarchy stays closed instead of unsafe jaw-only fallback (1.4396ms)
+✔ unknown bytes and legacy identity cannot gain the frozen manual driver (0.5883ms)
+✔ v14a cannot relabel the legacy automatic candidate (0.1586ms)
+✔ stage playback keeps frozen v14a automatic jaw unavailable and reports only manual opening (2.231ms)
+(node:46024) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/ADMIN/.codex/worktrees/csl-animation-workspace/SignLanguage-Bridge/slbridge/animation/web/rig.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\ADMIN\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+﹣ frozen v14a real loader and skinned geometry remain stable through 101 manual mouth levels and neutral reset (0.3793ms) # set ANIMATION_THREE_MODULE, ANIMATION_GLTF_LOADER and ANIMATION_V14A_AVATAR_GLB
+(node:33664) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/ADMIN/.codex/worktrees/csl-animation-workspace/SignLanguage-Bridge/slbridge/animation/web/rig.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\ADMIN\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+﹣ display repair preserves all finger joint rotations under quaternion-temporal-adaptive-v1 (0.4792ms) # configure deployed Three.js, v14A and a real source motion
+﹣ display repair preserves all finger joint rotations under source-quaternion-temporal-v1 (0.0672ms) # configure deployed Three.js, v14A and a real source motion
+﹣ display repair preserves all finger joint rotations under soke-gesture-refinement-v1 (0.0459ms) # configure deployed Three.js, v14A and a real source motion
+﹣ v14A hospital motion clears deep head penetration while retaining its source handshape (0.0675ms) # configure deployed Three.js, v14A and a real source motion
+﹣ body clearance enters gradually rather than adding a one-frame wrist pop (0.0573ms) # configure deployed Three.js, v14A and a real source motion
+(node:39100) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/ADMIN/.codex/worktrees/csl-animation-workspace/SignLanguage-Bridge/slbridge/animation/web/rig.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\ADMIN\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ nonunit answer002 hand keys interpolate instead of freezing when the dot exceeds one (1.8662ms)
+✔ negative encoding takes the same shortest arc without mutating either source (1.0548ms)
+✔ nominal integer time with floating-point residue reaches the intended key (0.4165ms)
+✔ authored endpoints and missing-bone resting samples remain component-exact (0.4275ms)
+✔ identical nonunit keys retain exact values rather than modifying a resting pose (0.3549ms)
+✔ unit keys and backward seeks preserve ordinary shortest-arc rotations (0.5108ms)
+✔ jaw candidate follows measured positive X opening without mutating source poses (1.3336ms)
+✔ automatic jaw requires explicit calibrated source and avatar identities and no baked export (0.1993ms)
+✔ source spikes cannot make the mouth jump; amplitude and speed remain bounded on seeks (0.7549ms)
+(node:37020) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/ADMIN/.codex/worktrees/csl-animation-workspace/SignLanguage-Bridge/slbridge/animation/web/rig.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\ADMIN\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+﹣ calibrated real jaw opens downward with its sibling lower lip and resets without drift (0.4204ms) # SKIP
+✔ automatic jaw starts only for explicit clips; manual override, brows, reset and toggles preserve time (1.691ms)
+✔ cancelled initialization cannot restore a pending jaw track after Stop (0.2233ms)
+✔ manual v11 summary records its own bounded angle while automatic source jaw stays unavailable (0.2925ms)
+✔ brow/eyelid inputs never synthesize a manual jaw override; reset releases it (1.8684ms)
+✔ pause, speed changes and seeking preserve the same timeline (1.3644ms)
+✔ completion, replay and stop have explicit behavior (0.2216ms)
+✔ edit, stop and superseding identical plays invalidate late callbacks (0.12ms)
+✔ camera fitting retains raised hands and wide signing space at narrow aspect (0.1434ms)
+✔ input change aborts old plan; ignored abort response never plays (0.8011ms)
+✔ stop while motion loads prevents late playback and old failure notices (1.6361ms)
+✔ newer preview wins when old stage load finishes (1.0791ms)
+✔ missing segment blocks entire preview and retains exact source text (0.2374ms)
+✔ confirmation required and append uses newline with six sentence bound (0.5261ms)
+✔ explicit preview sends both confirmations and plays only after guarded motion load (0.7057ms)
+✔ overlong input is rejected before any network request (0.1834ms)
+✔ browser fetch keeps its global receiver (0.1206ms)
+✔ source filtering reduces a one-frame finger impulse before kinematic targets are computed (5.2823ms)
+✔ centered filtering retains sustained fast rotation and long held handshapes (4.1435ms)
+✔ source filtering follows the shortest arc across equivalent axis-angle encodings (0.519ms)
+✔ source repair bounds a large correction and validates complete pose frames (1.5662ms)
+✔ scrubbing and pausing publish a rendered frame even when RAF is throttled (0.9073ms)
+✔ controls remain actionable while avatar initialization has not completed (0.2724ms)
+✔ source temporal repair belongs to its declared clip and is recorded in the review (1.0251ms)
+(node:4804) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/ADMIN/.codex/worktrees/csl-animation-workspace/SignLanguage-Bridge/slbridge/animation/web/rig.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\ADMIN\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+﹣ daughter homework clearance does not add an abrupt wrist-offset transition (0.5117ms) # configure deployed Three.js, frozen v14A and real word motion files
+﹣ drug allergy clearance does not add an abrupt wrist-offset transition (0.0735ms) # configure deployed Three.js, frozen v14A and real word motion files
+﹣ watermelon motion clears the remaining head overlap within existing translation and bounded wrist rotation (0.0507ms) # configure deployed Three.js, frozen v14A and real word motion files
+﹣ watermelon playback remains outside the independently measured head core at sub-frame samples (0.0447ms) # configure deployed Three.js, frozen v14A and real word motion files
+﹣ the calibrated contact track rejects different source identity, timing and repair configuration (0.0559ms) # configure deployed Three.js, frozen v14A and real word motion files
+✔ Stop remains actionable while plan is pending and rejects its late response (1.9968ms)
+✔ Stop remains actionable during motion fetch and rejects the late motion (2.9144ms)
+✔ Editing input invalidates a late plan independently of transport abort (0.8981ms)
+✔ Scrubbing keeps requested time when pausing publishes the current frame (0.7361ms)
+✔ Editing a recognition preserves raw evidence; a new catalog origin clears it (0.5414ms)
+✔ verified presentation attribution is shown as plain text and can be cleared (0.713ms)
+✔ recognition becomes a conversation turn only after explicit text confirmation (1.6722ms)
+✔ replay/ready notifications do not duplicate replies, and export preserves both directions (0.6463ms)
+✔ cancel and source/language changes reject a late recognition result (0.5656ms)
+✔ a response for another request or sign language never becomes editable text (0.2558ms)
+✔ raw video transport sends only the selected file and declared language (0.2126ms)
+✔ a camera permission result arriving after close releases every track (0.2154ms)
+✔ closing during recording discards its output and stops the owned camera (0.4307ms)
+✔ an old recorder stop callback cannot clear a new recorder time limit or tracks (0.2434ms)
+✔ export is a readable dialogue and identifies human edits (10.7162ms)
+✔ recorder construction and startup failures release owned camera tracks (0.2671ms)
+✔ actual app receives reviewed text without overwriting a draft or starting generation (18.7798ms)
+✔ normal app visits do not attach a cross-window receiver (2.5979ms)
+✔ confirmed captions have stable content IDs and keep bounded raw evidence without target annotations (6.6038ms)
+✔ unconfirmed, empty, incompatible and oversized payloads are refused (0.8963ms)
+✔ conversation accepts only locally validated transfers and keeps confirmation distinct from model review (10.9969ms)
+✔ the handshake imports once, reuses its dialogue window and preserves edited revisions (2.2642ms)
+✔ a timed-out transfer preserves the open dialogue window and its draft for retry (16.052ms)
+✔ wrong origin, window or nonce cannot make an unacknowledged transfer succeed (14.943ms)
+✔ an acknowledgement requires a sent payload and the matching content ID (16.0596ms)
+✔ receiver refuses unrelated peers and expired, cancelled or disposed transfers (1.2636ms)
+✔ UTF-8 size bounds and immutable validation also cover multibyte evidence (0.8353ms)
+✔ a blocked or closed popup has a recoverable failure (1.2394ms)
+✔ receiver validates peers and abandons an older nonce during asynchronous validation (0.3904ms)
+✔ leaving the realtime page cancels a pending handshake without a late acknowledgement (11.7678ms)
+(node:53896) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/ADMIN/.codex/worktrees/csl-animation-workspace/SignLanguage-Bridge/slbridge/animation/web/communication/meeting-app.js?scenario=0.5867841727271234 is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\ADMIN\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ reselection cancels a pending playback start without allowing its continuation to resume capture (8.7906ms)
+✔ a pending playback start cannot resume capture after the page becomes hidden (2.799ms)
+✔ a previous HTTP completion during final recorder shutdown cannot discard the final subtitle (7.2147ms)
+✔ closing a pending screen chooser releases a late stream without enabling audio (1.2292ms)
+✔ stopping shared video closes its owned stream (0.2702ms)
+✔ pause segmentation waits for real activity while fixed windows and manual finishing remain explicit (1.0485ms)
+✔ each timed segment is a complete independent video and pause discards unfinished encoding (2.0578ms)
+✔ changed video dimensions pause capture and require selection confirmation (0.2109ms)
+✔ a stalled frame loop cannot record unbounded video in the background (0.296ms)
+✔ default browser timers retain their Window receiver for screen and camera recordings (0.4647ms)
+✔ manual segmentation releases its canvas track when the next recorder fails to start (0.2859ms)
+✔ a letterboxed 16:9 meeting frame maps a reverse drag to real source pixels (1.7809ms)
+✔ dragging from blank bars or selecting a tiny patch cannot create a crop (0.1565ms)
+✔ crop bounds reject invalid numbers and encoding stays within an even video size (0.2262ms)
+✔ separate segments with the same recognized sentence stay separate and retain raw results (3.6079ms)
+✔ paused or replaced sources cannot publish a late model response (1.0974ms)
+✔ slow inference has a bounded visible queue and empty results are not captions (1.3242ms)
+✔ video completion drains a final delayed blob before stopping the caption session (0.6734ms)
+✔ page start forwards the current assistance opt-in (3.7395ms)
+✔ the real resize callback hides selection through a zero-size layout and restores it (2.0942ms)
+✔ demo starts at zero and a late old playback cannot cancel a newer file source (2.7278ms)
+✔ capture reads the current first frame without depending on an animation callback (2.9228ms)
+✔ stalled animation callbacks fail clearly instead of fabricating repeated frames (0.639ms)
+✔ EOF cannot wait forever when image encoding never calls back (0.4776ms)
+✔ cancelled drain resolves and an old callback cannot release a newer encoding (0.453ms)
+✔ an unavailable canvas reports a retry error without escaping the frame callback (0.2481ms)
+✔ a stopped encoder cannot send a late frame (0.3483ms)
+✔ missed sampling slots are explicit instead of renumbered (0.7373ms)
+✔ wide source is fitted into a square without stretching (0.1492ms)
+✔ natural end delivers an encoding frame before requesting sentence flush (0.1672ms)
+✔ capture reports encoding and skipped slots without renumbering or late-source metrics (0.6793ms)
+✔ EOF and stop publish the final current-session metrics before invalidation (0.2684ms)
+✔ an empty native summary ends with a retry message rather than successful translation (1.7395ms)
+✔ frame counts distinguish processed input without recognized text from empty input (0.3899ms)
+✔ disconnect before the first ACK still publishes the final sent-frame count (0.222ms)
+✔ successful finish retains only the current caption until an explicit new attempt (0.3283ms)
+✔ new attempts and cancellation hide the previous main caption while preserving reviewed history (1.4097ms)
+✔ live words update before any sentence and remain distinct from Chinese (0.3237ms)
+✔ stopped source cannot publish late words or overwrite a newer session (0.2652ms)
+✔ different sentences survive and LLM advice cannot replace an edited original (0.413ms)
+✔ outbound congestion fails visibly instead of renumbering dropped frames (0.2251ms)
+✔ advice can arrive after native finish and annotates its own sentence only (3.679ms)
+✔ a new source rejects late advice and invalid job IDs never become URLs (0.6343ms)
+✔ deferred previous sentence and a rejected next sentence preserve earlier history (0.2355ms)
+✔ frame acknowledgements update latency without repainting words and history (0.5083ms)
+✔ first-word total includes service preparation and capture startup (0.1956ms)
+✔ explicit completion drains final words and sentence without accepting more frames (0.2232ms)
+✔ each caption keeps its own bounded word evidence while the next utterance is running (0.5724ms)
+✔ manual confirmation is preserved against late native revisions and advice (0.1777ms)
+✔ malformed evidence cannot create a one-word review action (0.1238ms)
+✔ manual use of word evidence updates the visible sentence and retains the machine original (0.1202ms)
+✔ a revised machine sentence removes old advice and aborts its old-revision polling (1.7991ms)
+✔ a committed revision cannot be rewritten without increasing its revision (0.2125ms)
+✔ rejecting a native revision preserves the original advice task for a confirmed caption (1.0906ms)
+✔ source provenance stays local and each caption retains the source of its own session (0.3392ms)
+✔ only fixed same-origin train media become selectable demos (1.6057ms)
+✔ duplicate and oversized catalogs are rejected as a whole (0.1554ms)
+✔ real page uses the current attempt while reviewed older captions remain in history (6.9985ms)
+✔ actual EOF handler and zero-frame native events leave a clear retry state (1.7026ms)
+✔ a synchronous first-frame error cannot be overwritten by the start continuation (1.5014ms)
+✔ native error during a real pending EOF drain is not replaced by the later watchdog (1.847ms)
+✔ real realtime handlers require paused confirmed captions and transfer the latest text only once at a time (2.3084ms)
+ℹ tests 204
+ℹ suites 0
+ℹ pass 189
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 15
+ℹ todo 0
+ℹ duration_ms 1176.5464

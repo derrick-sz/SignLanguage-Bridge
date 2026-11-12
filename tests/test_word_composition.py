@@ -53,6 +53,105 @@ def test_real_word_sources_preserved_and_nearer_context_candidate_selected(word_
     assert motion['sha256'] == digest
 
 
+@pytest.fixture
+def standalone_bundle(tmp_path,word_bundle):
+    from copy import deepcopy
+    root=tmp_path/'standalone';root.mkdir()
+    manifest=deepcopy(word_bundle[1])
+    pose=np.zeros((30,55,3),dtype=np.float32);pose[:,52,0]=np.linspace(0,.6,30)
+    path=root/'thanks.npz';np.savez_compressed(path,poses=pose,expression=np.zeros((30,50),dtype=np.float32))
+    manifest.update(bundle_id='standalone-thanks',standalone_expressions=True)
+    manifest['source']['selection_scope']='whole-single-gloss-utterance-v1'
+    manifest['units']=[{'id':'native-thanks','label':'谢谢','path':path.name,'complete_expression':True,
+                        'sha256':hashlib.sha256(path.read_bytes()).hexdigest(),'frames':30,'fps':30,
+                        'source':{'video_file':'single-thanks','start':0,'end':30,'split':'train',
+                                  'annotation_frame_range':[4,17],'source_label_count':1,'native_blob_sha256':'d'*64}}]
+    (root/'manifest.json').write_text(json.dumps(manifest),encoding='utf-8')
+    return root,manifest,pose
+
+
+def test_complete_word_source_is_preferred_inside_a_sentence_without_changing_glosses(word_bundle,standalone_bundle):
+    from copy import deepcopy
+    import shutil
+    from slbridge.animation.word_composition import WordLibrary
+    root,manifest=word_bundle
+    short=deepcopy(manifest['units'][0]);short.update(id='thanks-fragment',label='谢谢')
+    whole=deepcopy(standalone_bundle[1]['units'][0])
+    shutil.copyfile(standalone_bundle[0]/whole['path'],root/whole['path'])
+    manifest['units'].extend([short,whole]);(root/'manifest.json').write_text(json.dumps(manifest),encoding='utf-8')
+    result=WordLibrary(root).compose('我谢谢我',['我','谢谢','我'])
+    assert result['glosses']==['我','谢谢','我']
+    item=result['motion']['clip']['composition']['items'][1]
+    assert item['unit_id']=='native-thanks' and item['selection_kind']=='whole_native_expression'
+    start,end=item['output_frame_range'];assert end-start==30
+    np.testing.assert_array_equal(np.array(result['motion']['clip']['poses'])[start:end],standalone_bundle[2])
+
+
+def test_exact_thanks_uses_complete_native_expression_without_word_planning(word_bundle,standalone_bundle):
+    from slbridge.animation.word_composition import WordLibrary,CompositionService
+    class Planner:
+        def plan(self,text):raise AssertionError('an exact complete expression does not need a lossy gloss plan')
+        def status(self):return {'state':'ready'}
+    service=CompositionService(WordLibrary(word_bundle[0]),Planner(),standalone_library=WordLibrary(standalone_bundle[0]))
+    for text in ['谢谢','谢谢。','  谢谢！  ']:
+        result=service.compose(text)
+        assert result['status']=='ready' and result['selection_mode']=='exact_native_utterance'
+        clip=result['motion']['clip'];assert clip['frames']==30 and clip['fps']==30
+        np.testing.assert_array_equal(np.array(clip['poses']),standalone_bundle[2])
+        assert clip['composition']['items'][0]['source_frame_range']==[0,30]
+        assert clip['human_approved'] is False and clip['language_review']=='NOT_RUN'
+        assert result['model_identity'] is None
+    assert service.status()['standalone_expressions']['bundle_id']=='standalone-thanks'
+
+
+@pytest.mark.parametrize('text',['谢谢你','谢谢，谢谢','谢谢医生。'])
+def test_standalone_lookup_is_exact_and_never_overrides_a_larger_sentence(word_bundle,standalone_bundle,text):
+    from slbridge.animation.word_composition import WordLibrary,CompositionService
+    calls=[]
+    class Planner:
+        def plan(self,value):calls.append(value);return {'glosses':['谢谢','你']}
+    service=CompositionService(WordLibrary(word_bundle[0]),Planner(),standalone_library=WordLibrary(standalone_bundle[0]))
+    result=service.compose(text)
+    assert calls==[text] and result['status']=='blocked' and 'motion' not in result
+    assert result['glosses']==['谢谢','你']
+
+
+def test_context_word_library_cannot_be_misconfigured_as_complete_expressions(word_bundle):
+    from slbridge.animation.word_composition import WordLibrary,CompositionService
+    with pytest.raises(ValueError,match='standalone'):
+        CompositionService(WordLibrary(word_bundle[0]),object(),standalone_library=WordLibrary(word_bundle[0]))
+
+
+def test_changed_complete_expression_fails_closed_instead_of_reusing_bad_word_fragment(word_bundle,standalone_bundle):
+    from slbridge.animation.word_composition import WordLibrary,CompositionService,WordLibraryError
+    service=CompositionService(WordLibrary(word_bundle[0]),object(),standalone_library=WordLibrary(standalone_bundle[0]))
+    service.compose('谢谢')
+    (standalone_bundle[0]/'thanks.npz').write_bytes(b'changed')
+    with pytest.raises(WordLibraryError):service.compose('谢谢')
+
+
+@pytest.mark.parametrize('fault',['multiple_labels','partial_range','annotation_outside','missing_blob','marker_string','missing_marker'])
+def test_complete_source_metadata_cannot_misrepresent_a_context_fragment(standalone_bundle,fault):
+    from slbridge.animation.word_composition import WordLibrary,WordLibraryError
+    root,manifest,_=standalone_bundle;unit=manifest['units'][0]
+    if fault=='multiple_labels':unit['source']['source_label_count']=2
+    elif fault=='partial_range':unit['source'].update(start=4,end=34)
+    elif fault=='annotation_outside':unit['source']['annotation_frame_range']=[4,31]
+    elif fault=='missing_blob':unit['source'].pop('native_blob_sha256')
+    elif fault=='marker_string':unit['complete_expression']='true'
+    elif fault=='missing_marker':unit.pop('complete_expression')
+    (root/'manifest.json').write_text(json.dumps(manifest),encoding='utf-8')
+    with pytest.raises(WordLibraryError):WordLibrary(root)
+
+
+def test_standalone_sources_with_a_different_skeleton_are_rejected(word_bundle,standalone_bundle):
+    from slbridge.animation.word_composition import WordLibrary,CompositionService
+    root,manifest,_=standalone_bundle;manifest['skeleton']['restJoints'][20]=[.1,0,0]
+    (root/'manifest.json').write_text(json.dumps(manifest),encoding='utf-8')
+    with pytest.raises(ValueError,match='skeleton'):
+        CompositionService(WordLibrary(word_bundle[0]),object(),standalone_library=WordLibrary(root))
+
+
 def test_missing_word_blocks_entire_sentence_and_never_changes_gloss(word_bundle):
     from slbridge.animation.word_composition import WordLibrary
     result = WordLibrary(word_bundle[0]).compose('我不去医院。', ['我', '不', '去', '医院'])

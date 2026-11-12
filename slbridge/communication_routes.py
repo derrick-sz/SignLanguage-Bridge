@@ -10,13 +10,20 @@ from starlette.requests import ClientDisconnect
 from .communication import RecognitionBusy, RecognitionContractChanged, RecognitionUnavailable, VideoInputError
 
 _WEB = Path(__file__).with_name('animation')/'web'/'communication'
-_STATIC = {'index.html', 'app.js', 'product.css', 'conversation.mjs', 'recognition-controller.mjs', 'capture.mjs'}
+_STATIC = {'index.html', 'assist.html', 'meeting.html', 'app.js', 'product.css', 'conversation.mjs', 'recognition-controller.mjs', 'capture.mjs',
+           'meeting-app.js', 'meeting.css', 'selection.mjs', 'screen-capture.mjs', 'caption-session.mjs',
+           'realtime.html', 'realtime.css', 'realtime-app.mjs', 'realtime-client.mjs', 'realtime-capture.mjs', 'realtime-demo.mjs',
+           'conversation-transfer.mjs'}
 
 
-def mount_communication_routes(app, gateway):
+def mount_communication_routes(app, gateway, *, demo_catalog=None):
+    from .communication_demos import mount_demo_routes
+    mount_demo_routes(app,demo_catalog)
+    from .communication_live import mount_live_bridge
+    mount_live_bridge(app, gateway)
     @app.get('/communicate/')
     @app.get('/communicate/{name}')
-    def page(name: str = 'index.html'):
+    def page(name: str = 'meeting.html'):
         if name not in _STATIC or not (_WEB/name).is_file():
             raise HTTPException(404, 'Unknown product resource')
         return FileResponse(_WEB/name, headers={'Cache-Control': 'no-cache', 'X-Content-Type-Options': 'nosniff'})

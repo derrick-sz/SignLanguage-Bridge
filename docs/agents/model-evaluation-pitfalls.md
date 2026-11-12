@@ -64,7 +64,7 @@
 
 - **本轮实跑通过、原OOM唯一根因未定（2026-11-07）：CUDA OOM不等于专用显存已满；全meta构造会遗漏非持久缓冲区。** 触发：SignSparK run01在face搬运时申请16 MiB失败，仍报告10.42 GiB空闲。避免：参数用`init_empty_weights(include_buffers=False)`，保留XLM-R/RoPE真实CPU非持久缓冲区，SHA/strict/mmap/assign及FP32不变，加载后拒绝meta残留并保存阶段内存快照。run02三流各859张量严格加载、两句256帧完成；与run01可比较的六份原始流逐位相同。系统提交额度运行中变化，不能严格归因于单一WDDM/主机commit原因，也不能外推任意负载稳定性。失败诊断写盘应best-effort，不能覆盖原异常。[R36]
 
-- **仍待优化：** 当前上游 forward 先执行未使用的 sentinel loss 路径，再 generate；24 条完整推理均实测调用 mT5 encoder 两次。这是效率问题，不是离线低 BLEU 的直接解释。优化时验证生成结果、编码次数和端到端耗时。
+- **重复训练计算已修复（2026-11-11，模型检出）：** 历史上游forward先执行未使用的sentinel loss，再generate；当前模型runtime临时捕获原视觉embedding/mask并移除hook后调用原generate，避免训练损失与重复编码。固定30条官方train姿态加4/256帧合成控制，32输入视觉摘要一致、各重复3次的96对token/text一致，encoder 2→1，独占模型阶段均值324.53→300.50ms。不改权重、beam或SLRT词，不当作泛化/摄像头保证；见[报告](https://github.com/betterway614/SignLanguage-Bridge/blob/codex/realtime-model-20261112/docs/reports/unisign-generation-optimization-2026-11-11.md)。
 - **延迟 93% 在姿态前端，且是纯逐帧成本（2026-10-25 实测）**：单条 8.7 s 片段端到端 5.54 s，其中解码+RTMPose 5.13 s，mT5 仅 0.394 s。回归 `pose_extract_ms ≈ -67 + 20.12×frames`（n=182，R²=0.994）说明没有可摊销的固定开销，约 50 fps。每帧跑两个 ONNX 模型：YOLOX-tiny 检测器输入 **416×416**（`Wholebody` 从 MODE 表取，不是 YOLOX 类默认的 640；204×170 画面 letterbox 放大 2.04×，实测约占 60%）+ RTMW-DW-L 姿态 192×256。三个易踩点：① rtmlib `mode="lightweight"` 实际加载 `rtmw-dw-l-m`（L 体型），`performance` 才是 `rtmw-dw-x-l@384×288`；② 管线把每帧都过一遍姿态提取（上限 600 帧），但模型只用 256 帧，>256 帧的片段（本数据集 39%）有 30–50% 计算被丢弃；③ batch=1、每帧同步，GPU 利用率约 30%。优化方向：只提采样帧（**已实现** `pose_sample_only`，实测长片段 1.65–1.94×，全量推算跳过 14.7% 提取）、跨帧复用检测 bbox（有精度风险，需配对验证）、姿态模型批处理。注意检测输入已是官方 416，不要为了提速再降尺寸。[R10]
 - **其他权重不能走生产加载路径**：`UniSignBackend.load_model()` 固定校验 pinned CSL-Daily 权重的字节与 SHA256，换 checkpoint 会报「incomplete or corrupt」。实验必须用 `TorchUniSignRuntime` 直连并在自己的协议文件里记录实际 SHA256（见 `scripts/evaluate_unisign_cslnews_checkpoint.py`），不要为了跑实验放宽生产校验。[R10]
 - 论文 RTMPose-x 与当前 lightweight RTMW-L/M 256×192 存在前端差异；强前端收益尚未量化。不能给 pose-only 权重直接打开 RGB 开关并称为已切换模型。
@@ -163,8 +163,8 @@
 
 ## 14. Round-3 双评审仲裁清单的协议差异（2026-10-27）
 
-- **状态：已修复（2026-10-27 修正 `arbitration_rows` 为协议口径，并同时输出 `material_disagreement_rows`；Round-3 双评已实跑：协议口径 36/90=40%、实质分歧 8/90=8.9%）。** 触发条件：Round-3 的 A/B 两位评审评分仅差 1 分，且严重语义错误判断相同。[Round-3 README](../../experiments/p1/e06/human_review/round3/README.md) 和模板填写说明要求对评分或严重错误的任意分歧仲裁，但 [`make_round3_package.py`](../../experiments/p1/e06/human_review/round3/make_round3_package.py) 的 `agreement.arbitration_rows` 仅筛选 `abs(score_A-score_B) >= 2` 或严重错误不同，因而会漏掉该类 1 分分歧。本次只完成 AI 评审人 A，未读取 B 评审意见，不能据此声称一致性或仲裁已通过。
-- 避免办法：B 到齐后，按协议额外以“评分不同或严重错误不同”逐行扫描，并由第三人或用户裁定；不能把现有 `arbitration_rows` 当成全部协议分歧。独立记录 AI/人工身份、量表版本与已读历史文本，不能将同一 AI 的两次输出计为两名独立人工评审。当前单 A 结果与边界见 [Round-3 AI A 评审摘要](../../outputs/01a17b59-e3b8-7590-b21b-250b3f41ca6f/round3/round3_reviewer_A_ai_summary.md)。
+- **状态：已修复（2026-10-27 修正 `arbitration_rows` 为协议口径，并同时输出 `material_disagreement_rows`；Round-3 双评已实跑：协议口径 36/90=40%、实质分歧 8/90=8.9%）。** 触发条件：Round-3 的 A/B 两位评审评分仅差 1 分，且严重语义错误判断相同。Round-3 README（本地产物：`experiments/p1/e06/human_review/round3/README.md`） 和模板填写说明要求对评分或严重错误的任意分歧仲裁，但 `make_round3_package.py`（本地产物：`experiments/p1/e06/human_review/round3/make_round3_package.py`） 的 `agreement.arbitration_rows` 仅筛选 `abs(score_A-score_B) >= 2` 或严重错误不同，因而会漏掉该类 1 分分歧。本次只完成 AI 评审人 A，未读取 B 评审意见，不能据此声称一致性或仲裁已通过。
+- 避免办法：B 到齐后，按协议额外以“评分不同或严重错误不同”逐行扫描，并由第三人或用户裁定；不能把现有 `arbitration_rows` 当成全部协议分歧。独立记录 AI/人工身份、量表版本与已读历史文本，不能将同一 AI 的两次输出计为两名独立人工评审。当前单 A 结果与边界见 Round-3 AI A 评审摘要（本地产物：`outputs/01a17b59-e3b8-7590-b21b-250b3f41ca6f/round3/round3_reviewer_A_ai_summary.md`）。
 
 ## 15. 三维动画生成路线的能力边界（2026-10-28）
 
@@ -248,7 +248,7 @@
 - [R3：后续准确率与实时链路核查](../reports/unisign-followup-accuracy-streaming-2026-10-24.md)：本轮窗口修复、24 条新诊断、797 项通过与真实会话未交付。
 - [R4：流式源码审计](../reports/unisign-streaming-source-audit-2026-10-24.md)：时序卷积、mT5、缓存、输出合同和 LLM 状态的源码行号。
 - [R5：初始接入与环境记录](../reports/unisign-integration-2026-10-23.md)：Windows 加载顺序与环境兼容；旧分数、benchmark 和未验收项按当时条件解释。
-- [R6：最近交付核验 JSON](../../artifacts/unisign-cecsl-eval/followup-20261024/delivery-verification.json)：输入和产物哈希、测试摘要及明确的未通过／NOT_RUN 状态。
+- R6：最近交付核验 JSON（本地产物：`artifacts/unisign-cecsl-eval/followup-20261024/delivery-verification.json`）：输入和产物哈希、测试摘要及明确的未通过／NOT_RUN 状态。
 - [R7：SLRT 集成交付报告](../reports/slrt-integration-2026-10-24.md)：权重严格加载、官方数值对照零差异、真实 MP4 Gloss 输出与吞吐实测、摄像头实时交付未通过及未验证边界。
 - [R8：SLRT 数据集实测](../reports/slrt-dataset-eval-2026-10-24.md)：CE-CSL test 500 条历史 WER 0.8918、镜像 36 条输入错误及结论撤回、吞吐与实时回放、CSL-Daily 视频缺失边界。
 - [R9：模型输入兼容性核验](../reports/model-input-compatibility-audit-2026-10-24.md)：实际输入张量、HRNet替代前端、宽屏裁剪证据、镜像与评测修复、训练数据来源及未验证对照。
@@ -385,3 +385,116 @@
 - **已接通产品工程链路，语言与动作质量未验收：** 触发：把动作研究工作台当成最终沟通产品，或把CTC词序列直接展示成已翻译整句。证据：`/communicate/`真实上传、识别、原文保留、人工核对、对话记录和数字人回复已接通；CE-CSL示例自动输出“平方 我 自己 。”，房子完整句由测试者依据配对标注手动修改，不能算模型正确。Libras Sim输入返回12词试点的中葡草案；Libras输出和完整中葡句子互译仍未接入。避免：按方向和任务类型披露能力，产品交互完成不能替代模型质量或原有穿模问题验收。见[产品报告](../reports/communication-product-2026-11-08.md)。
 - **已修复取消、设备所有权与忙状态回归：** 换源/换语种/取消的旧结果不能写入文字和对话；断开时先取消并等待网关任务，再清理上传文件；旧录制onstop不能取消新录制的限时器或释放新流。`inferencing`表示模型已加载且忙，若误判为不可用，在多语种已有一个ready时会导致页面重载后另一语种永久禁用。现按available与busy分别传递，含契约、临时文件、迟到回调及忙状态测试。设备生命周期单测不代表物理摄像头已验收。
 - **上传格式和安装资源有边界：** WebM使用FFmpeg有界转码为MP4、去音轨后推理，超长明确拒绝，不把截断内容当全句；同一视频重新编码可能改变模型词序列。wheel需显式包含communication子目录与默认scene定义，仅检查源码页面可用会漏掉安装后404/缺资源。本轮已构建并核对wheel资源。用户本轮明确只验证上传视频，物理摄像头与真实浏览器录制为NOT_RUN；WebM证据是数据集转码文件。
+
+
+## 完整原生词条与短切片补充（2026-11-09）
+
+- **已修复“谢谢”选材和动作完整性，语言质量待验收：** 截图对应S000122“谢谢医生”[4,13)的9帧词片段，按预览30FPS仅0.3秒，右拇指活动不足约5度。时长中位数候选筛选漏掉了只有一个Gloss的S000003“谢谢！”原句。重新核对官方配对LMDB和标注后，选择完整30帧源动作；不改源指骨、蒙皮或FPS。三份独立“谢谢！”完整序列加入候选并标记，句内也优先完整词条，纯词输入另有精确匹配；原1,989个其他词候选及5,916原单位保持。
+- **已加失败关闭约束：** 必须先统计同一源视频全部标注，再按请求标签筛选；不能过滤掉“医生”后误报独立“谢谢”。完整标记绑定单标签数量、原标注范围、全片范围和原blob摘要，合并器与运行时均验证；换骨架、篡改词条、伪完整标记均拒绝。源object元数据仅作无执行的pickle指令检查，构建和运行不反序列化它。
+- **边界：** 官方ISO裁剪实现本身也是直接取配对LMDB区间；本轮没有凭感觉乘时间系数、拉慢FPS或替换同ID的SOKE参数。完整词条补充不解决T2G全部语义规划或其他词条质量；通用手间/袖口/网格碰撞与真人语言自然度仍待验收。详细[本轮报告](../reports/thanks-native-gesture-2026-11-09.md)。
+
+
+## Uni-Sign页面切换与启动保护补充（2026-11-09）
+
+- **已修复并实机核验模型路由：** 用户授权后，8765中文从TFNet切为CSL-Daily Uni-Sign基础版，实际task=text，翻译与RTMPose均CUDA；8879的真实MP4/WebM请求返回整句，MP4与直连原文一致。Libras独立RF仍通过。本机profile显式配置csl_model/libras_model/device/startup_timeout_seconds；旧profile省略字段仍用TFNet/CPU兼容值，不可只看默认示例推定已迁移。S2与LLM融合未自动启用。
+- **已修复启动保护：** 模型/设备使用完整参数及相邻值匹配，防止unisign_pose误匹配unisign_pose_stage1或从别处匹配auto。Stop/RestartProduct在停止任何进程前预核验所有受影响服务；6个隔离场景从2通过/4失败变为6通过，实际错误别名Start被拒且监听PID不变。
+- **资源与验收边界：** TFNet仍在线时影子加载因Windows提交内存不足失败；仅释放身份核验的旧识别进程后，顺序加载成功，不能将首次OOM记为模型质量失败。使用含Torch/API依赖的.conda-env；D盘通用Python的旧Starlette/HTTPX不能用于本次TestClient回归。Python定向50过，上传格式适配不是物理摄像头验收；本次用户录制、识别语义、实时流、全仓库/CI均NOT_RUN。SLRT有独立new_stream，但共享v3仍为clip；不能把Uni-Sign切窗重跑或模型切换写成原生流式已接入。
+- 详细记录：[切换与实时模型范围](../reports/communication-unisign-switch-2026-11-09.md)。
+
+
+## SLRT + LLM小闭环实测补充（2026-11-09）
+
+- **已运行、语言/实时中文验收未通过：** 固定30条CSL-Daily已见test短句（排除旧Pilot-50），当前帧缓存v2+RTMPose CUDA的完整视频输出全非空，WER34.52%。受约束deepseek-v4.1-flash整理后19草稿/9信息不足/2次4096-token空正文，调用P50 5.58s、P95 28.84s；同19成功子集没有字符编辑相似度净收益证据。不能把覆盖63.3%叫准确率，也不能把拒答/失败从分母删掉。
+- **增量词可交付不等于完整实时字幕：** 同6条原FPS回放均在采集EOF前交付final词（工程状态），但5条队列丢帧，608采集帧只接收592帧，5条词列与完整文件不同，同6条WER37.5%→50%。EOF前中文草稿0/6，最终4草稿/2拒答；有效最终草稿在EOF后额外等待P50 6.29s（仅4成功）。这是数据集回放/共享机器实测，不能当物理摄像头P95或全局SLRT性能结论。
+- **合法JSON/词下标不保证语义保持：** AI文字初审19草稿发现4条明确语义风险、6条待复核；不是/他/去/见面/同学在两签者视频均变成他不是去见同学，改变否定作用域。参考原文只进评测，不能用练习句回填生成端。AI初审不等于真人盲评。最新词版本拒答时必须清除/标记旧草稿，不能把历史的去工作重新算最终输出。
+- **测量与选材约束：** 回放前修正异步异常静默、混用计时原点、取消伪EOF、native仍运行时释放backend、draft空证据等仪器问题；7项定向测试通过，阶段源码SHA有记录。关键词水会误命中水平，本轮保留该条主分母并披露主题误分；后续用概念/完整词校验，不把子串主题筛选称封闭场景覆盖。新签者、用户我想睡觉原录制、真人摄像头、网页E2E、长时会议与CI仍NOT_RUN。详见[本轮报告](https://github.com/betterway614/SignLanguage-Bridge/blob/codex/realtime-model-20261112/docs/reports/slrt-llm-scene-validation-2026-11-09.md)。
+
+## Uni-Sign同视频对照补充（2026-11-09）
+
+- **离线API对照已运行、泛化/实时语义待验证：** 同上轮30条、同派生视频、同p1-v1参考，Uni-Sign基础版BLEU26.1916、编辑相似度0.4607；SLRT直接拼词16.7320/0.3792，SLRT+LLM全请求7.5870/0.3023（含9拒答2失败）。同19条LLM已输出子集，Uni-Sign31.6415/0.5258，对照LLM20.1049/0.4774，但编辑增益95%签者聚类区间[−0.0870,+0.1805]仍含0。避免：全请求与相同成功子集均报告，不将BLEU/非空率叫准确率，不将本批观察推广到新签者。
+- **静止输入拒答验收未通过：** 黑帧输出空，静止人物重复帧被翻成“我肚子鼓鼓的。”；相同控制SLRT无词。Uni-Sign非空输出不保证有效动作或语义正确，也存在“小猫睡觉”→“你有早睡觉吗?”等明显误译。避免：评估静止/无手语控制，后续验证活动检测与拒答，不能靠句子流畅度放行。完整文件HTTP P50 2.28s/P95 3.23s不含录制时长，不能当原生流式延迟。详见[同视频对照](https://github.com/betterway614/SignLanguage-Bridge/blob/codex/realtime-model-20261112/docs/reports/unisign-scene-comparison-2026-11-09.md)。
+
+## 实时策略与当前吞吐审计补充（2026-11-09）
+
+- **瓶颈已确认、优化待验证：** 当前帧缓存v2已启用；同6条回放profiling中姿态约25–32ms/帧、canonical约3ms/帧、窗口约25ms/窗，stride=1稳态串行超过30FPS预算。不能将旧报告的加入帧缓存再次当成未做优化，也不能以加大队列掩盖积压。候选人体框复用/流水线/锚点stride=2需分别验证，不跳过采集帧后伪造连续时序。共享133点仍需按两模型分别适配，不能直接复用63点热图或已经归一化的输入。
+- **方案建议、未实施：** 用户选择动作中约1–2秒出词、停顿后补完整中文；建议SLRT词与Uni-Sign句末翻译分工，LLM不阻塞交付。当前网页仍以完整片段POST识别，HTTP请求字节流不是模型增量流。上游wait2 G2T示例为德语，本地未发现中文在线G2T，不能拿Text2Gloss倒用。ReSCUE官方仓库本次仍Coming Soon，论文实时分数不作为本地能力。详见[策略评估](https://github.com/betterway614/SignLanguage-Bridge/blob/codex/realtime-model-20261112/docs/research/real-time-recognition-strategy-2026-11-09.md)。
+
+## 实时四阶段工程补充（2026-11-10）
+
+- **已接入工程、语言验收待完成：** `/communicate/realtime.html`通过轻量产品WS桥交付SLRT增量词与共享RTMPose133点的Uni-Sign句末中文，可选LLM提示单独显示。真实H264浏览器样例显示首词0.68秒及“酒/饭店”冲突提示，原译文和人工修改分别保留；新5个静态资源已核对进wheel。避免：新接口不等于Uni-Sign本身原生流式，不把识别与数字人生成当互逆；模型端代码仍在E盘模型检出，产品端不重新加载一套模型。
+- **显式实时协议已回放、泛化未通过验收：** FP16/detect5/stride4/vote3，仍接收30FPS实际帧；v4固定30已见正例+2控制全完成，首partial P50/P95=0.678/1.142s、末句附加P95=1.422s（含1.2秒重复尾帧），词WER29.76%、文本BLEU25.454/edit0.4205。避免：不称准确率/新签者结果，不混用旧512px clip与共享320px姿态输入成绩，不把首词时间当逐词动作结束延迟。
+- **持续负载发现的调度缺口已修复、限定合成负载通过：** 同一WS原FPS连续送帧在27.965秒overload，原因是词队列已有债务仍立即运行句末翻译。v5维持16帧输入队列，优先处理当前帧/积压，最多2句FIFO等待，空闲再译，等1.5秒明确rejected；EOF排有效任务，取消不补造句。修后同一WS604秒18,112帧全部ack/处理、0丢帧，128句、0过载/翻译拒答；输入队列等待P95=218ms，句末等待峰值797ms。定向测试/独立审查通过；两固定视频循环不是自然会议验收，模型RSS增加16MiB不宣称长期无泄漏。不能用短片逐条成功替代长会话。
+- **LLM辅助与防迟到已修复：** 页面每次默认不勾选，服务有能力时才显示。修复勾选未传start及HTTPX缺整体截止；async整体8秒/64KiB、单运行/单等待，与词和原译文独立。原生WS结束后可轮询绑定job，换源拒绝迟到。两条真实产品请求后分别2.72/3.07秒收到risk；不等于纠错正确率，首次HTTPStatusError保留。只发送生成词/原译文，不发送视频、GT或目标练习句，凭据只在服务端。
+- **配置身份与时钟测量有新证据：** 同一路径根/嵌套配置内容改变会被Start拒绝复用且PID不变；路径改变前按旧profile停止。Stop后监听自然释放可有短暂延迟，保守拒绝Start时未终止不明PID，确认端口空闲后重试。首次持续脚本全进程资源枚举阻塞发送6秒，产生11.2秒追赶突发，该轮无效；改为已知PID采样及落后250ms中止，不能把测量阻塞当模型退化。
+- [使用说明](https://github.com/betterway614/SignLanguage-Bridge/blob/codex/realtime-model-20261112/docs/realtime-csl.md)、[实施与最终验证报告](https://github.com/betterway614/SignLanguage-Bridge/blob/codex/realtime-model-20261112/docs/reports/realtime-csl-engineering-2026-11-10.md)。物理摄像头/共享画面权限、新签者、用户原“我想睡觉”录制、真人手语语义/手形及CI仍NOT_RUN。
+
+## 训练样本应用验证补充（批次创建于2026-11-10 UTC）
+
+- **已测训练短句应用范围：** 固定30条官方train视频、30种表达、8签者，作者区间裁剪后1.23–6.67秒。完整上传规范化整句匹配30/30，实时含1.2秒尾帧29/30；SLRT词WER18.90%，LLM关闭。官方姿态历史参照30/30是imported。本轮支持先用已验证表达建应用库，不代表用户模仿或大部分真实需求已验收。
+- **自动分句误追加仍待修复：** S000068先正确输出“小猫在桌子下面。”，末段又误加“没钱，我出去玩。”；去掉补尾帧按文件自然EOF的单例复测正确，不混回主分母。LLM对正确/错误两句都给风险提示，保留原文和人工确认，不能把它当自动裁判。首版明确单句结束更可控。
+- **服务长时间运行后吞吐退化已缓解、根因待定位：** 源码/配置未变、服务运行22.8小时后连旧已通过test也overload。冻结现场，按身份核验启动器重建同权重后恢复，完整v2实验通过；v1的9次实时失败保留，不把过载算模型词错误，也不宣称根因修复或24小时稳定。没有修改生产代码或权重。
+- [训练应用验证与逐条证据](https://github.com/betterway614/SignLanguage-Bridge/blob/codex/realtime-model-20261112/docs/reports/training-application-validation.md)。原用户“我想睡觉”与真人模仿/数字人示范对齐仍待验证；训练集出现过词汇不等于任意新组合已覆盖。
+
+## 实时延迟维护补充（2026-11-11）
+
+- **等价去重已验证：** 同8个原FPS输入，识别事件完全一致；RTMPose图像供SLRT复用，重复canonical均值3.311→0.005ms/有效帧，ACK排队P95 82.43→48.56ms。ACK只更新轻量指标，不重建词/历史。首词按开始按钮计，包含连接与worker预热；不能藏准备时间、减帧重编号或扩队列伪装加速。
+- **持续回放通过的范围：** 单WS合成603.92s、18112帧全部处理、零丢帧/过载、128句；不代表真人连续对话。随后仅调整了初始化pipeline取锁位置，最终部署另做短测，不称最终这3行改动后再次10分钟。状态保留最近512帧及累计原生计时，取消后仍可诊断；工作集回收未复现旧35ms慢速，23小时退化根因仍待定位。
+- **应用收尾已区分：** “完成本句并暂停”排空编码/已接收帧后finish，等待尾句；“中止识别”/换源/后台立即丢弃未完成句。结束时强制刷新最终跳帧指标，迟到编码不能回写。不得据此宣称自动分句误追加、数字人对齐或新人模仿已验收。
+- [本轮完整证据与边界](https://github.com/betterway614/SignLanguage-Bridge/blob/codex/realtime-model-20261112/docs/reports/realtime-latency-optimization-2026-11-11.md)。物理摄像头、新签者和24小时稳定性仍NOT_RUN。
+- **浏览器跳帧不能藏：** H264训练示范自然EOF首词1.29s、采样跳帧0；手动3.050/5.833s完成首词0.92s、跳帧1，最终同句。Python持续流零丢帧不等于浏览器/摄像头零丢帧；用实际DOM译文、媒体paused/ended和native摘要复核，不能将一次工具等待超时当产品失败。
+
+## 实时句末证据与本人核对（2026-11-11）
+
+- **异常扩写提示已接入，不是自动语义裁判：** S000068末尾确有新手部动作，后段新词“没有”却生成“没钱我出去玩”，不是旧词残留。仅单词证据且扩写较多时标记，不按参考句过滤/改写。64回放原始语义事件全相同，train原匹配29/30、已见test2/30；提示仅train1段，不能把未提示视为正确，自动误追加仍未解决。
+- **确认/修改要保留来源与版本：** 每句保留word_evidence和原文，人工编辑同步主显示；确认结果不能被晚到native改写。接受新机器revision时清旧建议并取消旧轮询，被人工保护拒绝的revision不能取消仍有效的原译文辅助任务；建议显示再次校验revision。原文和提示留证，自动化点击确认不是独立人类语义审核。
+- **零尺寸布局已修复：** paint仅在video/preview四个尺寸positive finite时调用videoRect，临时隐藏选区、恢复再计算。真实ResizeObserver回归和最终加载/识别/核对复测通过；保留首次RangeError及修复后空console记录，不掩盖初次问题。
+- [报告与完整边界](https://github.com/betterway614/SignLanguage-Bridge/blob/codex/realtime-model-20261112/docs/reports/realtime-utterance-review-2026-11-11.md)：145后端过/1跳过、25 Node过；64真实WS回放，浏览器首词0.98s/采样跳帧0、修改与原文回读已测。物理摄像头、新签者、真人语言/中巴任务及24h稳定仍NOT_RUN。
+
+## 训练示范与网页性能复核（2026-11-11）
+
+- **已实现来源标识，跟练验收未运行：** 固定4条官方train来源、标注及媒体SHA核验后接入目录，3条成功表达和1条已知误追加明确区分。目标文字不进识别/LLM，验收读取#sentence而非示范说明；不能把选定训练样例成功叫整体准确率。视频Range已实测206；目录声明的train校验与独立官方split审计是两个层次。
+- **启动保护及旧播放竞态已修复：** 禁用demo_catalog却误复用旧启用进程的P2已关闭，完整选项名含等号后quoted路径形式也须拒绝。17项隔离回归、实际禁用/清单变更拒绝通过；原字节恢复后Start复用识别41868/产品64448，两PID不变。旧play Promise不能中止新源，历史来源绑定原会话。
+- **延迟与错误均保留：** 浏览器校园首词0.99s含准备242ms、采样跳帧0；问题回放1.18s含准备437ms、采样跳帧0，但原误追加仍可见，服务排队P95 225.51ms。不能把低延迟、零跳帧或重点核对提示当语义通过；老化根因、摄像头、新签者、真人语言和24h稳定仍待验。数字人“我想睡觉”实际为3源词片段组合39帧，语言NOT_RUN，不能当识别模型的标准逆输入。详见[本轮报告](https://github.com/betterway614/SignLanguage-Bridge/blob/codex/realtime-model-20261112/docs/reports/realtime-demo-catalog-2026-11-11.md)。
+
+## 句末性能与新网页复验（2026-11-11）
+
+- **模型去重已部署，网页本轮未通过：** 根模型检出省去未用训练loss，8实际WS输入事件一致、排队P95 146→130ms，首词P95 1143→1202ms未改善。IAB新标签attach/鼠标/截图超时；既有页面视频EOF却native收帧0，仍显示旧主字幕，不能用旧记录充当新输出。采样及空帧显示问题待单独修复，上一轮网页通过不冒充本轮通过。
+- **资源测量要看commit：** 服务驻留另载shadow模型时，free physical约4.7GiB而free commit仅0.7GB，其他进程MemoryError/WinError1455。独立审查测试未完成，不计通过；释放身份匹配空闲服务后独占复测才作为性能主结果。10GiB基准预检不预留内存，也不改变应用启动策略。证据：[本轮完整报告](https://github.com/betterway614/SignLanguage-Bridge/blob/codex/realtime-model-20261112/docs/reports/unisign-generation-optimization-2026-11-11.md)。
+
+## 当前字幕与采集恢复（2026-11-11）
+
+- **已修复显示/结束与挂起机制，浏览器待验：** caption绑定本地epoch，主显示不回退旧轮次，历史原文/确认保留；summary处理0帧后finished给重试提示。首帧即时采，后续RAF墙钟索引不变，2秒无JPEG交付停止而不补帧；EOF挂起可取消，旧编码不能影响新pending。终态必须清active/draining防错误覆盖，stop/fail须发布最终发送计数。
+- **证据边界：** 43 Node父/审查者各通过，真实4模块HTTP字节、真实空WS→client重放通过，两服务PID67636/45240未重启。FileResponse/no-cache只保证新请求读到新模块，既有页面还需刷新。IAB attach/刷新/控制持续超时，正常视频采样/新截图未认证，不能叫网页通过。详见[本轮报告](https://github.com/betterway614/SignLanguage-Bridge/blob/codex/realtime-model-20261112/docs/reports/realtime-capture-recovery-2026-11-11.md)。
+
+## 实时字幕接续对话（2026-11-11）
+
+- **工程接线已测，实际窗口待验：** 暂停采集且确认字幕后同源交接assist，导入保留草稿/原文/训练来源、不自动生成，重复内容去重，人工修改保留旧消息。68 Node父/审查者各通过、32接口通过、8模块HTTP字节相同；均不能代替浏览器/数字人播放或摄像头、语义与比赛验收，不新增实时延迟改善结论。
+- **已修复超时分流：** 清target会导致仍打开的草稿留旧页而后续对话去新页；RED→GREEN后超时仅取消nonce，确实closed才清引用。peer负向测试须其余期限字段有效；Node会忽略部分不存在文件，最终显式核对8文件并包含communication_product.test.mjs，而非不存在的conversation.test.mjs。
+- **部署与外部阻挡：** 新白名单模块404→200，仅产品45240→59624，识别67636保持；宿主截图/窗口激活失败尚无原因裁定，真实跨页体验继续NOT_RUN。见[完整报告](https://github.com/betterway614/SignLanguage-Bridge/blob/codex/realtime-model-20261112/docs/reports/realtime-conversation-2026-11-11.md)，原自动误追加和长期吞吐退化未因此修复。
+
+## 译文分数离线诊断与恢复（2026-11-11）
+
+- **独立诊断有信号，产品未新增分数门槛：** 固定61历史句段+2静止直接探针，126对token/text一致；模型均值274.37→274.89ms，P95增加19.04ms。已见train/test逐字代理风险AUC1.0/0.9464仅分别1负类/2正类；高分仍有人称误译，语序同义会被逐字代理判错，不能称概率/准确率或据此放行。静止直译探针不代表live绕过门控，原机器译文和人工确认逻辑保持。
+- **身份与恢复：** 独立脚本实际校验checkpoint bytes/SHA、异常close、分阶段源码绑定，7机制测试与审查通过。按原profile释放后恢复识别32160/产品49052，8模块HTTP字节保持、3真实WS325帧完成，两无动作控制0句；无新摄像头/语义或长期稳定验收。
+- **工具显示尺寸异常：** 原IAB读到viewport0×0但visible/videoWidth512，截图0宽、尺寸set/reset超时；已恢复可见性false，override状态未知，不据旧DOM叫新版网页通过。完整[报告](https://github.com/betterway614/SignLanguage-Bridge/blob/codex/realtime-model-20261112/docs/reports/unisign-score-diagnostic-2026-11-11.md)。
+
+## 实际网页恢复受阻（2026-11-11）
+
+- 原生打开面板请求无返回，停止观察不等于应用动作取消或失败；CUA复核仍原2/3页，实际0×0、visible、videoWidth512，旧确认记录不算新输出。自动控制连接/显示阻挡与产品/模型可用性分别记录，不猜锁屏或审批原因。
+- 8模块HTTP字节及关键模型源码保持，实时ready/idle、规划器ready，两端仍32160/49052，本轮未重启或改产品代码。连续至少三轮同一网页验收阻挡，需用户手动展开内置浏览器并确认桌面可操作，再继续真实采集、跨页回复和数字人播放；不能用替身缩小原目标。见[完整审计](https://github.com/betterway614/SignLanguage-Bridge/blob/codex/realtime-model-20261112/docs/reports/realtime-ui-recovery-2026-11-11.md)。
+
+## 数字人动作交叉核对（2026-11-12）
+
+- **优化候选待验证、未接入产品：** 实际“我想睡觉”组合的避碰修正最大相邻帧跳变0.05826，305个1/8帧采样累计61次核心点命中；固定样本离线候选分别降为0.01402和0，但最大偏移0.07952超过现有0.06，语义未经手语人员审核，数字人视频实时识别仍无词/句。不得把关键帧、有限核心采样或识别结果当作全部碰撞及手语语义验收；限制0.06的平滑候选反而增加关键帧命中。完整对照和原始产物见 E:/githubproject/SignLanguage-Bridge/docs/reports/avatar-crosscheck-optimization-2026-11-12.md。
+
+## 完整训练句数字人识别迭代（2026-11-12）
+
+- **有限同源诊断未通过：** 30条此前真人训练视频的同ID完整native动作转数字人后，实时词WER90.16%、整句4/30；真人旧批分别18.90%、29/30，但画面与时序不同，不能单因果归因。固定放大在30句上词WER降至83.46%但句匹配降至3/30；25单词上WER由76%升至80%，不能直接启用。14条实时空输出改走文件接口5条匹配，但静止数字人被译成“腰酸背痛。”；不要取消活动门控。证据与后续方案见 E:/githubproject/SignLanguage-Bridge/docs/reports/avatar-train-sentence-expansion-2026-11-12.md。
+
+## 训练姿态驱动的动作迭代（2026-11-12）
+
+- **候选未通过、未接入：** 30条同源train样本按签者分为17拟合/13保留，用估计2D关键点作肩宽归一化，时间仍为起终点线性暂配准。8条不同签者实际候选中6段受限修正、2段因碰撞采样/IK约束回退；保留签者4条的二维手腕平均偏差0.462→0.437肩宽，词WER仍81.58%，拟合组句匹配1/4→0/4。不得把几何改进写作手语语义正确；重录基线也可能改变识别。已新增受来源和帧索引绑定的评估工具及单元测试，详见 E:/githubproject/SignLanguage-Bridge/docs/reports/avatar-retarget-iteration-2026-11-12.md。
+
+## 数字人缺陷与计划归档（2026-11-12）
+
+- 后续接续使用[当前缺陷、证据与改进计划](https://github.com/betterway614/SignLanguage-Bridge/blob/codex/realtime-model-20261112/docs/superpowers/plans/2026-11-12-avatar-motion-quality.md)，按 AV-01～AV-13 缺陷和 M0～M6 依赖推进；历史原报告不改写。动作序列先准备、浏览器实时渲染、测试画布录制后回放必须分开描述，不将本批实验写成流式动作生成、直接实时采集或摄像头验收。本次只归档文档，没有新增运行或语义验收结论。

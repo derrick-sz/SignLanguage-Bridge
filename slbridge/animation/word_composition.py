@@ -15,7 +15,7 @@ import numpy as np
 
 from .gesture import _quaternions, _rotvec, _slerp
 from .registry import _skeleton
-from .word_library_build import SOURCE_IDENTITIES
+from .word_library_build import SOURCE_IDENTITIES, is_complete_expression
 
 PROFILE = 'retrieved-words-preserved-slerp6-v1'
 _SHA = re.compile(r'[0-9a-f]{64}\Z')
@@ -87,6 +87,10 @@ class WordLibrary:
             self._manifest_sha = _digest_bytes(raw)
             self.bundle_id = manifest['bundle_id']
             self.source = deepcopy(manifest['source'])
+            self.is_standalone = manifest.get('standalone_expressions', False)
+            if (type(self.is_standalone) is not bool or self.is_standalone !=
+                    (self.source.get('selection_scope') == 'whole-single-gloss-utterance-v1')):
+                raise ValueError('Invalid standalone expression scope')
             self.usage_role = manifest.get('usage_role', 'train-only-library')
             self.evaluation_eligible = manifest.get('evaluation_eligible')
             origins = self.source.get('sources')
@@ -134,6 +138,9 @@ class WordLibrary:
                         raise ValueError('Word unit source identity differs from its library')
                 elif source.get('split') != 'train' or 'library_bundle_id' in source:
                     raise ValueError('Unbound non-train word source')
+                complete = is_complete_expression(unit)
+                if self.is_standalone and not complete:
+                    raise ValueError('Standalone library contains a context fragment')
                 self._path(unit['path'])
                 ids.add(identity)
                 choices = self._words.setdefault(label, [])
@@ -198,6 +205,9 @@ class WordLibrary:
                 'usage_role': self.usage_role, 'evaluation_eligible': self.evaluation_eligible,
                 'max_candidates': MAX_CANDIDATES}
 
+    def has_word(self, label):
+        return label in self._words
+
     def compose(self, text, glosses):
         text = normalize_text(text)
         if (not isinstance(glosses, list) or not 1 <= len(glosses) <= MAX_WORDS
@@ -214,6 +224,9 @@ class WordLibrary:
             count = 0
             for gloss in glosses:
                 candidates = [(unit, self._load(unit)) for unit in self._words[gloss]]
+                complete = [pair for pair in candidates if pair[0].get('complete_expression')]
+                if complete:
+                    candidates = complete
                 if pieces:
                     left = _quaternions(pieces[-1][-1])
                     def score(pair):
@@ -239,6 +252,8 @@ class WordLibrary:
                               'source': deepcopy(unit['source']),
                               'source_frame_range': [unit['source']['start'], unit['source']['end']],
                               'output_frame_range': [count, count + len(poses)]})
+                if unit.get('complete_expression'):
+                    items[-1]['selection_kind'] = 'whole_native_expression'
                 count += len(poses)
                 pieces.append(poses)
             self._verify_index()
@@ -259,13 +274,19 @@ class WordLibrary:
 
 
 class CompositionService:
-    def __init__(self, library, planner):
+    def __init__(self, library, planner, *, standalone_library=None):
+        if standalone_library is not None and (not standalone_library.is_standalone
+                or standalone_library.parents != library.parents or standalone_library.rest != library.rest):
+            raise ValueError('Expected a standalone library with the same source skeleton')
         self.library, self.planner = library, planner
+        self.standalone_library = standalone_library
         self._lock = threading.Lock()
 
     def status(self):
         return {'enabled': True, 'planner': self.planner.status(), **self.library.status(),
-                'max_characters': 200, 'max_words': MAX_WORDS}
+                'max_characters': 200, 'max_words': MAX_WORDS,
+                'standalone_expressions': {'enabled': self.standalone_library is not None,
+                    **(self.standalone_library.status() if self.standalone_library is not None else {})}}
 
     def compose(self, text):
         normalized = normalize_text(text)
@@ -273,6 +294,13 @@ class CompositionService:
             raise CompositionBusyError('Another composition request is running')
         try:
             started = time.perf_counter()
+            exact = normalized.rstrip('。！？.!?')
+            if self.standalone_library is not None and self.standalone_library.has_word(exact):
+                result = self.standalone_library.compose(normalized, [exact])
+                elapsed = (time.perf_counter() - started) * 1000
+                return {**result, 'input_text': text, 'generation_text': normalized,
+                        'selection_mode': 'exact_native_utterance', 'model_identity': None,
+                        'timings_ms': {'planning_ms': 0, 'composition_ms': elapsed, 'total_ms': elapsed}}
             try:
                 plan = self.planner.plan(normalized)
             except RuntimeError as exc:

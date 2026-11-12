@@ -1,60 +1,11 @@
 <!doctype html>
-<html lang="zh-CN">
-<head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#F4F7FC"><link rel="icon" href="data:,">
-  <title>手语桥 · 面对面沟通</title>
-  <link rel="stylesheet" href="/communicate/product.css">
-  <script type="module" src="/communicate/app.js"></script>
-</head>
-<body>
-  <header class="app-header">
-    <a class="brand" href="/communicate/" aria-label="手语桥首页"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M7 27V14a7 7 0 0 1 7-7h12a7 7 0 0 1 7 7v12a7 7 0 0 1-7 7H15l-8 3v-9Z"/><path d="M13 24c2-6 12-6 14 0M14 15v5m6-7v6m6-4v5"/></svg><span>手语桥<small>SignLanguage Bridge</small></span></a>
-    <div class="header-actions"><span id="connection" class="connection"><span aria-hidden="true"></span>正在连接</span><button id="settings-open" class="quiet">设置</button></div>
-  </header>
-  <main class="shell">
-    <div class="intro"><div><h1>面对面沟通</h1><p>用手语理解对方，用文字继续表达。</p></div><span class="local-note">在本机处理视频</span></div>
-    <div class="mobile-switch" role="group" aria-label="选择沟通方式"><button id="tab-understand" aria-pressed="true">看懂手语</button><button id="tab-express" aria-pressed="false">表达文字</button></div>
-    <div class="communication-grid" id="communication-grid" data-mobile="understand">
-      <section class="work-panel understand-panel" aria-labelledby="understand-title">
-        <div class="panel-heading"><div><span class="direction">理解对方</span><h2 id="understand-title">看懂手语</h2></div><label class="language-select"><span class="sr-only">识别的手语</span><select id="sign-language" aria-label="识别的手语"><option value="csl">中国手语</option><option value="libras">巴西手语 Libras</option></select></label></div>
-        <div class="capture-stage" id="capture-stage">
-          <video id="source-video" playsinline hidden></video>
-          <div class="video-empty" id="video-empty"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="9" y="16" width="34" height="32" rx="7"/><path d="m43 26 12-7v26l-12-7"/></svg><h3>让双手和上半身进入画面</h3><p>录下一段手语，或上传已有视频。</p><button id="camera-open" class="button-white">开启摄像头</button></div>
-          <div class="record-indicator" id="record-indicator" hidden><span></span>录制中 <time id="record-time">0:00</time></div>
-          <button id="camera-close" class="camera-close" hidden>关闭摄像头</button>
-        </div>
-        <div class="source-actions"><input id="video-file" type="file" accept="video/mp4,video/webm,video/quicktime,video/x-msvideo,video/x-matroska,.mp4,.mov,.avi,.mkv,.webm" class="sr-only" aria-label="上传手语视频"><button id="upload-video" class="secondary">上传视频</button><button id="camera-switch" class="secondary">使用摄像头</button><button id="record-start" class="secondary" hidden>开始录制</button><button id="record-finish" class="record-button" hidden>结束并识别</button><button id="recognize" class="primary" disabled>识别这段手语</button><button id="recognition-cancel" class="quiet" hidden>取消</button></div>
-        <p id="recognition-status" class="status-line" role="status">正在连接识别服务…</p>
-        <p id="source-info" class="small-note">上传15秒以内、双手清楚可见的视频；单次录制最长12秒。</p>
-        <div class="recognition-result" id="recognition-result" hidden>
-          <div class="result-heading"><h3>核对识别文字</h3><span id="result-language"></span></div>
-          <p id="recognition-kind" class="small-note"></p>
-          <label class="sr-only" for="recognized-text">核对识别文字</label><textarea id="recognized-text" rows="3" spellcheck="false"></textarea>
-          <p id="portuguese-caption" class="portuguese-caption" hidden></p>
-          <details class="original-result"><summary>查看识别原文</summary><p id="original-text"></p></details>
-          <div class="result-actions"><button id="confirm-recognition" class="primary">加入对话</button><button id="use-recognition" class="quiet">带入文字回复</button></div>
-        </div>
-      </section>
-      <section class="work-panel express-panel" aria-labelledby="express-title">
-        <div class="panel-heading"><div><span class="direction">向对方表达</span><h2 id="express-title">用文字说给对方</h2></div><span id="avatar-status" class="panel-state">正在准备人物</span></div>
-        <div id="avatar-stage" class="avatar-stage" aria-label="中国手语数字人"></div>
-        <div class="avatar-toolbar"><span id="avatar-time" class="time">0:00 / 0:00</span><button id="motion-play" class="quiet" disabled>播放</button><button id="motion-stop" class="quiet" disabled>停止</button><button id="motion-slow" class="quiet" aria-pressed="false">慢放</button><button id="motion-closeup" class="quiet" aria-pressed="false">近景</button></div>
-        <p id="avatar-caption" class="avatar-caption">你的文字会显示在这里，方便一起核对。</p>
-        <div class="compose-area">
-          <div class="compose-label"><label for="reply-text">写下你想说的话</label><div class="quick-phrases" aria-label="常用表达"><button data-phrase="你好。">你好</button><button data-phrase="请等一下。">请等一下</button><button data-phrase="谢谢。">谢谢</button></div></div>
-          <form id="reply-form"><textarea id="reply-text" rows="2" maxlength="200" placeholder="例如：我想喝水。" spellcheck="false" aria-describedby="reply-hint"></textarea><div class="compose-bottom"><span id="reply-count" class="small-note">0 / 200</span><div><button id="reply-cancel" type="button" class="quiet" hidden>取消</button><button id="send-reply" type="submit" class="primary" disabled>转成手语</button></div></div></form>
-          <p id="reply-status" class="status-line" role="status">正在准备文字表达…</p>
-          <p id="reply-hint" class="small-note">当前支持中文转中国手语。</p>
-          <div id="reply-recovery" class="recovery" hidden><p>可以缩短、分句或调整表达，也可以尝试生成完整动作。</p><button id="try-generation" class="secondary">尝试完整生成</button><span>需要更长时间，可取消</span></div>
-          <p id="motion-quality" class="inline-note" hidden>这次动作可能不稳定，请同时出示文字确认。</p>
-        </div>
-      </section>
-    </div>
-    <section class="conversation" aria-labelledby="conversation-title"><div class="conversation-heading"><div><h2 id="conversation-title">本次对话</h2><p>核对过的手语文字和你发送的回复，会保存在这里。</p></div><div><button id="export-conversation" class="quiet" disabled>导出对话</button><button id="clear-conversation" class="quiet" disabled>清空记录</button></div></div><div id="conversation-empty" class="conversation-empty">还没有对话。可以先录一段手语，或写下第一句话。</div><ol id="conversation-list" class="conversation-list"></ol><button id="undo-clear" class="quiet" hidden>撤销清空</button></section>
-    <footer class="page-footer"><p>辅助沟通结果请与对方核对。对话仅保留在本次页面会话中。</p><span>中国手语 / Libras</span></footer>
-  </main>
-  <div id="notice" class="toast" role="status" hidden></div>
-  <dialog id="settings"><form method="dialog" class="dialog-heading"><h2>沟通设置</h2><button aria-label="关闭设置" class="quiet">关闭</button></form><div class="dialog-body"><label class="check-setting"><input id="mirror-camera" type="checkbox" checked>镜像显示摄像头预览</label><p class="small-note">镜像只影响你看到的预览。</p><h3>当前可用能力</h3><ul id="capability-list"><li>正在读取…</li></ul><p>文字表达目前支持中国手语。Libras动作输出和完整中葡句子互译尚未接入。</p><button id="retry-connections" class="secondary">重新连接服务</button><details class="advanced-tools"><summary>开发与诊断工具</summary><p>用于资源审核和模型调试。</p><a href="/generate/" target="_blank" rel="noopener">文字动作调试</a><a href="/animation/" target="_blank" rel="noopener">手形与接触检查</a><a href="/scenes/library" target="_blank" rel="noopener">已有原句资源</a></details></div></dialog>
-</body>
-</html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>手语桥 · 样例视频窗口</title><link rel="icon" href="data:,">
+<style>html,body{margin:0;width:100%;height:100%;background:#142337;color:#e9eff8;font-family:"Microsoft YaHei",sans-serif}video{width:100%;height:100%;display:block;object-fit:contain}main{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:25px;text-align:center}h1{font-size:24px}p{font-size:14px;color:#a6bbd3;line-height:1.8;max-width:38ch}button{background:#315de5;color:white;border:0;border-radius:7px;padding:12px 23px;font-size:15px;cursor:pointer}input,[hidden]{display:none!important}a{color:#b6ccff;font-size:12px;margin-top:22px}#error{color:#ffcdb8}</style></head>
+<body><video id="sample-video" controls autoplay muted loop playsinline aria-label="已选择的手语样例视频" hidden></video><main id="sample-start"><h1>手语样例视频窗口</h1><p>选择已有视频后，这个标签页只播放该视频。回到会议字幕页，点击共享屏幕并选择这个标签页。</p><button id="choose-sample">选择样例视频</button><input id="sample-file" type="file" accept="video/*" aria-label="选择手语样例视频"><p id="error" role="status"></p><a href="/communicate/" target="_blank" rel="noopener">打开会议字幕</a></main>
+<script type="module">
+const input=document.getElementById('sample-file'),video=document.getElementById('sample-video');let url=null;
+document.getElementById('choose-sample').addEventListener('click',()=>input.click());
+input.addEventListener('change',()=>{const file=input.files[0];if(!file)return;if(!file.size||file.size>128*1024*1024){document.getElementById('error').textContent='请选择128MB以内的视频。';return;}if(url)URL.revokeObjectURL(url);url=URL.createObjectURL(file);video.src=url;video.hidden=false;document.getElementById('sample-start').hidden=true;video.play().catch(()=>{});});
+video.addEventListener('error',()=>{document.getElementById('sample-start').hidden=false;document.getElementById('error').textContent='视频无法播放，请换用MP4或WebM。';});
+window.addEventListener('pagehide',()=>{video.pause();if(url)URL.revokeObjectURL(url);});
+</script></body></html>

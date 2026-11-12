@@ -38,6 +38,34 @@ def write_manifest(path, mutate):
     (path/'manifest.json').write_text(json.dumps(value),encoding='utf-8')
 
 
+def test_merge_preserves_whole_expression_source_binding(tmp_path):
+    from slbridge.animation.word_library_merge import merge_word_libraries
+    from slbridge.animation.word_composition import WordLibrary
+    base=library(tmp_path,'base',[('me','我',.1)])
+    whole=library(tmp_path,'whole',[('thanks','谢谢',.2)])
+    def mark(manifest):
+        manifest['standalone_expressions']=True
+        manifest['source']['selection_scope']='whole-single-gloss-utterance-v1'
+        unit=manifest['units'][0];unit['complete_expression']=True
+        unit['source'].update(start=0,end=3,annotation_frame_range=[0,3],source_label_count=1,native_blob_sha256='f'*64)
+    write_manifest(whole,mark)
+    merged=merge_word_libraries(base,[whole],tmp_path/'merged')
+    unit=next(u for u in merged['units'] if u['label']=='谢谢')
+    assert unit['complete_expression'] is True and unit['source']['native_blob_sha256']=='f'*64
+    result=WordLibrary(tmp_path/'merged').compose('我谢谢我',['我','谢谢','我'])
+    assert result['motion']['clip']['composition']['items'][1]['selection_kind']=='whole_native_expression'
+
+
+def test_merge_rejects_falsely_marked_complete_fragment_before_creating_output(tmp_path):
+    from slbridge.animation.word_library_merge import merge_word_libraries
+    base=library(tmp_path,'base',[('me','我',.1)])
+    bad=library(tmp_path,'bad',[('bad-thanks','谢谢',.2)])
+    write_manifest(bad,lambda manifest:manifest['units'][0].update(complete_expression=True))
+    with pytest.raises(ValueError,match='source binding'):
+        merge_word_libraries(base,[bad],tmp_path/'merged')
+    assert not (tmp_path/'merged').exists()
+
+
 def test_old_ids_metadata_and_bytes_survive_while_sources_round_robin(tmp_path):
     from slbridge.animation.word_library_merge import merge_word_libraries
     base=library(tmp_path,'base',[(f'b{i}','我',i*.1) for i in range(3)])

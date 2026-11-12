@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 from pathlib import Path
 import sqlite3
 
@@ -18,6 +19,7 @@ def main(argv=None):
     parser.add_argument("--generation-config", type=Path, help="Server-owned JSON paths for the existing SignSparK worker")
     parser.add_argument("--composition-config", type=Path, help="Server-owned word_library and planner JSON configuration")
     parser.add_argument("--recognition-url", help="Loopback v3 recognition API for the communication product")
+    parser.add_argument("--demo-catalog", type=Path, help="Server-owned fixed training-video demo catalog")
     args = parser.parse_args(argv)
     try:
         if not 1 <= args.port <= 65535:
@@ -75,17 +77,22 @@ def main(argv=None):
             from .text_gloss_planner import TextGlossPlanner
             composition_config = json.loads(args.composition_config.read_text(encoding='utf-8-sig'))
             word_library = WordLibrary(composition_config['word_library'])
-            composition_service = CompositionService(word_library, TextGlossPlanner(composition_config['planner']))
+            standalone_path = composition_config.get('standalone_library')
+            standalone_library = WordLibrary(standalone_path) if standalone_path else None
+            composition_service = CompositionService(word_library, TextGlossPlanner(composition_config['planner']),
+                                                     standalone_library=standalone_library)
         mount_word_composition_routes(app, composition_service)
         from ..communication import RecognitionGateway
         from ..communication_routes import mount_communication_routes
-        recognition_gateway = RecognitionGateway(args.recognition_url) if args.recognition_url else None
-        mount_communication_routes(app, recognition_gateway)
+        recognition_gateway = RecognitionGateway(args.recognition_url, token=os.environ.get('SLBRIDGE_API_TOKEN')) if args.recognition_url else None
+        from ..communication_demos import DemoCatalog
+        demos=DemoCatalog(args.demo_catalog) if args.demo_catalog else None
+        mount_communication_routes(app, recognition_gateway, demo_catalog=demos)
     except (OSError, ValueError, KeyError, sqlite3.Error) as exc:
         parser.error(str(exc))
     print(f"SignLanguage Bridge: http://127.0.0.1:{args.port}/communicate/ "
           f"(diagnostics: /generate/, /animation/)")
-    uvicorn.run(app, host="127.0.0.1", port=args.port, workers=1)
+    uvicorn.run(app, host="127.0.0.1", port=args.port, workers=1, ws_max_size=256*1024)
     return 0
 
 

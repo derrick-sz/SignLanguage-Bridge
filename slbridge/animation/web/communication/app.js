@@ -4,9 +4,11 @@ import {GenerationController} from '/generate/generate-controller.mjs';
 import {Conversation,readableTranscript} from './conversation.mjs';
 import {RecognitionController} from './recognition-controller.mjs';
 import {CameraCapture} from './capture.mjs';
+import {RealtimeHandoffReceiver} from './conversation-transfer.mjs';
 
 const $=id=>document.getElementById(id);
 const conversation=new Conversation();
+let realtimeReceiver=null;
 let recognitionCapabilities={ready:false,languages:[]},recognitionBusy=false,lastRecognized=null;
 let sourceFile=null,sourceUrl=null,sourceEpoch=0,sourceTooLong=false,isLive=false,isRecording=false;
 let stageReady=false,plannerReady=false,plannerState='starting',generationEnabled=false,replyBusy=false,replyLoaded=false,replyMode='fast';
@@ -53,7 +55,9 @@ function renderConversation(){
   $('conversation-list').replaceChildren(...messages.map(message=>{
     const item=document.createElement('li');item.className='message'+(message.direction==='sent'?' is-mine':'');
     const meta=document.createElement('div');meta.className='message-meta';
-    const label=document.createElement('span');label.textContent=message.direction==='sent'?'我的文字':'对方的手语 · '+languageName(message.sign_language);
+    const replay=message.provenance?.source?.kind;
+    const label=document.createElement('span');label.textContent=message.direction==='sent'?'我的文字':
+      (replay==='training_replay'?'训练示范手语':replay==='diagnostic_replay'?'问题回放手语':'对方的手语')+' · '+languageName(message.sign_language);
     const clock=document.createElement('time');clock.dateTime=message.created_at;clock.textContent=new Date(message.created_at).toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'});
     meta.append(label,clock);
     const body=document.createElement('p');body.className='message-body';body.textContent=message.text;
@@ -61,7 +65,15 @@ function renderConversation(){
     const copy=document.createElement('button');copy.className='quiet';copy.textContent='复制文字';copy.addEventListener('click',()=>copyText(message.text));
     const express=document.createElement('button');express.className='quiet';express.textContent='用手语展示';
     express.addEventListener('click',()=>{if(fillReply(message.text))beginReply('fast',true);});
-    actions.append(copy,express);item.append(meta,body,actions);return item;
+    actions.append(copy,express);item.append(meta,body,actions);
+    if(message.provenance?.kind==='realtime'){
+      const source=document.createElement('p');source.className='small-note';source.textContent='来源：'+message.provenance.source.label+' · 文字已核对';item.append(source);
+    }
+    if(message.direction==='received'&&message.text!==message.original_text){
+      const details=document.createElement('details'),summary=document.createElement('summary'),raw=document.createElement('p');
+      summary.textContent='查看识别原文';raw.textContent=message.original_text;details.append(summary,raw);item.append(details);
+    }
+    return item;
   }));
   if(messages.length)$('conversation-list').scrollTop=$('conversation-list').scrollHeight;
 }
@@ -230,6 +242,12 @@ $('export-conversation').addEventListener('click',()=>{
   const blob=new Blob(['\ufeff'+readableTranscript(conversation.export())],{type:'text/plain;charset=utf-8'}),url=URL.createObjectURL(blob);
   const link=document.createElement('a');link.href=url;link.download='手语桥-本次对话.txt';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
-window.addEventListener('pagehide',()=>{disposed=true;clearTimeout(readinessTimer);clearTimeout(toastTimer);clearInterval(recordTimer);capture.close();clearSourceUrl();recognition.invalidate();fast.invalidate();generator.invalidate();stage.dispose();});
+window.addEventListener('pagehide',()=>{disposed=true;realtimeReceiver?.dispose();clearTimeout(readinessTimer);clearTimeout(toastTimer);clearInterval(recordTimer);capture.close();clearSourceUrl();recognition.invalidate();fast.invalidate();generator.invalidate();stage.dispose();});
+if(window.opener&&window.location.hash==='#realtime-dialogue'){
+  realtimeReceiver=new RealtimeHandoffReceiver({origin:window.location.origin,opener:window.opener,onTransfer:payload=>{
+    const added=conversation.confirmRealtime(payload);renderConversation();mobileView('express');$('reply-text').focus();
+    notice(added?'已加入已核对的实时字幕，请写下回复。':'这句已在本次对话中。');return added;
+  },onError:notice});
+}
 stage.ready.then(()=>{stageReady=true;stage.renderer.domElement.setAttribute('aria-label','中国手语数字人');$('avatar-status').textContent='人物已准备';if(plannerReady)setStatus('reply-status','写下回复，转成手语说给对方。');updateCapabilityList();updateControls();}).catch(()=>{$('avatar-status').textContent='人物暂未连接';setStatus('reply-status','人物未能加载，请刷新页面重试。',true);});
 renderConversation();updateControls();connectServices();
