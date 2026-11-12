@@ -353,6 +353,12 @@ class ModelManager:
         with self._lease(expected_model) as version:
             return operation(version.recognizer)
 
+    @contextmanager
+    def native_session(self, *, expected_model=None):
+        """Pin one recognizer until a local streaming worker releases native work."""
+        with self._lease(expected_model) as version:
+            yield version.recognizer
+
     def infer(self, source, request: InferenceRequest, *, input_kind: str = "prepared") -> InferenceResponse:
         if not isinstance(request, InferenceRequest):
             raise ValueError("Inference requires a versioned InferenceRequest")

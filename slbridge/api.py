@@ -307,6 +307,7 @@ def create_app(
     job_runner_factory: Any = None,
     job_upload_ttl_seconds: float | None = 300.,
     job_media_probe: Any = None,
+    realtime_config: Path | str | None = None,
 ) -> FastAPI:
     """Create an app owning a manager or independent language runtimes.
 
@@ -351,6 +352,10 @@ def create_app(
             type(job_upload_ttl_seconds) not in {float, int} or job_upload_ttl_seconds < 0):
         raise ValueError("job_upload_ttl_seconds must be nonnegative or null")
     sensitive_paths = _path_variants((*catalog.values(), *defaults.cuda_dll_dirs))
+    live_config = None
+    if realtime_config is not None:
+        from .realtime_service import RealtimeConfig
+        live_config = RealtimeConfig.from_file(realtime_config)
 
     @asynccontextmanager
     async def lifespan(app: FastAPI):
@@ -361,6 +366,7 @@ def create_app(
         app.state.sessions = {}
         app.state.jobs = set()
         app.state.session_lock = threading.RLock()
+        app.state.realtime = None
         try:
             for language, alias in route_models.items():
                 try:
@@ -373,6 +379,17 @@ def create_app(
                     raise ValueError("Route language does not match its model")
             if initial_model is not None:
                 await run_in_threadpool(shared.switch, catalog[initial_model], options=defaults)
+            if live_config is not None:
+                from .realtime_service import RealtimeService, UnavailableRealtime
+                live_manager = shared.manager_for('csl') if hasattr(shared,'manager_for') else shared
+                live_service = RealtimeService(live_manager,live_config)
+                try:
+                    await run_in_threadpool(live_service.warmup)
+                    app.state.realtime = live_service
+                except Exception as error:
+                    await run_in_threadpool(live_service.close)
+                    app.state.realtime = UnavailableRealtime()
+                    _LOGGER.warning('Live CSL initialization failed: %s', type(error).__name__)
             # P0-A V1 job layer (T-A2-2/T-A2-3): store + optional recorder.
             from .job_runner import JobStore
             app.state.job_store = JobStore(max_jobs=job_max_store)
@@ -388,6 +405,8 @@ def create_app(
                 app.state.job_store.persistence_path = app.state.job_run_directory / "jobs.jsonl"
             yield
         finally:
+            if app.state.realtime is not None:
+                await run_in_threadpool(app.state.realtime.close)
             for session in app.state.sessions.values():
                 session.close()
             await run_in_threadpool(shared.close)
@@ -401,6 +420,8 @@ def create_app(
     app.router.route_class = _BoundedMultipartRoute
     app.add_middleware(_BoundedRequestMiddleware, limit=max_upload_bytes + _FORM_OVERHEAD_BYTES,
                        bearer_token=bearer_token)
+    from .realtime_routes import mount_realtime_routes
+    mount_realtime_routes(app, lambda:getattr(app.state,'realtime',None), bearer_token=bearer_token)
 
     @app.exception_handler(ApiError)
     async def api_error(request: Request, exc: ApiError):

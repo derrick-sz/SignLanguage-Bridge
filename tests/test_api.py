@@ -431,7 +431,7 @@ def test_cli_default_bind_single_worker_and_env_token(tmp_path, monkeypatch):
     called = []
     monkeypatch.setattr(uvicorn, "run", lambda app, **kwargs: called.append((app, kwargs)))
     assert api_cli.main(["--catalog", str(path), "--model", "rf", "--device", "cpu"]) == 0
-    assert called[0][1] == {"host": "127.0.0.1", "port": 8765, "workers": 1}
+    assert called[0][1] == {"host": "127.0.0.1", "port": 8765, "workers": 1, "ws_max_size": 256*1024}
 
 
 def test_factory_rejects_bad_server_configuration(tmp_path):

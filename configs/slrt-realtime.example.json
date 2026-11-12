@@ -1,0 +1,14 @@
+{
+  "backend": "slrt_online_csl",
+  "resource_dir": "../models/external/EMNLP24_Online/CSL-Daily",
+  "rtmpose_cache_dir": "../models/external/uni_sign/rtmlib-cache",
+  "device": "cuda",
+  "pose_device": "cuda",
+  "pose_backend": "rtmpose-experimental",
+  "precision": "float16",
+  "pose_detect_stride": 5,
+  "window_size": 16,
+  "stride": 4,
+  "vote_size": 3,
+  "queue_size": 16
+}

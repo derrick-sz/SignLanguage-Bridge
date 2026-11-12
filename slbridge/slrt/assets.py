@@ -71,6 +71,8 @@ class SLRTConfig:
     vote_size: int = 7
     pose_backend: str = 'hrnet'
     pose_device: str = 'auto'
+    pose_detect_stride: int = 1
+    precision: str = 'float32'
     detector_config: str | None = None
     detector_checkpoint: str | None = None
     hrnet_config: str | None = None
@@ -85,6 +87,12 @@ class SLRTConfig:
             raise ValueError('This trained SLRT checkpoint supports CSL only')
         if self.device not in {'cpu', 'cuda', 'auto'} or self.pose_device not in {'cpu', 'cuda', 'auto'}:
             raise ValueError('device must be auto, cpu or cuda')
+        if type(self.pose_detect_stride) is not int or not 1 <= self.pose_detect_stride <= 30:
+            raise ValueError('pose_detect_stride must be an integer in [1,30]')
+        if self.precision not in {'float32', 'float16'}:
+            raise ValueError('precision must be float32 or float16')
+        if self.precision == 'float16' and self.device == 'cpu':
+            raise ValueError('float16 precision requires CUDA')
         if type(self.window_size) is not int or self.window_size < 16 or self.window_size > 64 or self.window_size % 8:
             raise ValueError('window_size must be a multiple of 8 in [16,64]; only 16 is the trained protocol')
         for name in ('stride', 'cpu_threads', 'queue_size', 'max_gloss_history'):

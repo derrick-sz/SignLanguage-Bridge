@@ -1,6 +1,7 @@
 -r requirements-core.txt
 fastapi==0.118.0
 uvicorn==0.37.0
+websockets==15.0.1
 python-multipart==0.0.20
 pydantic==2.14.0
 starlette==0.48.0

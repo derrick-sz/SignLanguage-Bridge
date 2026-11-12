@@ -1,0 +1,2408 @@
+{
+  "schema_version": 1,
+  "purpose": "static_reuse_candidate_catalog_not_production_dictionary",
+  "archive_sha256": "4d98380ac0fe08db90b042df63528ae9be5c96b93f492625ec27a015ea5edae5",
+  "language_validation": "NOT_RUN",
+  "clips": [
+    {
+      "group": "t08_reference",
+      "clip_id": "pilot-greeting-answer-002",
+      "text_label": "是啊，你过得好不好？",
+      "aliases": [
+        "是啊，你过得好不好？"
+      ],
+      "fps": 25.0,
+      "frames": 174,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/t08-motion.json",
+      "member_sha256": "0087d5024d320ea2564640f538e4cc7a8ff06f36898f9875c32d9add94ed8a6f",
+      "pose_shape": [
+        174,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "86d7d13f742cb4cfbc441a3917118d8f7a2e4ad5d8470d3174883fe35a28f8a8",
+      "motion_review_status": null,
+      "human_motion_quality_approved": false,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "t08_reference",
+      "clip_id": "pilot-greeting-how-004",
+      "text_label": "很好，你呢？",
+      "aliases": [
+        "很好，你呢？"
+      ],
+      "fps": 25.0,
+      "frames": 153,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/t08-motion.json",
+      "member_sha256": "0087d5024d320ea2564640f538e4cc7a8ff06f36898f9875c32d9add94ed8a6f",
+      "pose_shape": [
+        153,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "86d7d13f742cb4cfbc441a3917118d8f7a2e4ad5d8470d3174883fe35a28f8a8",
+      "motion_review_status": null,
+      "human_motion_quality_approved": false,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "t08_reference",
+      "clip_id": "pilot-greeting-busy-005",
+      "text_label": "工作忙吗？",
+      "aliases": [
+        "工作忙吗？"
+      ],
+      "fps": 25.0,
+      "frames": 148,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/t08-motion.json",
+      "member_sha256": "0087d5024d320ea2564640f538e4cc7a8ff06f36898f9875c32d9add94ed8a6f",
+      "pose_shape": [
+        148,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "86d7d13f742cb4cfbc441a3917118d8f7a2e4ad5d8470d3174883fe35a28f8a8",
+      "motion_review_status": null,
+      "human_motion_quality_approved": false,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "t08_reference",
+      "clip_id": "pilot-greeting-lunch-006",
+      "text_label": "一起去吃饭吧！我请客。",
+      "aliases": [
+        "一起去吃饭吧！我请客。"
+      ],
+      "fps": 25.0,
+      "frames": 153,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/t08-motion.json",
+      "member_sha256": "0087d5024d320ea2564640f538e4cc7a8ff06f36898f9875c32d9add94ed8a6f",
+      "pose_shape": [
+        153,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "86d7d13f742cb4cfbc441a3917118d8f7a2e4ad5d8470d3174883fe35a28f8a8",
+      "motion_review_status": null,
+      "human_motion_quality_approved": false,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "t08_reference",
+      "clip_id": "pilot-greeting-well-007",
+      "text_label": "我也很好！",
+      "aliases": [
+        "我也很好！"
+      ],
+      "fps": 25.0,
+      "frames": 122,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/t08-motion.json",
+      "member_sha256": "0087d5024d320ea2564640f538e4cc7a8ff06f36898f9875c32d9add94ed8a6f",
+      "pose_shape": [
+        122,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "86d7d13f742cb4cfbc441a3917118d8f7a2e4ad5d8470d3174883fe35a28f8a8",
+      "motion_review_status": null,
+      "human_motion_quality_approved": false,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "t08_reference",
+      "clip_id": "pilot-greeting-overtime-008",
+      "text_label": "很忙，最近经常加班。",
+      "aliases": [
+        "很忙，最近经常加班。"
+      ],
+      "fps": 25.0,
+      "frames": 177,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/t08-motion.json",
+      "member_sha256": "0087d5024d320ea2564640f538e4cc7a8ff06f36898f9875c32d9add94ed8a6f",
+      "pose_shape": [
+        177,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "86d7d13f742cb4cfbc441a3917118d8f7a2e4ad5d8470d3174883fe35a28f8a8",
+      "motion_review_status": null,
+      "human_motion_quality_approved": false,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "t08_reference",
+      "clip_id": "pilot-hospital-cold-009",
+      "text_label": "有些感冒，喉咙发炎了，其他都很好，别担心。",
+      "aliases": [
+        "有些感冒，喉咙发炎了，其他都很好，别担心。"
+      ],
+      "fps": 25.0,
+      "frames": 282,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/t08-motion.json",
+      "member_sha256": "0087d5024d320ea2564640f538e4cc7a8ff06f36898f9875c32d9add94ed8a6f",
+      "pose_shape": [
+        282,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "ef6dbafaabf0c13c634fe50f37c5e1f498f8307a6b304020c570ea991919060f",
+      "motion_review_status": null,
+      "human_motion_quality_approved": false,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "t08_reference",
+      "clip_id": "pilot-hospital-rest-010",
+      "text_label": "好好休息，大概一周就会好转。",
+      "aliases": [
+        "好好休息，大概一周就会好转。"
+      ],
+      "fps": 25.0,
+      "frames": 159,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/t08-motion.json",
+      "member_sha256": "0087d5024d320ea2564640f538e4cc7a8ff06f36898f9875c32d9add94ed8a6f",
+      "pose_shape": [
+        159,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "ef6dbafaabf0c13c634fe50f37c5e1f498f8307a6b304020c570ea991919060f",
+      "motion_review_status": null,
+      "human_motion_quality_approved": false,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "t08_reference",
+      "clip_id": "pilot-hospital-allergy-011",
+      "text_label": "可以。药物过敏吗？",
+      "aliases": [
+        "可以。药物过敏吗？"
+      ],
+      "fps": 25.0,
+      "frames": 180,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/t08-motion.json",
+      "member_sha256": "0087d5024d320ea2564640f538e4cc7a8ff06f36898f9875c32d9add94ed8a6f",
+      "pose_shape": [
+        180,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "ef6dbafaabf0c13c634fe50f37c5e1f498f8307a6b304020c570ea991919060f",
+      "motion_review_status": null,
+      "human_motion_quality_approved": false,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "t08_reference",
+      "clip_id": "pilot-hospital-dose-012",
+      "text_label": "这个药每天三次，早、中、晚各一次，每次2片，饭后服用。",
+      "aliases": [
+        "这个药每天三次，早、中、晚各一次，每次2片，饭后服用。"
+      ],
+      "fps": 25.0,
+      "frames": 318,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/t08-motion.json",
+      "member_sha256": "0087d5024d320ea2564640f538e4cc7a8ff06f36898f9875c32d9add94ed8a6f",
+      "pose_shape": [
+        318,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "ef6dbafaabf0c13c634fe50f37c5e1f498f8307a6b304020c570ea991919060f",
+      "motion_review_status": null,
+      "human_motion_quality_approved": false,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "t08_reference",
+      "clip_id": "pilot-hospital-pay-013",
+      "text_label": "先交费，然后去取药。",
+      "aliases": [
+        "先交费，然后去取药。"
+      ],
+      "fps": 25.0,
+      "frames": 163,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/t08-motion.json",
+      "member_sha256": "0087d5024d320ea2564640f538e4cc7a8ff06f36898f9875c32d9add94ed8a6f",
+      "pose_shape": [
+        163,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "ef6dbafaabf0c13c634fe50f37c5e1f498f8307a6b304020c570ea991919060f",
+      "motion_review_status": null,
+      "human_motion_quality_approved": false,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "t08_reference",
+      "clip_id": "pilot-hospital-temperature-014",
+      "text_label": "刚量过体温，36.2度，嗓子疼，头痛，流鼻涕。",
+      "aliases": [
+        "刚量过体温，36.2度，嗓子疼，头痛，流鼻涕。"
+      ],
+      "fps": 25.0,
+      "frames": 329,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/t08-motion.json",
+      "member_sha256": "0087d5024d320ea2564640f538e4cc7a8ff06f36898f9875c32d9add94ed8a6f",
+      "pose_shape": [
+        329,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "ef6dbafaabf0c13c634fe50f37c5e1f498f8307a6b304020c570ea991919060f",
+      "motion_review_status": null,
+      "human_motion_quality_approved": false,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "t08_reference",
+      "clip_id": "pilot-hospital-serious-015",
+      "text_label": "有什么问题吗？严重吗？",
+      "aliases": [
+        "有什么问题吗？严重吗？"
+      ],
+      "fps": 25.0,
+      "frames": 155,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/t08-motion.json",
+      "member_sha256": "0087d5024d320ea2564640f538e4cc7a8ff06f36898f9875c32d9add94ed8a6f",
+      "pose_shape": [
+        155,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "ef6dbafaabf0c13c634fe50f37c5e1f498f8307a6b304020c570ea991919060f",
+      "motion_review_status": null,
+      "human_motion_quality_approved": false,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "t08_reference",
+      "clip_id": "pilot-hospital-iv-016",
+      "text_label": "我需要打针、输液吗？",
+      "aliases": [
+        "我需要打针、输液吗？"
+      ],
+      "fps": 25.0,
+      "frames": 219,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/t08-motion.json",
+      "member_sha256": "0087d5024d320ea2564640f538e4cc7a8ff06f36898f9875c32d9add94ed8a6f",
+      "pose_shape": [
+        219,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "ef6dbafaabf0c13c634fe50f37c5e1f498f8307a6b304020c570ea991919060f",
+      "motion_review_status": null,
+      "human_motion_quality_approved": false,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "t08_candidate",
+      "clip_id": "new-fe2208d9680580cd-0087",
+      "text_label": "如果下雨可以借你一把。",
+      "aliases": [
+        "如果下雨可以借你一把。"
+      ],
+      "fps": 25.0,
+      "frames": 100,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/t08-candidates.json",
+      "member_sha256": "ea273b6279f72b05f84c9915f02ce651cc805ec2f476bbac77d7fc095c69409f",
+      "pose_shape": [
+        100,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "7e92e6c9f5503c6dac9ccbf35ac88366519b2dc6239712ece786f04509397ce7",
+      "motion_review_status": null,
+      "human_motion_quality_approved": null,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "t08_candidate",
+      "clip_id": "new-8ffc3bdb3f8d0763-0124",
+      "text_label": "我给她买了一件衣服",
+      "aliases": [
+        "我给她买了一件衣服"
+      ],
+      "fps": 25.0,
+      "frames": 150,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/t08-candidates.json",
+      "member_sha256": "ea273b6279f72b05f84c9915f02ce651cc805ec2f476bbac77d7fc095c69409f",
+      "pose_shape": [
+        150,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "9a2fd59ff2f247b98821a9dc35f0c3fe5192211041e36e53fdbc0254a4ac5127",
+      "motion_review_status": null,
+      "human_motion_quality_approved": null,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "t08_candidate",
+      "clip_id": "new-58a5b3d6622ea72a-0068",
+      "text_label": "去人民广场怎么走？",
+      "aliases": [
+        "去人民广场怎么走？"
+      ],
+      "fps": 25.0,
+      "frames": 200,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/t08-candidates.json",
+      "member_sha256": "ea273b6279f72b05f84c9915f02ce651cc805ec2f476bbac77d7fc095c69409f",
+      "pose_shape": [
+        200,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "08859f2a3cdd1351c3e2f5541295fab6542c839f5e5e5220ee458a4b46b687dd",
+      "motion_review_status": null,
+      "human_motion_quality_approved": null,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-0ad6eaefc7647487-cap-0043",
+      "text_label": "通知",
+      "aliases": [
+        "通知"
+      ],
+      "fps": 25.0,
+      "frames": 350,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-0ad6eaefc7647487-cap-0043.json",
+      "member_sha256": "4514de1548f987900fc1b346dee13e5f9ffe6f03f6b5017bdc3e5ae91651ef8d",
+      "pose_shape": [
+        350,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "0ad6eaefc764748726222bfe0caa950b9b7e3d5f9d240459191777f4c793337b",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-0ad6eaefc7647487-cap-0054",
+      "text_label": "协调",
+      "aliases": [
+        "协调"
+      ],
+      "fps": 25.0,
+      "frames": 250,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-0ad6eaefc7647487-cap-0054.json",
+      "member_sha256": "af9b3ad2aa1119fa4f654bad1abfa3a7cfb3040c1d356a1e7259f3b556ed3672",
+      "pose_shape": [
+        250,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "0ad6eaefc764748726222bfe0caa950b9b7e3d5f9d240459191777f4c793337b",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-0ad6eaefc7647487-cap-0067",
+      "text_label": "我去开会汇报抽样调查落实的情况",
+      "aliases": [
+        "我去开会汇报抽样调查落实的情况"
+      ],
+      "fps": 25.0,
+      "frames": 300,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-0ad6eaefc7647487-cap-0067.json",
+      "member_sha256": "91a8f852780699f4614279c7680c2c236aa4769de03f30ed5e2133b55e5b6c80",
+      "pose_shape": [
+        300,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "0ad6eaefc764748726222bfe0caa950b9b7e3d5f9d240459191777f4c793337b",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-1918b4f42eac7d78-cap-0009",
+      "text_label": "认识你很高兴",
+      "aliases": [
+        "认识你很高兴"
+      ],
+      "fps": 25.0,
+      "frames": 200,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-1918b4f42eac7d78-cap-0009.json",
+      "member_sha256": "02e3cbfaceca600f560b83ccfa5787590ab19ca19a4429fe7336db65e91547af",
+      "pose_shape": [
+        200,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "1918b4f42eac7d7892c2bcb0ed415a56f9010ffb285583a388cd80c905c3ceff",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-1918b4f42eac7d78-cap-0032",
+      "text_label": "这句话做工作要注意方式方法",
+      "aliases": [
+        "这句话做工作要注意方式方法"
+      ],
+      "fps": 25.0,
+      "frames": 300,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-1918b4f42eac7d78-cap-0032.json",
+      "member_sha256": "0302a1ad89e12c82ee58fd7d424d323922391444506518067f5477b40052fcfb",
+      "pose_shape": [
+        300,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "1918b4f42eac7d7892c2bcb0ed415a56f9010ffb285583a388cd80c905c3ceff",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-1e9f8dcd51272a10-cap-0006",
+      "text_label": "企业",
+      "aliases": [
+        "企业"
+      ],
+      "fps": 25.0,
+      "frames": 200,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-1e9f8dcd51272a10-cap-0006.json",
+      "member_sha256": "e1fa164324b4d4831e7b24493902ca935acf2cd5f27a37c08cba528620b5af50",
+      "pose_shape": [
+        200,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "1e9f8dcd51272a101825b86bdf56ecc060bebeff8ec52dea033362634a195b70",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-1e9f8dcd51272a10-cap-0059",
+      "text_label": "工具放在工厂仓库里",
+      "aliases": [
+        "工具放在工厂仓库里"
+      ],
+      "fps": 25.0,
+      "frames": 200,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-1e9f8dcd51272a10-cap-0059.json",
+      "member_sha256": "c498ceed0bbeccc409e41afb62f3253b26b2b5154a5c2611626cc7008cb7a517",
+      "pose_shape": [
+        200,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "1e9f8dcd51272a101825b86bdf56ecc060bebeff8ec52dea033362634a195b70",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-1e9f8dcd51272a10-cap-0068",
+      "text_label": "纺织厂",
+      "aliases": [
+        "纺织厂"
+      ],
+      "fps": 25.0,
+      "frames": 200,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-1e9f8dcd51272a10-cap-0068.json",
+      "member_sha256": "6b0790e2438b0d544e0033f704837a96a5c080d8ff255c4d61b27afaea2fa4a7",
+      "pose_shape": [
+        200,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "1e9f8dcd51272a101825b86bdf56ecc060bebeff8ec52dea033362634a195b70",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-231eb9ae6a4196e1-cap-0009",
+      "text_label": "科学技术是第一生产力",
+      "aliases": [
+        "科学技术是第一生产力"
+      ],
+      "fps": 25.0,
+      "frames": 200,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-231eb9ae6a4196e1-cap-0009.json",
+      "member_sha256": "18b8ab2a2a503e6b201daf13709faea3586c425f7f54f4cf932c3391a9c767ac",
+      "pose_shape": [
+        200,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "231eb9ae6a4196e10f896590570a484243e7780404a9a376d48dcd65f1b95ff0",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-231eb9ae6a4196e1-cap-0052",
+      "text_label": "化学燃料对环境有污染",
+      "aliases": [
+        "化学燃料对环境有污染"
+      ],
+      "fps": 25.0,
+      "frames": 350,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-231eb9ae6a4196e1-cap-0052.json",
+      "member_sha256": "5e6f12dcb35acb02ca7ac70194ff6711abf616d347e42fc62c20a3c43457864c",
+      "pose_shape": [
+        350,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "231eb9ae6a4196e10f896590570a484243e7780404a9a376d48dcd65f1b95ff0",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-2940f3252f6cf6c2-cap-0021",
+      "text_label": "你的公司地址在哪里",
+      "aliases": [
+        "你的公司地址在哪里"
+      ],
+      "fps": 25.0,
+      "frames": 300,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-2940f3252f6cf6c2-cap-0021.json",
+      "member_sha256": "056827aba1916cc923071a01bd719e5ef942e804d8cc6477d43a1deb767204a8",
+      "pose_shape": [
+        300,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "2940f3252f6cf6c2d35d0e2d43eb535b03ec193b64312f955bce0432a643abd1",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-2f7f92954492c2b6-cap-0013",
+      "text_label": "诚实",
+      "aliases": [
+        "诚实"
+      ],
+      "fps": 25.0,
+      "frames": 250,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-2f7f92954492c2b6-cap-0013.json",
+      "member_sha256": "5ed797745b2c6b94b049e1955eac13187cee214ae692b0f14a02bc981706e4b3",
+      "pose_shape": [
+        250,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "2f7f92954492c2b6115af607e2c8671d7bfceac381b33f55a88d047902629aa0",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-2f7f92954492c2b6-cap-0024",
+      "text_label": "轻率",
+      "aliases": [
+        "轻率"
+      ],
+      "fps": 25.0,
+      "frames": 300,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-2f7f92954492c2b6-cap-0024.json",
+      "member_sha256": "2bc089113f2f916b8853727b6637b46c8b3f7bb755b763d826423d6ef5a3a7ff",
+      "pose_shape": [
+        300,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "2f7f92954492c2b6115af607e2c8671d7bfceac381b33f55a88d047902629aa0",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-2f7f92954492c2b6-cap-0034",
+      "text_label": "卓越",
+      "aliases": [
+        "卓越"
+      ],
+      "fps": 25.0,
+      "frames": 200,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-2f7f92954492c2b6-cap-0034.json",
+      "member_sha256": "fae2cf9a674eeda40f473d4a9fc405d2fbe6f2986c2f2fe89e5dc45bd0d81b36",
+      "pose_shape": [
+        200,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "2f7f92954492c2b6115af607e2c8671d7bfceac381b33f55a88d047902629aa0",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-3243956708faefef-cap-0027",
+      "text_label": "必须遵守国家法律",
+      "aliases": [
+        "必须遵守国家法律"
+      ],
+      "fps": 25.0,
+      "frames": 250,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-3243956708faefef-cap-0027.json",
+      "member_sha256": "5e69ac079e867a4df8778fe5e366ec7cc6f6ee7b75e2ff3873f8704e64c603fe",
+      "pose_shape": [
+        250,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "3243956708faefef989b9361a6705b53cd690d2a5120b9399f5596989446750f",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-3769d839ceae577a-cap-0015",
+      "text_label": "公里",
+      "aliases": [
+        "公里"
+      ],
+      "fps": 25.0,
+      "frames": 300,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-3769d839ceae577a-cap-0015.json",
+      "member_sha256": "320004f40d3892a6ceda929f26ee60015668a45aeefdb0f1a633bd966f0485b2",
+      "pose_shape": [
+        300,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "3769d839ceae577ac40387c5735c99904fc1f31a377d8ff7f56ba861bd9de564",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-3769d839ceae577a-cap-0032",
+      "text_label": "效率",
+      "aliases": [
+        "效率"
+      ],
+      "fps": 25.0,
+      "frames": 350,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-3769d839ceae577a-cap-0032.json",
+      "member_sha256": "44516c9ad602255b0e61851448806819de9b49e7d289e2fdcf1097a0b187492e",
+      "pose_shape": [
+        350,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "3769d839ceae577ac40387c5735c99904fc1f31a377d8ff7f56ba861bd9de564",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-3769d839ceae577a-cap-0057",
+      "text_label": "生命在于运动",
+      "aliases": [
+        "生命在于运动"
+      ],
+      "fps": 25.0,
+      "frames": 350,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-3769d839ceae577a-cap-0057.json",
+      "member_sha256": "66c47434aa18f07f58f432b9d2d6787cf5da259ef0328848119a6c7d500163e9",
+      "pose_shape": [
+        350,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "3769d839ceae577ac40387c5735c99904fc1f31a377d8ff7f56ba861bd9de564",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-37ed1b4b4811a5f7-cap-0040",
+      "text_label": "中午",
+      "aliases": [
+        "中午"
+      ],
+      "fps": 25.0,
+      "frames": 250,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-37ed1b4b4811a5f7-cap-0040.json",
+      "member_sha256": "40c818dc258415930f7a5318dec465e5b124a2a0fa1bcbd9473cb5c0105b998e",
+      "pose_shape": [
+        250,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "37ed1b4b4811a5f71a3ac7562dacb8958d02016cece5529493b495d3c8b99807",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-37ed1b4b4811a5f7-cap-0062",
+      "text_label": "季节",
+      "aliases": [
+        "季节"
+      ],
+      "fps": 25.0,
+      "frames": 300,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-37ed1b4b4811a5f7-cap-0062.json",
+      "member_sha256": "43117175b01e35bf5474815152dde7d29fe267e6ae27491748dd0e8a4a2a3e79",
+      "pose_shape": [
+        300,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "37ed1b4b4811a5f71a3ac7562dacb8958d02016cece5529493b495d3c8b99807",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-43995676038861bd-cap-0026",
+      "text_label": "邮局",
+      "aliases": [
+        "邮局"
+      ],
+      "fps": 25.0,
+      "frames": 350,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-43995676038861bd-cap-0026.json",
+      "member_sha256": "2d4d6e58724ed3a33aebbe189bc7b6249e87b504362b8240220ff5403d78b30f",
+      "pose_shape": [
+        350,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "43995676038861bd33e13f6744adaa1ab7f7a20270d033964571406e18e477e6",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-43995676038861bd-cap-0046",
+      "text_label": "棉花",
+      "aliases": [
+        "棉花"
+      ],
+      "fps": 25.0,
+      "frames": 350,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-43995676038861bd-cap-0046.json",
+      "member_sha256": "47ac2b83f7849f17ddc9d4e6e1f3d3d8cdee041abf1809781cb3f91e0db71f06",
+      "pose_shape": [
+        350,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "43995676038861bd33e13f6744adaa1ab7f7a20270d033964571406e18e477e6",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-43995676038861bd-cap-0067",
+      "text_label": "芝麻",
+      "aliases": [
+        "芝麻"
+      ],
+      "fps": 25.0,
+      "frames": 200,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-43995676038861bd-cap-0067.json",
+      "member_sha256": "876a132a917b6d08722e62c57370020d2719f6a407bf4c8d4a42be5c050c2e14",
+      "pose_shape": [
+        200,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "43995676038861bd33e13f6744adaa1ab7f7a20270d033964571406e18e477e6",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-4d896bcbac33e97f-cap-0014",
+      "text_label": "今天下午要开运动会",
+      "aliases": [
+        "今天下午要开运动会"
+      ],
+      "fps": 25.0,
+      "frames": 200,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-4d896bcbac33e97f-cap-0014.json",
+      "member_sha256": "17f50ab2aef396bca604717768d16941c1f4decd5c4e81225bcb90f25b29ed6b",
+      "pose_shape": [
+        200,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "4d896bcbac33e97fc4499cf13b233c7bd074a6ed45510786e2fbc722c25ec0c0",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-4d896bcbac33e97f-cap-0052",
+      "text_label": "他是上次跳高比赛冠军",
+      "aliases": [
+        "他是上次跳高比赛冠军"
+      ],
+      "fps": 25.0,
+      "frames": 350,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-4d896bcbac33e97f-cap-0052.json",
+      "member_sha256": "dadd3413f929dccaa2a6fa045c8855934adac1bb9e7b4d6784cbd5b99377495b",
+      "pose_shape": [
+        350,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "4d896bcbac33e97fc4499cf13b233c7bd074a6ed45510786e2fbc722c25ec0c0",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-4de2552e8bfaf1c7-cap-0042",
+      "text_label": "教育",
+      "aliases": [
+        "教育"
+      ],
+      "fps": 25.0,
+      "frames": 250,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-4de2552e8bfaf1c7-cap-0042.json",
+      "member_sha256": "45621f71203c567ad1bfee403943906863dbcf9754f2fb184edca4ae8400a85f",
+      "pose_shape": [
+        250,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "4de2552e8bfaf1c7c4f9d3774b3f8b21fabe6a9fa8e8f7fba264439503dd7237",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-4de2552e8bfaf1c7-cap-0054",
+      "text_label": "记者",
+      "aliases": [
+        "记者"
+      ],
+      "fps": 25.0,
+      "frames": 250,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-4de2552e8bfaf1c7-cap-0054.json",
+      "member_sha256": "776f8b6d698f6e471e32472ce18440babe5874c9d83422688d638bb1e1e08f50",
+      "pose_shape": [
+        250,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "4de2552e8bfaf1c7c4f9d3774b3f8b21fabe6a9fa8e8f7fba264439503dd7237",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-4de2552e8bfaf1c7-cap-0065",
+      "text_label": "职位",
+      "aliases": [
+        "职位"
+      ],
+      "fps": 25.0,
+      "frames": 250,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-4de2552e8bfaf1c7-cap-0065.json",
+      "member_sha256": "95a64ac3d758a8c6bb1cf448bac644ce8b0e5f9b475168d07fd1d31ce43573a0",
+      "pose_shape": [
+        250,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "4de2552e8bfaf1c7c4f9d3774b3f8b21fabe6a9fa8e8f7fba264439503dd7237",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-6fcdf63697987efd-cap-0137",
+      "text_label": "欢迎你到我家来玩儿",
+      "aliases": [
+        "欢迎你到我家来玩儿"
+      ],
+      "fps": 25.0,
+      "frames": 200,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-6fcdf63697987efd-cap-0137.json",
+      "member_sha256": "edfd5fb62bc55d473d2928d55598ae5fb5d1ff7732e500a709904990293040dd",
+      "pose_shape": [
+        200,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "6fcdf63697987efd028b966db3fa6ea03cd42d6abf4279dab738ae1f4e5f7ad4",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-721dfd733ac0d1da-cap-0022",
+      "text_label": "必须",
+      "aliases": [
+        "必须"
+      ],
+      "fps": 25.0,
+      "frames": 200,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-721dfd733ac0d1da-cap-0022.json",
+      "member_sha256": "c330db9c03a161d70713019b7b98dddd26cfc238450726d8a1a59d017d2cb775",
+      "pose_shape": [
+        200,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "721dfd733ac0d1dafea0e2baa75d832a5af3fe4589481fcd32d5fb9c34935dac",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-721dfd733ac0d1da-cap-0059",
+      "text_label": "亲密的好朋友都很有默契",
+      "aliases": [
+        "亲密的好朋友都很有默契"
+      ],
+      "fps": 25.0,
+      "frames": 600,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-721dfd733ac0d1da-cap-0059.json",
+      "member_sha256": "b383dff7c4af136510a2c21c64f95d4575bd15411eaae9c152d0d31cef94357f",
+      "pose_shape": [
+        600,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "721dfd733ac0d1dafea0e2baa75d832a5af3fe4589481fcd32d5fb9c34935dac",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-7a6dd49e8394db6e-cap-0067",
+      "text_label": "我爸爸每天早上都要看报纸",
+      "aliases": [
+        "我爸爸每天早上都要看报纸"
+      ],
+      "fps": 25.0,
+      "frames": 300,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-7a6dd49e8394db6e-cap-0067.json",
+      "member_sha256": "7a9bee8d0d933f8c469eb98f625efe97cb958d1e8e84951ac263f22a4849df8d",
+      "pose_shape": [
+        300,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "7a6dd49e8394db6e3fc5374b6daa26cd48c0a63c451d14d4e598ce291429c743",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-7a6dd49e8394db6e-cap-0084",
+      "text_label": "小王大学毕业后去中学做教师",
+      "aliases": [
+        "小王大学毕业后去中学做教师"
+      ],
+      "fps": 25.0,
+      "frames": 350,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-7a6dd49e8394db6e-cap-0084.json",
+      "member_sha256": "b599cc1c5824fe661ab4803a1a19281d12d467ea3c852d03870cbf01a1b21ccf",
+      "pose_shape": [
+        350,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "7a6dd49e8394db6e3fc5374b6daa26cd48c0a63c451d14d4e598ce291429c743",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-7f82e48bebd0b4c8-cap-0024",
+      "text_label": "我的愿望是世界和平",
+      "aliases": [
+        "我的愿望是世界和平"
+      ],
+      "fps": 25.0,
+      "frames": 200,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-7f82e48bebd0b4c8-cap-0024.json",
+      "member_sha256": "50e6433a6ee575e93d97a7b39c5e0ce521cf0f999b0b4af23ff2d8a46d8f5c12",
+      "pose_shape": [
+        200,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "7f82e48bebd0b4c875afd0c968d4feabf6741bd407ee3de3bbd639e3df37839a",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-7f82e48bebd0b4c8-cap-0064",
+      "text_label": "1979年1月1日中美正式建交",
+      "aliases": [
+        "1979年1月1日中美正式建交"
+      ],
+      "fps": 25.0,
+      "frames": 450,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-7f82e48bebd0b4c8-cap-0064.json",
+      "member_sha256": "787a82fe12f8def9642125280138e1ada5c2509592c80c20a58554bb9e195f07",
+      "pose_shape": [
+        450,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "7f82e48bebd0b4c875afd0c968d4feabf6741bd407ee3de3bbd639e3df37839a",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-7f82e48bebd0b4c8-cap-0088",
+      "text_label": "构建和谐社会",
+      "aliases": [
+        "构建和谐社会"
+      ],
+      "fps": 25.0,
+      "frames": 250,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-7f82e48bebd0b4c8-cap-0088.json",
+      "member_sha256": "5e30319919a95eef9861c483ba5dd52f5820319badc65046f5c43ba756c0c893",
+      "pose_shape": [
+        250,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "7f82e48bebd0b4c875afd0c968d4feabf6741bd407ee3de3bbd639e3df37839a",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-8586bbbd011ee26f-cap-0038",
+      "text_label": "我家附近有一家咖啡店",
+      "aliases": [
+        "我家附近有一家咖啡店"
+      ],
+      "fps": 25.0,
+      "frames": 600,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-8586bbbd011ee26f-cap-0038.json",
+      "member_sha256": "cdff7d53eaf1ba47471857660c4db2737e7c78cd0c267cdb03a887ab04f5417b",
+      "pose_shape": [
+        600,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "8586bbbd011ee26f3ebb0ba8b6aadf47968f876220f30e798a74f1d04e0e0a16",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-8586bbbd011ee26f-cap-0068",
+      "text_label": "洗衣机",
+      "aliases": [
+        "洗衣机"
+      ],
+      "fps": 25.0,
+      "frames": 450,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-8586bbbd011ee26f-cap-0068.json",
+      "member_sha256": "7328267db0fcbfbbec9fbac23c0fadf442753cc7c67be0d995a60ed48f766e77",
+      "pose_shape": [
+        450,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "8586bbbd011ee26f3ebb0ba8b6aadf47968f876220f30e798a74f1d04e0e0a16",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-8586bbbd011ee26f-cap-0072",
+      "text_label": "煤气灶",
+      "aliases": [
+        "煤气灶"
+      ],
+      "fps": 25.0,
+      "frames": 450,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-8586bbbd011ee26f-cap-0072.json",
+      "member_sha256": "9045695dac22a3464ef7f01a1f05caa51448a5c0db36d9626b928aa58f2e24d2",
+      "pose_shape": [
+        450,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "8586bbbd011ee26f3ebb0ba8b6aadf47968f876220f30e798a74f1d04e0e0a16",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-91a3d8b79835b43a-cap-0048",
+      "text_label": "早上和晚上都很冷多穿衣服",
+      "aliases": [
+        "早上和晚上都很冷多穿衣服"
+      ],
+      "fps": 25.0,
+      "frames": 350,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-91a3d8b79835b43a-cap-0048.json",
+      "member_sha256": "53ac2c7f7e171c27ea2080824dde8382268a8c09d67b1c0a214bf73e5880f10b",
+      "pose_shape": [
+        350,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "91a3d8b79835b43ae02215e1f49e98b50f4cbddbd496f03c4addcaa7e83687ee",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-91a3d8b79835b43a-cap-0087",
+      "text_label": "你五月中旬的计划是什么",
+      "aliases": [
+        "你五月中旬的计划是什么"
+      ],
+      "fps": 25.0,
+      "frames": 250,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-91a3d8b79835b43a-cap-0087.json",
+      "member_sha256": "8d96078caba57d7644da35d0d9acd38d5afd4e1cc3ebc0f94b5d38d757a753a6",
+      "pose_shape": [
+        250,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "91a3d8b79835b43ae02215e1f49e98b50f4cbddbd496f03c4addcaa7e83687ee",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-96970a786fe72c0c-cap-0020",
+      "text_label": "欢迎",
+      "aliases": [
+        "欢迎"
+      ],
+      "fps": 25.0,
+      "frames": 450,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-96970a786fe72c0c-cap-0020.json",
+      "member_sha256": "faf5c7f5c1c6270d705ee8ccc447166e5ac43624d1e16f41b49b6af7fb70c132",
+      "pose_shape": [
+        450,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "96970a786fe72c0c5d48a6f114c246a243b8977c0239a73762c7d22093e70d7d",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-96970a786fe72c0c-cap-0028",
+      "text_label": "要求",
+      "aliases": [
+        "要求"
+      ],
+      "fps": 25.0,
+      "frames": 350,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-96970a786fe72c0c-cap-0028.json",
+      "member_sha256": "b59e7999c0c1e9084d14223d0f5ddb10ee60adc536979c69a6ad409d34ec40e9",
+      "pose_shape": [
+        350,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "96970a786fe72c0c5d48a6f114c246a243b8977c0239a73762c7d22093e70d7d",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-96970a786fe72c0c-cap-0047",
+      "text_label": "安慰",
+      "aliases": [
+        "安慰"
+      ],
+      "fps": 25.0,
+      "frames": 350,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-96970a786fe72c0c-cap-0047.json",
+      "member_sha256": "e44a265667eee9d9bd77b407c1dd9f02542634bbca6aca75d529fa0248722b89",
+      "pose_shape": [
+        350,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "96970a786fe72c0c5d48a6f114c246a243b8977c0239a73762c7d22093e70d7d",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-9a33d14220f9151c-cap-0029",
+      "text_label": "我喜欢给小朋友讲故事",
+      "aliases": [
+        "我喜欢给小朋友讲故事"
+      ],
+      "fps": 25.0,
+      "frames": 300,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-9a33d14220f9151c-cap-0029.json",
+      "member_sha256": "3513a7f87a3b8158aef9af2e85912846a249d79d6260c2b68fe6f915b10525a9",
+      "pose_shape": [
+        300,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "9a33d14220f9151c2619a29e2400c296af698eec65114d1fbd0ad91604b9b966",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-9a33d14220f9151c-cap-0067",
+      "text_label": "诗歌是一种文学形式",
+      "aliases": [
+        "诗歌是一种文学形式"
+      ],
+      "fps": 25.0,
+      "frames": 350,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-9a33d14220f9151c-cap-0067.json",
+      "member_sha256": "93d33f092b5b6698b1bdc79b301dbe154d9290f303f13c66c5cdae651057b589",
+      "pose_shape": [
+        350,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "9a33d14220f9151c2619a29e2400c296af698eec65114d1fbd0ad91604b9b966",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-9d441e9bde7c3e44-cap-0039",
+      "text_label": "窍门",
+      "aliases": [
+        "窍门"
+      ],
+      "fps": 25.0,
+      "frames": 300,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-9d441e9bde7c3e44-cap-0039.json",
+      "member_sha256": "ffdf9fe6e12abd90bfb3b261db4ffb14288b2690a50847a98065752d7ebf0a3a",
+      "pose_shape": [
+        300,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "9d441e9bde7c3e449e367850125240a010b17009bbe3a39f27547b49ea33a58b",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-9d441e9bde7c3e44-cap-0073",
+      "text_label": "这个专业就业前景良好",
+      "aliases": [
+        "这个专业就业前景良好"
+      ],
+      "fps": 25.0,
+      "frames": 400,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-9d441e9bde7c3e44-cap-0073.json",
+      "member_sha256": "d75b9295a7e343a3d8c67ad36d1d57f998d1c228d43855835ee6ea2c92a04fdb",
+      "pose_shape": [
+        400,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "9d441e9bde7c3e449e367850125240a010b17009bbe3a39f27547b49ea33a58b",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-9d441e9bde7c3e44-cap-0086",
+      "text_label": "生活态度要乐观",
+      "aliases": [
+        "生活态度要乐观"
+      ],
+      "fps": 25.0,
+      "frames": 400,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-9d441e9bde7c3e44-cap-0086.json",
+      "member_sha256": "6a0c61ac50dc24f368f53f8b2cdceb443823025124507201bafe2c86eaa191dd",
+      "pose_shape": [
+        400,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "9d441e9bde7c3e449e367850125240a010b17009bbe3a39f27547b49ea33a58b",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-b030bc07e17cb6ad-cap-0012",
+      "text_label": "他是这个领域的专家",
+      "aliases": [
+        "他是这个领域的专家"
+      ],
+      "fps": 25.0,
+      "frames": 300,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-b030bc07e17cb6ad-cap-0012.json",
+      "member_sha256": "547aee3de7119e4b405313d9979cc12de0db8de970a7afd2cfad7547c1852b13",
+      "pose_shape": [
+        300,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "b030bc07e17cb6ada1a1f3de8b380bfe18a348f7872d750ede3b5a6779c89f54",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-b030bc07e17cb6ad-cap-0043",
+      "text_label": "列队欢迎国宾",
+      "aliases": [
+        "列队欢迎国宾"
+      ],
+      "fps": 25.0,
+      "frames": 350,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-b030bc07e17cb6ad-cap-0043.json",
+      "member_sha256": "a2e07613019ae23d235bbdd3188ab4a43a8e6825ed3c19770715c4204e24b412",
+      "pose_shape": [
+        350,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "b030bc07e17cb6ada1a1f3de8b380bfe18a348f7872d750ede3b5a6779c89f54",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-bf6aa7dc258c2d92-cap-0032",
+      "text_label": "去建设银行存钱",
+      "aliases": [
+        "去建设银行存钱"
+      ],
+      "fps": 25.0,
+      "frames": 250,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-bf6aa7dc258c2d92-cap-0032.json",
+      "member_sha256": "f7f8fb19f5faf381132ba12bc29cb75492dabc6b3e782cc81910b91c70cfa11d",
+      "pose_shape": [
+        250,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "bf6aa7dc258c2d92a727280c96449815f334d919d0fcf6df9816eaacc5766583",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-c67cf83aaea23b7e-cap-0041",
+      "text_label": "省会",
+      "aliases": [
+        "省会"
+      ],
+      "fps": 25.0,
+      "frames": 200,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-c67cf83aaea23b7e-cap-0041.json",
+      "member_sha256": "83a08a90a0573c7d3efa775337a9ea6221fe88158960479a0434a2f38954f9aa",
+      "pose_shape": [
+        200,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "c67cf83aaea23b7ee2c8e2b55709fe1a6bea52e71bcfba68371e0397c2e32ff8",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-c67cf83aaea23b7e-cap-0055",
+      "text_label": "新疆",
+      "aliases": [
+        "新疆"
+      ],
+      "fps": 25.0,
+      "frames": 200,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-c67cf83aaea23b7e-cap-0055.json",
+      "member_sha256": "d71f73a6e04d15c03812d9aa512d7e6018c1b98ece9b7039957ea192851788dd",
+      "pose_shape": [
+        200,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "c67cf83aaea23b7ee2c8e2b55709fe1a6bea52e71bcfba68371e0397c2e32ff8",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-c67cf83aaea23b7e-cap-0060",
+      "text_label": "长春",
+      "aliases": [
+        "长春"
+      ],
+      "fps": 25.0,
+      "frames": 200,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-c67cf83aaea23b7e-cap-0060.json",
+      "member_sha256": "2d9377e47d283f4fec11ab08cfc3e2607e92b2fd42bf71812890a839b236b7b7",
+      "pose_shape": [
+        200,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "c67cf83aaea23b7ee2c8e2b55709fe1a6bea52e71bcfba68371e0397c2e32ff8",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-cb8ac953180a2b6e-cap-0025",
+      "text_label": "手语要多练习才可以熟能生巧",
+      "aliases": [
+        "手语要多练习才可以熟能生巧"
+      ],
+      "fps": 25.0,
+      "frames": 300,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-cb8ac953180a2b6e-cap-0025.json",
+      "member_sha256": "36ce0e76f2ca6fa534100074a5ab9b9fcc5a1e7b2adfea86177cb4ae722c494a",
+      "pose_shape": [
+        300,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "cb8ac953180a2b6e4730324ea45160dcee7d18478131e3b20b902fa0081de19f",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-d3621fe5607e6b6c-cap-0037",
+      "text_label": "能",
+      "aliases": [
+        "能"
+      ],
+      "fps": 25.0,
+      "frames": 250,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-d3621fe5607e6b6c-cap-0037.json",
+      "member_sha256": "fecb990ef42cf567dc2f4fae5cacc9be9c4eaf55f0776dd3d2b69a59b11f9ca2",
+      "pose_shape": [
+        250,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "d3621fe5607e6b6cc41d2b227170cbad8ac52432ca92d619a252ccfbaa72b3aa",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-d3621fe5607e6b6c-cap-0038",
+      "text_label": "但是",
+      "aliases": [
+        "但是"
+      ],
+      "fps": 25.0,
+      "frames": 250,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-d3621fe5607e6b6c-cap-0038.json",
+      "member_sha256": "12a3060b084955726abebaf0ef1f93dbb19445ba49a28ed71278345df6976a03",
+      "pose_shape": [
+        250,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "d3621fe5607e6b6cc41d2b227170cbad8ac52432ca92d619a252ccfbaa72b3aa",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-d3621fe5607e6b6c-cap-0075",
+      "text_label": "谁的家在医院附近",
+      "aliases": [
+        "谁的家在医院附近"
+      ],
+      "fps": 25.0,
+      "frames": 500,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-d3621fe5607e6b6c-cap-0075.json",
+      "member_sha256": "baf3a358c6e6508d41759c20a8a61a51a763e5eaf480d183ba0fdeedc374dea8",
+      "pose_shape": [
+        500,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "d3621fe5607e6b6cc41d2b227170cbad8ac52432ca92d619a252ccfbaa72b3aa",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-d437b3c3b3857c1a-cap-0016",
+      "text_label": "平时上班是早上七点晚上六点",
+      "aliases": [
+        "平时上班是早上七点晚上六点"
+      ],
+      "fps": 25.0,
+      "frames": 300,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-d437b3c3b3857c1a-cap-0016.json",
+      "member_sha256": "1ffb20fd8dff1de83d222aaf9f90b09382355636d9e43c215f421202440d2bff",
+      "pose_shape": [
+        300,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "d437b3c3b3857c1ab016afa6363ac649b1c22007afde81416e6b096e2d7445e1",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-d7fd725882dd34cb-cap-0032",
+      "text_label": "我们要学会用法律保护自己",
+      "aliases": [
+        "我们要学会用法律保护自己"
+      ],
+      "fps": 25.0,
+      "frames": 350,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-d7fd725882dd34cb-cap-0032.json",
+      "member_sha256": "e0c23b63e02e11b8224c3bd0a5b627092cb3292eaa4c66c284781375dafc6215",
+      "pose_shape": [
+        350,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "d7fd725882dd34cb04f3ffe8bcf77310e31556f0b09230f91745a7317fd3622f",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-d7fd725882dd34cb-cap-0043",
+      "text_label": "通知我参加会议",
+      "aliases": [
+        "通知我参加会议"
+      ],
+      "fps": 25.0,
+      "frames": 250,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-d7fd725882dd34cb-cap-0043.json",
+      "member_sha256": "658414ad732f2bc90a37cfbfa9cc006cf2cd7061c93ea6707bbb4511748623d2",
+      "pose_shape": [
+        250,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "d7fd725882dd34cb04f3ffe8bcf77310e31556f0b09230f91745a7317fd3622f",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-db3d18d67ffd0f9a-cap-0004",
+      "text_label": "从今天起就由我们来给大家讲手语课程",
+      "aliases": [
+        "从今天起就由我们来给大家讲手语课程"
+      ],
+      "fps": 25.0,
+      "frames": 250,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-db3d18d67ffd0f9a-cap-0004.json",
+      "member_sha256": "a3981bd2db57e98bedbe9eeef1f692d924d93d3abedc0b0af80d344b213ba784",
+      "pose_shape": [
+        250,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "db3d18d67ffd0f9a88793bbdee63e6b0c74efd8c56d166e2246a71afd0bf90b3",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-db3d18d67ffd0f9a-cap-0108",
+      "text_label": "群众",
+      "aliases": [
+        "群众"
+      ],
+      "fps": 25.0,
+      "frames": 300,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-db3d18d67ffd0f9a-cap-0108.json",
+      "member_sha256": "d3c7772cdb6f208a730f3cfe56d9162b9c6bfbf478da74a3dae3088cf96768b7",
+      "pose_shape": [
+        300,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "db3d18d67ffd0f9a88793bbdee63e6b0c74efd8c56d166e2246a71afd0bf90b3",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-e5cd26a04b42de03-cap-0005",
+      "text_label": "锻炼",
+      "aliases": [
+        "锻炼"
+      ],
+      "fps": 25.0,
+      "frames": 300,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-e5cd26a04b42de03-cap-0005.json",
+      "member_sha256": "72c05928196cca0bfe50e8c4147f39509700fa764e3cb5ca686e3388a4150cca",
+      "pose_shape": [
+        300,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "e5cd26a04b42de036093a2371012f7f87e09d012f6c4077b2f96b490cde8a62e",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-e5cd26a04b42de03-cap-0086",
+      "text_label": "保健",
+      "aliases": [
+        "保健"
+      ],
+      "fps": 25.0,
+      "frames": 350,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-e5cd26a04b42de03-cap-0086.json",
+      "member_sha256": "ba7349d0ac8eb57f676446f8d32ac599accace1d9e4fb4253cd6641a9e5ac548",
+      "pose_shape": [
+        350,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "e5cd26a04b42de036093a2371012f7f87e09d012f6c4077b2f96b490cde8a62e",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-e680ca40e169e74f-cap-0006",
+      "text_label": "市民",
+      "aliases": [
+        "市民"
+      ],
+      "fps": 25.0,
+      "frames": 350,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-e680ca40e169e74f-cap-0006.json",
+      "member_sha256": "94936289fe651e70b1e2267f0a67fd36db6d68e1fd0b9740eb2856d96b65eb68",
+      "pose_shape": [
+        350,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "e680ca40e169e74f0f2fef496af0c5cdacb7c6c500c9dbe3aa13ea4205321c09",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-e680ca40e169e74f-cap-0024",
+      "text_label": "家属",
+      "aliases": [
+        "家属"
+      ],
+      "fps": 25.0,
+      "frames": 300,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-e680ca40e169e74f-cap-0024.json",
+      "member_sha256": "609bb5b512386ab2f67ec73550d79c77932eab61c92f5381e82ece9796f62350",
+      "pose_shape": [
+        300,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "e680ca40e169e74f0f2fef496af0c5cdacb7c6c500c9dbe3aa13ea4205321c09",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-e680ca40e169e74f-cap-0028",
+      "text_label": "哥哥",
+      "aliases": [
+        "哥哥"
+      ],
+      "fps": 25.0,
+      "frames": 250,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-e680ca40e169e74f-cap-0028.json",
+      "member_sha256": "f26b3d539b027d28cafa5c8cc54e0d3e85641429d440262c33dee0e948be4937",
+      "pose_shape": [
+        250,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "e680ca40e169e74f0f2fef496af0c5cdacb7c6c500c9dbe3aa13ea4205321c09",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-e8e3f2d5617f64c2-cap-0007",
+      "text_label": "劳动",
+      "aliases": [
+        "劳动"
+      ],
+      "fps": 25.0,
+      "frames": 200,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-e8e3f2d5617f64c2-cap-0007.json",
+      "member_sha256": "979a14f9ce39138825a73300f24679ba15b8798f3f08945fb38fdb7bf8e7495c",
+      "pose_shape": [
+        200,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "e8e3f2d5617f64c20997b8cd9bd08783914dd76e03e76baa45530ec7f7ed44ff",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-e8e3f2d5617f64c2-cap-0008",
+      "text_label": "就业",
+      "aliases": [
+        "就业"
+      ],
+      "fps": 25.0,
+      "frames": 200,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-e8e3f2d5617f64c2-cap-0008.json",
+      "member_sha256": "86c4b7ed683f0d5323e15c5a0b7a333b86c3709b6784a1648aeb5302016b2697",
+      "pose_shape": [
+        200,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "e8e3f2d5617f64c20997b8cd9bd08783914dd76e03e76baa45530ec7f7ed44ff",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-e8e3f2d5617f64c2-cap-0057",
+      "text_label": "父母是我们的赡养对象",
+      "aliases": [
+        "父母是我们的赡养对象"
+      ],
+      "fps": 25.0,
+      "frames": 400,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-e8e3f2d5617f64c2-cap-0057.json",
+      "member_sha256": "d6765bdb605d9577db624aabb7f649b1701e02782cb8d1dfe97fc116616bbd79",
+      "pose_shape": [
+        400,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "e8e3f2d5617f64c20997b8cd9bd08783914dd76e03e76baa45530ec7f7ed44ff",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-fded1934a28c2e8c-cap-0012",
+      "text_label": "保安",
+      "aliases": [
+        "保安"
+      ],
+      "fps": 25.0,
+      "frames": 200,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-fded1934a28c2e8c-cap-0012.json",
+      "member_sha256": "d156e5f99a92a931740398d7c3de2486296d2ebf80c55fcdfc0a3de6df63e2c6",
+      "pose_shape": [
+        200,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "fded1934a28c2e8cdd7b42bccd838dc5a747df926e822fc3417932fb0f0f770f",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-fded1934a28c2e8c-cap-0024",
+      "text_label": "每个公民必须遵守国家法律",
+      "aliases": [
+        "每个公民必须遵守国家法律"
+      ],
+      "fps": 25.0,
+      "frames": 400,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-fded1934a28c2e8c-cap-0024.json",
+      "member_sha256": "b546feb0f64355163d5e4de46ab9a174ced9c4bd2be1454be3812e91f46cc2d3",
+      "pose_shape": [
+        400,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "fded1934a28c2e8cdd7b42bccd838dc5a747df926e822fc3417932fb0f0f770f",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-fdefdb3258332397-cap-0002",
+      "text_label": "在图书馆里请保持安静",
+      "aliases": [
+        "在图书馆里请保持安静"
+      ],
+      "fps": 25.0,
+      "frames": 350,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-fdefdb3258332397-cap-0002.json",
+      "member_sha256": "6bdc8f52e45767643e5815ec30a2b72314af9588feb19001144d6c8014686c1a",
+      "pose_shape": [
+        350,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "fdefdb325833239794a4ef0620183be48241bdc4f3141d45bae82acfef296077",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-fdefdb3258332397-cap-0010",
+      "text_label": "豪华",
+      "aliases": [
+        "豪华"
+      ],
+      "fps": 25.0,
+      "frames": 250,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-fdefdb3258332397-cap-0010.json",
+      "member_sha256": "ab8038d170dce0c3e88ca0d430da88ed66b4cc10ceca75ebc0c52a2a613d3af7",
+      "pose_shape": [
+        250,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "fdefdb325833239794a4ef0620183be48241bdc4f3141d45bae82acfef296077",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-fdefdb3258332397-cap-0048",
+      "text_label": "不要和陌生人说话",
+      "aliases": [
+        "不要和陌生人说话"
+      ],
+      "fps": 25.0,
+      "frames": 350,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-fdefdb3258332397-cap-0048.json",
+      "member_sha256": "27ff2d5eaf61c9840db26149ed7ce450b8682f519d9707c8273c0e4536ba07d5",
+      "pose_shape": [
+        350,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "fdefdb325833239794a4ef0620183be48241bdc4f3141d45bae82acfef296077",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-fec724ab9b1c8f89-cap-0062",
+      "text_label": "执照",
+      "aliases": [
+        "执照"
+      ],
+      "fps": 25.0,
+      "frames": 300,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-fec724ab9b1c8f89-cap-0062.json",
+      "member_sha256": "4436dc4989af6e769b8461fc63cbd395618d01034b5306fbd1e8a25e8d3541b2",
+      "pose_shape": [
+        300,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "fec724ab9b1c8f89fc9219d5075e79d7fa6c59099598ec5e14d8b2155ca9c4e6",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-fec724ab9b1c8f89-cap-0071",
+      "text_label": "损坏东西要赔偿",
+      "aliases": [
+        "损坏东西要赔偿"
+      ],
+      "fps": 25.0,
+      "frames": 250,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-fec724ab9b1c8f89-cap-0071.json",
+      "member_sha256": "2db9d47dc4e3ea7e46af71052062fb8d3b93c9cf2fadc6d821001fbc36669b14",
+      "pose_shape": [
+        250,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "fec724ab9b1c8f89fc9219d5075e79d7fa6c59099598ec5e14d8b2155ca9c4e6",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-fec724ab9b1c8f89-cap-0073",
+      "text_label": "破产",
+      "aliases": [
+        "破产"
+      ],
+      "fps": 25.0,
+      "frames": 250,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-fec724ab9b1c8f89-cap-0073.json",
+      "member_sha256": "d493b0a728e9a67cff918e26a169aba7e819817397e030b55f2d3592acd081a2",
+      "pose_shape": [
+        250,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "fec724ab9b1c8f89fc9219d5075e79d7fa6c59099598ec5e14d8b2155ca9c4e6",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-ff94c253a0965ef5-cap-0016",
+      "text_label": "在很久很久以前有一个古老的传说",
+      "aliases": [
+        "在很久很久以前有一个古老的传说"
+      ],
+      "fps": 25.0,
+      "frames": 250,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-ff94c253a0965ef5-cap-0016.json",
+      "member_sha256": "341e4ddb2630108cbd296d68a73c4f5482fe6cdfc39c4bc6191f07147e2e3242",
+      "pose_shape": [
+        250,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "ff94c253a0965ef504874edcd518839f60fcc0178e546da4b3d02b9744d2f1c2",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-ff94c253a0965ef5-cap-0050",
+      "text_label": "中国是一个历史文化悠久文明古国",
+      "aliases": [
+        "中国是一个历史文化悠久文明古国"
+      ],
+      "fps": 25.0,
+      "frames": 250,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-ff94c253a0965ef5-cap-0050.json",
+      "member_sha256": "3b037efbed114d8175fb874fcab110080ad2f56033efbd5315c7eb4dec16d2d8",
+      "pose_shape": [
+        250,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "ff94c253a0965ef504874edcd518839f60fcc0178e546da4b3d02b9744d2f1c2",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    },
+    {
+      "group": "smplx_fit",
+      "clip_id": "new-ff94c253a0965ef5-cap-0074",
+      "text_label": "人民英雄纪念碑在天安门广场",
+      "aliases": [
+        "人民英雄纪念碑在天安门广场"
+      ],
+      "fps": 25.0,
+      "frames": 300,
+      "container_path": "E:\\githubproject\\signbridge\\docs\\assets\\signbridge-chrome-extension-motion-demo-20261022.zip",
+      "member": "demo/experimental/new-ff94c253a0965ef5-cap-0074.json",
+      "member_sha256": "34f5978586dba08725713c5872a4a39be92593941746feeb9d1ed5fdf370386a",
+      "pose_shape": [
+        300,
+        55,
+        3
+      ],
+      "pose_structure_and_finiteness_pass": true,
+      "source_sha256": "ff94c253a0965ef504874edcd518839f60fcc0178e546da4b3d02b9744d2f1c2",
+      "motion_review_status": "approved_for_demo_motion",
+      "human_motion_quality_approved": true,
+      "language_review_status": "not_verified_in_this_audit",
+      "text_to_sign_generated": false
+    }
+  ]
+}

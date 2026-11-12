@@ -45,6 +45,7 @@ class SLRTStream:
         self._first_source_time = None
         self._partial = None
         self._history_truncated = 0
+        self.canonical_frames_reused = 0
         self._reset_window()
 
     def _reset_window(self):
@@ -114,13 +115,25 @@ class SLRTStream:
             self._first_source_time = packet.timestamp
         self.frames_received += 1
         started = perf_counter()
-        kp = self.frontend.extract(packet.image, frame_index=packet.frame_index, timestamp=packet.timestamp)
+        prepared = None
+        if callable(getattr(self.frontend,'extract_prepared',None)):
+            prepared,kp = self.frontend.extract_prepared(packet.image,frame_index=packet.frame_index,timestamp=packet.timestamp)
+        else:
+            kp = self.frontend.extract(packet.image, frame_index=packet.frame_index, timestamp=packet.timestamp)
         self._measure('pose_ms', (perf_counter()-started)*1000)
         if kp is None:
             self.quality_rejected_frames += 1
             return events + self.interrupt('no_reliable_single_signer')
         started = perf_counter()
-        bgr = canonical_frame(packet.image)
+        if prepared is None:
+            bgr = canonical_frame(packet.image)
+        else:
+            if (not isinstance(prepared,np.ndarray) or prepared.dtype!=np.uint8 or
+                    prepared.shape!=(320,320,3) or not prepared.flags.c_contiguous):
+                raise ValueError('Invalid prepared canonical frame')
+            bgr=prepared
+            bgr.setflags(write=False)
+            self.canonical_frames_reused+=1
         self._measure('frame_preprocess_ms',(perf_counter()-started)*1000)
         # Drop original high-resolution pixels from the retained frame window.
         compact_packet = FramePacket(bgr,packet.timestamp,packet.frame_index,packet.source_id)
@@ -187,6 +200,7 @@ class SLRTStream:
         self._eos = self._paused = False
         self.first_output_latency_ms = None
         self.frames_received = self.windows_processed = self.quality_rejected_frames = self.dropped_frames = 0
+        self.canonical_frames_reused = 0
         for k in self._timings:
             self._timings[k].clear(); self._timing_totals[k] = 0.; self._timing_counts[k] = 0
 
@@ -203,6 +217,7 @@ class SLRTStream:
                     tokens=list(self._history),partial=self._partial,translation=None,
                     frames_received=self.frames_received,windows_processed=self.windows_processed,
                     quality_rejected_frames=self.quality_rejected_frames,dropped_frames=self.dropped_frames,
+                    canonical_frames_reused=self.canonical_frames_reused,
                     retained_frames=len(self._frames),history_truncated=self._history_truncated,
                     first_stable_required_context_ms=self.first_output_latency_ms,
                     preprocessing_protocol=PROTOCOL,config=self.config.to_dict(),
