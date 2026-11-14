@@ -8,7 +8,7 @@
 
 `C:/Users/ADMIN/.codex/worktrees/csl-animation-workspace/SignLanguage-Bridge`
 
-服务启动后打开 [动画工作台](http://127.0.0.1:8874/animation/)。本机服务只监听 loopback；不启动自动播放。
+服务启动后打开 [动画工作台](http://127.0.0.1:8874/animation/)。服务默认只监听 loopback；不启动自动播放。
 
 在上述工作区打开 PowerShell，仅看动画可运行：
 
@@ -29,6 +29,19 @@
 ```
 
 同一端口只运行一个服务。动画重播不需要 GPU 推理；视频识别依旧使用原有模型环境。其他机器可安装项目的 `api` 可选依赖，并提供自己的动作 ZIP、模型目录和 Python 环境。动作资源与大模型不包含在 Python wheel 中。当前机器的 G 盘数据和权重目录无需移动。
+
+### Linux 服务器内网访问（2026-10-30）
+
+在 `project/git-worktree/` 中，使用已安装 API 依赖的环境启动；`--host` 可指定服务器内网地址，默认仍为 `127.0.0.1`：
+
+```bash
+.venv-animation/bin/python -m slbridge.animation.cli \
+  --archive ../../assets/action_archive/signbridge-chrome-extension-motion-demo-20261022.zip \
+  --expected-sha256 4d98380ac0fe08db90b042df63528ae9be5c96b93f492625ec27a015ea5edae5 \
+  --host 10.45.25.55 --port 8874
+```
+
+自己的电脑可访问 `http://10.45.25.55:8874/animation/`，前提是能连通服务器内网和该端口。三维渲染使用访问者浏览器的 WebGL 2；服务器桌面的图形加速不影响其他电脑的浏览器。此命令只加载现有动画，不登记识别模型。也可保留默认监听地址，通过 SSH 或 VS Code 转发 8874 端口访问。
 
 ## 预览步骤
 

@@ -11,6 +11,7 @@ def main(argv=None):
     parser.add_argument("--expected-sha256")
     parser.add_argument("--catalog", type=Path, help="Existing strict v1 recognition model catalog")
     parser.add_argument("--model", help="Optional initial recognition model alias")
+    parser.add_argument("--host", default="127.0.0.1", help="Listen address (default: 127.0.0.1)")
     parser.add_argument("--port", type=int, default=8874)
     args = parser.parse_args(argv)
     try:
@@ -29,9 +30,9 @@ def main(argv=None):
         app = create_app(catalog, initial_model=args.model, animation_registry=registry)
     except (OSError, ValueError, KeyError) as exc:
         parser.error(str(exc))
-    print(f"Animation workspace: http://127.0.0.1:{args.port}/animation/ "
+    print(f"Animation workspace: http://{args.host}:{args.port}/animation/ "
           f"({len(registry.catalog()['assets'])} research assets)")
-    uvicorn.run(app, host="127.0.0.1", port=args.port, workers=1)
+    uvicorn.run(app, host=args.host, port=args.port, workers=1)
     return 0
 
 

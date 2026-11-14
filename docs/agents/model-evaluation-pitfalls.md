@@ -195,6 +195,14 @@
 
 ## 动画工作台实施后的新坑（2026-10-28）
 
+- **待验证：同名 `pytorch_model.bin` 不是同一模型。** `models/external/SLRT_Online/pretrained_models/mBart/` 和 `mBART_zh_fullvocab/` 指向同一 250027 词表的全量 mBART 文件；作者 Text2Gloss 包配置为 6308 词表。不能仅凭文件名复制替换或宣称任务检查点存在。[核验记录](../research/spoken2sign-reuse-audit-2026-10-28.md)。
+
+- **更正：Text2Gloss 嵌入本机已有（2026-10-28，用户指出）。** `E:/githubproject/SignLanguage-Bridge/artifacts/slrt-gdrive-20261025/mBart_zh_t2g/` 含 gloss/text embeddings，两文件大小和 CRC32 与作者 ZIP 一致；之前只搜索 F/G 造成遗漏。该目录未见基础 `pytorch_model.bin` 与任务 checkpoint；其他小文件已另行取得，任务 checkpoint 仍待核实。详见[复用核验更正](../research/spoken2sign-reuse-audit-2026-10-28.md)。
+
+- **待验证：Text2Gloss 基础包不能冒充任务检查点。** 本次取得上游 Spoken2Sign 源码及作者 ZIP 的中央目录，包内有基础 mBART 和词表/嵌入，上游推理另查 `{dataset}_best.ckpt`，缺失时只记录后继续。必须显式检查检查点加载及任务身份，不能将未加载任务权重的运行当作有效翻译。[获取记录](../research/spoken2sign-reuse-audit-2026-10-28.md)。
+
+- **待验证：Spoken2Sign Text2Gloss 与 3D 词典不等于本地已可用。** 既往作者 `mBart_zh_t2g.zip` 仅有历史词表资产核对，本次定向搜索未找到可确认任务检查点、3D 词典与 connector 权重。上游 `motion_gen.py` 默认含 Phoenix 路径、缺词会静默跳过，且文件含 MPG 许可声明；不能直接照搬或宣称 CSL 端到端可用。需逐项核对任务权重、字典、许可并验证缺失处理。[免训练复用核验](../research/spoken2sign-reuse-audit-2026-10-28.md)。
+
 - **已修复：审核不能只绑定来源视频。** 同一 source_sha256 的重新拟合/改姿态新包，完整性校验可以合法通过，但旧动作批准不能继承。独立复核及负对照复现后，registry 绑定批准 ID、entry/clip 的 source/fitted 摘要和上游 1e-6 规范化姿态摘要。真实归档 83 段仍匹配；改姿态/fit 回归阻止继承。不能把 motion-only 批准升级为语言认证。[R23]
 - **已修复：取消必须覆盖加载阶段。** 原工作台在 fetch 期间禁用 Stop；迟到计划/动作可继续启动。现在请求期间 Stop 可用，AbortController 与代次门共同兜底。回归故意让 transport 忽略 abort，确认迟到响应仍不播放。[R23]
 - **已修复：控制操作不能依赖下一次 RAF。** 后台/节流环境下，暂停、定位和显示切换的时间或画面可能滞后；现在同步发布并绘制。先读取滑杆目标，再暂停，避免暂停回调覆盖用户定位值。隐藏 IAB 的截图本身也可能滞后，交付截图使用可见窗口核对。[R23]
