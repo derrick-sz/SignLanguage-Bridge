@@ -1,0 +1,305 @@
+{
+  "schema": "signbridge-avatar-quality-document-archive-v1",
+  "archived_on": "2026-11-12",
+  "timezone": "Asia/Taipei",
+  "evidence_type": "imported existing measured results; documentation update only; no new model or camera run",
+  "distinct_avatar_source_samples": 55,
+  "human_video30": {
+    "n": 30,
+    "signers": 8,
+    "word_sequence_exact": 11,
+    "word_wer": {
+      "metric_definition_version": "p1-v1",
+      "n": 30,
+      "reference_tokens": 254,
+      "substitutions": 17,
+      "deletions": 27,
+      "insertions": 4,
+      "corpus_wer": 0.189
+    },
+    "sentence_exact": 29,
+    "frames_processed": 6113
+  },
+  "avatar_whole_word25": {
+    "n": 25,
+    "gloss_exact": 6,
+    "gloss_contains": 6,
+    "gloss_nonempty": 11,
+    "sentence_exact": 8,
+    "sentence_exact_ignore_punctuation": 8,
+    "sentence_nonempty": 11,
+    "gloss_wer": {
+      "metric_definition_version": "p1-v1",
+      "n": 25,
+      "reference_tokens": 25,
+      "substitutions": 5,
+      "deletions": 14,
+      "insertions": 0,
+      "corpus_wer": 0.76
+    }
+  },
+  "avatar_whole_sentence30": {
+    "n": 30,
+    "gloss_sequence_exact": 0,
+    "gloss_nonempty": 23,
+    "sentence_exact": 4,
+    "sentence_nonempty": 23,
+    "word_wer": {
+      "metric_definition_version": "p1-v1",
+      "n": 30,
+      "reference_tokens": 254,
+      "substitutions": 30,
+      "deletions": 199,
+      "insertions": 0,
+      "corpus_wer": 0.9016
+    }
+  },
+  "whole_word_source_missing": [
+    "S000444_P0000_T00"
+  ],
+  "framing_probe25": {
+    "baseline": {
+      "n": 25,
+      "gloss_exact": 6,
+      "sentence_exact": 8,
+      "gloss_nonempty": 11,
+      "sentence_nonempty": 11,
+      "gloss_wer": {
+        "metric_definition_version": "p1-v1",
+        "n": 25,
+        "reference_tokens": 25,
+        "substitutions": 5,
+        "deletions": 14,
+        "insertions": 0,
+        "corpus_wer": 0.76
+      }
+    },
+    "cropped": {
+      "n": 25,
+      "gloss_exact": 6,
+      "sentence_exact": 9,
+      "gloss_nonempty": 16,
+      "sentence_nonempty": 16,
+      "gloss_wer": {
+        "metric_definition_version": "p1-v1",
+        "n": 25,
+        "reference_tokens": 25,
+        "substitutions": 9,
+        "deletions": 9,
+        "insertions": 2,
+        "corpus_wer": 0.8
+      }
+    },
+    "positive_sentence_to_wrong": 0,
+    "wrong_sentence_to_correct": 1
+  },
+  "framing_probe30": {
+    "baseline": {
+      "n": 30,
+      "gloss_exact": 0,
+      "sentence_exact": 4,
+      "gloss_nonempty": 23,
+      "sentence_nonempty": 23,
+      "gloss_wer": {
+        "metric_definition_version": "p1-v1",
+        "n": 30,
+        "reference_tokens": 254,
+        "substitutions": 30,
+        "deletions": 199,
+        "insertions": 0,
+        "corpus_wer": 0.9016
+      }
+    },
+    "cropped": {
+      "n": 30,
+      "gloss_exact": 0,
+      "sentence_exact": 3,
+      "gloss_nonempty": 28,
+      "sentence_nonempty": 28,
+      "gloss_wer": {
+        "metric_definition_version": "p1-v1",
+        "n": 30,
+        "reference_tokens": 254,
+        "substitutions": 32,
+        "deletions": 180,
+        "insertions": 0,
+        "corpus_wer": 0.8346
+      }
+    },
+    "positive_sentence_to_wrong": 1,
+    "wrong_sentence_to_correct": 0
+  },
+  "empty_output_file_probe": {
+    "selected_previous_empty_cases": 14,
+    "sentence_exact": 5,
+    "nonempty": 14,
+    "static_avatar_file_text": "腰酸背疼。",
+    "static_avatar_live_final_words": 0,
+    "static_avatar_live_sentences": 0
+  },
+  "retarget_candidate8": {
+    "fit": {
+      "samples": 4,
+      "accepted": 4,
+      "point_pairs": 72,
+      "mean_error_before": 0.30797112200202215,
+      "mean_error_after": 0.284449167860051,
+      "improved_samples": 4,
+      "worsened_samples": 0,
+      "word_wer_before": {
+        "metric_definition_version": "p1-v1",
+        "n": 4,
+        "reference_tokens": 30,
+        "substitutions": 2,
+        "deletions": 27,
+        "insertions": 0,
+        "corpus_wer": 0.9667
+      },
+      "word_wer_after": {
+        "metric_definition_version": "p1-v1",
+        "n": 4,
+        "reference_tokens": 30,
+        "substitutions": 2,
+        "deletions": 24,
+        "insertions": 0,
+        "corpus_wer": 0.8667
+      },
+      "sentence_exact_before": 1,
+      "sentence_exact_after": 0
+    },
+    "holdout": {
+      "samples": 4,
+      "accepted": 2,
+      "point_pairs": 72,
+      "mean_error_before": 0.4616314951951305,
+      "mean_error_after": 0.4369782595377829,
+      "improved_samples": 3,
+      "worsened_samples": 1,
+      "word_wer_before": {
+        "metric_definition_version": "p1-v1",
+        "n": 4,
+        "reference_tokens": 38,
+        "substitutions": 7,
+        "deletions": 24,
+        "insertions": 0,
+        "corpus_wer": 0.8158
+      },
+      "word_wer_after": {
+        "metric_definition_version": "p1-v1",
+        "n": 4,
+        "reference_tokens": 38,
+        "substitutions": 5,
+        "deletions": 26,
+        "insertions": 0,
+        "corpus_wer": 0.8158
+      },
+      "sentence_exact_before": 0,
+      "sentence_exact_after": 0
+    },
+    "geometry_accepted": 6,
+    "fallback_to_original": 2,
+    "deployed": false,
+    "expert_review": "NOT_RUN",
+    "provisional_linear_time_alignment": true
+  },
+  "sleep_geometry_candidate": {
+    "product": {
+      "keyframe_core_hits": 2,
+      "interpolated_core_hits": 61,
+      "interpolated_ticks": 305,
+      "max_offset": 0.06000001186160845,
+      "max_offset_step": 0.05825689055733326,
+      "finger_local_rotation_max_radians": 5.960464477539063e-08
+    },
+    "candidate": {
+      "keyframe_core_hits": 0,
+      "interpolated_core_hits": 0,
+      "interpolated_ticks": 305,
+      "max_offset": 0.07952059125561682,
+      "max_offset_step": 0.014018688965824597,
+      "finger_local_rotation_max_radians": 5.960464477539063e-08
+    },
+    "product_diagnostics": {
+      "strategy": "source-wrist-ik-v1",
+      "handshape_source": "original-poses",
+      "samples": 78,
+      "clamped": 0,
+      "body_clearance": {
+        "profile": "mesh-core-clearance-directional-v3",
+        "available": true,
+        "contact_track": null,
+        "adjusted_hands": 35,
+        "max_offset": 0.06000001186160845,
+        "max_offset_step": 0.05825689055733326,
+        "max_wrist_rotation": 0,
+        "max_wrist_rotation_step": 0,
+        "remaining_core_hits": 2
+      },
+      "wrist_error_before_mean": 0.030101128699849794,
+      "wrist_error_after_mean": 0.01701330797445064
+    },
+    "candidate_clamped": 0
+  },
+  "evaluation_tool_tests": {
+    "passed_at_previous_iteration": 8,
+    "source": "docs/reports/avatar-retarget-iteration-2026-11-12.md",
+    "rerun_for_this_document_edit": false
+  },
+  "scope_limits": [
+    "train-source diagnostic, not official benchmark",
+    "word WER, word sequence exact and sentence exact are different metrics",
+    "canvas recording followed by paced replay, not direct real-time capture acceptance",
+    "human video and avatar rendering differ in timing and visual domain",
+    "pose estimates and finite collider samples do not establish sign-language correctness"
+  ],
+  "sources": {
+    "human30": {
+      "path": "artifacts/train-realtime-recheck-20261112/eval/summary.json",
+      "sha256": "86aae4fc2046ad2cc2bbb70958ee0a72cca4ad14cd9a0587cb99ffdf444f349a"
+    },
+    "avatar_words25": {
+      "path": "artifacts/avatar-train-eval-20261112/eval/summary.json",
+      "sha256": "b30d3eae87a8a5e6046dd4b117fa2b0e68807c4e62e168e68c745b0360272986"
+    },
+    "avatar_sentences30": {
+      "path": "artifacts/avatar-train-sentences-20261112/eval/summary.json",
+      "sha256": "5fdd194ef8568fcceb743e9aecaf94a7c78883526feae4dab6e7d12645ca57d8"
+    },
+    "crop_words25": {
+      "path": "artifacts/avatar-train-crop-probe-20261112/eval/summary.json",
+      "sha256": "9b37516e769a8f1d46c2366cc110ad2eb84d3030e2fb52a44269736167f98e69"
+    },
+    "crop_sentences30": {
+      "path": "artifacts/avatar-train-sentences-crop-20261112/eval/summary.json",
+      "sha256": "1af49cddc8c6a2e3cf399b80f6c84596674a00486e8e5265b785fd1e4bfd7713"
+    },
+    "empty_gate14": {
+      "path": "artifacts/avatar-empty-gate-probe-20261112/eval/summary.json",
+      "sha256": "f2504eed8b7889c0e19bf5138a4083994f9c09ff47e5845e97c10a85077d3b6f"
+    },
+    "static_avatar_live": {
+      "path": "artifacts/avatar-empty-gate-probe-20261112/static-avatar-live.json",
+      "sha256": "0640ea51bdd3d91b4ca503d3f16d97158bd80b5d7668afd80778720ed39f60a1"
+    },
+    "static_avatar_file": {
+      "path": "artifacts/avatar-empty-gate-probe-20261112/static-avatar-file.json",
+      "sha256": "9427ca218895fa0b2629a0b113857b4a4f8367211f526344fe22dfb0525ab584"
+    },
+    "retarget8": {
+      "path": "artifacts/avatar-retarget-iteration-20261112/candidate-evaluation.json",
+      "sha256": "831ddb8a4e174a2c7ca4612f49b936591ab143997ff4714a70c879547b8c7989"
+    },
+    "retarget_geometry": {
+      "path": "artifacts/avatar-retarget-iteration-20261112/candidate-geometry-v2.json",
+      "sha256": "7fcf1390a99cda769ea732d884343795996a468a33ff26be080823a120fc54e9"
+    },
+    "pose_binding30": {
+      "path": "artifacts/avatar-retarget-iteration-20261112/reusable-analysis-v3.json",
+      "sha256": "f11f46e9010bac81227ef9f279a0c8f27e2beab8743803b06f03443078355f6a"
+    },
+    "sleep_geometry": {
+      "path": "artifacts/avatar-sleep-clearance-candidate-20261112/actual-geometry-refined.json",
+      "sha256": "30f2234a1654043ebffba956e69d77df2f988096d880f1b3a042994dd503b255"
+    }
+  }
+}

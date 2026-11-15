@@ -385,7 +385,17 @@ $env:PYTHONPATH = 'E:\githubproject\SignLanguage-Bridge'
 
 方向修复回归为786 passed、10 skipped；Uni-Sign定向测试为34 passed、无跳过。后续窗口修复全量回归为797 passed、10 skipped，窗口／会话组合为42 passed，详见两份修复与核查报告。单元测试不依赖网络或 GB 级权重。真实 CUDA 推理单独作为实验证据，而不是普通单元测试。
 
+## 2026-11-11句末推理优化
+
+当前实时页已经通过独立`csl-realtime-v1`连接SLRT增量词与Uni-Sign句末中文，另有可选LLM文字辅助；原来的Uni-Sign完整窗口实验与这套词优先调度是不同入口，不能把旧窗口“稳定候选”耗时当成新SLRT首词。使用说明见[实时链路](realtime-csl.md)。Uni-Sign本身仍是非因果整句模型。
+
+`TorchUniSignRuntime`现在复用上游forward产生的原始embedding/mask，在进入未使用的mT5训练损失前停止该段，移除临时hook后仍调用原generate。没有复制/修改上游源码、改变姿态、权重、beam4或最大100 token。真实96组成对模型运行的视觉摘要及token/text一致、encoder调用2→1；独占模型阶段均值324.53→300.50ms，P95 505.41→465.38ms，不能称整个摄像头体验缩短同样比例。`runtime_info.model_inference_path=upstream_visual_inputs_then_generate`可核对实际部署。
+
+定向验证与原始证据见[句末优化报告](reports/unisign-generation-optimization-2026-11-11.md)。诊断脚本`benchmark_unisign_generation.py`必须给出本仓库旧runtime副本并使用新输出目录；Windows提交额度不足10GiB时拒绝加载另一份模型。这是诊断预检，不预留资源，也不更改系统页文件或应用启动策略。性能基准应在身份核验的空闲服务释放后顺序运行，避免只看物理可用内存。
+
 ## 仍未完成 / 不得宣称
+
+2026-11-11新增独立`probe_unisign_scores.py`诊断，尚未改变产品的`TextPrediction.score=None`或自动接受行为。固定61个历史实时句段重新抽点，另加2静止直接探针，126组成对token/text一致；官方`output_scores/return_dict`取到长度归一化beam log分数，模型阶段均值增加0.52ms、P95增加19.04ms，另有显存成本。风险排序的逐字代理有信号，但人称错与同义语序边界证明不能当正确概率。脚本必须分阶段在身份匹配的空闲服务释放后顺序运行，参考只由evaluate读取；实际权重/阶段源码须绑定，预检不预留资源。见[独立分数报告](reports/unisign-score-diagnostic-2026-11-11.md)。P-1历史“无分数导出”保持原日期含义，本轮离线探针不回改历史成绩。
 
 - **CSL-Daily test 的 pose 口径已复现**（2026-10-25）：BLEU-4 **25.55** vs 论文 25.61，87.5% 预测与作者快照逐字相同（见上文「CSL-Daily in-domain 复现」）。帧采样为确定性 `linspace`，与上游 `random.sample` 不同，复现精度约 ±0.5 BLEU。
 - **视频端到端只覆盖 1,086/1,176（2026-10-26）**：本地有 1,086 条 test 视频（缺 90 条偏长句），用近似句段裁剪 + 本地 RTMPose 得 BLEU-4 **24.82**（统一上游参考）；同批官方 pose 为 **25.58**。这不是完整官方 test，也不是论文协议，见[1,086 条报告](reports/csldaily-video-slrt-unisign-full-1086-2026-10-26.md)与[627 条报告](reports/csldaily-video-slrt-unisign-2026-10-26.md)。

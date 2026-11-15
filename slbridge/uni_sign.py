@@ -8,6 +8,7 @@ into this repository.
 from __future__ import annotations
 
 from collections import OrderedDict
+from contextlib import contextmanager
 from dataclasses import dataclass
 import gc
 import importlib.util
@@ -306,6 +307,30 @@ class RtmposeExtractor:
         keypoints, scores = self._wholebody.pose_model(frame, bboxes=self._last_boxes)
         return keypoints, scores
 
+    def warmup_live(self) -> dict[str, float | int]:
+        """Warm both existing ORT graphs on their owning live worker.
+
+        An empty detector result skips pose inference in RTMLib. Supply a
+        synthetic box explicitly so readiness covers that graph too. Synthetic
+        observations never enter detection reuse or the live word stream.
+        """
+        import numpy as np
+        image = np.zeros((320, 320, 3), dtype=np.uint8)
+        boxes = np.array([[0, 0, 319, 319]], dtype=np.float32)
+        detector_ms, pose_ms = [], []
+        try:
+            for _ in range(3):
+                started = time.perf_counter()
+                self._wholebody.det_model(image)
+                detector_ms.append((time.perf_counter()-started)*1000)
+                started = time.perf_counter()
+                self._wholebody.pose_model(image, bboxes=boxes)
+                pose_ms.append((time.perf_counter()-started)*1000)
+            return dict(iterations=3, detector_ms=sum(detector_ms[1:])/2,
+                        pose_ms=sum(pose_ms[1:])/2)
+        finally:
+            self.reset_detection()
+
     def reset_detection(self) -> None:
         """Forget the reused box; the next frame runs detection again."""
         self._last_boxes = None
@@ -336,6 +361,10 @@ class RtmposeExtractor:
             except Exception:
                 pass
         self._dll_handles.clear()
+
+class _GenerationInputsReady(Exception):
+    """Stop the pinned training forward at its visual-to-mT5 boundary."""
+
 
 class TorchUniSignRuntime:
     """Load and execute the pinned PyTorch model in an isolated import scope."""
@@ -443,6 +472,38 @@ class TorchUniSignRuntime:
             })
             torch.cuda.reset_peak_memory_stats()
 
+    def _generation_inputs(self, source: dict[str, Any]) -> dict[str, Any]:
+        """Use upstream visual/prefix construction without its unused loss pass.
+
+        This runtime owns an inference-only model, serialized by the backend.
+        The temporary hook stops before mT5 executes, preserving the exact
+        embeddings/mask used by upstream generate without copying model code.
+        """
+        inputs: dict[str, Any] = {}
+
+        def capture(_module, args, kwargs):
+            if args or not {'inputs_embeds', 'attention_mask', 'labels'} <= kwargs.keys():
+                raise RuntimeError('Pinned Uni-Sign generation inputs boundary changed')
+            embeds, mask = kwargs['inputs_embeds'], kwargs['attention_mask']
+            if embeds.ndim != 3 or mask.ndim != 2 or embeds.shape[:2] != mask.shape:
+                raise RuntimeError('Invalid Uni-Sign generation inputs shapes')
+            inputs.update(inputs_embeds=embeds, attention_mask=mask)
+            raise _GenerationInputsReady()
+
+        handle = self._model.mt5_model.register_forward_pre_hook(capture, with_kwargs=True)
+        try:
+            try:
+                # Only the batch length and visual prompt use this placeholder.
+                # No label-conditioned mT5 operation is executed.
+                self._model(source, {'gt_sentence': ['.'], 'gt_gloss': ['']})
+            except _GenerationInputsReady as error:
+                error.__traceback__ = None
+            if not inputs:
+                raise RuntimeError('Pinned Uni-Sign did not expose generation inputs')
+            return inputs
+        finally:
+            handle.remove()
+
     def infer(self, pose: PoseWindow, *, num_beams: int, max_new_tokens: int) -> tuple[str, dict[str, float]]:
         if self._model is None or self._torch is None or self._tokenizer is None:
             self.load()
@@ -458,12 +519,8 @@ class TorchUniSignRuntime:
                                               dtype=torch.long, device=self.device_name)
         source["src_length_batch"] = torch.tensor([len(pose.sampled_indices)],
                                                   dtype=torch.long, device=self.device_name)
-        # The upstream forward computes a training loss even for online inference.
-        # A non-data sentinel keeps that unused label path non-empty; generation
-        # consumes only the visual embeddings and never this sentinel.
-        target = {"gt_sentence": ["."], "gt_gloss": [""]}
         with torch.inference_mode():
-            stack_out = self._model(source, target)
+            stack_out = self._generation_inputs(source)
             if self.device_name == "cuda":
                 torch.cuda.synchronize()
             forward_done = time.perf_counter()
@@ -485,6 +542,7 @@ class TorchUniSignRuntime:
     def runtime_info(self) -> dict[str, Any]:
         info = {
             "backend": "pytorch_uni_sign",
+            "model_inference_path": "upstream_visual_inputs_then_generate",
             "providers": [f"PyTorch {self.device_name.upper()}"],
             "device": self.device_name,
             "dtype": self.dtype_name,
@@ -1014,6 +1072,57 @@ class UniSignBackend:
             status="recognized", sample_id=request.request_id, model_id=self.config.run_id,
             sign_language="csl", prediction=TextPrediction(text=text.strip(), language="zh", score=None),
             quality=quality, task_type="text", score_type=SCORE_TYPE, time_range=time_range)
+
+    @contextmanager
+    def live_pose_extractor(self, *, detect_stride: int = 1):
+        """Borrow the loaded extractor under the same lock as file inference.
+
+        A live coordinator already holds the model manager's native lease.
+        No second ORT session or copy of mT5 is loaded.
+        """
+        if type(detect_stride) is not int or not 1 <= detect_stride <= 30:
+            raise ValueError('detect_stride must be in [1,30]')
+        with self._lock:
+            if not self._loaded:
+                self.load_model()
+            extractor = self._extractor
+            if extractor is None:
+                raise RuntimeError('Uni-Sign pose extractor is unavailable')
+            previous = extractor._detect_stride
+            extractor._detect_stride = detect_stride
+            extractor.reset_detection()
+            self._cache.clear()
+            try:
+                yield extractor
+            finally:
+                extractor._detect_stride = previous
+                extractor.reset_detection()
+                self._cache.clear()
+
+    def translate_pose_arrays(self, points, scores, *, width: int, height: int,
+                              request: InferenceRequest):
+        """Translate caller-owned raw RTMPose133 pixels using the pinned protocol.
+
+        The live 320px frontend is explicitly a new experimental input protocol;
+        it must not inherit full-file 512px frontend evaluation claims.
+        """
+        request.check_active()
+        with self._lock:
+            if not self._loaded:
+                self.load_model()
+            normalized = normalize_rtmpose_pixels(points, width, height, mode=self.pose_normalization)
+            pose = prepare_pose_window(normalized, scores, max_frames=self.max_frames)
+            pose = orient_pose_window(pose, self.pose_orientation)
+            details = dict(shared_pose=True, pose_quality=pose.quality,
+                           input_protocol='shared_rtmpose133_square320_ref512_v1')
+            if pose.quality['valid_body_fraction'] < .1:
+                return '', dict(details, rejected_reason='insufficient_body_frames')
+            request.check_active()
+            text, timings = self._runtime.infer(pose, num_beams=self.num_beams, max_new_tokens=self.max_new_tokens)
+            request.check_active()
+            if not isinstance(text, str):
+                raise ValueError('Uni-Sign must return text')
+            return text.strip(), dict(details, timing_ms=timings)
 
     def recognize_clip(self, clip: Any, request: InferenceRequest) -> RecognitionResult:
         request.check_active()
