@@ -60,6 +60,22 @@ class HRNetFrontend:
 
 
 class RTMPoseExperimentalFrontend:
+    @classmethod
+    def from_shared(cls, config, extractor):
+        """Adapt a leased Uni-Sign extractor without owning its native sessions."""
+        if config.device_id != 0:
+            raise SLRTResourceError('Shared RTMPose supports device_id=0 only')
+        if config.pose_device == 'cuda' and extractor.runtime_info.get('pose_device') != 'cuda':
+            raise SLRTResourceError('Shared RTMPose must use the declared CUDA device')
+        if getattr(extractor, '_detect_stride', config.pose_detect_stride) != config.pose_detect_stride:
+            raise SLRTResourceError('Shared detector stride does not match the live protocol')
+        value = cls.__new__(cls)
+        value.extractor = extractor
+        value._shared = True
+        value.info = dict(extractor.runtime_info, frontend='rtmpose-experimental-shared', experimental=True,
+                          coordinate_system='coco_wholebody_133_xyc_512_v1', shared_extractor=True)
+        return value
+
     def __init__(self, config):
         if config.device_id != 0:
             raise SLRTResourceError('Experimental RTMLib frontend currently supports device_id=0 only')
@@ -76,29 +92,40 @@ class RTMPoseExperimentalFrontend:
                 device = 'cuda' if torch.cuda.is_available() else 'cpu'
             # The existing wrapper handles native DLL ordering and verifies providers.
             self.extractor = RtmposeExtractor(mode='lightweight', backend='onnxruntime', device=device,
-                                              cache_dir=cache, strict_cuda=config.pose_device == 'cuda')
+                                              cache_dir=cache, strict_cuda=config.pose_device == 'cuda',
+                                              detect_stride=config.pose_detect_stride)
         except (ImportError, OSError, RuntimeError) as e:
             raise SLRTResourceError(f'Experimental RTMPose frontend failed: {e}') from e
         self.info = dict(frontend='rtmpose-experimental', experimental=True,
                          coordinate_system='coco_wholebody_133_xyc_512_v1',
                          assets=[dict(path=str(p), sha256=sha256(p)) for p in assets],
                          **self.extractor.runtime_info)
+        self.info['pose_detect_stride'] = config.pose_detect_stride
 
     def extract(self, bgr, *, frame_index, timestamp):
+        return self.extract_prepared(bgr,frame_index=frame_index,timestamp=timestamp)[1]
+
+    def extract_prepared(self, bgr, *, frame_index, timestamp):
+        """Return the same canonical pixels used for pose, plus 512-reference points."""
         frame = canonical_frame(bgr)
         keypoints, scores = self.extractor.extract(frame)
         # No unverified multi-person identity selection across windows.
         if len(keypoints) != 1:
-            return None
+            self.extractor.reset_detection()
+            return frame,None
         kp = np.concatenate([np.asarray(keypoints[0],np.float32) * (512/320),
                              np.asarray(scores[0],np.float32).clip(0,1)[:,None]], axis=-1)
         select_keypoints(kp[None])
         if float(kp[:11,2].mean()) < .2 or float(kp[91:,2].mean()) < .1:
-            return None
-        return kp
+            self.extractor.reset_detection()
+            return frame,None
+        return frame,kp
 
     def close(self):
-        self.extractor.close()
+        if getattr(self, '_shared', False):
+            self.extractor.reset_detection()
+        else:
+            self.extractor.close()
 
 
 class HRNetNPZFrontend:

@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "slrt_config_file": "slrt-realtime.example.json",
+  "pause_seconds": 0.8,
+  "max_seconds": 8,
+  "queue_size": 16,
+  "llm": {"enabled": false}
+}

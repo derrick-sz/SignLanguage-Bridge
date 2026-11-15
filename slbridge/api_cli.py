@@ -59,6 +59,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--route", action="append", default=[], metavar="LANGUAGE=MODEL",
                         help="Independent language model route; repeat once per language")
     parser.add_argument("--max-caption-sessions", type=int, default=64)
+    parser.add_argument("--realtime-config", type=Path, help="Optional server-owned CSL live-pipeline configuration")
     parser.add_argument("--inference-timeout-seconds", type=float, default=120.)
     parser.add_argument("--host", default="127.0.0.1")
     parser.add_argument("--port", type=int, default=8765)
@@ -100,12 +101,13 @@ def main(argv: Sequence[str] | None = None) -> int:
         app = create_app(catalog, initial_model=args.model, options=options,
                          max_upload_bytes=args.max_upload_mb * 1024 * 1024, bearer_token=token,
                          routes=routes, max_sessions=args.max_caption_sessions,
-                         inference_timeout_seconds=args.inference_timeout_seconds)
+                         inference_timeout_seconds=args.inference_timeout_seconds,
+                         realtime_config=args.realtime_config)
     except (OSError, ValueError) as exc:
         parser.error(str(exc))
     except ModuleNotFoundError:
         parser.error("HTTP API dependencies are missing; install the project's api extra")
-    uvicorn.run(app, host=args.host, port=args.port, workers=1)
+    uvicorn.run(app, host=args.host, port=args.port, workers=1, ws_max_size=256*1024)
     return 0
 
 

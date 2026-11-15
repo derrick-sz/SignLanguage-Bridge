@@ -498,3 +498,5 @@
 ## 数字人缺陷与计划归档（2026-11-12）
 
 - 后续接续使用[当前缺陷、证据与改进计划](https://github.com/betterway614/SignLanguage-Bridge/blob/codex/realtime-model-20261112/docs/superpowers/plans/2026-11-12-avatar-motion-quality.md)，按 AV-01～AV-13 缺陷和 M0～M6 依赖推进；历史原报告不改写。动作序列先准备、浏览器实时渲染、测试画布录制后回放必须分开描述，不将本批实验写成流式动作生成、直接实时采集或摄像头验收。本次只归档文档，没有新增运行或语义验收结论。
+
+模型分支的完整补充记录保留于[模型侧坑点记忆](model-evaluation-pitfalls-model-2026-11-12.md)。

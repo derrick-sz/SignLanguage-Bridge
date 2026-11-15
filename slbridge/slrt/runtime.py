@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import gc
+from contextlib import nullcontext
 import sys
 from time import perf_counter
 
@@ -37,6 +38,8 @@ class SLRTRuntime:
             raise SLRTResourceError('CUDA explicitly requested but Torch CUDA is unavailable')
         self.device = 'cuda' if config.device == 'auto' and torch.cuda.is_available() else 'cpu' if config.device == 'auto' else config.device
         self.torch_device = f'cuda:{config.device_id}' if self.device == 'cuda' else 'cpu'
+        if config.precision == 'float16' and self.device != 'cuda':
+            raise SLRTResourceError('float16 precision requires CUDA; no silent CPU fallback')
         if self.device == 'cuda' and config.device_id >= torch.cuda.device_count():
             raise SLRTResourceError(f'CUDA device {config.device_id} is unavailable')
         # CPU tensor conversion also runs in CUDA mode. Bound those workers so
@@ -58,6 +61,7 @@ class SLRTRuntime:
     def info(self):
         t = self.torch
         return dict(backend='pytorch_slrt', device=self.torch_device, dtype='float32',
+                    compute_precision=self.config.precision,
                     torch_version=t.__version__, state_keys=self.state_keys, strict_load=True,
                     classes=len(self.vocabulary), blank_id=0, load_ms=self.load_ms,
                     checkpoint_sha256=self.config.checkpoint_sha256, vocabulary_sha256=self.config.vocabulary_sha256,
@@ -93,10 +97,13 @@ class SLRTRuntime:
                 rgb, hm = prepare_inputs(bgr, keypoints, device=self.torch_device)
             self.synchronize()
             preprocessed = perf_counter()
-            probabilities = self.model(rgb, hm)
+            autocast = (self.torch.autocast(device_type='cuda', dtype=self.torch.float16)
+                        if self.config.precision == 'float16' else nullcontext())
+            with autocast:
+                probabilities = self.model(rgb, hm)
             self.synchronize()
             predicted = perf_counter()
-            probabilities = probabilities[0].cpu().numpy()
+            probabilities = probabilities[0].float().cpu().numpy()
         return probabilities, dict(preprocess_ms=(preprocessed-start)*1000,
                                    inference_ms=(predicted-preprocessed)*1000,
                                    window_total_ms=(perf_counter()-start)*1000)
